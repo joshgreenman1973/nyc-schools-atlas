@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>NYC schools atlas</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="wordmark">NYC schools atlas</div>
+    <div class="sub">Every public, charter and private K&ndash;12 school in New York City &mdash; mapped with demographics, programs, attendance zones and the neighborhood children they serve.</div>
+  </div>
+  <button id="about-btn" class="btn ghost">About &amp; methodology</button>
+</header>
+
+<div id="app">
+  <aside id="sidebar">
+    <div class="search-row">
+      <input id="q" type="search" placeholder="Search school name, neighborhood, or address&hellip;" autocomplete="off" />
+      <div id="result-count" class="count"></div>
+      <div class="addr-row">
+        <input id="addr" type="search" placeholder="Find zoned schools for an address&hellip;" autocomplete="off" />
+        <button id="addr-go" class="btn ghost">Go</button>
+      </div>
+      <div id="addr-msg" class="count"></div>
+      <div id="addr-result"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Sector</div>
+      <label class="chk"><input type="checkbox" data-filter="sector" value="public" checked /><span class="swatch shape-circle ink-public"></span>Public district</label>
+      <label class="chk"><input type="checkbox" data-filter="sector" value="charter" checked /><span class="swatch shape-square ink-charter"></span>Charter</label>
+      <label class="chk"><input type="checkbox" data-filter="sector" value="private" checked /><span class="swatch shape-triangle ink-private"></span>Private / independent / parochial</label>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Grade band</div>
+      <label class="chk"><input type="checkbox" data-filter="band" value="ES" checked />Elementary (K&ndash;5)</label>
+      <label class="chk"><input type="checkbox" data-filter="band" value="MS" checked />Middle (6&ndash;8)</label>
+      <label class="chk"><input type="checkbox" data-filter="band" value="HS" checked />High school (9&ndash;12)</label>
+      <label class="chk"><input type="checkbox" data-filter="band" value="PK" checked />Pre-K / 3-K</label>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Programs &amp; designations</div>
+      <div id="program-filters"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Admissions (high school)</div>
+      <div id="admission-filters"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Layers</div>
+      <label class="chk"><input type="checkbox" id="lyr-dots" />Child population (each dot = 25 kids)</label>
+      <div class="dot-legend" id="dot-legend" hidden>
+        <span><i class="dot dot-a"></i>Ages 0&ndash;4</span>
+        <span><i class="dot dot-b"></i>Ages 5&ndash;11</span>
+        <span><i class="dot dot-c"></i>Ages 12&ndash;17</span>
+      </div>
+      <label class="chk"><input type="checkbox" id="lyr-zone" checked />Show attendance zone on hover</label>
+    </div>
+
+    <div class="panel muted">
+      <div class="panel-title">Compare</div>
+      <div id="compare-empty">Shift-click any two schools to compare demographics side by side.</div>
+      <div id="compare-tray" hidden></div>
+    </div>
+  </aside>
+
+  <div id="map"></div>
+</div>
+
+<div id="about" class="modal" hidden>
+  <div class="modal-card">
+    <button class="modal-close" data-close>&times;</button>
+    <h2>About this map</h2>
+    <p>This atlas combines 2,524 New York City K&ndash;12 schools &mdash; public district, charter and private/parochial/independent &mdash; with demographic data, attendance zones, program tags and the number of children living in each census tract. It is designed as a reference tool for parents, journalists and researchers, not as an endorsement of any school.</p>
+
+    <h3>What&rsquo;s in each tooltip</h3>
+    <ul>
+      <li><b>Enrollment trend</b>: total students over the last five reported school years, plotted as a small sparkline.</li>
+      <li><b>Demographics</b>: race/ethnicity, students with disabilities (SWD), English language learners (ELL), poverty and the Economic Need Index &mdash; from the latest DOE Demographic Snapshot available on NYC Open Data (2021&ndash;22).</li>
+      <li><b>Programs &amp; designations</b>: Specialized High School, International Baccalaureate (IB), Career and Technical Education (CTE), ASD Nest, ASD Horizon, Dual Language, Gifted and Talented, District 75, accessibility status, AP courses, language classes &mdash; extracted from DOE directory files.</li>
+      <li><b>Attendance zone</b>: for schools that are zoned (elementary and middle), the catchment polygon shades in on hover.</li>
+      <li><b>Building photo</b>: Google Street View static image, loaded only when the tooltip opens.</li>
+      <li><b>Links</b>: official website when known, Google News search for the school, and a Wikipedia lookup (good for notable high schools with alumni pages).</li>
+    </ul>
+
+    <h3>Data sources</h3>
+    <ul>
+      <li><b>School locations (public, charter)</b>: NYC DOE &ldquo;School Locations&rdquo; (Socrata <code>a3nt-yts4</code>).</li>
+      <li><b>Demographics, 5-year trend</b>: NYC DOE &ldquo;2017&ndash;18 to 2021&ndash;22 Demographic Snapshot&rdquo; (Socrata <code>c7ru-d68s</code>).</li>
+      <li><b>High-school programs</b>: NYC DOE &ldquo;2021 High School Directory&rdquo; (Socrata <code>8b6c-7uty</code>).</li>
+      <li><b>Middle-school programs</b>: NYC DOE &ldquo;2021 Middle School Directory&rdquo; (Socrata <code>f6s7-vytj</code>).</li>
+      <li><b>Elementary programs</b>: NYC DOE &ldquo;2021 Kindergarten Admissions Guide&rdquo; (Socrata <code>e7es-jx5j</code>) &mdash; note this is thinner than the HS/MS directories.</li>
+      <li><b>Attendance zones</b>: NYC DOE &ldquo;School Zones 2024&ndash;25&rdquo; (Socrata <code>cmjf-yawu</code> elementary, <code>t26j-jbq7</code> middle).</li>
+      <li><b>Private schools</b>: National Center for Education Statistics (NCES) EDGE Geocoded Private Schools 2021&ndash;22.</li>
+      <li><b>Child population</b>: U.S. Census Bureau American Community Survey (ACS) 5-year 2018&ndash;2022, table B09001 (&ldquo;population under 18 years by age&rdquo;) by census tract.</li>
+      <li><b>Tract boundaries</b>: NYC Planning &ldquo;2020 Census Tracts&rdquo;.</li>
+    </ul>
+
+    <h3>Honest limitations</h3>
+    <ul>
+      <li><b>Latest DOE demographic snapshot on Open Data is 2021&ndash;22.</b> Newer data exists internally at DOE but is not on the public API. A FOIL request would unlock 2024&ndash;25.</li>
+      <li><b>Private schools carry no demographic breakdown.</b> NCES gives location and name; race/poverty data is not systematically published for private schools. Their tooltips will say so explicitly.</li>
+      <li><b>&ldquo;Where students come from&rdquo; is only knowable for zoned schools.</b> Charter and unzoned/screened public schools draw citywide or by district; we don&rsquo;t publish the student-residence data that would be needed to show actual draw areas.</li>
+      <li><b>Attendance zones are the 2024&ndash;25 boundaries.</b> If a school has been rezoned since 2021&ndash;22, its demographic snapshot and zone may not match exactly.</li>
+      <li><b>Program tags are extracted from the DOE directory narrative.</b> A school that runs ASD Nest but didn&rsquo;t describe it in its directory paragraph will not be tagged. The absence of a tag is not proof the program does not exist.</li>
+      <li><b>Per-pupil spending is not included in round one.</b> The cleanest source is DOE&rsquo;s annual School Based Expenditure Report, which is not currently on the Open Data API in a usable form. Adding it is on the round-two list rather than shipping something that would be wrong.</li>
+      <li><b>Notable alumni</b> are surfaced through a Wikipedia search link rather than scraped in bulk &mdash; alumni coverage on Wikipedia is patchy and biased toward famous high schools.</li>
+      <li><b>The child-population dots are a visual estimate.</b> ACS figures are 5-year estimates with margins of error, and each dot is placed randomly within its census tract &mdash; not at actual child addresses.</li>
+    </ul>
+
+    <h3>Colophon</h3>
+    <p>Basemap: CARTO Dark Matter (no labels). Map library: Leaflet 1.9. Fonts: Fraunces (display) and Inter (body). Build script and source data live in the project repository.</p>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
