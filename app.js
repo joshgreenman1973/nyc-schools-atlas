@@ -202,8 +202,8 @@ if (addr) {
   addr.addEventListener('input', () => {
     const v = addr.value.trim();
     clearTimeout(addrDebounce);
-    if (v.length < 3) { hideAddrSuggest(); return; }
-    addrDebounce = setTimeout(() => fetchAddrSuggest(v), 250);
+    if (v.length < 2) { hideAddrSuggest(); return; }
+    addrDebounce = setTimeout(() => fetchAddrSuggest(v), 80);
   });
   addr.addEventListener('keydown', (e) => {
     if (!addrSuggest.hidden && addrSuggestions.length) {
@@ -225,15 +225,15 @@ if (addr) {
 }
 
 function fetchAddrSuggest(q) {
-  const viewbox = '-74.2591,40.9176,-73.7004,40.4774';
-  const url = `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=6&viewbox=${viewbox}&bounded=1&q=${encodeURIComponent(q)}`;
-  fetch(url, { headers: { 'Accept-Language': 'en' } })
+  const url = `https://geosearch.planninglabs.nyc/v2/autocomplete?size=6&text=${encodeURIComponent(q)}`;
+  fetch(url)
     .then(r => r.json())
-    .then(arr => {
-      addrSuggestions = (arr || []).filter(r => {
-        const a = r.address || {};
-        return (a.state === 'New York' || a.city === 'New York' || a['ISO3166-2-lvl4'] === 'US-NY');
-      });
+    .then(data => {
+      addrSuggestions = (data.features || []).map(f => ({
+        display_name: f.properties.label,
+        lat: f.geometry.coordinates[1],
+        lon: f.geometry.coordinates[0],
+      }));
       addrActiveIdx = addrSuggestions.length ? 0 : -1;
       renderAddrSuggest();
     })
@@ -276,11 +276,11 @@ function selectAddrSuggest(r) {
 function geocodeAddress(q) {
   q = (q || '').trim();
   if (!q) return;
-  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q + ', New York City')}&limit=1`;
-  fetch(url, { headers: { 'Accept-Language': 'en' } }).then(r => r.json()).then(arr => {
-    if (!arr || !arr.length) { flashAddr('Address not found'); return; }
-    const { lat, lon } = arr[0];
-    const latNum = parseFloat(lat), lonNum = parseFloat(lon);
+  const url = `https://geosearch.planninglabs.nyc/v2/search?size=1&text=${encodeURIComponent(q)}`;
+  fetch(url).then(r => r.json()).then(data => {
+    const f = (data.features || [])[0];
+    if (!f) { flashAddr('Address not found'); return; }
+    const latNum = f.geometry.coordinates[1], lonNum = f.geometry.coordinates[0];
     map.setView([latNum, lonNum], 15);
     if (activeAddressPin) map.removeLayer(activeAddressPin);
     activeAddressPin = L.circleMarker([latNum, lonNum], {
