@@ -475,24 +475,29 @@ function renderCard(s) {
 function wireUpCardEvents(s) {
   const root = document.querySelector('.leaflet-popup-content .card');
   if (!root) return;
-  root.querySelectorAll('.tab').forEach(btn => {
-    btn.addEventListener('click', () => {
-      root.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
-      root.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      root.querySelector(`.pane[data-pane="${btn.dataset.tab}"]`).classList.add('active');
-    });
-  });
-  root.querySelectorAll('.nearby-chip').forEach(c => {
-    c.addEventListener('click', () => {
-      const dbn = c.dataset.dbn;
-      const m = markerIndex.get(dbn);
-      if (m) { m.openPopup(); map.panTo(m.getLatLng()); }
-    });
-  });
   const photo = root.querySelector('[data-photo]');
   if (photo) loadPhoto(s, photo);
 }
+
+// Delegated click handler for popup cards — survives popup rebuilds
+document.addEventListener('click', (e) => {
+  const tab = e.target.closest('.leaflet-popup-content .tab');
+  if (tab) {
+    const card = tab.closest('.card');
+    if (!card) return;
+    card.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+    card.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    const pane = card.querySelector(`.pane[data-pane="${tab.dataset.tab}"]`);
+    if (pane) pane.classList.add('active');
+    return;
+  }
+  const chip = e.target.closest('.leaflet-popup-content .nearby-chip');
+  if (chip && chip.dataset.dbn) {
+    const m = markerIndex.get(chip.dataset.dbn);
+    if (m) { m.openPopup(); map.panTo(m.getLatLng()); }
+  }
+});
 
 function loadPhoto(s, photoEl) {
   const lat = photoEl.dataset.lat, lon = photoEl.dataset.lon;
