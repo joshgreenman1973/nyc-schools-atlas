@@ -789,7 +789,7 @@ function renderComparePanel() {
 }
 
 // ---------- Choropleth: children per tract ----------
-const CHORO_COLORS = ['#f7eddc', '#f0c59f', '#dd8a5e', '#b15a38', '#6b2e1c'];
+const CHORO_COLORS = ['#d4f1ef', '#84d5d0', '#3aa99f', '#1c6e6a', '#0d3c3a'];
 function toggleChoropleth(on) {
   document.getElementById('choro-legend').hidden = !on;
   if (on) {
