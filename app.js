@@ -38,7 +38,6 @@ const PROGRAM_FILTER_LIST = [
   'Gifted and Talented',
   'Dual language',
   'ASD Nest',
-  'ASD Horizon',
   'District 75 (special education)',
   'Fully accessible',
 ];
@@ -361,11 +360,11 @@ function passesFilters(s) {
   let bandOk = false;
   for (const b of s._bands) if (filters.band.has(b)) { bandOk = true; break; }
   if (!bandOk) return false;
-  if (filters.programs.size && s.sector !== 'private') {
-    const ptags = new Set(s.programs);
+  if (filters.programs.size) {
+    const ptags = new Set(s.programs || []);
     for (const p of filters.programs) if (!ptags.has(p)) return false;
   }
-  if (filters.admissions.size && s.sector !== 'private') {
+  if (filters.admissions.size) {
     const a = (s.admission || '').toLowerCase();
     let ok = false;
     for (const want of filters.admissions) if (a.includes(want.toLowerCase())) { ok = true; break; }
