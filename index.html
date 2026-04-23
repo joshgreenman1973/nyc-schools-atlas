@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./style.css?v=9" />
+<link rel="stylesheet" href="./style.css?v=10" />
 </head>
 <body>
 
@@ -100,7 +100,7 @@
     <ul>
       <li><b>Enrollment trend</b>: total students over the last six reported school years (2019&ndash;20 through 2024&ndash;25), sourced from NYSED&rsquo;s annual BEDS Day enrollment database, plotted as a small sparkline.</li>
       <li><b>Demographics</b>: race/ethnicity, students with disabilities (SWD), English language learners (ELL), poverty and the Economic Need Index &mdash; from the latest DOE Demographic Snapshot available on NYC Open Data (2021&ndash;22).</li>
-      <li><b>Programs &amp; designations</b>: Specialized High School, International Baccalaureate (IB), Career and Technical Education (CTE), ASD Nest, ASD Horizon, Dual Language, Gifted and Talented, District 75, accessibility status, AP courses, language classes &mdash; extracted from DOE directory files.</li>
+      <li><b>Programs &amp; designations</b>: Specialized High School, International Baccalaureate (IB), Career and Technical Education (CTE), ASD Nest (from NYU Steinhardt&rsquo;s published roster), Dual Language, Gifted and Talented, District 75, accessibility status, AP courses, language classes &mdash; extracted from DOE directory files.</li>
       <li><b>Attendance zone</b>: for schools that are zoned (elementary and middle), the catchment polygon shades in on hover.</li>
       <li><b>Building photo</b>: Google Street View static image, loaded only when the tooltip opens.</li>
       <li><b>Links</b>: official website when known, Google News search for the school, and a Wikipedia lookup (good for notable high schools with alumni pages).</li>
@@ -126,7 +126,8 @@
       <li><b>Private schools carry no demographic breakdown.</b> NCES gives location and name; race/poverty data is not systematically published for private schools. Their tooltips will say so explicitly.</li>
       <li><b>&ldquo;Where students come from&rdquo; is only knowable for zoned schools.</b> Charter and unzoned/screened public schools draw citywide or by district; we don&rsquo;t publish the student-residence data that would be needed to show actual draw areas.</li>
       <li><b>Attendance zones are the 2024&ndash;25 boundaries.</b> If a school has been rezoned since 2021&ndash;22, its demographic snapshot and zone may not match exactly.</li>
-      <li><b>Program tags are extracted from the DOE directory narrative.</b> A school that runs ASD Nest but didn&rsquo;t describe it in its directory paragraph will not be tagged. The absence of a tag is not proof the program does not exist.</li>
+      <li><b>Program tags are extracted from the DOE directory narrative</b> except for ASD Nest, which uses NYU Steinhardt&rsquo;s published school list (DOE&rsquo;s Nest partner). The absence of a tag is not proof the program does not exist at a school.</li>
+      <li><b>ASD Horizon is not mapped</b> because NYCPS does not publish a school list. Placement is assigned centrally through ASDprograms@schools.nyc.gov. A school tagged ASD Nest may also host a Horizon program &mdash; the two are often paired.</li>
       <li><b>Per-pupil spending is not included in round one.</b> The cleanest source is DOE&rsquo;s annual School Based Expenditure Report, which is not currently on the Open Data API in a usable form. Adding it is on the round-two list rather than shipping something that would be wrong.</li>
       <li><b>Notable alumni</b> are surfaced through a Wikipedia search link rather than scraped in bulk &mdash; alumni coverage on Wikipedia is patchy and biased toward famous high schools.</li>
       <li><b>The child-population dots are a visual estimate.</b> ACS figures are 5-year estimates with margins of error, and each dot is placed randomly within its census tract &mdash; not at actual child addresses.</li>
@@ -138,6 +139,6 @@
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="./app.js?v=9"></script>
+<script src="./app.js?v=10"></script>
 </body>
 </html>
