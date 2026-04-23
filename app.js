@@ -128,7 +128,64 @@ function onFilterChange(e) {
 }
 
 document.querySelectorAll('input[data-filter]').forEach(i => i.addEventListener('change', onFilterChange));
-document.getElementById('q').addEventListener('input', e => { filters.q = e.target.value.trim().toLowerCase(); renderSchools(); });
+const qInput = document.getElementById('q');
+const qSuggest = document.getElementById('q-suggest');
+let qActiveIdx = -1;
+let qMatches = [];
+qInput.addEventListener('input', e => {
+  const v = e.target.value.trim();
+  filters.q = v.toLowerCase();
+  renderSchools();
+  renderQSuggest(v);
+});
+qInput.addEventListener('keydown', e => {
+  if (qSuggest.hidden || !qMatches.length) return;
+  if (e.key === 'ArrowDown') { e.preventDefault(); qActiveIdx = Math.min(qActiveIdx + 1, qMatches.length - 1); paintQSuggest(); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); qActiveIdx = Math.max(qActiveIdx - 1, 0); paintQSuggest(); }
+  else if (e.key === 'Enter') { e.preventDefault(); selectQ(qMatches[qActiveIdx >= 0 ? qActiveIdx : 0]); }
+  else if (e.key === 'Escape') { hideQSuggest(); }
+});
+qInput.addEventListener('blur', () => setTimeout(hideQSuggest, 150));
+
+function renderQSuggest(v) {
+  if (v.length < 2 || !allSchools.length) { hideQSuggest(); return; }
+  const q = v.toLowerCase();
+  const ranked = [];
+  for (const s of allSchools) {
+    const name = (s.name || '').toLowerCase();
+    const nb = (s.neighborhood || '').toLowerCase();
+    const addr = (s.address || '').toLowerCase();
+    let rank = -1;
+    if (name.startsWith(q)) rank = 0;
+    else if (name.includes(q)) rank = 1;
+    else if (nb.includes(q)) rank = 2;
+    else if (addr.includes(q)) rank = 3;
+    if (rank >= 0) ranked.push([rank, s]);
+  }
+  ranked.sort((a, b) => a[0] - b[0] || a[1].name.localeCompare(b[1].name));
+  qMatches = ranked.slice(0, 8).map(x => x[1]);
+  qActiveIdx = qMatches.length ? 0 : -1;
+  paintQSuggest();
+}
+function paintQSuggest() {
+  if (!qMatches.length) { hideQSuggest(); return; }
+  qSuggest.innerHTML = qMatches.map((s, i) => {
+    const sub = [s.neighborhood, s.boro].filter(Boolean).join(' · ');
+    return `<div class="addr-suggest-item${i === qActiveIdx ? ' active' : ''}" data-dbn="${s.dbn}"><div>${escapeHtml(s.name)}</div><div class="muted" style="font-size:10.5px">${escapeHtml(sub)}</div></div>`;
+  }).join('');
+  qSuggest.hidden = false;
+  qSuggest.querySelectorAll('[data-dbn]').forEach(el => {
+    el.addEventListener('mousedown', (e) => { e.preventDefault(); const s = allSchools.find(x => x.dbn === el.dataset.dbn); selectQ(s); });
+  });
+}
+function hideQSuggest() { qSuggest.hidden = true; qMatches = []; qActiveIdx = -1; }
+function selectQ(s) {
+  if (!s) return;
+  hideQSuggest();
+  const m = markerIndex.get(s.dbn);
+  if (m) { map.setView(m.getLatLng(), 15); m.openPopup(); }
+  else { map.setView([s.lat, s.lon], 15); }
+}
 document.getElementById('lyr-zone').addEventListener('change', e => { filters.showZones = e.target.checked; });
 document.getElementById('lyr-dots').addEventListener('change', e => toggleDots(e.target.checked));
 document.getElementById('about-btn').addEventListener('click', () => document.getElementById('about').hidden = false);
