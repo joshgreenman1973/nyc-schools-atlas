@@ -102,7 +102,9 @@ body{display:flex;flex-direction:column;overflow:hidden}
 .choro-legend{margin:6px 0 0 2px}
 .choro-scale{display:flex;gap:0;height:10px;border-radius:2px;overflow:hidden;margin-bottom:4px}
 .choro-sw{flex:1;display:block}
-.choro-labels{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted)}
+.choro-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);font-variant-numeric:tabular-nums}
+.choro-foot{font-size:10.5px;color:var(--muted);margin-top:6px;line-height:1.4}
+.zones-note{font-size:10.5px;color:var(--muted);margin-top:6px;line-height:1.4}
 
 /* Leaflet overrides */
 .leaflet-container{background:#0a0d11;font-family:Inter,sans-serif}

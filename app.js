@@ -188,6 +188,8 @@ function selectQ(s) {
 }
 document.getElementById('lyr-zone').addEventListener('change', e => { filters.showZones = e.target.checked; });
 document.getElementById('lyr-choro').addEventListener('change', e => toggleChoropleth(e.target.checked));
+document.getElementById('lyr-all-es').addEventListener('change', e => toggleAllZones('elementary', e.target.checked));
+document.getElementById('lyr-all-ms').addEventListener('change', e => toggleAllZones('middle', e.target.checked));
 document.getElementById('about-btn').addEventListener('click', () => document.getElementById('about').hidden = false);
 document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => b.closest('.modal').hidden = true));
 
@@ -419,6 +421,34 @@ function showZone(s) {
 }
 function hideZone() {
   if (activeHoverZoneLayer) { map.removeLayer(activeHoverZoneLayer); activeHoverZoneLayer = null; }
+}
+
+// ---------- All-zones overlays (elementary / middle) ----------
+const ALL_ZONE_STYLES = {
+  elementary: { color: '#e6c547', weight: 1, fillColor: '#e6c547', fillOpacity: 0.06, opacity: 0.55 },
+  middle:     { color: '#5bb8e6', weight: 1, fillColor: '#5bb8e6', fillOpacity: 0.06, opacity: 0.55 },
+};
+const allZoneLayers = { elementary: null, middle: null };
+let allZonesRaw = null;
+
+function toggleAllZones(level, on) {
+  if (!on) {
+    if (allZoneLayers[level]) { map.removeLayer(allZoneLayers[level]); allZoneLayers[level] = null; }
+    return;
+  }
+  const build = (zones) => {
+    const feats = zones.features.filter(f => (f.properties.zone_type || '') === level);
+    const layer = L.geoJSON({ type: 'FeatureCollection', features: feats }, {
+      style: ALL_ZONE_STYLES[level],
+      interactive: false,
+    });
+    layer.addTo(map);
+    if (layer.bringToBack) layer.bringToBack();
+    if (choroLayer && choroLayer.bringToBack) choroLayer.bringToBack();
+    allZoneLayers[level] = layer;
+  };
+  if (allZonesRaw) { build(allZonesRaw); return; }
+  fetch('./data/zones.geojson').then(r => r.json()).then(z => { allZonesRaw = z; build(z); });
 }
 
 // ---------- Photo with fallback ----------
@@ -813,6 +843,12 @@ function toggleChoropleth(on) {
         },
         interactive: false,
       });
+      // Legend numbers: show the four break thresholds
+      const lbl = document.getElementById('choro-labels');
+      if (lbl) {
+        const fmt = n => n >= 1000 ? `${(n/1000).toFixed(n>=10000?0:1)}k` : String(Math.round(n));
+        lbl.innerHTML = `<span>0</span><span>${fmt(breaks[0])}</span><span>${fmt(breaks[1])}</span><span>${fmt(breaks[2])}</span><span>${fmt(breaks[3])}</span><span>${fmt(breaks[3])}+</span>`;
+      }
       // Insert choropleth UNDER markers by adding to map then re-ordering.
       choroLayer.addTo(map);
       if (choroLayer.bringToBack) choroLayer.bringToBack();
