@@ -627,25 +627,23 @@ function barRow(label, value, color) {
 function sparklineSVG(trend) {
   const pts = (trend || []).filter(r => r[1] != null);
   if (pts.length < 2) return '';
-  const w = 180, h = 28, pad = 2;
+  const w = 180, h = 38, pad = 2, labelBand = 12;
+  const plotH = h - labelBand;
   const vals = pts.map(p => p[1]);
   const min = Math.min(...vals), max = Math.max(...vals);
   const range = Math.max(1, max - min);
   const dx = (w - pad * 2) / (pts.length - 1);
-  const path = pts.map((p, i) => {
-    const x = pad + i * dx;
-    const y = pad + (h - pad * 2) * (1 - (p[1] - min) / range);
-    return `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`;
-  }).join(' ');
+  const yAt = v => pad + (plotH - pad * 2) * (1 - (v - min) / range);
+  const path = pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${(pad + i * dx).toFixed(1)},${yAt(p[1]).toFixed(1)}`).join(' ');
   const lastX = pad + (pts.length - 1) * dx;
-  const lastY = pad + (h - pad * 2) * (1 - (pts[pts.length - 1][1] - min) / range);
+  const lastY = yAt(pts[pts.length - 1][1]);
   const dir = pts[pts.length - 1][1] >= pts[0][1] ? '#5ca57a' : '#c0604e';
   const firstYr = pts[0][0], lastYr = pts[pts.length - 1][0];
   return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
     <path d="${path}" fill="none" stroke="${dir}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
     <circle cx="${lastX}" cy="${lastY}" r="2.4" fill="${dir}"/>
-    <text x="${pad}" y="${h-1}" font-size="8" fill="#676d7e">${firstYr}</text>
-    <text x="${w-2}" y="${h-1}" font-size="8" fill="#676d7e" text-anchor="end">${lastYr}</text>
+    <text x="${pad}" y="${h-2}" font-size="9" fill="#676d7e">${firstYr}</text>
+    <text x="${w-2}" y="${h-2}" font-size="9" fill="#676d7e" text-anchor="end">${lastYr}</text>
   </svg>`;
 }
 
