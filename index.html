@@ -26,7 +26,10 @@
       <input id="q" type="search" placeholder="Search school name, neighborhood, or address&hellip;" autocomplete="off" />
       <div id="result-count" class="count"></div>
       <div class="addr-row">
-        <input id="addr" type="search" placeholder="Find zoned schools for an address&hellip;" autocomplete="off" />
+        <div class="addr-wrap">
+          <input id="addr" type="search" placeholder="Find zoned schools for an address&hellip;" autocomplete="off" />
+          <div id="addr-suggest" class="addr-suggest" hidden></div>
+        </div>
         <button id="addr-go" class="btn ghost">Go</button>
       </div>
       <div id="addr-msg" class="count"></div>
@@ -87,7 +90,7 @@
 
     <h3>What&rsquo;s in each tooltip</h3>
     <ul>
-      <li><b>Enrollment trend</b>: total students over the last five reported school years, plotted as a small sparkline.</li>
+      <li><b>Enrollment trend</b>: total students over the last six reported school years (2019&ndash;20 through 2024&ndash;25), sourced from NYSED&rsquo;s annual BEDS Day enrollment database, plotted as a small sparkline.</li>
       <li><b>Demographics</b>: race/ethnicity, students with disabilities (SWD), English language learners (ELL), poverty and the Economic Need Index &mdash; from the latest DOE Demographic Snapshot available on NYC Open Data (2021&ndash;22).</li>
       <li><b>Programs &amp; designations</b>: Specialized High School, International Baccalaureate (IB), Career and Technical Education (CTE), ASD Nest, ASD Horizon, Dual Language, Gifted and Talented, District 75, accessibility status, AP courses, language classes &mdash; extracted from DOE directory files.</li>
       <li><b>Attendance zone</b>: for schools that are zoned (elementary and middle), the catchment polygon shades in on hover.</li>
@@ -98,7 +101,8 @@
     <h3>Data sources</h3>
     <ul>
       <li><b>School locations (public, charter)</b>: NYC DOE &ldquo;School Locations&rdquo; (Socrata <code>a3nt-yts4</code>).</li>
-      <li><b>Demographics, 5-year trend</b>: NYC DOE &ldquo;2017&ndash;18 to 2021&ndash;22 Demographic Snapshot&rdquo; (Socrata <code>c7ru-d68s</code>).</li>
+      <li><b>Demographics</b>: NYC DOE &ldquo;2017&ndash;18 to 2021&ndash;22 Demographic Snapshot&rdquo; (Socrata <code>c7ru-d68s</code>).</li>
+      <li><b>Enrollment 2019&ndash;20 through 2024&ndash;25</b>: NYSED BEDS Day Enrollment database (<code>data.nysed.gov</code>).</li>
       <li><b>High-school programs</b>: NYC DOE &ldquo;2021 High School Directory&rdquo; (Socrata <code>8b6c-7uty</code>).</li>
       <li><b>Middle-school programs</b>: NYC DOE &ldquo;2021 Middle School Directory&rdquo; (Socrata <code>f6s7-vytj</code>).</li>
       <li><b>Elementary programs</b>: NYC DOE &ldquo;2021 Kindergarten Admissions Guide&rdquo; (Socrata <code>e7es-jx5j</code>) &mdash; note this is thinner than the HS/MS directories.</li>

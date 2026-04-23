@@ -249,13 +249,27 @@ body{display:flex;flex-direction:column;overflow:hidden}
 
 /* Address search */
 .addr-row{display:flex;gap:6px;margin-top:8px}
+.addr-wrap{flex:1;position:relative}
 #addr{
-  flex:1;background:var(--ink-3);color:var(--text);
+  width:100%;box-sizing:border-box;
+  background:var(--ink-3);color:var(--text);
   border:1px solid var(--line);border-radius:8px;
   padding:8px 10px;font:inherit;font-size:12.5px;
 }
 #addr:focus{outline:none;border-color:var(--accent)}
 #addr-go{padding:6px 12px;font-size:12px}
+.addr-suggest{
+  position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:1000;
+  background:var(--ink-3);border:1px solid var(--line);border-radius:8px;
+  box-shadow:0 8px 24px rgba(0,0,0,.4);
+  max-height:240px;overflow-y:auto;
+}
+.addr-suggest-item{
+  padding:8px 10px;font-size:12px;cursor:pointer;
+  border-bottom:1px solid rgba(255,255,255,.06);color:var(--text);
+}
+.addr-suggest-item:last-child{border-bottom:0}
+.addr-suggest-item:hover,.addr-suggest-item.active{background:rgba(255,122,69,.15)}
 #addr-result{margin-top:6px;display:flex;flex-direction:column;gap:4px}
 .zone-hit{
   background:var(--ink-3);padding:6px 8px;border-radius:4px;

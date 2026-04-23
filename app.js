@@ -134,13 +134,86 @@ document.getElementById('lyr-dots').addEventListener('change', e => toggleDots(e
 document.getElementById('about-btn').addEventListener('click', () => document.getElementById('about').hidden = false);
 document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => b.closest('.modal').hidden = true));
 
-// Address search
+// Address search with autocomplete
 const addr = document.getElementById('addr');
+const addrSuggest = document.getElementById('addr-suggest');
+let addrDebounce = null;
+let addrSuggestions = [];
+let addrActiveIdx = -1;
+
 if (addr) {
-  addr.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') { e.preventDefault(); geocodeAddress(addr.value); }
+  addr.addEventListener('input', () => {
+    const v = addr.value.trim();
+    clearTimeout(addrDebounce);
+    if (v.length < 3) { hideAddrSuggest(); return; }
+    addrDebounce = setTimeout(() => fetchAddrSuggest(v), 250);
   });
+  addr.addEventListener('keydown', (e) => {
+    if (!addrSuggest.hidden && addrSuggestions.length) {
+      if (e.key === 'ArrowDown') { e.preventDefault(); addrActiveIdx = Math.min(addrActiveIdx + 1, addrSuggestions.length - 1); renderAddrSuggest(); return; }
+      if (e.key === 'ArrowUp') { e.preventDefault(); addrActiveIdx = Math.max(addrActiveIdx - 1, 0); renderAddrSuggest(); return; }
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const pick = addrSuggestions[addrActiveIdx >= 0 ? addrActiveIdx : 0];
+        if (pick) selectAddrSuggest(pick);
+        return;
+      }
+      if (e.key === 'Escape') { hideAddrSuggest(); return; }
+    } else if (e.key === 'Enter') {
+      e.preventDefault(); geocodeAddress(addr.value);
+    }
+  });
+  addr.addEventListener('blur', () => setTimeout(hideAddrSuggest, 150));
   document.getElementById('addr-go').addEventListener('click', () => geocodeAddress(addr.value));
+}
+
+function fetchAddrSuggest(q) {
+  const viewbox = '-74.2591,40.9176,-73.7004,40.4774';
+  const url = `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=6&viewbox=${viewbox}&bounded=1&q=${encodeURIComponent(q)}`;
+  fetch(url, { headers: { 'Accept-Language': 'en' } })
+    .then(r => r.json())
+    .then(arr => {
+      addrSuggestions = (arr || []).filter(r => {
+        const a = r.address || {};
+        return (a.state === 'New York' || a.city === 'New York' || a['ISO3166-2-lvl4'] === 'US-NY');
+      });
+      addrActiveIdx = addrSuggestions.length ? 0 : -1;
+      renderAddrSuggest();
+    })
+    .catch(() => hideAddrSuggest());
+}
+
+function renderAddrSuggest() {
+  if (!addrSuggestions.length) { hideAddrSuggest(); return; }
+  addrSuggest.innerHTML = addrSuggestions.map((r, i) =>
+    `<div class="addr-suggest-item${i === addrActiveIdx ? ' active' : ''}" data-i="${i}">${escapeHtml(r.display_name)}</div>`
+  ).join('');
+  addrSuggest.hidden = false;
+  addrSuggest.querySelectorAll('.addr-suggest-item').forEach(el => {
+    el.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      selectAddrSuggest(addrSuggestions[+el.dataset.i]);
+    });
+  });
+}
+
+function hideAddrSuggest() {
+  addrSuggest.hidden = true;
+  addrSuggestions = [];
+  addrActiveIdx = -1;
+}
+
+function selectAddrSuggest(r) {
+  if (!r) return;
+  addr.value = r.display_name;
+  hideAddrSuggest();
+  const latNum = parseFloat(r.lat), lonNum = parseFloat(r.lon);
+  map.setView([latNum, lonNum], 15);
+  if (activeAddressPin) map.removeLayer(activeAddressPin);
+  activeAddressPin = L.circleMarker([latNum, lonNum], {
+    radius: 10, color: '#ff7a45', weight: 3, fillColor: '#ff7a45', fillOpacity: 0.25,
+  }).addTo(map);
+  showZonedForPoint(latNum, lonNum);
 }
 
 function geocodeAddress(q) {
@@ -231,11 +304,11 @@ function passesFilters(s) {
   let bandOk = false;
   for (const b of s._bands) if (filters.band.has(b)) { bandOk = true; break; }
   if (!bandOk) return false;
-  if (filters.programs.size) {
+  if (filters.programs.size && s.sector !== 'private') {
     const ptags = new Set(s.programs);
     for (const p of filters.programs) if (!ptags.has(p)) return false;
   }
-  if (filters.admissions.size) {
+  if (filters.admissions.size && s.sector !== 'private') {
     const a = (s.admission || '').toLowerCase();
     let ok = false;
     for (const want of filters.admissions) if (a.includes(want.toLowerCase())) { ok = true; break; }
@@ -302,7 +375,7 @@ function photoUrls(s) {
 function renderCard(s) {
   const div = document.createElement('div');
   div.className = 'card';
-  const photo = `<div class="photo empty" data-photo data-lat="${s.lat}" data-lon="${s.lon}"><span>Loading photo&hellip;</span></div>`;
+  const photo = `<div class="photo" data-photo data-lat="${s.lat}" data-lon="${s.lon}" style="display:none"></div>`;
 
   const sectorLabel = s.sector === 'public' ? 'Public' : s.sector === 'charter' ? 'Charter' : 'Private';
   const metaBits = [
@@ -373,7 +446,7 @@ function loadPhoto(s, photoEl) {
       if (meta && meta.status === 'OK') {
         const img = new Image();
         const src = `https://maps.googleapis.com/maps/api/streetview?size=380x170&location=${lat},${lon}&fov=75&pitch=5&key=${GSV_KEY}`;
-        img.onload = () => { photoEl.style.backgroundImage = `url('${src}')`; photoEl.classList.remove('empty'); photoEl.innerHTML = ''; };
+        img.onload = () => { photoEl.style.backgroundImage = `url('${src}')`; photoEl.style.display = ''; photoEl.innerHTML = ''; };
         img.onerror = () => tryWikipediaPhoto(s, photoEl);
         img.src = src;
       } else {
@@ -398,7 +471,7 @@ function tryWikipediaPhoto(s, photoEl) {
           const img = summary.originalimage && summary.originalimage.source;
           if (img) {
             photoEl.style.backgroundImage = `url('${img}')`;
-            photoEl.classList.remove('empty');
+            photoEl.style.display = '';
             photoEl.innerHTML = '';
           } else {
             showEmpty(photoEl);
@@ -410,20 +483,20 @@ function tryWikipediaPhoto(s, photoEl) {
 }
 
 function showEmpty(photoEl) {
-  photoEl.classList.add('empty');
-  photoEl.style.backgroundImage = '';
-  photoEl.innerHTML = '<span>No photo available</span>';
+  photoEl.style.display = 'none';
 }
 
 function renderOverviewPane(s) {
   const d = s.demo;
   let html = '';
-  if (d && d.enrollment != null) {
+  const latestEnroll = (d && d.enrollment_latest != null) ? d.enrollment_latest : (d && d.enrollment);
+  const latestYear = (d && d.year_enrollment) ? d.year_enrollment : (d && d.year);
+  if (latestEnroll != null) {
     const spark = sparklineSVG(s.trend);
     html += `<div class="section enrollment-row">
       <div>
-        <div class="enrollment-num">${fmtNum(d.enrollment)}</div>
-        <div class="enrollment-label">enrolled (${escapeHtml(d.year)})</div>
+        <div class="enrollment-num">${fmtNum(latestEnroll)}</div>
+        <div class="enrollment-label">enrolled (${escapeHtml(latestYear || '')})</div>
       </div>
       <div class="spark-wrap">${spark}</div>
     </div>`;
