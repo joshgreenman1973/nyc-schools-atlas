@@ -39,6 +39,7 @@ const PROGRAM_FILTER_LIST = [
   'Gifted and Talented',
   'Dual language',
   'ASD Nest',
+  'ASD Horizon',
   'District 75 (special education)',
   'Fully accessible',
 ];
