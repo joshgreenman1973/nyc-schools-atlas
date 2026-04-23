@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./style.css?v=6" />
+<link rel="stylesheet" href="./style.css?v=7" />
 </head>
 <body>
 
@@ -66,11 +66,16 @@
 
     <div class="panel">
       <div class="panel-title">Layers</div>
-      <label class="chk"><input type="checkbox" id="lyr-dots" />Child population (each dot = 25 kids)</label>
-      <div class="dot-legend" id="dot-legend" hidden>
-        <span><i class="dot dot-a"></i>Ages 0&ndash;4</span>
-        <span><i class="dot dot-b"></i>Ages 5&ndash;11</span>
-        <span><i class="dot dot-c"></i>Ages 12&ndash;17</span>
+      <label class="chk"><input type="checkbox" id="lyr-choro" />Child population by tract</label>
+      <div class="choro-legend" id="choro-legend" hidden>
+        <div class="choro-scale">
+          <span class="choro-sw" style="background:#f7eddc"></span>
+          <span class="choro-sw" style="background:#f0c59f"></span>
+          <span class="choro-sw" style="background:#dd8a5e"></span>
+          <span class="choro-sw" style="background:#b15a38"></span>
+          <span class="choro-sw" style="background:#6b2e1c"></span>
+        </div>
+        <div class="choro-labels"><span>Fewer children</span><span>More</span></div>
       </div>
       <label class="chk"><input type="checkbox" id="lyr-zone" checked />Show attendance zone on hover</label>
     </div>
@@ -133,6 +138,6 @@
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="./app.js?v=6"></script>
+<script src="./app.js?v=7"></script>
 </body>
 </html>

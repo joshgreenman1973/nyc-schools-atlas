@@ -21,6 +21,7 @@ let activeHoverZoneLayer = null;
 let activeAddressPin = null;
 let zonesIndex = null;
 let dotsLayer = null;
+let choroLayer = null;
 
 const filters = {
   q: '',
@@ -186,7 +187,7 @@ function selectQ(s) {
   else { map.setView([s.lat, s.lon], 15); }
 }
 document.getElementById('lyr-zone').addEventListener('change', e => { filters.showZones = e.target.checked; });
-document.getElementById('lyr-dots').addEventListener('change', e => toggleDots(e.target.checked));
+document.getElementById('lyr-choro').addEventListener('change', e => toggleChoropleth(e.target.checked));
 document.getElementById('about-btn').addEventListener('click', () => document.getElementById('about').hidden = false);
 document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => b.closest('.modal').hidden = true));
 
@@ -787,7 +788,40 @@ function renderComparePanel() {
   panel.classList.add('active');
 }
 
-// ---------- Dot density ----------
+// ---------- Choropleth: children per tract ----------
+const CHORO_COLORS = ['#f7eddc', '#f0c59f', '#dd8a5e', '#b15a38', '#6b2e1c'];
+function toggleChoropleth(on) {
+  document.getElementById('choro-legend').hidden = !on;
+  if (on) {
+    if (choroLayer) { choroLayer.addTo(map); return; }
+    fetch('./data/tracts.geojson').then(r => r.json()).then(gj => {
+      const counts = gj.features.map(f => (f.properties.children || {}).total || 0).filter(v => v > 0).sort((a, b) => a - b);
+      const q = p => counts[Math.floor(counts.length * p)] || 0;
+      const breaks = [q(0.2), q(0.4), q(0.6), q(0.8)];
+      const colorFor = v => {
+        if (v <= 0) return null;
+        for (let i = 0; i < breaks.length; i++) if (v <= breaks[i]) return CHORO_COLORS[i];
+        return CHORO_COLORS[4];
+      };
+      choroLayer = L.geoJSON(gj, {
+        style: f => {
+          const v = (f.properties.children || {}).total || 0;
+          const c = colorFor(v);
+          return c
+            ? { color: c, weight: 0.3, fillColor: c, fillOpacity: 0.55, opacity: 0.8 }
+            : { weight: 0, fillOpacity: 0 };
+        },
+        interactive: false,
+      });
+      // Insert choropleth UNDER markers by adding to map then re-ordering.
+      choroLayer.addTo(map);
+      if (choroLayer.bringToBack) choroLayer.bringToBack();
+    });
+  } else {
+    if (choroLayer) map.removeLayer(choroLayer);
+  }
+}
+
 function toggleDots(on) {
   document.getElementById('dot-legend').hidden = !on;
   if (on) {
