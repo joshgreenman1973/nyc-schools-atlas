@@ -613,15 +613,20 @@ function renderOverviewPane(s) {
 function renderAcademicsPane(s) {
   let html = '';
   const q = s.quality;
+  const qm = s.quality_meta;
   if (q) {
     const items = [];
     if (q.attendance != null) items.push(stat('Avg attendance', fmtPct(q.attendance)));
     if (q.chronic_absent != null) items.push(stat('Chronic absence', fmtPct(q.chronic_absent)));
     if (q.grad_4yr != null) items.push(stat('4-yr graduation', fmtPct(q.grad_4yr)));
     if (q.ccr_4yr != null) items.push(stat('College &amp; career ready', fmtPct(q.ccr_4yr / 100)));
-    html += `<div class="section"><h4>Outcomes (2023&ndash;24)</h4><div class="stat-grid">${items.join('')}</div></div>`;
+    const vintage = (qm && qm.vintage) ? escapeHtml(qm.vintage) : '';
+    const sourceLine = (qm && qm.source)
+      ? `<div class="note source-line">Source: ${escapeHtml(qm.source)}${vintage ? ' &middot; ' + vintage : ''}. Chronic absence = students absent 10%+ of enrolled days.</div>`
+      : '';
+    html += `<div class="section"><h4>Outcomes${vintage ? ' (' + vintage + ')' : ''}</h4><div class="stat-grid">${items.join('')}</div>${sourceLine}</div>`;
   } else {
-    html += `<div class="section note">No 2023&ndash;24 quality metrics published for this school (common for charters, private schools, and very small programs).</div>`;
+    html += `<div class="section note">No quality metrics published for this school (common for charters, private schools, and very small programs).</div>`;
   }
   if (s.programs && s.programs.length) {
     const chips = s.programs.slice(0, 24).map(p => {
