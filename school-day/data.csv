@@ -1,0 +1,9 @@
+system,annual_hours,days,daily_hours,category,notes
+Success Academy (NYC charter),1570,185-190,8h 30m,charter,Early-August start; long days plus internal assessments
+KIPP NYC (charter),1380,182-185,7h 35m,charter,Late-August start; school day 7:55 AM - 3:30 PM
+Houston ISD,1260,~187,7h 30m,peer_district,Texas operates on 75600 minutes/year standard
+Uncommon Schools (NYC charter),1250,180-185,7h 30m typical,charter,Half-day Fridays with 12:30 PM dismissal
+Miami-Dade County,1170,180,~6h 30m,peer_district,"Aug 13, 2026 - June 4, 2027; FL law requires later MS/HS start times by July 2026"
+NYC Public Schools,1102,177,6h 20m,focal,"Sept 10, 2026 - June 28, 2027; UFT contract sets day length"
+LAUSD,1080,180,~6h,peer_district,"Aug 10, 2026 - May 28, 2027"
+Chicago Public Schools,1055,176,~6h 30m post-2012 reform,peer_district,"Aug 24, 2026 - June 11, 2027"

@@ -1,0 +1,149 @@
+/* Unified chrome for NYC Schools — Atlas of the System.
+   Injected at the top of every page. The map page is dark below the header;
+   explainer pages are light. The header itself is dark on every page. */
+
+:root {
+  --site-ink: #0c0f14;
+  --site-ink-2: #161a22;
+  --site-line: #2a2f3c;
+  --site-text: #e8ecf3;
+  --site-muted: #9099ab;
+  --site-accent: #ff7c53;
+  --site-paper: #faf7f1;
+  --site-paper-ink: #050507;
+  --site-paper-muted: #707175;
+  --site-paper-line: #e3dccc;
+}
+
+.site-header {
+  background: var(--site-ink);
+  color: var(--site-text);
+  border-bottom: 1px solid var(--site-line);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  position: relative;
+  z-index: 100;
+}
+.site-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 14px 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.site-brand {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  flex: none;
+  min-width: 0;
+}
+.site-brand .mark {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+  color: var(--site-text);
+}
+.site-brand .mark em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--site-accent);
+}
+.site-brand .tag {
+  color: var(--site-muted);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+.site-nav {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.site-nav::-webkit-scrollbar { display: none; }
+.site-nav a {
+  color: var(--site-muted);
+  text-decoration: none;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  white-space: nowrap;
+  transition: color .15s, background .15s;
+}
+.site-nav a:hover { color: var(--site-text); background: var(--site-ink-2); }
+.site-nav a.active {
+  color: var(--site-ink);
+  background: var(--site-text);
+  font-weight: 500;
+}
+
+.site-footer {
+  background: var(--site-ink);
+  color: var(--site-muted);
+  border-top: 1px solid var(--site-line);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  padding: 24px;
+  text-align: center;
+  line-height: 1.6;
+}
+.site-footer a { color: var(--site-text); text-decoration: none; border-bottom: 1px solid var(--site-line); }
+.site-footer a:hover { color: var(--site-accent); border-color: var(--site-accent); }
+.site-footer .footer-line + .footer-line { margin-top: 4px; }
+
+/* Section indicator: each non-map page gets a thin colored bar under the header */
+.site-section-bar {
+  height: 3px;
+  background: var(--section-accent, var(--site-accent));
+}
+
+/* Type tokens explainer pages can opt into */
+.explainer {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--site-paper);
+  color: var(--site-paper-ink);
+  font-size: 16px;
+  line-height: 1.55;
+}
+.explainer h1, .explainer h2, .explainer h3 {
+  font-family: 'Fraunces', Georgia, serif;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.explainer h1 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; }
+.explainer h2 { font-size: clamp(22px, 2.6vw, 28px); font-weight: 600; margin-top: 1.6em; }
+.explainer h3 { font-size: 18px; font-weight: 600; margin-top: 1.2em; }
+.explainer .container {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+.explainer .container.wide { max-width: 1100px; }
+.explainer .dek {
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: italic;
+  font-size: 19px;
+  color: var(--site-paper-muted);
+  margin-top: 6px;
+  margin-bottom: 24px;
+  line-height: 1.4;
+}
+.explainer .kicker {
+  font-size: 11.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--site-accent);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.explainer p { margin: 1em 0; }
+.explainer a { color: var(--site-paper-ink); border-bottom: 1px solid var(--site-paper-line); text-decoration: none; }
+.explainer a:hover { border-color: var(--site-accent); color: var(--site-accent); }
+.explainer hr { border: 0; border-top: 1px solid var(--site-paper-line); margin: 2.4em 0; }

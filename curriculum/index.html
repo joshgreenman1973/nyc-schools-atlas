@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NYC schools atlas — Curriculum & standards</title>
+<meta name="description" content="What New York State expects every K-12 student to know, by grade and subject. Distilled from NYSED next-generation learning standards.">
+<link rel="stylesheet" href="../shared/chrome.css?v=13" />
+<style>
+  body { margin: 0; }
+  .explainer .container.wide { max-width: 1240px; }
+
+  .subj-tabs {
+    display: flex; gap: 4px; flex-wrap: wrap;
+    border-bottom: 1px solid var(--site-paper-line);
+    margin: 24px 0 8px;
+  }
+  .subj-tab {
+    background: none; border: 0;
+    font: inherit; font-weight: 500; font-size: 14px;
+    padding: 10px 16px; cursor: pointer;
+    color: var(--site-paper-muted);
+    border-bottom: 3px solid transparent;
+    margin-bottom: -1px;
+    transition: color .15s, border-color .15s;
+  }
+  .subj-tab:hover { color: var(--site-paper-ink); }
+  .subj-tab.active {
+    color: var(--site-paper-ink);
+    border-bottom-color: var(--subj-accent, var(--site-accent));
+  }
+
+  .subj-intro {
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--site-paper-muted);
+    margin: 16px 0 28px;
+    max-width: 720px;
+    line-height: 1.5;
+  }
+
+  .ladder {
+    display: grid;
+    grid-template-columns: 200px repeat(6, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--site-paper-line);
+    padding: 22px 0;
+  }
+  .ladder:last-child { border-bottom: 1px solid var(--site-paper-line); }
+  .ladder-name {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.2;
+    padding-right: 16px;
+  }
+  .ladder-name .what {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 12.5px;
+    color: var(--site-paper-muted);
+    margin-top: 6px;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+  .cell {
+    padding: 0 12px;
+    border-left: 1px solid var(--site-paper-line);
+    cursor: pointer;
+    position: relative;
+    transition: background .12s;
+  }
+  .cell:hover { background: #f0ebde; }
+  .cell.open { background: #ede5d0; }
+  .cell-grade {
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--subj-accent, var(--site-accent));
+    margin-bottom: 6px;
+  }
+  .cell-sum {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .cell-ex {
+    display: none;
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--site-paper-muted);
+    line-height: 1.5;
+    border-top: 1px dashed var(--site-paper-line);
+    padding-top: 6px;
+  }
+  .cell.open .cell-ex { display: block; }
+  .cell-ex b { color: var(--site-paper-ink); }
+
+  .grades-header {
+    display: grid;
+    grid-template-columns: 200px repeat(6, 1fr);
+    gap: 0;
+    margin-top: 8px;
+  }
+  .grades-header .grade-label {
+    padding: 8px 12px;
+    border-left: 1px solid var(--site-paper-line);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--site-paper-muted);
+  }
+  .grades-header .spacer { padding-right: 16px; }
+
+  .helper {
+    font-size: 13px;
+    color: var(--site-paper-muted);
+    margin: 14px 0 0;
+  }
+
+  .source-block {
+    background: #f1eadb;
+    border-left: 3px solid var(--site-accent);
+    padding: 16px 20px;
+    margin-top: 36px;
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+  .source-block h3 { font-family: 'Fraunces', serif; font-size: 16px; margin-bottom: 8px; }
+  .source-block ul { padding-left: 18px; margin: 8px 0; }
+  .source-block li { margin: 4px 0; }
+
+  .caveat {
+    background: #fff;
+    border: 1px solid var(--site-paper-line);
+    padding: 16px 18px;
+    margin: 20px 0 0;
+    font-size: 13.5px;
+    line-height: 1.55;
+    border-radius: 4px;
+  }
+  .caveat b { display: block; margin-bottom: 4px; font-family: 'Fraunces', serif; font-size: 15px; font-weight: 600; }
+
+  @media (max-width: 900px) {
+    .ladder, .grades-header { grid-template-columns: 1fr; gap: 0; }
+    .ladder-name { padding: 4px 0 12px; }
+    .cell { border-left: 0; border-top: 1px solid var(--site-paper-line); padding: 10px 0; }
+    .cell-grade { color: var(--subj-accent, var(--site-accent)); }
+    .grades-header { display: none; }
+  }
+</style>
+</head>
+<body data-section="curriculum">
+
+<div id="site-header"></div>
+
+<main class="explainer">
+  <div class="container wide">
+    <div class="kicker">NYC Schools Atlas &middot; Standards</div>
+    <h1>What NYC kids are expected to know, K through 12</h1>
+    <p class="dek">Curriculum varies wildly between schools. Standards don&rsquo;t. Here&rsquo;s what New York State says every student should be able to do by the end of each major grade band &mdash; in the four core subjects, distilled from the official NYS Next-Generation and Framework standards.</p>
+
+    <div class="caveat">
+      <b>Why this exists</b>
+      Parents and journalists routinely encounter a gap: every NYC school teaches reading, math, science, and social studies, but <em>what</em> they teach (the curriculum, textbooks, sequence) can look completely different. The state-set <em>standards</em> are the constant. They define what a student is supposed to be able to do, regardless of which curriculum got them there. Click any cell to see a concrete example.
+    </div>
+
+    <div class="subj-tabs" id="subj-tabs"></div>
+    <div class="subj-intro" id="subj-intro"></div>
+
+    <div class="grades-header">
+      <div class="spacer"></div>
+      <div class="grade-label">Kindergarten</div>
+      <div class="grade-label">End of Gr 2</div>
+      <div class="grade-label">End of Gr 4</div>
+      <div class="grade-label">End of Gr 6</div>
+      <div class="grade-label">End of Gr 8</div>
+      <div class="grade-label">End of HS</div>
+    </div>
+
+    <div id="ladders"></div>
+
+    <p class="helper">Click any cell for a concrete example. &ldquo;HS&rdquo; = the standards every NY student must meet by graduation; individual courses (e.g. Algebra I in 8th or 9th grade, Regents English) cover slices of this content.</p>
+
+    <div class="source-block">
+      <h3>Sources &amp; provenance</h3>
+      <p>Every cell here is paraphrased from the published NY State learning standards. The standards documents themselves are the authoritative source &mdash; this page is a navigational distillation, not a replacement.</p>
+      <ul>
+        <li><b>English Language Arts:</b> <a href="https://www.nysed.gov/curriculum-instruction/new-york-state-next-generation-english-language-arts-learning-standards" target="_blank" rel="noopener">NYS Next Generation ELA Learning Standards</a> (adopted 2017, implementation 2020&ndash;21).</li>
+        <li><b>Mathematics:</b> <a href="https://www.nysed.gov/curriculum-instruction/new-york-state-next-generation-mathematics-learning-standards" target="_blank" rel="noopener">NYS Next Generation Mathematics Learning Standards</a> (adopted 2017).</li>
+        <li><b>Science:</b> <a href="https://www.nysed.gov/curriculum-instruction/science-learning-standards" target="_blank" rel="noopener">NYS P-12 Science Learning Standards</a> (NYSSLS, adopted 2016; based on NGSS).</li>
+        <li><b>Social studies:</b> <a href="https://www.nysed.gov/curriculum-instruction/k-12-social-studies-framework" target="_blank" rel="noopener">NYS K-12 Social Studies Framework</a> (revised 2014, with field guide).</li>
+      </ul>
+      <p style="margin-top:10px"><b>Honest limitation:</b> standards are not curriculum. A school that exceeds standards looks very different from one that barely meets them, even if both are technically &ldquo;on grade level.&rdquo; This page tells you the floor, not the ceiling.</p>
+    </div>
+  </div>
+</main>
+
+<script>
+const CURRICULUM = {
+  ela: {
+    name: 'English Language Arts',
+    accent: '#217ebe',
+    intro: 'New York’s Next-Generation ELA standards build four strands in parallel from kindergarten through grade 12: foundational reading skills, reading comprehension, writing, and language/speaking. Each grade adds complexity to the same core skills.',
+    concepts: [
+      { name: 'Decoding & fluency', what: 'Turning print into sound — the mechanical part of reading.', cells: [
+        { sum: 'Knows letter sounds; blends simple CVC words.', ex: 'Reads "cat," "sun," "map" by sounding out each letter then blending.' },
+        { sum: 'Reads 2-syllable words and common irregular words fluently.', ex: 'Reads "rabbit," "magnet," "people," "again" without sounding out.' },
+        { sum: 'Reads multi-syllable words with prefixes, suffixes, and roots.', ex: 'Recognizes "unhappiness" = un + happy + ness; "transportation" = trans + port + ation.' },
+        { sum: 'Decodes most grade-level text automatically; uses context for unfamiliar words.', ex: 'Decoding speed is no longer the bottleneck — only proper nouns and rare words slow the reader down.' },
+        { sum: 'Reads grade-level texts fluently with appropriate phrasing and expression.', ex: 'Reads aloud sounding like speech, not word-by-word; this is the expected floor by end of grade 8.' },
+        { sum: 'Foundational reading is mastered; focus shifts to vocabulary in complex texts.', ex: 'Standards no longer separately address decoding — students are expected to read any English text.' },
+      ]},
+      { name: 'Reading comprehension', what: 'Understanding what you read — literal, inferential, and analytical.', cells: [
+        { sum: 'Asks/answers questions about key details in a read-aloud story.', ex: 'After hearing The Snowy Day, can answer "What did Peter put in his pocket?" and "Why was the snowball gone?"' },
+        { sum: 'Identifies main idea and key details; describes characters’ actions and reasons.', ex: 'Reads a short text about pollinators and explains the main idea plus two supporting details.' },
+        { sum: 'Determines theme; analyzes character development; compares accounts of the same event.', ex: 'Reads a folktale and another version of the same story; explains how characters’ traits drive different outcomes.' },
+        { sum: 'Cites textual evidence; analyzes how scenes/events fit into the larger structure.', ex: 'Quotes specific lines from a chapter to support claims about a character’s motivation.' },
+        { sum: 'Analyzes themes across texts; evaluates author’s purpose, tone, and use of structure.', ex: 'Compares how two authors treat the theme of justice; explains why each chose their narrative structure.' },
+        { sum: 'Reads complex literature and nonfiction; analyzes structure, rhetoric, and historical/cultural context.', ex: 'Reads The Crucible and a 1950s editorial; argues how each uses persuasion differently and why.' },
+      ]},
+      { name: 'Writing', what: 'From letter formation to multi-source argument.', cells: [
+        { sum: 'Draws, dictates, and writes simple opinion, informative, and narrative pieces.', ex: '"My favorite color is blue because blue is the sky." (Written or dictated to teacher.)' },
+        { sum: 'Writes 3+ sentence pieces with a beginning, middle, end; introduces a topic and provides facts.', ex: 'A 4-sentence paragraph: "Bees live in hives. The queen lays eggs. Workers gather nectar. We need bees to grow food."' },
+        { sum: 'Writes structured paragraphs with topic sentences, supporting details, and conclusions.', ex: 'A 5-paragraph essay on whether 4th graders should have homework, with reasons and examples.' },
+        { sum: 'Writes arguments with claims and evidence; informative pieces with multiple sources.', ex: 'A 1-2 page argument citing two articles, with a counterclaim acknowledged and refuted.' },
+        { sum: 'Writes multi-paragraph arguments and analyses; integrates evidence from several sources.', ex: 'A research paper on a historical figure using 3-5 sources, with in-text citations and a works cited list.' },
+        { sum: 'Writes college-ready arguments, analyses, and narratives; cites sources accurately.', ex: 'A research paper that synthesizes 8+ sources, anticipates objections, and follows MLA or APA style.' },
+      ]},
+      { name: 'Speaking, listening, language', what: 'Conventions, vocabulary, and oral communication.', cells: [
+        { sum: 'Participates in conversations; speaks in complete sentences; uses ~3,000 words.', ex: 'Tells a personal story to the class in 3-5 sentences with a clear sequence.' },
+        { sum: 'Uses standard capitalization, punctuation, and spelling; expanding vocabulary.', ex: 'Writes "I went to the park on Saturday." with correct capitals and a period.' },
+        { sum: 'Uses standard grammar; presents on a topic clearly; understands academic vocabulary.', ex: 'Gives a 2-minute presentation on a research topic with visual aids.' },
+        { sum: 'Uses varied sentence structures; recognizes and corrects common grammar errors; uses tools.', ex: 'Combines short sentences using semicolons, dashes, and subordinating conjunctions.' },
+        { sum: 'Participates in evidence-based discussions; uses precise language and figurative devices.', ex: 'Holds a Socratic seminar role: paraphrases peers, builds on ideas, cites text.' },
+        { sum: 'Adapts speech and writing to audience and purpose; demonstrates command of standard English.', ex: 'Delivers a formal presentation and writes the same content as an op-ed — distinct voices for each.' },
+      ]},
+    ]
+  },
+
+  math: {
+    name: 'Mathematics',
+    accent: '#57aa4a',
+    intro: 'NY’s Next-Generation Math standards organize K-8 into "domains" (counting, operations, fractions, ratios, expressions, geometry, statistics) and then high school into algebra, functions, geometry, and statistics. Algebra I is the gateway course — most students take it in 8th or 9th grade.',
+    concepts: [
+      { name: 'Number sense & operations', what: 'Counting, place value, and the four operations from whole numbers to fractions and beyond.', cells: [
+        { sum: 'Counts to 100; adds and subtracts within 10; recognizes teen numbers as 10 + a few.', ex: 'Solves 7 + 2 = 9 using fingers, counters, or mental math; understands 14 = 10 + 4.' },
+        { sum: 'Adds and subtracts within 100; understands place value to hundreds.', ex: 'Computes 47 + 35 by regrouping; explains why the answer is in the 80s.' },
+        { sum: 'Fluent in multiplication facts; adds/subtracts fractions with like denominators; multi-digit multiplication.', ex: 'Knows 7 × 8 = 56 instantly; computes 234 × 6 by the standard algorithm; adds 3/8 + 2/8.' },
+        { sum: 'Operates with fractions, decimals, and percents; understands ratios and rates.', ex: 'Solves: a recipe calls for 2/3 cup of flour, scaled to 1.5 batches — how much flour total?' },
+        { sum: 'Operates with rational and irrational numbers; understands exponents, roots, and scientific notation.', ex: 'Knows √2 is irrational; computes (2³)² = 64; writes 0.00045 as 4.5 × 10⁻⁴.' },
+        { sum: 'Reasons with complex numbers, exponential growth, and number systems abstractly.', ex: 'Simplifies (3 + 2i)(1 − i); analyzes compound interest as exponential growth.' },
+      ]},
+      { name: 'Algebraic thinking', what: 'From pattern recognition to manipulating symbols, equations, and functions.', cells: [
+        { sum: 'Recognizes and extends patterns; understands "equals" as "the same as."', ex: 'Continues the pattern ○ △ □ ○ △ □ ○...; knows 4 + 3 = ? has the same answer as 5 + 2.' },
+        { sum: 'Solves single-step word problems using addition and subtraction.', ex: '"Maya had 12 marbles. She gave some away and has 7 left. How many did she give away?" → 12 − ? = 7.' },
+        { sum: 'Solves multi-step word problems; understands variables as unknowns; writes simple equations.', ex: 'If 4 × ? + 3 = 23, what is ?; solves using inverse operations.' },
+        { sum: 'Solves one-variable equations; writes and graphs proportional relationships.', ex: 'If y = 1.5x represents miles per minute, graphs the line and predicts y when x = 12.' },
+        { sum: 'Solves systems of linear equations; analyzes functions; manipulates linear and exponential expressions.', ex: 'Solves: 2x + y = 7 and x − y = 2. Distinguishes 2ˣ (exponential) from x² (quadratic).' },
+        { sum: 'Models with quadratic, polynomial, rational, exponential, and trigonometric functions.', ex: 'Models projectile motion as h(t) = −16t² + 80t; finds when h = 0; finds max height.' },
+      ]},
+      { name: 'Geometry & measurement', what: 'Shapes, space, and how to measure them — from blocks to formal proof.', cells: [
+        { sum: 'Names 2D and 3D shapes; describes positions (above, behind, next to).', ex: 'Identifies a circle, square, triangle, and cube; places a block "between" two others.' },
+        { sum: 'Measures with rulers; understands halves, quarters, thirds of shapes; tells time.', ex: 'Measures a pencil in inches; divides a circle into 4 equal parts; reads "quarter to three."' },
+        { sum: 'Computes area and perimeter; classifies shapes by attributes; understands angles.', ex: 'Finds the area of a 6 × 4 rectangle; classifies a square as a special rectangle.' },
+        { sum: 'Works with coordinate plane; computes volume; understands scale, transformations.', ex: 'Plots (3, −2) on the coordinate plane; finds the volume of a rectangular prism with dimensions 4 × 3 × 5.' },
+        { sum: 'Uses Pythagorean theorem; understands congruence, similarity, transformations.', ex: 'A ladder 13 ft long leans against a wall 5 ft from the base. How high does it reach? → 12 ft.' },
+        { sum: 'Constructs formal geometric proofs; uses trigonometry; analyzes 3D figures algebraically.', ex: 'Proves two triangles are congruent using SAS; computes sin(60°); finds the volume of a sphere.' },
+      ]},
+      { name: 'Data, statistics & probability', what: 'Reading the world through numbers.', cells: [
+        { sum: 'Sorts and counts objects; describes quantities ("more," "fewer").', ex: 'Sorts buttons by color; tells which pile has more.' },
+        { sum: 'Reads simple picture graphs and bar graphs.', ex: 'Reads a class graph of favorite fruits and answers "How many more chose apples than bananas?"' },
+        { sum: 'Creates and interprets bar graphs and line plots; understands fractions as data points.', ex: 'Plots the lengths of 10 leaves to the nearest 1/4 inch; identifies the most common length.' },
+        { sum: 'Computes mean, median, mode; understands probability as a fraction.', ex: 'Class test scores: finds mean and median; computes probability of rolling a 4 on a die (1/6).' },
+        { sum: 'Analyzes bivariate data; understands sampling and inference.', ex: 'Given a scatter plot of study time vs. test score, describes the trend and identifies outliers.' },
+        { sum: 'Uses statistical inference, regression, and probability distributions.', ex: 'Tests whether a difference in survey results is statistically significant; computes expected value.' },
+      ]},
+    ]
+  },
+
+  science: {
+    name: 'Science',
+    accent: '#dde44c',
+    intro: 'NY’s P-12 Science Learning Standards (NYSSLS, based on the Next Generation Science Standards) blend three dimensions: disciplinary core ideas (life, physical, earth/space), science and engineering practices, and crosscutting concepts. Inquiry comes earlier than it used to — even kindergarteners design simple experiments.',
+    concepts: [
+      { name: 'Life science', what: 'Living things, from single organisms to ecosystems and heredity.', cells: [
+        { sum: 'Living things have needs (food, water, air) and a place to live.', ex: 'Identifies what a goldfish needs to survive; compares a pet’s needs to a plant’s.' },
+        { sum: 'Plants and animals have parents that resemble them; offspring grow and change.', ex: 'Matches baby animals to their parents; observes seed-to-plant life cycle.' },
+        { sum: 'Organisms have life cycles and inherited traits; depend on each other in ecosystems.', ex: 'Diagrams the butterfly life cycle; explains why bees are essential to flowering plants.' },
+        { sum: 'Cells are the basic unit of life; food webs and matter flow through ecosystems.', ex: 'Models energy flow from sun → grass → grasshopper → frog → snake.' },
+        { sum: 'Genetics, natural selection, and human impact on ecosystems.', ex: 'Explains how peppered moths changed color frequency during the Industrial Revolution.' },
+        { sum: 'Molecular biology, evolution, and biodiversity at depth (Living Environment / AP Bio).', ex: 'Compares DNA sequences to determine evolutionary relationships; models protein synthesis.' },
+      ]},
+      { name: 'Physical science', what: 'Matter, energy, motion, and forces.', cells: [
+        { sum: 'Objects have observable properties (color, size, weight, texture).', ex: 'Sorts objects by whether they sink or float; describes ice cubes vs. water.' },
+        { sum: 'Matter exists in different states; pushing and pulling changes motion.', ex: 'Investigates: how does the strength of a push change how far a ball rolls?' },
+        { sum: 'Forces, motion, electricity, magnetism; matter has measurable properties.', ex: 'Uses a magnet to identify which classroom objects are iron-based.' },
+        { sum: 'Atoms make up matter; energy transfers; waves carry energy.', ex: 'Diagrams how energy moves through a roller coaster (potential ↔ kinetic).' },
+        { sum: 'Chemical reactions, conservation of mass and energy, Newton’s laws applied.', ex: 'Balances the equation 2H₂ + O₂ → 2H₂O and explains conservation of mass.' },
+        { sum: 'Chemistry (Regents Chemistry) and physics (Regents Physics) at depth.', ex: 'Computes wavelength from frequency; balances redox reactions; analyzes projectile trajectories.' },
+      ]},
+      { name: 'Earth & space science', what: 'How our planet, weather, and the solar system work.', cells: [
+        { sum: 'Weather changes from day to day; Earth has different environments.', ex: 'Records the weather for a week; notices that ice melts faster in sun.' },
+        { sum: 'Patterns in the sky (day/night, seasons); Earth’s surface has water and land.', ex: 'Tracks sunrise/sunset over a month and notices the change.' },
+        { sum: 'Water cycle; weathering and erosion; Earth’s history through fossils.', ex: 'Builds a model of the water cycle in a closed jar.' },
+        { sum: 'Plate tectonics, climate, atmosphere; Earth’s place in the solar system.', ex: 'Explains why earthquakes are common on the West Coast but rare in NYC.' },
+        { sum: 'Climate change, resources, natural hazards, deep time, astronomy.', ex: 'Analyzes ice-core data showing CO₂ levels over 800,000 years.' },
+        { sum: 'Earth Science (Regents) covers astronomy, geology, meteorology, oceanography.', ex: 'Uses a topographic map to find elevation, slope, and stream direction.' },
+      ]},
+      { name: 'Scientific practice', what: 'Asking questions, designing experiments, building models.', cells: [
+        { sum: 'Asks "I wonder" questions; observes carefully; communicates with drawings.', ex: 'Wonders why rocks are different colors; draws and labels a rock collection.' },
+        { sum: 'Plans and conducts simple investigations; describes patterns.', ex: 'Tests: does a paper airplane fly farther with or without paper clips on the wings?' },
+        { sum: 'Designs experiments with controlled variables; uses simple data tables.', ex: 'Tests how the height of a ramp affects how far a ball rolls; controls all other variables.' },
+        { sum: 'Analyzes data; constructs explanations; uses models to predict.', ex: 'Reads graph of plant height over time; predicts height in week 8 from week-1-to-6 data.' },
+        { sum: 'Argues from evidence; critiques claims; designs engineering solutions.', ex: 'Designs and iterates a wind turbine to maximize power output.' },
+        { sum: 'Conducts independent research; communicates findings in scientific format.', ex: 'Writes a lab report with introduction, methods, results, discussion, and references.' },
+      ]},
+    ]
+  },
+
+  ss: {
+    name: 'Social Studies',
+    accent: '#e7466d',
+    intro: 'NY’s K-12 Social Studies Framework builds in concentric circles: self, family, neighborhood, NYC, NY State, U.S., world. Specific grade-by-grade topics are set: 4th grade is NY State history; 7th-8th is U.S. history; 9th-10th is Global History; 11th is U.S. History; 12th is Government + Economics. Two Regents exams (Global History and U.S. History) are required for graduation.',
+    concepts: [
+      { name: 'Geography & communities', what: 'Where we live, how it shapes us, and how places connect.', cells: [
+        { sum: 'Self, family, classroom community; identifies symbols (flag, school).', ex: 'Draws a map of the classroom; names the principal.' },
+        { sum: 'Family, neighborhood, and urban/rural communities; cardinal directions.', ex: 'Maps the route from home to school; identifies north, south, east, west.' },
+        { sum: 'New York State geography, history, and government.', ex: 'Identifies the 5 boroughs and the Hudson, Erie Canal, Niagara Falls; knows Albany is the capital.' },
+        { sum: 'World geography and ancient civilizations (Mesopotamia, Egypt, China, Greece, Rome).', ex: 'Explains why early civilizations developed near rivers; locates the Fertile Crescent on a map.' },
+        { sum: 'Medieval through Renaissance; rise of nation-states; age of exploration.', ex: 'Compares feudalism in Europe and Japan; traces Columbus’s impact on Indigenous societies.' },
+        { sum: 'Global History (Regents): 1750 to today — revolutions, industrialization, world wars, globalization.', ex: 'Analyzes how the French Revolution’s ideas reached Haiti, Latin America, and 1848 Europe.' },
+      ]},
+      { name: 'U.S. history & civics', what: 'How the country was built, contested, and is governed.', cells: [
+        { sum: 'National symbols, holidays, and civic identity.', ex: 'Pledges allegiance; names the current president; recognizes Statue of Liberty.' },
+        { sum: 'Important figures and events in American history; rules and laws.', ex: 'Explains why rules exist in the classroom; names Martin Luther King Jr.’s "I Have a Dream."' },
+        { sum: 'U.S. foundations: Revolution, Constitution, three branches of government.', ex: 'Explains why we have a Bill of Rights; identifies the role of Congress vs. the President.' },
+        { sum: 'U.S. history through Reconstruction; civic engagement; checks and balances.', ex: 'Analyzes a primary source from the Civil War; debates whether Reconstruction succeeded.' },
+        { sum: 'U.S. history from industrialization to today; rights and citizenship.', ex: 'Compares the Progressive Era to the Civil Rights Movement as eras of reform.' },
+        { sum: 'U.S. History (Regents) and Participation in Government: full sweep + active citizenship.', ex: 'Writes a position paper on a current Supreme Court case; participates in mock Congress.' },
+      ]},
+      { name: 'World cultures & history', what: 'How other societies have shaped, and been shaped by, the wider world.', cells: [
+        { sum: 'Recognizes that families and cultures around the world have customs.', ex: 'Shares a family tradition; identifies that other students may celebrate different holidays.' },
+        { sum: 'Communities around the world; basic geography of continents.', ex: 'Locates the 7 continents on a globe; compares a desert and rainforest community.' },
+        { sum: 'Indigenous peoples of the Americas; early NY State Indigenous nations.', ex: 'Describes Haudenosaunee (Iroquois) Confederacy governance; explains its influence on U.S. ideas.' },
+        { sum: 'World religions, classical civilizations, and major belief systems.', ex: 'Compares the spread of Buddhism, Christianity, and Islam along trade routes.' },
+        { sum: 'European exploration and its global consequences (Columbian Exchange, colonialism).', ex: 'Traces the Columbian Exchange: what moved across the Atlantic and what disappeared.' },
+        { sum: 'Global History (Regents): 20th-century world conflicts, decolonization, current global issues.', ex: 'Analyzes the causes and consequences of the Rwandan genocide; debates UN intervention norms.' },
+      ]},
+      { name: 'Economics & decision-making', what: 'How people make choices with limited resources — individually, locally, and globally.', cells: [
+        { sum: 'Wants vs. needs; jobs in the community.', ex: 'Distinguishes a need (food, water) from a want (a new toy); describes what a firefighter does.' },
+        { sum: 'Goods and services; producers and consumers; money basics.', ex: 'Sets up a classroom store; explains who is the producer and who is the consumer.' },
+        { sum: 'Scarcity and opportunity cost; goods/services in NY economy.', ex: 'Decides how to spend $5 between two desired items; identifies the opportunity cost.' },
+        { sum: 'Basic supply and demand; trade between regions; economic interdependence.', ex: 'Explains why coffee is grown abroad but consumed in NY — climate and trade.' },
+        { sum: 'Market systems vs. command economies; role of government in the economy.', ex: 'Compares how prices are set in a market vs. how rent control works in NYC.' },
+        { sum: 'Economics (12th-grade requirement): markets, fiscal/monetary policy, personal finance.', ex: 'Builds a personal monthly budget; explains how the Fed uses interest rates to fight inflation.' },
+      ]},
+    ]
+  },
+};
+
+const subjTabs = document.getElementById('subj-tabs');
+const subjIntro = document.getElementById('subj-intro');
+const ladders = document.getElementById('ladders');
+const GRADES = ['K', '2', '4', '6', '8', 'HS'];
+
+function render(subjId) {
+  const data = CURRICULUM[subjId];
+  document.documentElement.style.setProperty('--subj-accent', data.accent);
+  // tabs
+  subjTabs.innerHTML = Object.entries(CURRICULUM).map(([id, d]) =>
+    `<button class="subj-tab${id === subjId ? ' active' : ''}" data-subj="${id}">${d.name}</button>`
+  ).join('');
+  subjTabs.querySelectorAll('.subj-tab').forEach(b => b.addEventListener('click', () => render(b.dataset.subj)));
+  // intro
+  subjIntro.textContent = data.intro;
+  // ladders
+  ladders.innerHTML = data.concepts.map((c, ci) => {
+    const cells = c.cells.map((cell, gi) => `
+      <div class="cell" data-c="${ci}" data-g="${gi}">
+        <div class="cell-grade">Gr ${GRADES[gi]}</div>
+        <div class="cell-sum">${cell.sum}</div>
+        <div class="cell-ex"><b>Example.</b> ${cell.ex}</div>
+      </div>`).join('');
+    return `
+      <div class="ladder">
+        <div class="ladder-name">${c.name}<span class="what">${c.what}</span></div>
+        ${cells}
+      </div>`;
+  }).join('');
+  ladders.querySelectorAll('.cell').forEach(el => {
+    el.addEventListener('click', () => el.classList.toggle('open'));
+  });
+}
+
+render('ela');
+</script>
+
+<script src="../shared/chrome.js?v=13"></script>
+</body>
+</html>

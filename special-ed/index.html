@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NYC special education due process spending tracker</title>
+<link rel="stylesheet" href="https://use.typekit.net/qqk2vto.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
+<style>
+:root {
+  --vc-black: #050507;
+  --vc-white: #ffffff;
+  --vc-cloud: #dddddd;
+  --vc-chartreuse: #dde44c;
+  --vc-orange: #ff7c53;
+  --vc-periwinkle: #9b9fbc;
+  --vc-charcoal: #707175;
+  --vc-indigo: #394882;
+  --vc-cerulean: #217ebe;
+  --vc-magenta: #e7466d;
+  --vc-goodest-green: #57aa4a;
+  --vc-baddest-red: #d2232a;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'halyard-text', 'Inter', sans-serif;
+  font-weight: 300;
+  background: var(--vc-white);
+  color: var(--vc-black);
+  line-height: 1.6;
+}
+.container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+header { padding: 2.5rem 0 1.5rem; border-bottom: 1px solid #eee; margin-bottom: 2rem; }
+header .kicker {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vc-charcoal);
+  margin-bottom: 0.6rem;
+}
+header h1 {
+  font-size: 2.6rem;
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.01em;
+}
+header .subtitle {
+  font-size: 1.05rem;
+  color: var(--vc-charcoal);
+  max-width: 780px;
+}
+section { margin-bottom: 3rem; }
+h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  letter-spacing: -0.005em;
+}
+h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 1.25rem 0 0.5rem;
+}
+p { margin-bottom: 0.85rem; }
+a { color: var(--vc-indigo); text-decoration: underline; text-underline-offset: 2px; }
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+}
+.metric {
+  padding: 1.1rem 1.2rem;
+  border-left: 3px solid var(--vc-orange);
+  background: #fafafa;
+}
+.metric .value {
+  font-size: 1.9rem;
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--vc-black);
+}
+.metric .label {
+  font-size: 0.82rem;
+  color: var(--vc-charcoal);
+  margin-top: 0.35rem;
+  line-height: 1.4;
+}
+.chart-box {
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 1.2rem 1.2rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+.chart-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.chart-note {
+  font-size: 0.78rem;
+  color: var(--vc-charcoal);
+  margin-bottom: 0.9rem;
+}
+.chart-wrap { position: relative; height: 380px; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+th, td {
+  text-align: left;
+  padding: 0.55rem 0.6rem;
+  border-bottom: 1px solid #eee;
+}
+th {
+  font-weight: 700;
+  background: #fafafa;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--vc-charcoal);
+}
+td.num { font-variant-numeric: tabular-nums; text-align: right; }
+td.src { font-size: 0.82rem; color: var(--vc-charcoal); }
+
+.callout {
+  background: #fff8f3;
+  border-left: 3px solid var(--vc-orange);
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-size: 0.92rem;
+}
+.callout strong { font-weight: 700; }
+
+ul { padding-left: 1.2rem; margin-bottom: 1rem; }
+li { margin-bottom: 0.35rem; }
+
+footer {
+  border-top: 1px solid #eee;
+  padding: 1.5rem 0 2rem;
+  font-size: 0.82rem;
+  color: var(--vc-charcoal);
+  margin-top: 3rem;
+}
+
+@media (max-width: 640px) {
+  header h1 { font-size: 2rem; }
+  .chart-wrap { height: 320px; }
+}
+</style>
+  <link rel="stylesheet" href="../shared/chrome.css?v=13" />
+</head>
+<body data-section="special-ed">
+<div id="site-header"></div>
+<div class="container">
+<header>
+  <div class="kicker">Vital City · Fiscal monitor</div>
+  <h1>NYC special education due process spending</h1>
+  <p class="subtitle">Annual tracker of what New York City pays out under Carter and Connors cases — the federal Individuals with Disabilities Education Act (IDEA) mechanisms that let families recover private school tuition and services when the Department of Education fails to provide a Free Appropriate Public Education.</p>
+</header>
+
+<section>
+  <div class="metrics">
+    <div class="metric"><div class="value">$1.3B</div><div class="label">FY2025 total spending</div></div>
+    <div class="metric"><div class="value">28×</div><div class="label">Growth since FY2005 ($47M)</div></div>
+    <div class="metric"><div class="value">$101,757</div><div class="label">Average settlement per student, FY2024</div></div>
+    <div class="metric"><div class="value">~60%</div><div class="label">Of all US due process filings originate in NYC (FY2021)</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>Total annual spending, FY2005–FY2027</h2>
+  <div class="chart-box">
+    <div class="chart-title">Carter / Connors / pendency payments combined</div>
+    <div class="chart-note">Figures include tuition reimbursement, direct tuition payment, related services, transportation, and legal fees. FY2026 and FY2027 are budgeted / projected. Policy markers shown where the trajectory inflects.</div>
+    <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
+  </div>
+</section>
+
+<section>
+  <h2>What's actually driving the growth</h2>
+  <div class="chart-box">
+    <div class="chart-title">Tuition vs. services as share of due process payments</div>
+    <div class="chart-note">In FY2012, tuition was 74% of due process payments. By FY2023, services (speech, OT, PT, SETSS, paraprofessionals delivered by private providers) had overtaken tuition as the largest category.</div>
+    <div class="chart-wrap"><canvas id="mixChart"></canvas></div>
+  </div>
+  <p class="callout"><strong>Caveat:</strong> The Department of Education cannot disaggregate Carter (reimbursement-based) from Connors (prospective / direct payment) spending. In March 2025 testimony before the City Council, DOE General Counsel confirmed the data is not structured to separate them. This means it is not possible, from public data, to measure whether Connors has succeeded at its original purpose — leveling access for families who cannot front tuition.</p>
+</section>
+
+<section>
+  <h2>Where the money goes: specialized private schools commonly cited in Carter placements</h2>
+  <p>No public dataset lists which private schools receive Carter or Connors payments, or how much each receives annually. Obtaining that breakdown would require a FOIL request to DOE for payee-level tuition disbursements. What is published is each school's own annual tuition — shown below for schools widely cited in legal guides, journalism, and DOE Council testimony as serving students placed under IDEA due process. Inclusion on this list is not an allegation; these are schools known to enroll Carter-placed students, and most say so publicly.</p>
+  <div class="chart-box" style="padding: 0; overflow-x: auto;">
+    <table id="schoolsTable"></table>
+  </div>
+  <p class="callout"><strong>What this table is not.</strong> These are the schools' own <em>published annual tuition</em> figures for 2025–26 (or most recent available), not per-student Carter receipts. Actual settlements paid by DOE frequently exceed the published tuition because they can include related services (speech, occupational therapy, physical therapy), 1:1 paraprofessionals, transportation, and legal fees. The FY2024 average Carter settlement of $101,757 is higher than all but a handful of published tuitions on this list, which is consistent with settlements bundling services on top of tuition.</p>
+</section>
+
+<section>
+  <h2>Year-by-year data</h2>
+  <div class="chart-box" style="padding: 0; overflow-x: auto;">
+    <table id="dataTable"></table>
+  </div>
+</section>
+
+<section>
+  <h2>Why the curve bent in 2014</h2>
+  <p>In September 2014, the de Blasio administration simplified the settlement process: a 15-day target to settle, a policy of not re-litigating previously settled cases, and reduced paperwork requirements. Settlement volume jumped 61% in the first full year. The reform was a response to a documented dysfunction — families who had won FAPE-denial findings were being dragged back into hearings every September — but it created a one-way ratchet: placements approved once tended to continue indefinitely, with annual tuition escalation, under IDEA's "stay-put" pendency protections.</p>
+</section>
+
+<section>
+  <h2>What this tracker can and can't show</h2>
+  <h3>Publicly available (tracked here)</h3>
+  <ul>
+    <li>Total annual spending, from IBO fiscal briefs, the City Comptroller's reports, the State Comptroller (OSC), the Mayor's Management Report, and DOE budget testimony at City Council.</li>
+    <li>Category split (tuition vs. services vs. legal vs. transportation) from the Comptroller's <em>Course Correction</em> report (FY2012–FY2023).</li>
+    <li>Total case counts and timeliness from the Mayor's Management Report.</li>
+  </ul>
+  <h3>Not publicly available</h3>
+  <ul>
+    <li>Carter vs. Connors split — DOE itself cannot produce this.</li>
+    <li>School-by-school spending distribution — which private schools absorb what share.</li>
+    <li>Demographic breakdown of filing families (FOIL-able but not published).</li>
+    <li>Outcomes data on private placements — academic, behavioral, or post-secondary.</li>
+    <li>District-level availability of District 75 programs and ICT seats, year over year.</li>
+  </ul>
+  <p>See <a href="methodology.md">methodology.md</a> for full source notes, data gaps, and reconciliation of the FY2021 figures (which differ between IBO's in-year brief and later retrospective totals).</p>
+</section>
+
+<footer>
+  Last updated April 2026. Not affiliated with the NYC Department of Education. All figures sourced from public documents — see methodology. Built as a Vital City fiscal monitor.
+</footer>
+</div>
+
+<script>
+const data = [
+  { fy: 2005, total: 47,   tuition: null, services: null, note: null, src: "Manhattan Institute compilation of IBO/DOE" },
+  { fy: 2010, total: 143,  tuition: null, services: null, note: null, src: "Manhattan Institute" },
+  { fy: 2012, total: 161,  tuition: 119,  services: 33,   note: "Pre-reform baseline", src: "Comptroller, Course Correction" },
+  { fy: 2015, total: 250,  tuition: null, services: null, note: "de Blasio 15-day settlement policy takes effect FY2015", src: "IBO" },
+  { fy: 2016, total: 312,  tuition: null, services: null, note: null, src: "Manhattan Institute" },
+  { fy: 2020, total: 499,  tuition: null, services: null, note: null, src: "Manhattan Institute" },
+  { fy: 2021, total: 807,  tuition: null, services: null, note: "IBO in-year figure $653M; later retrospective $807M", src: "IBO / OSC retrospective" },
+  { fy: 2022, total: 918,  tuition: 468,  services: 372,  note: null, src: "Comptroller, Course Correction" },
+  { fy: 2023, total: 1070, tuition: null, services: null, note: "OATH begins taking over impartial hearings", src: "NYS Comptroller (OSC)" },
+  { fy: 2024, total: 1200, tuition: null, services: null, note: null, src: "DOE Council testimony" },
+  { fy: 2025, total: 1300, tuition: null, services: null, note: "Flagged by Mayor Mamdani as major unbudgeted need", src: "City Journal / IBO" },
+  { fy: 2026, total: 1300, tuition: null, services: null, note: "Budgeted", src: "DOE projections" },
+  { fy: 2027, total: 1500, tuition: null, services: null, note: "Budgeted", src: "DOE projections" }
+];
+
+const fmt$ = v => v >= 1000 ? `$${(v/1000).toFixed(2)}B` : `$${v}M`;
+
+Chart.defaults.font.family = "'halyard-text', 'Inter', sans-serif";
+Chart.defaults.color = '#050507';
+
+new Chart(document.getElementById('trendChart'), {
+  type: 'bar',
+  data: {
+    labels: data.map(d => `FY${String(d.fy).slice(2)}`),
+    datasets: [{
+      label: 'Total spending ($M)',
+      data: data.map(d => d.total),
+      backgroundColor: data.map(d => d.fy >= 2026 ? '#9b9fbc' : '#ff7c53'),
+      borderRadius: 2
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => fmt$(ctx.parsed.y),
+          afterLabel: ctx => {
+            const d = data[ctx.dataIndex];
+            return d.note ? d.note : '';
+          }
+        }
+      },
+      annotation: {
+        annotations: {
+          reform: {
+            type: 'line',
+            xMin: 3, xMax: 3,
+            borderColor: '#394882',
+            borderWidth: 1,
+            borderDash: [4, 4],
+            label: {
+              display: true,
+              content: '2014 settlement reform',
+              position: 'start',
+              backgroundColor: 'rgba(57,72,130,0.9)',
+              color: '#fff',
+              font: { size: 10 },
+              padding: 4
+            }
+          },
+          projected: {
+            type: 'box',
+            xMin: 10.5, xMax: 12.5,
+            backgroundColor: 'rgba(155,159,188,0.08)',
+            borderWidth: 0,
+            label: {
+              display: true,
+              content: 'Budgeted',
+              position: { x: 'center', y: 'start' },
+              color: '#707175',
+              font: { size: 10 }
+            }
+          }
+        }
+      }
+    },
+    scales: {
+      y: {
+        ticks: { callback: v => fmt$(v) },
+        grid: { color: '#f0f0f0' }
+      },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+const mixYears = data.filter(d => d.tuition != null);
+new Chart(document.getElementById('mixChart'), {
+  type: 'bar',
+  data: {
+    labels: mixYears.map(d => `FY${String(d.fy).slice(2)}`),
+    datasets: [
+      {
+        label: 'Tuition',
+        data: mixYears.map(d => d.tuition),
+        backgroundColor: '#394882'
+      },
+      {
+        label: 'Services',
+        data: mixYears.map(d => d.services),
+        backgroundColor: '#dde44c'
+      },
+      {
+        label: 'Other (legal, transportation)',
+        data: mixYears.map(d => d.total - d.tuition - d.services),
+        backgroundColor: '#9b9fbc'
+      }
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 12 } } },
+      tooltip: {
+        callbacks: { label: ctx => `${ctx.dataset.label}: ${fmt$(ctx.parsed.y)}` }
+      }
+    },
+    scales: {
+      x: { stacked: true, grid: { display: false } },
+      y: { stacked: true, ticks: { callback: v => fmt$(v) }, grid: { color: '#f0f0f0' } }
+    }
+  }
+});
+
+const schools = [
+  { name: "Stephen Gaynor School", grades: "K–8", focus: "Learning differences", tuition: 86220, year: "2025–26", notes: "" },
+  { name: "The Windward School (NYC)", grades: "1–9", focus: "Language-based learning disabilities (dyslexia)", tuition: 75980, year: "2025–26", notes: "" },
+  { name: "Mary McDowell Friends School", grades: "K–12", focus: "Learning disabilities", tuition: 87000, year: "2025–26", notes: "" },
+  { name: "The Churchill School and Center", grades: "K–12", focus: "Language-based learning disabilities", tuition: 80000, year: "2025–26", notes: "K–8 $79,000; 9–12 $81,000 (midpoint shown)" },
+  { name: "The Gateway School", grades: "K–8", focus: "Language-based learning disabilities, ADHD", tuition: 80500, year: "2025–26", notes: "School states most families pursue DOE reimbursement or direct payment" },
+  { name: "The Cooke School & Institute", grades: "Ages 5–21", focus: "Mild to moderate cognitive/developmental disabilities", tuition: 95500, year: "2025–26", notes: "" },
+  { name: "Parkside School", grades: "K–5", focus: "Language-based learning and social-pragmatic needs", tuition: 73000, year: "2025–26", notes: "" },
+  { name: "Aaron School", grades: "K–12", focus: "Learning and social differences", tuition: 49975, year: "2024–25", notes: "" },
+  { name: "The IDEAL School of Manhattan", grades: "K–12", focus: "Inclusion model; tiered programs", tuition: 95401, year: "2025–26", notes: "Standard $55,997; Zenith $95,401 (shown); Dylan $169,294" },
+  { name: "Rebecca School", grades: "Ages 4–21", focus: "Autism spectrum, DIR/Floortime method", tuition: null, year: "2025–26", notes: "Tuition not publicly listed" }
+];
+
+const schoolsTable = document.getElementById('schoolsTable');
+schoolsTable.innerHTML = `
+  <thead><tr>
+    <th>School</th>
+    <th>Grades</th>
+    <th>Focus</th>
+    <th class="num">Published tuition</th>
+    <th>Year</th>
+    <th>Note</th>
+  </tr></thead>
+  <tbody>
+  ${schools.map(s => `
+    <tr>
+      <td>${s.name}</td>
+      <td>${s.grades}</td>
+      <td>${s.focus}</td>
+      <td class="num">${s.tuition ? '$' + s.tuition.toLocaleString() : '—'}</td>
+      <td>${s.year}</td>
+      <td class="src">${s.notes}</td>
+    </tr>
+  `).join('')}
+  </tbody>
+`;
+
+const table = document.getElementById('dataTable');
+table.innerHTML = `
+  <thead><tr>
+    <th>Fiscal year</th>
+    <th class="num">Total spending</th>
+    <th>Note</th>
+    <th>Primary source</th>
+  </tr></thead>
+  <tbody>
+  ${data.map(d => `
+    <tr>
+      <td>FY${d.fy}</td>
+      <td class="num">${fmt$(d.total)}</td>
+      <td>${d.note || ''}</td>
+      <td class="src">${d.src}</td>
+    </tr>
+  `).join('')}
+  </tbody>
+`;
+</script>
+  <script src="../shared/chrome.js?v=13"></script>
+</body>
+</html>

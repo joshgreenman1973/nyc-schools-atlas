@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Methodology — New York City instructional time, 2026–27</title>
+<style>
+  :root {
+    --black: #050507;
+    --white: #ffffff;
+    --cloud: #dddddd;
+    --chartreuse: #dde44c;
+    --orange: #ff7c53;
+    --periwinkle: #9b9fbc;
+    --magenta: #e7466d;
+    --charcoal: #707175;
+    --chartreuse-20: #f7f8dd;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px;
+    background: #f4f4f0;
+    font-family: 'Halyard', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--black);
+    line-height: 1.55;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 32px 36px 26px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .back {
+    font-size: 11px;
+    color: var(--charcoal);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--chartreuse);
+    margin-bottom: 18px;
+    display: inline-block;
+  }
+  h1 {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 8px 0 14px;
+    letter-spacing: -0.01em;
+  }
+  .dek {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 15px;
+    color: var(--black);
+    line-height: 1.5;
+    margin: 0 0 22px;
+    padding-left: 14px;
+    border-left: 3px solid var(--chartreuse);
+  }
+  .rule {
+    border-top: 2px solid var(--black);
+    margin: 0 0 22px;
+  }
+  h2 {
+    font-size: 17px;
+    font-weight: 800;
+    margin: 28px 0 8px;
+    letter-spacing: -0.005em;
+  }
+  h2:first-of-type { margin-top: 0; }
+  p {
+    font-size: 14px;
+    margin: 0 0 12px;
+  }
+  ul {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 0 14px;
+    padding-left: 22px;
+  }
+  ul li { margin-bottom: 6px; }
+  table.calc {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 8px 0 18px;
+  }
+  table.calc th, table.calc td {
+    text-align: left;
+    padding: 8px 10px 8px 0;
+    border-bottom: 0.5px solid var(--cloud);
+    vertical-align: top;
+  }
+  table.calc th {
+    color: var(--charcoal);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 0.5px solid var(--black);
+  }
+  table.calc td.formula {
+    font-family: 'SF Mono', Menlo, monospace;
+    font-size: 12px;
+    color: var(--charcoal);
+  }
+  table.peers {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin: 8px 0 18px;
+  }
+  table.peers th, table.peers td {
+    text-align: left;
+    padding: 8px 8px 8px 0;
+    border-bottom: 0.5px solid var(--cloud);
+    vertical-align: top;
+  }
+  table.peers th {
+    color: var(--charcoal);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 0.5px solid var(--black);
+  }
+  table.peers td.num {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    white-space: nowrap;
+  }
+  table.peers a {
+    color: var(--charcoal);
+    text-decoration: underline;
+    font-size: 11px;
+  }
+  .downloads {
+    background: var(--chartreuse-20);
+    padding: 18px;
+    margin: 18px 0 22px;
+    border-top: 3px solid var(--chartreuse);
+  }
+  .downloads h2 { margin-top: 0; }
+  .downloads .file-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+  .downloads .file-row a {
+    font-weight: 700;
+    color: var(--black);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--magenta);
+  }
+  .downloads .file-row a:hover { background: var(--white); }
+  .downloads .file-row .desc {
+    color: var(--charcoal);
+    font-size: 12px;
+  }
+  .caveat {
+    background: #fdf3ee;
+    border-left: 4px solid var(--orange);
+    padding: 12px 16px;
+    margin: 8px 0 12px;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .caveat strong { font-weight: 700; }
+  .sources-list {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--charcoal);
+  }
+  .sources-list a { color: var(--charcoal); text-decoration: underline; }
+  .sources-list li { margin-bottom: 4px; }
+  .footer {
+    padding-top: 14px;
+    margin-top: 28px;
+    border-top: 0.5px solid var(--cloud);
+    font-size: 11px;
+    color: var(--charcoal);
+  }
+  @media (max-width: 600px) {
+    .container { padding: 22px 18px; }
+    table.peers { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back">&larr; Back to the infographic</a>
+
+  <h1>Methodology &amp; data: New York City instructional time, 2026&ndash;27</h1>
+
+  <p class="dek">
+    Every figure in the infographic, where it came from, and how it was computed. Caveats are listed where each one applies.
+  </p>
+
+  <div class="rule"></div>
+
+  <h2>What we measured</h2>
+  <p>
+    Annual instructional hours for the New York City public school system and a set of peer districts and city charter networks, for the 2026&ndash;27 school year. The metric is <strong>scheduled bell-to-bell hours, including lunch and recess</strong> &mdash; the closest comparable measure of what families experience day to day. Different states regulate "instructional time" differently (see the caveat below), so any cross-jurisdiction comparison requires a single common metric. Bell-to-bell time is what charter networks publish, what union contracts negotiate, and what most reporting refers to.
+  </p>
+
+  <h2>How we computed each headline number</h2>
+  <table class="calc">
+    <tr><th>Number</th><th>Formula</th><th>Source</th></tr>
+    <tr>
+      <td>1,102 hours / year (New York City)</td>
+      <td class="formula">~6h 20m &times; 175 actual student days = ~1,108<br>Reported as 1,102 by Kraft et al. via Chalkbeat</td>
+      <td>Kraft, Goldstein &amp; Lyon (2025); Chalkbeat 2026-02-27</td>
+    </tr>
+    <tr>
+      <td>1,231 hours / year (U.S. national average)</td>
+      <td class="formula">Synthesis of federal time-use data and 74 prior studies</td>
+      <td>Kraft, Goldstein &amp; Lyon, <em>Time for School</em>, Education Next 2025</td>
+    </tr>
+    <tr>
+      <td>129-hour annual gap</td>
+      <td class="formula">1,231 &minus; 1,102 = 129</td>
+      <td>Derived</td>
+    </tr>
+    <tr>
+      <td>~20 school days equivalent</td>
+      <td class="formula">129 hr &divide; 6.33 hr/day &asymp; 20.4 days</td>
+      <td>Derived</td>
+    </tr>
+    <tr>
+      <td>~1,680 cumulative hours over K&ndash;12</td>
+      <td class="formula">129 hr/year &times; 13 years = 1,677 hr</td>
+      <td>Derived; assumes constant annual gap and perfect attendance</td>
+    </tr>
+    <tr>
+      <td>~1.5 academic years equivalent</td>
+      <td class="formula">1,680 hr &divide; ~1,150 avg U.S. annual hr &asymp; 1.46 years</td>
+      <td>Derived</td>
+    </tr>
+    <tr>
+      <td>177 student attendance days</td>
+      <td class="formula">180 (state minimum) &minus; 3 PD days counted toward total</td>
+      <td>NYC Public Schools 2026&ndash;27 calendar; state regulation allows up to 4</td>
+    </tr>
+    <tr>
+      <td>20 of 43 weeks unbroken (the fragmentation grid)</td>
+      <td class="formula">Computed in JS from a per-week classification of every Mon&ndash;Fri school day in the official 2026&ndash;27 calendar.<br>"Unbroken" = all 5 days are full student days &mdash; no closure, half-day, PD day, recess, or Regents-administration day.</td>
+      <td>NYC Public Schools 2026&ndash;27 calendar</td>
+    </tr>
+  </table>
+
+  <p>
+    Note: David Bloomfield&rsquo;s often-cited figure is "about 20 of 45" weeks. We classify 43 active weeks (the Monday containing or following Sept 10, 2026 through the Monday of June 28, 2027); his 45 likely counts the two summer-bracketing partial weeks. The full-week count of 20 is consistent.
+  </p>
+
+  <h2>The "Build your own school year" calculator</h2>
+  <p>
+    The interactive calculator on the homepage uses a simpler scheduled-hours formula than the headline 1,102 figure: <code>annual_hours = (school_day_minutes &times; student_attendance_days) / 60</code>. At the New York City defaults (380 min &times; 177 days), that yields 1,121 scheduled hours, slightly above the 1,102 actual-realized figure used in the headline. The 19-hour gap reflects three days of weather/snow waivers in 2025&ndash;26 that brought actual student days down from 177 to 175. The calculator is meant to show how each input moves the total, not to reproduce the headline number exactly.
+  </p>
+  <p>
+    The "K&ndash;12 cumulative hours" readout multiplies the per-year gap vs. the 1,231 national average by 13 years &mdash; a deliberately simple projection, not a forecast. See the caveat on cumulative gaps below.
+  </p>
+
+  <h2>Per-system sources for the peer chart</h2>
+  <table class="peers">
+    <tr><th>System</th><th class="num">Hours</th><th class="num">Days</th><th>Daily</th><th>Source</th></tr>
+    <tr>
+      <td>Success Academy</td><td class="num">1,570</td><td class="num">185&ndash;190</td><td>8h 30m</td>
+      <td><a href="https://www.successacademies.org/academic-calendars/">academic calendar</a></td>
+    </tr>
+    <tr>
+      <td>KIPP NYC</td><td class="num">1,380</td><td class="num">182&ndash;185</td><td>7h 35m</td>
+      <td><a href="https://kippnyc.org/">kippnyc.org</a></td>
+    </tr>
+    <tr>
+      <td>Houston ISD</td><td class="num">1,260</td><td class="num">~187</td><td>7h 30m</td>
+      <td><a href="https://www.houstonisd.org/our-district/district-calendar">district calendar</a></td>
+    </tr>
+    <tr>
+      <td>Uncommon Schools</td><td class="num">1,250</td><td class="num">180&ndash;185</td><td>7h 30m typical</td>
+      <td><a href="https://uncommonschools.org/">uncommonschools.org</a> (half-day Fridays factored in)</td>
+    </tr>
+    <tr>
+      <td>Miami-Dade County</td><td class="num">1,170</td><td class="num">180</td><td>~6h 30m</td>
+      <td><a href="https://www.dadeschools.net/">dadeschools.net</a></td>
+    </tr>
+    <tr>
+      <td>New York City Public Schools</td><td class="num">1,102</td><td class="num">177</td><td>6h 20m</td>
+      <td><a href="https://www.schools.nyc.gov/calendar/2026-2027-school-year-calendar">official calendar</a></td>
+    </tr>
+    <tr>
+      <td>LAUSD</td><td class="num">1,080</td><td class="num">180</td><td>~6h</td>
+      <td><a href="https://www.lausd.org/calendar">lausd.org/calendar</a></td>
+    </tr>
+    <tr>
+      <td>Chicago Public Schools</td><td class="num">1,055</td><td class="num">176</td><td>~6h 30m</td>
+      <td><a href="https://www.cps.edu/calendar/">cps.edu/calendar</a></td>
+    </tr>
+  </table>
+
+  <h2>Caveats</h2>
+
+  <div class="caveat">
+    <strong>The 1.5-year cumulative gap is illustrative.</strong> It assumes the gap stays constant for 13 years and that attendance is perfect. Both assumptions break down in practice. Use it as a framing device, not a precise estimate.
+  </div>
+
+  <div class="caveat">
+    <strong>The Kraft study is national, not New York City&ndash;specific.</strong> It establishes that more instructional time tends to produce more learning. Linking that finding to specific New York City outcomes requires a step the data does not directly provide.
+  </div>
+
+  <div class="caveat">
+    <strong>Different states count "instructional time" differently.</strong> New York State excludes lunch and recess from its 900/990-hour minimums; Texas counts "operational minutes"; California sets pure-instruction floors by grade band. The bell-to-bell hours used here are the closest comparable measure of what families experience, but they are not the same as what state regulators measure.
+  </div>
+
+  <div class="caveat">
+    <strong>Charter networks chose longer days.</strong> The comparison is fair as a description of what city kids in different schools experience, but it would be unfair to imply district schools could simply adopt charter schedules without significant labor-relations consequences.
+  </div>
+
+  <div class="caveat">
+    <strong>New York City&rsquo;s per-pupil spending is high.</strong> Any argument that frames the time gap as a resource-allocation failure has to address the spending picture, which the Citizens Budget Commission has documented in detail.
+  </div>
+
+  <div class="downloads">
+    <h2>Download the data</h2>
+    <div class="file-row">
+      <a href="data.json" download>data.json</a>
+      <span class="desc">All figures, calendar events, sources, and quotes in structured JSON</span>
+    </div>
+    <div class="file-row">
+      <a href="data.csv" download>data.csv</a>
+      <span class="desc">Peer/charter comparison flattened to CSV for spreadsheets</span>
+    </div>
+  </div>
+
+  <h2>Sources</h2>
+  <ul class="sources-list">
+    <li><a href="https://www.schools.nyc.gov/calendar/2026-2027-school-year-calendar">New York City Public Schools 2026&ndash;27 calendar</a></li>
+    <li><a href="https://www.schools.nyc.gov/calendar/how-we-create-the-new-york-city-public-schools-calendar">How We Create the New York City Public Schools Calendar</a> (NYC Public Schools)</li>
+    <li><a href="https://www.chalkbeat.org/newyork/2026/04/21/nyc-public-school-calendar-2026-2027/">Chalkbeat: New York City unveils 2026&ndash;27 school calendar</a> (April 21, 2026)</li>
+    <li><a href="https://www.chalkbeat.org/newyork/2026/02/27/nyc-shorter-school-year-instructional-time-gap/">Chalkbeat: New York City students clock about 130 fewer hours in class than national peers</a> (Feb 27, 2026)</li>
+    <li><a href="https://www.chalkbeat.org/newyork/2025/09/09/why-nyc-school-year-is-shorter-than-180-days/">Chalkbeat: New York City schools have 176 days of class, not the required 180</a> (Sept 9, 2025)</li>
+    <li><a href="https://www.educationnext.org/time-for-school-assessing-inequality-access-instructional-time-united-states/">Kraft, Goldstein &amp; Lyon, <em>Time for School</em>, Education Next, 2025</a></li>
+    <li><a href="https://cbcny.org/research/highest-costs-middling-marks">Citizens Budget Commission: Highest Costs, Middling Marks</a></li>
+    <li><a href="https://www.uft.org/your-rights/contracts/contract-2023/contract-2023-time-workday-and-remote-work">UFT Contract 2023: Time, the workday and remote work</a></li>
+    <li><a href="https://nces.ed.gov/programs/statereform/tab1_1-2020.asp">NCES: State Education Practices &mdash; minimum instructional days and hours</a></li>
+  </ul>
+
+  <div class="footer">
+    Last updated 2026-04-28. Built from a research package handed off by editorial &mdash; <a href="index.html">back to the infographic</a>.
+  </div>
+
+</div>
+</body>
+</html>

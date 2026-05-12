@@ -1,0 +1,246 @@
+{
+  "title": "NYC Public School Instructional Time, 2026-27",
+  "last_updated": "2026-04-28",
+  "core_findings": {
+    "nyc_annual_hours_2025_26": 1102,
+    "us_national_average_hours": 1231,
+    "annual_gap_hours": 129,
+    "annual_gap_days_equivalent": 20,
+    "k12_cumulative_gap_hours": 1680,
+    "k12_cumulative_gap_years_equivalent": 1.5,
+    "nyc_school_day_minutes": 380,
+    "nyc_school_day_label": "6h 20m",
+    "national_school_day_average_label": "~7h",
+    "nyc_attendance_days_2026_27": 177,
+    "nyc_state_required_days": 180,
+    "nyc_pd_days_counted_2026_27": 3,
+    "full_5_day_weeks_per_year": 20,
+    "total_weeks_per_year": 45
+  },
+  "nyc_2026_27_calendar": {
+    "first_day": "2026-09-10",
+    "last_day": "2027-06-28",
+    "summer_break_weeks": 11,
+    "key_events": [
+      {"date": "2026-09-10", "day": "Thursday", "event": "First day of school for students"},
+      {"date": "2026-09-21", "day": "Monday", "event": "Yom Kippur; schools closed"},
+      {"date": "2026-10-12", "day": "Monday", "event": "Italian Heritage/Indigenous Peoples' Day"},
+      {"date": "2026-11-03", "day": "Tuesday", "event": "Election Day; remote instruction for students"},
+      {"date": "2026-11-05", "day": "Thursday", "event": "Parent-Teacher Conferences (Elementary); 3-hour early dismissal"},
+      {"date": "2026-11-11", "day": "Wednesday", "event": "Veterans Day; schools closed"},
+      {"date": "2026-11-12", "day": "Thursday", "event": "Parent-Teacher Conferences (Middle School/D75); early dismissal"},
+      {"date": "2026-11-20", "day": "Friday", "event": "Parent-Teacher Conferences (High School); early dismissal"},
+      {"date": "2026-11-26", "day": "Thursday-Friday", "event": "Thanksgiving Recess"},
+      {"date": "2026-12-24", "day": "Thursday-Friday", "event": "Winter Recess (through Jan 1)"},
+      {"date": "2027-01-18", "day": "Monday", "event": "Rev. Dr. Martin Luther King Jr. Day"},
+      {"date": "2027-01-26", "day": "Tuesday-Friday", "event": "Regents Administration (through Jan 29)"},
+      {"date": "2027-02-01", "day": "Monday", "event": "Professional Development Day (HS/6-12 No Classes)"},
+      {"date": "2027-02-02", "day": "Tuesday", "event": "Spring Semester begins"},
+      {"date": "2027-02-15", "day": "Monday-Friday", "event": "Midwinter Recess (through Feb 19)"},
+      {"date": "2027-03-09", "day": "Tuesday", "event": "Eid al-Fitr; schools closed"},
+      {"date": "2027-03-26", "day": "Friday", "event": "Good Friday; schools closed"},
+      {"date": "2027-04-22", "day": "Thursday-Friday", "event": "Spring Recess (covers Passover; through April 30)"},
+      {"date": "2027-05-17", "day": "Monday", "event": "Eid al-Adha; schools closed"},
+      {"date": "2027-05-31", "day": "Monday", "event": "Memorial Day"},
+      {"date": "2027-06-08", "day": "Tuesday", "event": "Clerical Day (No classes 3-K through MS)"},
+      {"date": "2027-06-10", "day": "Thursday", "event": "Anniversary Day/Chancellor's Conference Day; no students"},
+      {"date": "2027-06-15", "day": "Tuesday-Friday", "event": "Regents Administration (through June 25)"},
+      {"date": "2027-06-28", "day": "Monday", "event": "Last day of school for students"}
+    ],
+    "anatomy_summary": {
+      "student_attendance_days": 177,
+      "pd_days_counted_toward_180": 3,
+      "religious_cultural_holiday_closures": 5,
+      "half_days_for_parent_teacher_conferences": 3,
+      "regents_administration_days": 9,
+      "summer_break_weeks": 11,
+      "ends_on_monday": true
+    }
+  },
+  "comparison_data_2026_27": {
+    "definition": "Estimated annual instructional hours, scheduled bell-to-bell where applicable",
+    "districts_and_charters": [
+      {
+        "name": "Success Academy (NYC charter)",
+        "annual_hours": 1570,
+        "days": "185-190",
+        "daily_hours": "8h 30m",
+        "category": "charter",
+        "notes": "Early-August start; long days plus internal assessments"
+      },
+      {
+        "name": "KIPP NYC (charter)",
+        "annual_hours": 1380,
+        "days": "182-185",
+        "daily_hours": "7h 35m",
+        "category": "charter",
+        "notes": "Late-August start; school day 7:55 AM - 3:30 PM"
+      },
+      {
+        "name": "Houston ISD",
+        "annual_hours": 1260,
+        "days": "~187",
+        "daily_hours": "7h 30m",
+        "category": "peer_district",
+        "notes": "Texas operates on 75,600 minutes/year standard"
+      },
+      {
+        "name": "Uncommon Schools (NYC charter)",
+        "annual_hours": 1250,
+        "days": "180-185",
+        "daily_hours": "7h 30m typical",
+        "category": "charter",
+        "notes": "Half-day Fridays with 12:30 PM dismissal"
+      },
+      {
+        "name": "Miami-Dade County",
+        "annual_hours": 1170,
+        "days": 180,
+        "daily_hours": "~6h 30m",
+        "category": "peer_district",
+        "notes": "Aug 13, 2026 - June 4, 2027; FL law requires later MS/HS start times by July 2026"
+      },
+      {
+        "name": "NYC Public Schools",
+        "annual_hours": 1102,
+        "days": 177,
+        "daily_hours": "6h 20m",
+        "category": "focal",
+        "notes": "Sept 10, 2026 - June 28, 2027; UFT contract sets day length"
+      },
+      {
+        "name": "LAUSD",
+        "annual_hours": 1080,
+        "days": 180,
+        "daily_hours": "~6h",
+        "category": "peer_district",
+        "notes": "Aug 10, 2026 - May 28, 2027"
+      },
+      {
+        "name": "Chicago Public Schools",
+        "annual_hours": 1055,
+        "days": 176,
+        "daily_hours": "~6h 30m post-2012 reform",
+        "category": "peer_district",
+        "notes": "Aug 24, 2026 - June 11, 2027"
+      }
+    ]
+  },
+  "structural_requirements": {
+    "ny_state_minimum_days": 180,
+    "ny_state_min_hours_k6": 900,
+    "ny_state_min_hours_7_12": 990,
+    "uft_school_day_length_minutes": 380,
+    "max_pd_days_counted_toward_180": 4,
+    "calendar_constraints": [
+      "Must begin after Labor Day (UFT contract)",
+      "Must end before second-to-last weekday in June (UFT contract)",
+      "Must include 180 days of instruction (NY State law)",
+      "Up to 4 PD days may count toward 180 (NY State regulation)"
+    ]
+  },
+  "key_voices": {
+    "matthew_kraft": {
+      "title": "Professor of education and economics, Brown University",
+      "co_author_of": "Time for School (Education Next, 2025)",
+      "key_quote": "State minimums set a floor we should be moving beyond. They are not what we should be targeting or aspiring to.",
+      "secondary_quote": "Overall the evidence strongly points to additional instructional time increasing student success in school. Of course, how much time you add, when you add it, and how it's used also matter tremendously. But it is one of those necessary but not sufficient inputs into supporting a successful education."
+    },
+    "david_bloomfield": {
+      "title": "Professor of education, law, and public policy, Brooklyn College and CUNY Graduate Center",
+      "key_quote": "What seems like 180 days isn't really. A child's individual calendar may differ from grade to grade, program to program because of testing and other non-instructional obligations.",
+      "fragmentation_observation": "Out of 45 school weeks, less than half — about 20 — have complete five-day weeks."
+    },
+    "kamar_samuels": {
+      "title": "NYC Schools Chancellor",
+      "context": "Pledged to focus on chronic absenteeism",
+      "quote": "Folks need to understand that if we're not in school your child is going to miss work."
+    }
+  },
+  "context_data": {
+    "nyc_chronic_absenteeism_rate": "~33%",
+    "nyc_per_pupil_spending_rank": "Above national average; below-average performance per CBC",
+    "national_avg_school_days": "179-180",
+    "national_avg_school_day_hours": 7,
+    "national_avg_weekly_hours": 35,
+    "nyc_avg_weekly_hours": 31.67
+  },
+  "sources": [
+    {
+      "title": "School Year Calendar 2026-2027",
+      "publisher": "NYC Public Schools",
+      "url": "https://www.schools.nyc.gov/calendar/2026-2027-school-year-calendar"
+    },
+    {
+      "title": "NYC unveils 2026-27 school calendar: Late September start and a Monday finish in June",
+      "author": "Amy Zimmer",
+      "publisher": "Chalkbeat",
+      "date": "2026-04-21",
+      "url": "https://www.chalkbeat.org/newyork/2026/04/21/nyc-public-school-calendar-2026-2027/"
+    },
+    {
+      "title": "NYC students clock about 130 fewer hours in class than national peers. It likely hurts learning.",
+      "author": "Amy Zimmer",
+      "publisher": "Chalkbeat",
+      "date": "2026-02-27",
+      "url": "https://www.chalkbeat.org/newyork/2026/02/27/nyc-shorter-school-year-instructional-time-gap/"
+    },
+    {
+      "title": "Time for School: Assessing Inequality in Access to Instructional Time in the United States",
+      "author": "Matthew A. Kraft, Sarah Goldstein, and Lyon",
+      "publisher": "Education Next",
+      "date": "2025",
+      "url": "https://www.educationnext.org/time-for-school-assessing-inequality-access-instructional-time-united-states/"
+    },
+    {
+      "title": "NYC schools have 176 days of class, not the required 180. Here's why.",
+      "author": "Amy Zimmer",
+      "publisher": "Chalkbeat",
+      "date": "2025-09-09",
+      "url": "https://www.chalkbeat.org/newyork/2025/09/09/why-nyc-school-year-is-shorter-than-180-days/"
+    },
+    {
+      "title": "Highest Costs, Middling Marks",
+      "publisher": "Citizens Budget Commission",
+      "url": "https://cbcny.org/research/highest-costs-middling-marks"
+    },
+    {
+      "title": "Contract 2023: Time, the workday and remote work",
+      "publisher": "United Federation of Teachers",
+      "url": "https://www.uft.org/your-rights/contracts/contract-2023/contract-2023-time-workday-and-remote-work"
+    },
+    {
+      "title": "Academic Calendars K-12",
+      "publisher": "Success Academy",
+      "url": "https://www.successacademies.org/academic-calendars/"
+    },
+    {
+      "title": "KIPP NYC",
+      "url": "https://kippnyc.org/"
+    },
+    {
+      "title": "Uncommon Schools",
+      "url": "https://uncommonschools.org/"
+    },
+    {
+      "title": "Chicago Public Schools 2026-27 Calendar",
+      "url": "https://www.cps.edu/calendar/"
+    },
+    {
+      "title": "LAUSD 2026-27 Instructional Calendar",
+      "url": "https://www.lausd.org/calendar"
+    },
+    {
+      "title": "Houston ISD District Calendar",
+      "url": "https://www.houstonisd.org/our-district/district-calendar"
+    },
+    {
+      "title": "Miami-Dade County Public Schools",
+      "url": "https://www.dadeschools.net/"
+    },
+    {
+      "title": "NCES State Education Practices: Minimum instructional days and hours",
+      "url": "https://nces.ed.gov/programs/statereform/tab1_1-2020.asp"
+    }
+  ]
+}

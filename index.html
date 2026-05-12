@@ -8,17 +8,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./style.css?v=12" />
+<link rel="stylesheet" href="./shared/chrome.css?v=13" />
+<link rel="stylesheet" href="./style.css?v=13" />
 </head>
-<body>
+<body data-section="map" data-no-footer="true">
 
-<header class="topbar">
-  <div class="brand">
-    <div class="wordmark">NYC schools atlas</div>
-    <div class="sub">Every public, charter and private K&ndash;12 school in New York City &mdash; mapped with demographics, programs, attendance zones and the neighborhood children they serve.</div>
-  </div>
-  <button id="about-btn" class="btn ghost">About &amp; methodology</button>
-</header>
+<div id="site-header"></div>
+
+<div class="map-subhead">
+  <div class="sub">Every public, charter and private K&ndash;12 school in New York City &mdash; mapped with demographics, programs, attendance zones and the neighborhood children they serve.</div>
+  <button id="about-btn" class="btn ghost">Map sources</button>
+</div>
 
 <div id="app">
   <aside id="sidebar">
@@ -52,6 +52,22 @@
       <label class="chk"><input type="checkbox" data-filter="band" value="MS" checked />Middle (6&ndash;8)</label>
       <label class="chk"><input type="checkbox" data-filter="band" value="HS" checked />High school (9&ndash;12)</label>
       <label class="chk"><input type="checkbox" data-filter="band" value="PK" checked />Pre-K / 3-K</label>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Enrollment trajectory</div>
+      <div class="traj-help">3-year change in total enrollment. Schools without trend data are dimmed.</div>
+      <div id="traj-views">
+        <label class="chk"><input type="radio" name="traj" value="all" checked />All schools</label>
+        <label class="chk"><input type="radio" name="traj" value="rising" /><span class="traj-dot traj-rising"></span>Rising (&plus;10% or more)</label>
+        <label class="chk"><input type="radio" name="traj" value="stable" /><span class="traj-dot traj-stable"></span>Stable (within &plusmn;10%)</label>
+        <label class="chk"><input type="radio" name="traj" value="falling" /><span class="traj-dot traj-falling"></span>Falling (10&ndash;25% loss)</label>
+        <label class="chk"><input type="radio" name="traj" value="collapsing" /><span class="traj-dot traj-collapsing"></span>Collapsing (&gt;25% loss)</label>
+        <label class="chk"><input type="radio" name="traj" value="tiny" /><span class="traj-dot traj-tiny"></span>Very small (&lt;100 students)</label>
+        <label class="chk"><input type="radio" name="traj" value="underenrolled" /><span class="traj-dot traj-under"></span>Under-enrolled (&lt;300 and falling)</label>
+        <label class="chk"><input type="radio" name="traj" value="largest" /><span class="traj-dot traj-largest"></span>Largest 50 by enrollment</label>
+      </div>
+      <div id="traj-summary" class="count"></div>
     </div>
 
     <div class="panel">
@@ -144,6 +160,7 @@
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="./app.js?v=12"></script>
+<script src="./shared/chrome.js?v=13"></script>
+<script src="./app.js?v=13"></script>
 </body>
 </html>

@@ -30,7 +30,66 @@ const filters = {
   programs: new Set(),
   admissions: new Set(),
   showZones: true,
+  trajectory: 'all',
 };
+
+const TRAJECTORY_WINDOW = 3;
+const LARGEST_N = 50;
+let largestSet = new Set();
+
+function latestEnrollment(s) {
+  if (s.demo && s.demo.enrollment_latest != null) return s.demo.enrollment_latest;
+  if (s.demo && s.demo.enrollment != null) return s.demo.enrollment;
+  if (s.trend && s.trend.length) {
+    for (let i = s.trend.length - 1; i >= 0; i--) if (s.trend[i][1] != null) return s.trend[i][1];
+  }
+  return null;
+}
+
+function trajectoryChange(s) {
+  if (!s.trend || s.trend.length < 2) return null;
+  const valid = s.trend.filter(r => r[1] != null);
+  if (valid.length < 2) return null;
+  const latest = valid[valid.length - 1][1];
+  const idx = Math.max(0, valid.length - 1 - TRAJECTORY_WINDOW);
+  const prior = valid[idx][1];
+  if (!prior || prior < 10) return null;
+  return { latest, prior, pct: (latest - prior) / prior };
+}
+
+function passesTrajectory(s) {
+  const v = filters.trajectory;
+  if (v === 'all') return true;
+  if (v === 'tiny') {
+    const e = latestEnrollment(s);
+    return e != null && e < 100;
+  }
+  if (v === 'largest') return largestSet.has(s.dbn);
+  const t = trajectoryChange(s);
+  if (!t) return false;
+  switch (v) {
+    case 'rising':      return t.pct >= 0.10;
+    case 'stable':      return Math.abs(t.pct) < 0.10;
+    case 'falling':     return t.pct <= -0.10 && t.pct > -0.25;
+    case 'collapsing':  return t.pct <= -0.25;
+    case 'underenrolled': return t.latest < 300 && t.pct <= -0.10;
+  }
+  return false;
+}
+
+function trajectoryClass(s) {
+  const v = filters.trajectory;
+  if (v === 'all') return '';
+  if (!passesTrajectory(s)) return '';
+  if (v === 'tiny') return 'traj-hit traj-hit-tiny';
+  if (v === 'largest') return 'traj-hit traj-hit-largest';
+  if (v === 'rising') return 'traj-hit traj-hit-rising';
+  if (v === 'stable') return 'traj-hit traj-hit-stable';
+  if (v === 'falling') return 'traj-hit traj-hit-falling';
+  if (v === 'collapsing') return 'traj-hit traj-hit-collapsing';
+  if (v === 'underenrolled') return 'traj-hit traj-hit-under';
+  return '';
+}
 
 const PROGRAM_FILTER_LIST = [
   'Specialized High School',
@@ -95,6 +154,8 @@ Promise.all([
     zonesIndex.get(dbn).push(f);
   }
   for (const s of schools) s._bands = detectBand(s);
+  computeLargest();
+  wireTrajectory();
   buildProgramFilters();
   buildAdmissionFilters();
   renderSchools();
@@ -103,6 +164,44 @@ Promise.all([
   console.error(err);
   document.getElementById('result-count').textContent = 'Failed to load data.';
 });
+
+function computeLargest() {
+  const ranked = allSchools
+    .map(s => [s.dbn, latestEnrollment(s)])
+    .filter(r => r[1] != null)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, LARGEST_N);
+  largestSet = new Set(ranked.map(r => r[0]));
+}
+
+function wireTrajectory() {
+  document.querySelectorAll('input[name="traj"]').forEach(el => {
+    el.addEventListener('change', e => {
+      if (!e.target.checked) return;
+      filters.trajectory = e.target.value;
+      renderSchools();
+      updateTrajectorySummary();
+    });
+  });
+  updateTrajectorySummary();
+}
+
+function updateTrajectorySummary() {
+  const el = document.getElementById('traj-summary');
+  if (!el) return;
+  if (filters.trajectory === 'all') { el.textContent = ''; return; }
+  const hits = allSchools.filter(passesTrajectory);
+  if (!hits.length) { el.textContent = '0 schools match.'; return; }
+  const changes = hits.map(trajectoryChange).filter(Boolean).map(t => t.pct);
+  if (filters.trajectory === 'tiny' || filters.trajectory === 'largest') {
+    el.textContent = `${hits.length.toLocaleString()} schools match.`;
+    return;
+  }
+  changes.sort((a, b) => a - b);
+  const median = changes.length ? changes[Math.floor(changes.length / 2)] : 0;
+  const sign = median >= 0 ? '+' : '';
+  el.textContent = `${hits.length.toLocaleString()} schools match · median change ${sign}${Math.round(median * 100)}%.`;
+}
 
 function buildProgramFilters() {
   const host = document.getElementById('program-filters');
@@ -383,13 +482,18 @@ function passesFilters(s) {
 function renderSchools() {
   markerLayer.clearLayers();
   markerIndex.clear();
-  let count = 0;
+  let count = 0, hitCount = 0;
+  const trajActive = filters.trajectory !== 'all';
   for (const s of allSchools) {
     if (!passesFilters(s)) continue;
     count++;
+    const isHit = !trajActive || passesTrajectory(s);
+    if (isHit) hitCount++;
     const cls = sectorClass(s);
+    const tcls = trajectoryClass(s);
+    const fadeCls = trajActive && !isHit ? ' faded' : '';
     const icon = L.divIcon({
-      html: `<div class="mk ${cls}" data-dbn="${s.dbn}"></div>`,
+      html: `<div class="mk ${cls}${fadeCls} ${tcls}" data-dbn="${s.dbn}"></div>`,
       className: 'mk-wrap',
       iconSize: [14, 14],
       iconAnchor: [7, 7],
@@ -403,8 +507,9 @@ function renderSchools() {
     m.addTo(markerLayer);
     markerIndex.set(s.dbn, m);
   }
+  const base = `${count.toLocaleString()} of ${allSchools.length.toLocaleString()} schools shown`;
   document.getElementById('result-count').textContent =
-    `${count.toLocaleString()} of ${allSchools.length.toLocaleString()} schools shown`;
+    filters.trajectory === 'all' ? base : `${base} · ${hitCount.toLocaleString()} highlighted`;
 }
 
 // ---------- Zone hover ----------

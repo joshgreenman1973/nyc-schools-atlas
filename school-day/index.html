@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New York City instructional time, 2026–27</title>
+<style>
+  :root {
+    --black: #050507;
+    --white: #ffffff;
+    --cloud: #dddddd;
+    --chartreuse: #dde44c;
+    --orange: #ff7c53;
+    --periwinkle: #9b9fbc;
+    --magenta: #e7466d;
+    --charcoal: #707175;
+    --cerulean: #217ebe;
+    --chartreuse-20: #f7f8dd;
+    --orange-20: #fde5dd;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px;
+    background: #f4f4f0;
+    font-family: 'Halyard', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--black);
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 32px 36px 26px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  h1 {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.18;
+    margin: 0 0 12px;
+    letter-spacing: -0.01em;
+  }
+  .dek {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 16px;
+    color: var(--black);
+    line-height: 1.45;
+    margin: 0 0 22px;
+    padding-left: 14px;
+    border-left: 3px solid var(--chartreuse);
+  }
+  .rule {
+    border-top: 2px solid var(--black);
+    margin: 0 0 22px;
+  }
+  h2 {
+    font-size: 17px;
+    font-weight: 800;
+    margin: 0 0 4px;
+    letter-spacing: -0.005em;
+  }
+  .subhead {
+    font-size: 12px;
+    color: var(--charcoal);
+    line-height: 1.45;
+    margin: 0 0 14px;
+    font-weight: 300;
+  }
+  .chart-wrap {
+    position: relative;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  .chart-wrap.gap { height: 200px; }
+  .chart-wrap.peers { height: 380px; }
+  .takeaway {
+    background: var(--orange-20);
+    padding: 14px 16px;
+    margin: 8px 0 28px;
+    border-left: 4px solid var(--orange);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .takeaway strong { font-weight: 700; }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .stat-grid.two {
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 22px;
+  }
+  .stat-card {
+    background: var(--chartreuse-20);
+    padding: 16px 14px;
+    border-top: 3px solid var(--chartreuse);
+  }
+  .stat-num {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-num small { font-size: 16px; }
+  .stat-label {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .stat-desc {
+    font-size: 11px;
+    color: var(--charcoal);
+    line-height: 1.4;
+    font-weight: 300;
+  }
+
+  /* Fragmentation grid */
+  .frag-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 16px;
+    font-size: 11px;
+    color: var(--charcoal);
+    margin-bottom: 12px;
+    align-items: center;
+  }
+  .frag-swatch {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 6px;
+    vertical-align: -2px;
+    border: 0.5px solid rgba(0,0,0,0.08);
+  }
+  .frag-grid {
+    display: grid;
+    grid-template-columns: 64px repeat(5, 1fr);
+    gap: 3px;
+    font-size: 10px;
+    margin-bottom: 8px;
+  }
+  .frag-head {
+    font-size: 10px;
+    color: var(--charcoal);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-align: center;
+    padding-bottom: 4px;
+  }
+  .frag-row-label {
+    font-size: 11px;
+    color: var(--charcoal);
+    text-align: right;
+    padding-right: 8px;
+    line-height: 22px;
+    font-variant-numeric: tabular-nums;
+  }
+  .frag-row-label.full {
+    color: var(--black);
+    font-weight: 700;
+  }
+  .frag-cell {
+    height: 22px;
+    border-radius: 2px;
+    position: relative;
+  }
+  .frag-cell.student { background: var(--chartreuse); }
+  .frag-cell.holiday { background: var(--magenta); opacity: 0.85; }
+  .frag-cell.halfday {
+    background: var(--orange);
+    opacity: 0.85;
+  }
+  .frag-cell.pd { background: var(--periwinkle); }
+  .frag-cell.regents { background: var(--cerulean); opacity: 0.55; }
+  .frag-cell.recess { background: var(--cloud); }
+  .frag-cell.outside { background: #f4f4f0; }
+  .frag-row.full {
+    box-shadow: inset 3px 0 0 var(--black);
+  }
+  .frag-tag {
+    font-size: 10px;
+    line-height: 22px;
+    color: var(--charcoal);
+    padding-left: 6px;
+  }
+  .frag-tag.full {
+    color: var(--black);
+    font-weight: 700;
+  }
+  .frag-summary {
+    font-size: 13px;
+    line-height: 1.5;
+    background: var(--chartreuse-20);
+    border-left: 4px solid var(--chartreuse);
+    padding: 14px 16px;
+    margin: 8px 0 28px;
+  }
+  .frag-summary strong { font-weight: 700; }
+
+  /* Build your own school year */
+  .builder {
+    background: var(--chartreuse-20);
+    padding: 18px 18px 16px;
+    margin-bottom: 28px;
+    border-top: 3px solid var(--chartreuse);
+  }
+  .builder-row {
+    display: grid;
+    grid-template-columns: 160px 1fr 70px;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .builder-row label {
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .builder-row input[type=range] {
+    width: 100%;
+  }
+  .builder-row .val {
+    font-size: 13px;
+    font-weight: 700;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .builder-bar {
+    margin-top: 14px;
+    height: 28px;
+    background: var(--white);
+    position: relative;
+    border: 0.5px solid var(--cloud);
+  }
+  .builder-bar .fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: var(--magenta);
+    transition: width 0.15s ease-out;
+  }
+  .builder-bar .ref {
+    position: absolute;
+    top: -4px;
+    bottom: -4px;
+    width: 0;
+    border-left: 2px dashed var(--black);
+  }
+  .builder-bar .ref-label {
+    position: absolute;
+    top: -16px;
+    font-size: 10px;
+    color: var(--charcoal);
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .builder-bar #refNat .ref-label {
+    top: auto;
+    bottom: -16px;
+  }
+  .builder-readout {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 28px;
+  }
+  .builder-stat {
+    background: var(--white);
+    padding: 12px 12px 10px;
+    border: 0.5px solid var(--cloud);
+  }
+  .builder-stat .num {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 6px;
+    font-variant-numeric: tabular-nums;
+  }
+  .builder-stat .num.neg { color: var(--magenta); }
+  .builder-stat .num.pos { color: var(--cerulean); }
+  .builder-stat .lbl {
+    font-size: 10px;
+    color: var(--charcoal);
+    line-height: 1.35;
+  }
+  .builder-actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .builder-actions button {
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 6px 12px;
+    background: var(--white);
+    border: 0.5px solid var(--black);
+    cursor: pointer;
+  }
+  .builder-actions button:hover {
+    background: var(--black);
+    color: var(--white);
+  }
+
+  table.calendar-anatomy {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  table.calendar-anatomy tr:first-child {
+    border-bottom: 0.5px solid var(--black);
+  }
+  table.calendar-anatomy tr:first-child td {
+    font-weight: 600;
+  }
+  table.calendar-anatomy tr {
+    border-bottom: 0.5px solid var(--cloud);
+  }
+  table.calendar-anatomy td {
+    padding: 8px 8px 8px 0;
+    color: var(--charcoal);
+  }
+  table.calendar-anatomy td:first-child {
+    width: 70%;
+  }
+  table.calendar-anatomy td:last-child {
+    text-align: right;
+  }
+  table.calendar-anatomy tr:first-child td {
+    color: var(--black);
+  }
+  table.calendar-anatomy tr.flag td {
+    color: var(--magenta);
+    font-weight: 600;
+  }
+  .callout {
+    background: var(--white);
+    border: 0.5px solid var(--cloud);
+    padding: 12px 14px;
+    margin: 14px 0 28px;
+  }
+  .callout-kicker {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--orange);
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .callout-body {
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .pullquote {
+    border-top: 0.5px solid var(--black);
+    padding-top: 20px;
+    margin-bottom: 22px;
+  }
+  .pullquote p {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.45;
+    margin: 0 0 10px;
+  }
+  .pullquote .attrib {
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--charcoal);
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  .pullquote .attrib em {
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .methodology-link {
+    background: var(--white);
+    border: 0.5px solid var(--cloud);
+    padding: 12px 14px;
+    margin-bottom: 22px;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .methodology-link a {
+    color: var(--black);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--chartreuse);
+  }
+  .methodology-link a:hover { background: var(--chartreuse-20); }
+
+  .footer {
+    padding-top: 14px;
+    border-top: 0.5px solid var(--cloud);
+  }
+  .sources {
+    font-size: 10px;
+    color: var(--charcoal);
+    line-height: 1.55;
+  }
+  .sources a {
+    color: var(--charcoal);
+    text-decoration: underline;
+  }
+  @media (max-width: 600px) {
+    .container { padding: 22px 18px; }
+    .stat-grid { grid-template-columns: 1fr; }
+    .builder-readout { grid-template-columns: 1fr; }
+    .builder-row { grid-template-columns: 100px 1fr 60px; }
+    .frag-grid { grid-template-columns: 56px repeat(5, 1fr); }
+    .stat-grid.two { grid-template-columns: 1fr; }
+  }
+  @media print {
+    body { background: white; padding: 0; }
+    .container { box-shadow: none; }
+  }
+</style>
+  <link rel="stylesheet" href="../shared/chrome.css?v=13" />
+</head>
+<body data-section="school-day">
+<div id="site-header"></div>
+<div class="container">
+
+  <h1>New York City kids spend roughly a year and a half less in class over their K&ndash;12 careers than the average American student</h1>
+
+  <p class="dek">
+    The 2026&ndash;27 calendar promises 180 days. Students will see 177 of them, in a school day that runs about 40 minutes shorter than the national norm, with fewer than half the year&rsquo;s weeks running uninterrupted from Monday to Friday.
+  </p>
+
+  <div class="rule"></div>
+
+  <!-- SECTION 1: THE HEADLINE GAP -->
+  <h2>The 129-hour gap</h2>
+  <p class="subhead">
+    Estimated annual instructional hours for a New York City student vs. the U.S. national average
+  </p>
+
+  <div class="chart-wrap gap">
+    <canvas id="gapChart" role="img" aria-label="New York City at 1,102 instructional hours per year versus 1,231 hours for the U.S. national average — a gap of 129 hours.">New York City: 1,102 hours. National average: 1,231 hours. Gap: 129 hours per year.</canvas>
+  </div>
+
+  <div class="takeaway">
+    <strong>129 hours per year</strong> works out to roughly <strong>20 school days</strong>. Carried across a 13-year K&ndash;12 career, that adds up to <strong>about 1,680 hours</strong> &mdash; close to <strong>1.5 academic years of instruction</strong> a New York City student does not get.
+  </div>
+
+  <!-- SECTION 2: WHAT SETS THE HOURS -->
+  <h2>Two factors set the total hours</h2>
+  <p class="subhead">
+    School day length &times; student attendance days = annual instructional hours. Both are shaped by the New York State Education Law and the UFT collective bargaining agreement.
+  </p>
+
+  <div class="stat-grid two">
+    <div class="stat-card">
+      <div class="stat-num">6h<small>&nbsp;20m</small></div>
+      <div class="stat-label">School day length</div>
+      <div class="stat-desc">About 40 minutes shorter than the national average of seven hours, set by the UFT contract</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">177<small>&nbsp;days</small></div>
+      <div class="stat-label">Student attendance days</div>
+      <div class="stat-desc">Three short of the state&rsquo;s 180-day minimum; gap closed by counting Chancellor&rsquo;s PD days toward the total, as state rules permit</div>
+    </div>
+  </div>
+
+  <h2>A separate question: how those days are distributed</h2>
+  <p class="subhead">
+    The fragmentation of the school year doesn&rsquo;t change the 1,102-hour total &mdash; it describes how those hours are arranged across the calendar, a different kind of cost.
+  </p>
+
+  <!-- NEW SECTION A: FRAGMENTATION GRID -->
+  <p class="subhead" style="margin-top:-4px">
+    Each row is one week of the 2026&ndash;27 school year. Cells are colored by status; weeks with five back-to-back full student days are highlighted with a black outline.
+  </p>
+
+  <div class="frag-legend">
+    <span><span class="frag-swatch" style="background:var(--chartreuse)"></span>Full student day</span>
+    <span><span class="frag-swatch" style="background:var(--orange);opacity:.85"></span>Half-day</span>
+    <span><span class="frag-swatch" style="background:var(--magenta);opacity:.85"></span>Closed</span>
+    <span><span class="frag-swatch" style="background:var(--periwinkle)"></span>PD / no students</span>
+    <span><span class="frag-swatch" style="background:var(--cerulean);opacity:.55"></span>Regents (some grades)</span>
+    <span><span class="frag-swatch" style="background:var(--cloud)"></span>Recess</span>
+  </div>
+
+  <div id="fragGrid" class="frag-grid"></div>
+
+  <div class="frag-summary">
+    <strong><span id="fullCount">—</span> of <span id="totalWeeks">—</span> weeks</strong> in the 2026&ndash;27 New York City public school year run from Monday to Friday without a closure, half-day, PD day, recess, or Regents-administration interruption. The rest contain at least one break in the instructional sequence.
+  </div>
+
+  <!-- SECTION 3: PEER COMPARISON -->
+  <h2>How New York City compares with peer districts and city charters</h2>
+  <p class="subhead">
+    Estimated annual instructional hours, 2026&ndash;27 school year
+  </p>
+
+  <div class="chart-wrap peers">
+    <canvas id="peersChart" role="img" aria-label="Annual instructional hours by school system. New York City Public Schools at 1,102 hours falls below most urban districts shown. Charter networks Success Academy at 1,570, KIPP NYC at 1,380, and Uncommon Schools at 1,250 substantially exceed New York City.">Annual hours: New York City Public Schools 1,102; LAUSD 1,080; Chicago 1,055; Miami-Dade 1,170; Houston ISD 1,260; Uncommon Schools 1,250; KIPP NYC 1,380; Success Academy 1,570.</canvas>
+  </div>
+
+  <!-- NEW SECTION B: BUILD YOUR OWN SCHOOL YEAR -->
+  <h2>Build your own school year</h2>
+  <p class="subhead">
+    Adjust the inputs to see how annual instructional hours change. The dashed lines mark the New York City baseline (1,102 hours) and the U.S. national average (1,231 hours).
+  </p>
+
+  <div class="builder">
+    <div class="builder-row">
+      <label for="dayMin">School day length</label>
+      <input type="range" id="dayMin" min="300" max="510" step="5" value="380">
+      <div class="val"><span id="dayMinVal">6h 20m</span></div>
+    </div>
+    <div class="builder-row">
+      <label for="days">Student attendance days</label>
+      <input type="range" id="days" min="160" max="200" step="1" value="177">
+      <div class="val"><span id="daysVal">177</span></div>
+    </div>
+    <div class="builder-row">
+      <label for="pdDays">PD days counted toward 180</label>
+      <input type="range" id="pdDays" min="0" max="4" step="1" value="3">
+      <div class="val"><span id="pdDaysVal">3</span></div>
+    </div>
+
+    <div class="builder-bar">
+      <div class="fill" id="fillBar"></div>
+      <div class="ref" id="refNYC" style="left: 0%"><span class="ref-label">New York City 1,102</span></div>
+      <div class="ref" id="refNat" style="left: 0%"><span class="ref-label">U.S. avg 1,231</span></div>
+    </div>
+
+    <div class="builder-readout">
+      <div class="builder-stat">
+        <div class="num" id="annualHours">1,121</div>
+        <div class="lbl">Annual instructional hours (your scenario)</div>
+      </div>
+      <div class="builder-stat">
+        <div class="num neg" id="gapHours">−110</div>
+        <div class="lbl">Hours per year vs. U.S. national average (1,231)</div>
+      </div>
+      <div class="builder-stat">
+        <div class="num neg" id="k12Gap">−1,430</div>
+        <div class="lbl">Cumulative hours over a 13-year K&ndash;12 career</div>
+      </div>
+    </div>
+
+    <div class="builder-actions">
+      <button type="button" id="btnNYC">Reset to New York City 2026&ndash;27</button>
+      <button type="button" id="btnNational">Match U.S. average</button>
+      <button type="button" id="btnSuccess">Match Success Academy</button>
+    </div>
+  </div>
+
+  <!-- SECTION 4: 2026-27 CALENDAR ANATOMY -->
+  <h2>The shape of next year&rsquo;s school calendar</h2>
+  <p class="subhead">
+    Sept. 10, 2026 &ndash; June 28, 2027 &middot; first day to last day, by category
+  </p>
+
+  <table class="calendar-anatomy">
+    <tr><td>Days students are scheduled in class</td><td>177</td></tr>
+    <tr><td>Chancellor&rsquo;s Conference / PD days counted toward 180</td><td>3</td></tr>
+    <tr><td>Religious / cultural holiday closures</td><td>5</td></tr>
+    <tr><td>Half-days for parent-teacher conferences</td><td>3</td></tr>
+    <tr><td>Regents administration days (some grades only)</td><td>9</td></tr>
+    <tr><td>Length of summer break (weeks)</td><td>~11</td></tr>
+    <tr class="flag"><td>Final day falls on a Monday (June 28)</td><td>&mdash;</td></tr>
+  </table>
+
+  <div class="callout">
+    <div class="callout-kicker">The Monday Finale</div>
+    <div class="callout-body">
+      The 2026&ndash;27 school year ends on Monday, June 28, 2027 &mdash; a so-called &ldquo;dog-leg day&rdquo; that observers expect will see lower-than-typical attendance among both students and staff, given how often families have already started summer travel by that point.
+    </div>
+  </div>
+
+  <!-- SECTION 5: KRAFT QUOTE -->
+  <div class="pullquote">
+    <p>State minimums set a floor we should be moving beyond. They are not what we should be targeting or aspiring to.</p>
+    <div class="attrib">Matthew Kraft &middot; Brown University &middot; co-author, <em>Time for School</em> (Education Next, 2025)</div>
+  </div>
+
+  <!-- METHODOLOGY LINK -->
+  <div class="methodology-link">
+    Bell-to-bell scheduled hours, including lunch and recess, are the closest measure of what families experience &mdash; but states count instructional time differently and any cumulative gap projection assumes constant conditions. <a href="methodology.html">Read the full methodology and download the data &rarr;</a>
+  </div>
+
+  <!-- SOURCES -->
+  <div class="footer">
+    <div class="sources">
+      Sources: <a href="https://www.schools.nyc.gov/calendar/2026-2027-school-year-calendar">NYC Public Schools 2026&ndash;27 calendar</a>; <a href="https://www.chalkbeat.org/newyork/2026/02/27/nyc-shorter-school-year-instructional-time-gap/">Chalkbeat</a>; <a href="https://www.educationnext.org/time-for-school-assessing-inequality-access-instructional-time-united-states/">Kraft et al., <em>Time for School</em>, Education Next 2025</a>; <a href="https://cbcny.org/research/highest-costs-middling-marks">Citizens Budget Commission</a>; <a href="https://www.successacademies.org/academic-calendars/">Success Academy</a>; <a href="https://kippnyc.org/">KIPP NYC</a>; <a href="https://uncommonschools.org/">Uncommon Schools</a>; <a href="https://www.cps.edu/calendar/">Chicago Public Schools</a>; <a href="https://www.lausd.org/calendar">LAUSD</a>; <a href="https://www.dadeschools.net/">Miami-Dade</a>; <a href="https://www.houstonisd.org/">Houston ISD</a>.
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+(function(){
+  // ============= HEADLINE GAP CHART =============
+  var gapCtx = document.getElementById('gapChart');
+  if (gapCtx) {
+    new Chart(gapCtx, {
+      type: 'bar',
+      data: {
+        labels: ['New York City public schools', 'U.S. national average'],
+        datasets: [{
+          data: [1102, 1231],
+          backgroundColor: ['#e7466d', '#9b9fbc'],
+          borderWidth: 0,
+          barThickness: 50
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: { padding: { right: 80, left: 4, top: 8, bottom: 8 } },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#050507',
+            titleFont: { family: 'Halyard, Helvetica Neue, Arial', size: 12, weight: '600' },
+            bodyFont: { family: 'Halyard, Helvetica Neue, Arial', size: 12 },
+            padding: 8,
+            callbacks: { label: function(c){ return c.parsed.x.toLocaleString() + ' hours/year'; } }
+          }
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+            max: 1400,
+            grid: { color: '#eeeeee', drawBorder: false },
+            border: { display: false },
+            ticks: {
+              font: { family: 'Halyard, Helvetica Neue, Arial', size: 10 },
+              color: '#707175',
+              callback: function(v){ return v.toLocaleString(); }
+            }
+          },
+          y: {
+            grid: { display: false, drawBorder: false },
+            border: { display: false },
+            ticks: {
+              font: { family: 'Halyard, Helvetica Neue, Arial', size: 13, weight: '500' },
+              color: '#050507'
+            }
+          }
+        }
+      },
+      plugins: [{
+        id: 'gapLabels',
+        afterDatasetsDraw: function(chart){
+          var c = chart.ctx;
+          var meta = chart.getDatasetMeta(0);
+          var data = [1102, 1231];
+          c.save();
+          c.font = '700 16px Halyard, Helvetica Neue, Arial';
+          c.textAlign = 'left';
+          c.textBaseline = 'middle';
+          meta.data.forEach(function(bar, i){
+            c.fillStyle = i === 0 ? '#e7466d' : '#050507';
+            c.fillText(data[i].toLocaleString() + ' hrs', bar.x + 8, bar.y);
+          });
+          c.restore();
+        }
+      }]
+    });
+  }
+
+  // ============= PEER COMPARISON CHART =============
+  var peerCtx = document.getElementById('peersChart');
+  if (peerCtx) {
+    var labels = [
+      'Success Academy (NYC charter)',
+      'KIPP NYC (charter)',
+      'Houston ISD',
+      'Uncommon Schools (NYC charter)',
+      'Miami-Dade County',
+      'New York City Public Schools',
+      'LAUSD',
+      'Chicago Public Schools'
+    ];
+    var data = [1570, 1380, 1260, 1250, 1170, 1102, 1080, 1055];
+    var colors = labels.map(function(l){
+      if (l === 'New York City Public Schools') return '#e7466d';
+      if (l.indexOf('charter') > -1) return '#dde44c';
+      return '#9b9fbc';
+    });
+
+    new Chart(peerCtx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: data,
+          backgroundColor: colors,
+          borderWidth: 0,
+          barThickness: 24
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: { padding: { right: 70, left: 4, top: 4, bottom: 4 } },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#050507',
+            titleFont: { family: 'Halyard, Helvetica Neue, Arial', size: 12, weight: '600' },
+            bodyFont: { family: 'Halyard, Helvetica Neue, Arial', size: 12 },
+            padding: 8,
+            callbacks: { label: function(c){ return c.parsed.x.toLocaleString() + ' hours/year'; } }
+          }
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+            max: 1700,
+            grid: { color: '#eeeeee', drawBorder: false },
+            border: { display: false },
+            ticks: {
+              font: { family: 'Halyard, Helvetica Neue, Arial', size: 10 },
+              color: '#707175',
+              callback: function(v){ return v.toLocaleString(); }
+            },
+            title: {
+              display: true,
+              text: 'Annual instructional hours',
+              font: { family: 'Halyard, Helvetica Neue, Arial', size: 11, weight: '400' },
+              color: '#707175',
+              padding: { top: 6 }
+            }
+          },
+          y: {
+            grid: { display: false, drawBorder: false },
+            border: { display: false },
+            ticks: {
+              font: function(ctx){
+                var label = ctx.tick && ctx.tick.label ? (Array.isArray(ctx.tick.label) ? ctx.tick.label.join('') : ctx.tick.label) : '';
+                return {
+                  family: 'Halyard, Helvetica Neue, Arial',
+                  size: 12,
+                  weight: label === 'New York City Public Schools' ? '700' : '400'
+                };
+              },
+              color: function(ctx){
+                var label = ctx.tick && ctx.tick.label ? (Array.isArray(ctx.tick.label) ? ctx.tick.label.join('') : ctx.tick.label) : '';
+                return label === 'New York City Public Schools' ? '#e7466d' : '#050507';
+              }
+            }
+          }
+        }
+      },
+      plugins: [{
+        id: 'peerLabels',
+        afterDatasetsDraw: function(chart){
+          var c = chart.ctx;
+          var meta = chart.getDatasetMeta(0);
+          c.save();
+          c.font = '600 12px Halyard, Helvetica Neue, Arial';
+          c.textAlign = 'left';
+          c.textBaseline = 'middle';
+          meta.data.forEach(function(bar, i){
+            c.fillStyle = labels[i] === 'New York City Public Schools' ? '#e7466d' : '#050507';
+            c.fillText(data[i].toLocaleString() + ' hrs', bar.x + 6, bar.y);
+          });
+          c.restore();
+        }
+      }]
+    });
+  }
+
+  // ============= FRAGMENTATION GRID =============
+  // Each week: Monday date + 5 cells (Mon-Fri) classified.
+  // Classifications drawn from the NYC public schools 2026-27 calendar.
+  // Codes: s=student day, x=closed, h=half-day, p=PD/no students, r=Regents (some grades),
+  //        b=recess, o=outside school year (before/after first/last day).
+  var weeks = [
+    { mon: '2026-09-07', days: ['o','o','o','s','s'] }, // Pre-year through Wed; first day Thu Sept 10
+    { mon: '2026-09-14', days: ['s','s','s','s','s'] },
+    { mon: '2026-09-21', days: ['x','s','s','s','s'] }, // Yom Kippur
+    { mon: '2026-09-28', days: ['s','s','s','s','s'] },
+    { mon: '2026-10-05', days: ['s','s','s','s','s'] },
+    { mon: '2026-10-12', days: ['x','s','s','s','s'] }, // Indigenous Peoples'
+    { mon: '2026-10-19', days: ['s','s','s','s','s'] },
+    { mon: '2026-10-26', days: ['s','s','s','s','s'] },
+    { mon: '2026-11-02', days: ['s','s','s','h','s'] }, // Election Day Tue (remote); P-T conf Thu half-day
+    { mon: '2026-11-09', days: ['s','s','x','h','s'] }, // Veterans Wed; P-T conf Thu MS/D75
+    { mon: '2026-11-16', days: ['s','s','s','s','h'] }, // P-T conf Fri HS half-day — broken
+    { mon: '2026-11-23', days: ['s','s','s','x','x'] }, // Thanksgiving Thu/Fri
+    { mon: '2026-11-30', days: ['s','s','s','s','s'] },
+    { mon: '2026-12-07', days: ['s','s','s','s','s'] },
+    { mon: '2026-12-14', days: ['s','s','s','s','s'] },
+    { mon: '2026-12-21', days: ['s','s','s','b','b'] }, // Winter recess starts Dec 24
+    { mon: '2026-12-28', days: ['b','b','b','b','b'] },
+    { mon: '2027-01-04', days: ['s','s','s','s','s'] },
+    { mon: '2027-01-11', days: ['s','s','s','s','s'] },
+    { mon: '2027-01-18', days: ['x','s','s','s','s'] }, // MLK Mon
+    { mon: '2027-01-25', days: ['s','r','r','r','r'] }, // Regents Tue-Fri
+    { mon: '2027-02-01', days: ['p','s','s','s','s'] }, // PD Mon (HS no classes)
+    { mon: '2027-02-08', days: ['s','s','s','s','s'] },
+    { mon: '2027-02-15', days: ['b','b','b','b','b'] }, // Midwinter recess
+    { mon: '2027-02-22', days: ['s','s','s','s','s'] },
+    { mon: '2027-03-01', days: ['s','s','s','s','s'] },
+    { mon: '2027-03-08', days: ['s','x','s','s','s'] }, // Eid al-Fitr Tue
+    { mon: '2027-03-15', days: ['s','s','s','s','s'] },
+    { mon: '2027-03-22', days: ['s','s','s','s','x'] }, // Good Friday
+    { mon: '2027-03-29', days: ['s','s','s','s','s'] },
+    { mon: '2027-04-05', days: ['s','s','s','s','s'] },
+    { mon: '2027-04-12', days: ['s','s','s','s','s'] },
+    { mon: '2027-04-19', days: ['s','s','s','b','b'] }, // Spring recess starts Apr 22
+    { mon: '2027-04-26', days: ['b','b','b','b','b'] }, // Spring recess through Apr 30
+    { mon: '2027-05-03', days: ['s','s','s','s','s'] },
+    { mon: '2027-05-10', days: ['s','s','s','s','s'] },
+    { mon: '2027-05-17', days: ['x','s','s','s','s'] }, // Eid al-Adha
+    { mon: '2027-05-24', days: ['s','s','s','s','s'] },
+    { mon: '2027-05-31', days: ['x','s','s','s','s'] }, // Memorial Day
+    { mon: '2027-06-07', days: ['s','p','s','p','s'] }, // Clerical Tue (no 3K-MS); Anniversary Day Thu
+    { mon: '2027-06-14', days: ['s','r','r','r','r'] }, // Regents Tue-Fri
+    { mon: '2027-06-21', days: ['s','r','r','r','r'] }, // Regents through Jun 25
+    { mon: '2027-06-28', days: ['s','o','o','o','o'] }  // Last day Mon
+  ];
+
+  var classMap = {
+    s: 'student', x: 'holiday', h: 'halfday', p: 'pd',
+    r: 'regents', b: 'recess', o: 'outside'
+  };
+  var labelMap = {
+    s: 'Student day', x: 'Closed', h: 'Half-day', p: 'PD / no students',
+    r: 'Regents', b: 'Recess', o: 'Pre-/post-year'
+  };
+
+  var grid = document.getElementById('fragGrid');
+  if (grid) {
+    var head = ['Week of', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+    head.forEach(function(h, i){
+      var d = document.createElement('div');
+      d.className = 'frag-head';
+      if (i === 0) d.style.textAlign = 'right';
+      d.textContent = h;
+      grid.appendChild(d);
+    });
+
+    var fullCount = 0;
+    weeks.forEach(function(w, i){
+      var isFull = w.days.every(function(c){ return c === 's'; });
+      if (isFull) fullCount++;
+
+      var monDate = new Date(w.mon + 'T00:00:00');
+      var label = document.createElement('div');
+      label.className = 'frag-row-label' + (isFull ? ' full' : '');
+      label.textContent = (isFull ? '✓ ' : '') + monDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      grid.appendChild(label);
+
+      w.days.forEach(function(code, j){
+        var cell = document.createElement('div');
+        cell.className = 'frag-cell ' + classMap[code];
+        var dayNames = ['Mon','Tue','Wed','Thu','Fri'];
+        cell.title = dayNames[j] + ' ' + w.mon + ' · ' + labelMap[code];
+        if (isFull) {
+          cell.style.outline = '1.5px solid #050507';
+          cell.style.outlineOffset = '-1px';
+        }
+        grid.appendChild(cell);
+      });
+    });
+
+    document.getElementById('fullCount').textContent = fullCount;
+    document.getElementById('totalWeeks').textContent = weeks.length;
+  }
+
+  // ============= BUILD YOUR OWN SCHOOL YEAR =============
+  var dayMin = document.getElementById('dayMin');
+  var days = document.getElementById('days');
+  var pdDays = document.getElementById('pdDays');
+  var dayMinVal = document.getElementById('dayMinVal');
+  var daysVal = document.getElementById('daysVal');
+  var pdDaysVal = document.getElementById('pdDaysVal');
+  var annualHours = document.getElementById('annualHours');
+  var gapHours = document.getElementById('gapHours');
+  var k12Gap = document.getElementById('k12Gap');
+  var fillBar = document.getElementById('fillBar');
+  var refNYC = document.getElementById('refNYC');
+  var refNat = document.getElementById('refNat');
+
+  var BAR_MAX = 1600; // hours; visual scale max
+  var US_AVG = 1231;
+  var NYC_BASELINE = 1102;
+
+  function fmtHours(min) {
+    var h = Math.floor(min / 60);
+    var m = min % 60;
+    return h + 'h' + (m ? ' ' + m + 'm' : '');
+  }
+  function fmtSigned(n) {
+    var s = Math.round(n);
+    if (s > 0) return '+' + s.toLocaleString();
+    return s.toLocaleString();
+  }
+  function update() {
+    var dm = parseInt(dayMin.value, 10);
+    var d = parseInt(days.value, 10);
+    var pd = parseInt(pdDays.value, 10);
+    dayMinVal.textContent = fmtHours(dm);
+    daysVal.textContent = d;
+    pdDaysVal.textContent = pd;
+
+    // Annual hours = day length (hr) * student attendance days
+    var hrs = (dm * d) / 60;
+    annualHours.textContent = Math.round(hrs).toLocaleString();
+
+    var gap = hrs - US_AVG;
+    gapHours.textContent = fmtSigned(gap);
+    gapHours.classList.toggle('neg', gap < 0);
+    gapHours.classList.toggle('pos', gap >= 0);
+
+    var k12 = gap * 13;
+    k12Gap.textContent = fmtSigned(k12);
+    k12Gap.classList.toggle('neg', k12 < 0);
+    k12Gap.classList.toggle('pos', k12 >= 0);
+
+    var pct = Math.max(0, Math.min(100, (hrs / BAR_MAX) * 100));
+    fillBar.style.width = pct + '%';
+    refNYC.style.left = ((NYC_BASELINE / BAR_MAX) * 100) + '%';
+    refNat.style.left = ((US_AVG / BAR_MAX) * 100) + '%';
+  }
+
+  if (dayMin && days && pdDays) {
+    [dayMin, days, pdDays].forEach(function(el){ el.addEventListener('input', update); });
+    document.getElementById('btnNYC').addEventListener('click', function(){
+      dayMin.value = 380; days.value = 177; pdDays.value = 3; update();
+    });
+    document.getElementById('btnNational').addEventListener('click', function(){
+      dayMin.value = 420; days.value = 180; pdDays.value = 0; update();
+    });
+    document.getElementById('btnSuccess').addEventListener('click', function(){
+      dayMin.value = 510; days.value = 185; pdDays.value = 0; update();
+    });
+    update();
+  }
+})();
+</script>
+  <script src="../shared/chrome.js?v=13"></script>
+</body>
+</html>

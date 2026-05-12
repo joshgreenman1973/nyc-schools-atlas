@@ -28,21 +28,14 @@
 html,body{margin:0;padding:0;height:100%;background:var(--ink);color:var(--text);font-family:Inter,system-ui,sans-serif;font-size:14px;line-height:1.45}
 body{display:flex;flex-direction:column;overflow:hidden}
 
-.topbar{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:16px 24px;
+.map-subhead{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+  padding:10px 24px;
   background:var(--ink-2);
   border-bottom:1px solid var(--line);
   flex:none;
 }
-.wordmark{
-  font-family:Fraunces,Georgia,serif;
-  font-weight:800;
-  font-size:28px;
-  letter-spacing:-0.015em;
-  line-height:1;
-}
-.sub{color:var(--muted);max-width:760px;font-size:12.5px;margin-top:5px;line-height:1.5}
+.map-subhead .sub{color:var(--muted);max-width:880px;font-size:12.5px;line-height:1.5}
 .btn{
   background:transparent;color:var(--text);border:1px solid var(--line);
   padding:8px 14px;border-radius:999px;cursor:pointer;font:inherit;
@@ -119,7 +112,27 @@ body{display:flex;flex-direction:column;overflow:hidden}
 .leaflet-bar{box-shadow:0 4px 16px rgba(0,0,0,.5) !important;border:0 !important}
 
 /* School markers via divIcon shapes */
-.mk{display:block;width:12px;height:12px;opacity:.95;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6));transition:transform .12s}
+.mk{display:block;width:12px;height:12px;opacity:.95;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6));transition:transform .12s,opacity .15s,box-shadow .15s}
+.mk.faded{opacity:.12;filter:none}
+.mk.faded:hover{opacity:.5}
+.mk.traj-hit{box-shadow:0 0 0 3px rgba(255,255,255,.18),0 0 10px 2px var(--traj-ring,#fff);z-index:380}
+.mk.traj-hit-rising{--traj-ring:#5ca57a}
+.mk.traj-hit-stable{--traj-ring:#9099ab}
+.mk.traj-hit-falling{--traj-ring:#d9904b}
+.mk.traj-hit-collapsing{--traj-ring:#c0604e}
+.mk.traj-hit-tiny{--traj-ring:#b48cff}
+.mk.traj-hit-under{--traj-ring:#e06c75}
+.mk.traj-hit-largest{--traj-ring:#5bb8e6}
+
+.traj-help{color:var(--muted);font-size:11.5px;line-height:1.45;margin-bottom:8px}
+.traj-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px;box-shadow:0 0 0 2px rgba(255,255,255,.08)}
+.traj-rising{background:#5ca57a}
+.traj-stable{background:#9099ab}
+.traj-falling{background:#d9904b}
+.traj-collapsing{background:#c0604e}
+.traj-tiny{background:#b48cff}
+.traj-under{background:#e06c75}
+.traj-largest{background:#5bb8e6}
 .mk:hover{transform:scale(1.35);z-index:400}
 .mk.selected{outline:2px solid #fff;outline-offset:2px;transform:scale(1.4)}
 .mk.public{background:var(--public);border-radius:50%;border:1.5px solid rgba(0,0,0,.4)}
