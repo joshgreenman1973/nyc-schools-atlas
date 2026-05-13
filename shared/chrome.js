@@ -5,11 +5,11 @@
 (function () {
   const NAV = [
     { id: 'map',         label: 'Map',          href: 'ROOT/' },
+    { id: 'curriculum',  label: 'Curriculum',   href: 'ROOT/curriculum/' },
+    { id: 'school-day',  label: 'School day',   href: 'ROOT/school-day/' },
     { id: 'enrollment',  label: 'Enrollment',   href: 'ROOT/enrollment/' },
     { id: 'spending',    label: 'Spending',     href: 'ROOT/spending/' },
     { id: 'special-ed',  label: 'Special ed',   href: 'ROOT/special-ed/' },
-    { id: 'school-day',  label: 'School day',   href: 'ROOT/school-day/' },
-    { id: 'curriculum',  label: 'Curriculum',   href: 'ROOT/curriculum/' },
     { id: 'about',       label: 'About',        href: 'ROOT/about/' },
   ];
   const SECTION_ACCENT = {
