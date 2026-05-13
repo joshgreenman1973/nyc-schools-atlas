@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NYC per-pupil K-12 spending: where the money goes</title>
 <meta name="description" content="NYC Department of Education per-pupil spending explained: historical trend, 2024 category breakdown, special education, cross-district comparison. All from official government sources.">
-<link rel="stylesheet" href="https://use.typekit.net/qqk2vto.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
 :root {
@@ -24,7 +23,7 @@
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-  font-family: 'halyard-text', 'Inter', sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-weight: 300;
   background: var(--vc-white);
   color: var(--vc-black);
@@ -197,7 +196,7 @@ table.data th.num { text-align: right; }
   border-color: var(--vc-black);
 }
 </style>
-  <link rel="stylesheet" href="../shared/chrome.css?v=13" />
+  <link rel="stylesheet" href="../shared/chrome.css?v=14" />
 </head>
 <body data-section="spending">
 <div id="site-header"></div>
@@ -377,7 +376,7 @@ const VC = {
   periwinkle: '#9b9fbc', green: '#57aa4a'
 };
 
-Chart.defaults.font.family = "'halyard-text', 'Inter', sans-serif";
+Chart.defaults.font.family = "'Inter', system-ui, -apple-system, sans-serif";
 Chart.defaults.font.size = 12;
 Chart.defaults.color = VC.black;
 
@@ -668,6 +667,6 @@ new Chart(document.getElementById('compareChart'), {
   }
 });
 </script>
-  <script src="../shared/chrome.js?v=13"></script>
+  <script src="../shared/chrome.js?v=14"></script>
 </body>
 </html>

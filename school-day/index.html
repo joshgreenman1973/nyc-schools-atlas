@@ -23,7 +23,7 @@
     margin: 0;
     padding: 24px;
     background: #f4f4f0;
-    font-family: 'Halyard', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     color: var(--black);
   }
   .container {
@@ -41,7 +41,7 @@
     letter-spacing: -0.01em;
   }
   .dek {
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: 'Fraunces', Georgia, serif;
     font-style: italic;
     font-weight: 300;
     font-size: 16px;
@@ -367,7 +367,7 @@
     margin-bottom: 22px;
   }
   .pullquote p {
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: 'Fraunces', Georgia, serif;
     font-weight: 300;
     font-style: italic;
     font-size: 18px;
@@ -427,7 +427,7 @@
     .container { box-shadow: none; }
   }
 </style>
-  <link rel="stylesheet" href="../shared/chrome.css?v=13" />
+  <link rel="stylesheet" href="../shared/chrome.css?v=14" />
 </head>
 <body data-section="school-day">
 <div id="site-header"></div>
@@ -629,8 +629,8 @@
           legend: { display: false },
           tooltip: {
             backgroundColor: '#050507',
-            titleFont: { family: 'Halyard, Helvetica Neue, Arial', size: 12, weight: '600' },
-            bodyFont: { family: 'Halyard, Helvetica Neue, Arial', size: 12 },
+            titleFont: { family: 'Inter, system-ui, sans-serif', size: 12, weight: '600' },
+            bodyFont: { family: 'Inter, system-ui, sans-serif', size: 12 },
             padding: 8,
             callbacks: { label: function(c){ return c.parsed.x.toLocaleString() + ' hours/year'; } }
           }
@@ -642,7 +642,7 @@
             grid: { color: '#eeeeee', drawBorder: false },
             border: { display: false },
             ticks: {
-              font: { family: 'Halyard, Helvetica Neue, Arial', size: 10 },
+              font: { family: 'Inter, system-ui, sans-serif', size: 10 },
               color: '#707175',
               callback: function(v){ return v.toLocaleString(); }
             }
@@ -651,7 +651,7 @@
             grid: { display: false, drawBorder: false },
             border: { display: false },
             ticks: {
-              font: { family: 'Halyard, Helvetica Neue, Arial', size: 13, weight: '500' },
+              font: { family: 'Inter, system-ui, sans-serif', size: 13, weight: '500' },
               color: '#050507'
             }
           }
@@ -664,7 +664,7 @@
           var meta = chart.getDatasetMeta(0);
           var data = [1102, 1231];
           c.save();
-          c.font = '700 16px Halyard, Helvetica Neue, Arial';
+          c.font = '700 16px Inter, system-ui, sans-serif';
           c.textAlign = 'left';
           c.textBaseline = 'middle';
           meta.data.forEach(function(bar, i){
@@ -717,8 +717,8 @@
           legend: { display: false },
           tooltip: {
             backgroundColor: '#050507',
-            titleFont: { family: 'Halyard, Helvetica Neue, Arial', size: 12, weight: '600' },
-            bodyFont: { family: 'Halyard, Helvetica Neue, Arial', size: 12 },
+            titleFont: { family: 'Inter, system-ui, sans-serif', size: 12, weight: '600' },
+            bodyFont: { family: 'Inter, system-ui, sans-serif', size: 12 },
             padding: 8,
             callbacks: { label: function(c){ return c.parsed.x.toLocaleString() + ' hours/year'; } }
           }
@@ -730,14 +730,14 @@
             grid: { color: '#eeeeee', drawBorder: false },
             border: { display: false },
             ticks: {
-              font: { family: 'Halyard, Helvetica Neue, Arial', size: 10 },
+              font: { family: 'Inter, system-ui, sans-serif', size: 10 },
               color: '#707175',
               callback: function(v){ return v.toLocaleString(); }
             },
             title: {
               display: true,
               text: 'Annual instructional hours',
-              font: { family: 'Halyard, Helvetica Neue, Arial', size: 11, weight: '400' },
+              font: { family: 'Inter, system-ui, sans-serif', size: 11, weight: '400' },
               color: '#707175',
               padding: { top: 6 }
             }
@@ -749,7 +749,7 @@
               font: function(ctx){
                 var label = ctx.tick && ctx.tick.label ? (Array.isArray(ctx.tick.label) ? ctx.tick.label.join('') : ctx.tick.label) : '';
                 return {
-                  family: 'Halyard, Helvetica Neue, Arial',
+                  family: 'Inter, system-ui, sans-serif',
                   size: 12,
                   weight: label === 'New York City Public Schools' ? '700' : '400'
                 };
@@ -768,7 +768,7 @@
           var c = chart.ctx;
           var meta = chart.getDatasetMeta(0);
           c.save();
-          c.font = '600 12px Halyard, Helvetica Neue, Arial';
+          c.font = '600 12px Inter, system-ui, sans-serif';
           c.textAlign = 'left';
           c.textBaseline = 'middle';
           meta.data.forEach(function(bar, i){
@@ -951,6 +951,6 @@
   }
 })();
 </script>
-  <script src="../shared/chrome.js?v=13"></script>
+  <script src="../shared/chrome.js?v=14"></script>
 </body>
 </html>
