@@ -63,7 +63,29 @@ Anchor points for the per-pupil view:
 
 **Limitation:** anchor points still mix three methodologies (Council operating-budget totals, Census current spending, IBO fully-loaded). The FY2021/FY2022 jump reflects both real COVID-era federal relief inflows and Census vs. Council/IBO methodology differences. A clean consistent long-run series exists only as a chart image in IBO's June 2023 Education Spending Tables — that is why the pre-2016 points are labeled approximate.
 
-### FY2024 $40B breakdown (Section 2)
+### Denominator effect — decomposing per-pupil growth (Section 2)
+
+Per-pupil = total spending / enrollment. To isolate how much of the FY2016-FY2022 per-pupil rise is driven by enrollment decline (denominator) vs. real spending growth (numerator), the chart indexes three series to FY2016 = 100:
+
+| Year | Per-pupil ($) | District K-12 enrollment (thousands) | Total district current spending ($B, derived) |
+|---|---|---|---|
+| FY2016 | 22,850 | 982 | 22.4 |
+| FY2017 | 24,147 | 982 | 23.7 |
+| FY2018 | 25,199 | 980 | 24.7 |
+| FY2019 | 26,588 | 977 | 26.0 |
+| FY2020 | 28,004 | 962 | 26.9 |
+| FY2021 | 29,931 | 938 | 28.1 |
+| FY2022 | 35,914 | 891 | 32.0 |
+
+**Enrollment series** rounded from NYSED School Report Card district totals and NYC DOE Annual Enrollment Snapshot, K-12 district schools (Geographic Districts 1-32 + District 75, excludes charters). These figures align with the Census F-33 denominator within ~1%.
+
+**Total spending series** is derived as per-pupil × enrollment, consistent with Census F-33 definitions. This replaces an earlier total-spending series on this page that implicitly held enrollment flat — that prior series overstated FY2022 total spending by ~$3B and was misleading on the very point Section 2 now addresses.
+
+**Decomposition.** Per-pupil rose $13,064 from FY2016 to FY2022. If enrollment had remained at 982K, the FY2022 numerator of $32.0B would have produced $32,587 per pupil. The gap between $32,587 (constant-enrollment counterfactual) and $35,914 (actual) is $3,327 — about 25.5% of the $13,064 increase. The remaining 74.5% reflects real numerator growth from ESSER federal relief, contractual salary increases, pension/health-care obligations, and special-education due-process settlements.
+
+**Why personnel costs don't track enrollment down.** Roughly two-thirds of operating spending is staff compensation (UFT/CSA contracts) and benefits. Teacher headcount, salary steps and longevity, health insurance, and pension contributions are set by collective bargaining and state law, not by student count. NYC's pupil-teacher ratio fell from 12.1 (1990) to 9.4 (FY2024) in part because teaching headcount has been stickier than enrollment.
+
+### FY2024 $40B breakdown (Section 3)
 
 All figures directly from IBO June 17, 2025 release:
 - Operating budget: $33B
@@ -79,7 +101,7 @@ All figures directly from IBO June 17, 2025 release:
 
 The two derived figures ($7B pensions+debt, $9.5B other operating) are labeled as such on the chart and are arithmetic residuals from the IBO-stated components.
 
-### Schools vs. central administration vs. everything else (Section 3)
+### Schools vs. central administration vs. everything else (Section 4)
 
 Derived from the NYC Council Finance Division's Fiscal 2019 Preliminary Budget report on the Department of Education, aggregating U/A-level operating-budget lines into five buckets:
 
@@ -95,7 +117,7 @@ Derived from the NYC Council Finance Division's Fiscal 2019 Preliminary Budget r
 
 **Limitation:** FY2019 is the most recent year for which a U/A-level aggregation like this has been publicly compiled in one document. The Council Finance Division publishes an updated DOE report each year; the proportions do not change materially year over year, but the absolute dollar figures would.
 
-### FY2018 functional breakdown (Section 4)
+### FY2018 functional breakdown (Section 5)
 
 Directly from NYC DOE School Based Expenditure Report FY2018 citywide summary:
 
@@ -115,7 +137,7 @@ Directly from NYC DOE School Based Expenditure Report FY2018 citywide summary:
 
 **This is the last year DOE published SBER.** A follow-on post-2018 equivalent does not exist.
 
-### Special education (Section 5)
+### Special education (Section 6)
 
 - **$2.4B "special education"** - IBO June 2025 release, the narrowly-defined school-related-programs line. Excludes embedded special ed in general-ed schools, District 75, and Carter/Connors tuition.
 - **$1.3B FY2025 due-process** and **$101,757 average settlement** - NYC Comptroller sources, reproduced in companion infographic [NYC special education due process spending tracker](https://joshgreenman1973.github.io/experiments/nyc-special-ed-spending/).
@@ -127,7 +149,7 @@ Directly from NYC DOE School Based Expenditure Report FY2018 citywide summary:
 - Recipient-school list for Carter/Connors payments.
 - A total "all-in" special education spending figure that aggregates embedded general-ed special ed + District 75 + Carter/Connors.
 
-### NYC premium decomposition — does higher SPED share explain it? (Section 6)
+### NYC premium decomposition — does higher SPED share explain it? (Section 7)
 
 NYC's "current spending per pupil" (Census F-33 FY2022) is $35,914 vs. a U.S. average of $15,633 — a $20,281 gap. One common hypothesis: NYC's gap is driven by a higher share of students with Individualized Education Programs (IEPs), who cost roughly 1.9× a general-ed student to serve.
 
@@ -140,7 +162,7 @@ Decomposition math:
 
 **Conclusion:** higher SPED enrollment share explains only ~$704 of the $20,281 gap, or about 3.5%. The other ~96% reflects NYC's higher wage base, smaller class sizes, richer benefit packages, older infrastructure costs, and a broader array of school-based services — not a disproportionately disabled student population.
 
-### Cross-district comparison (Section 7)
+### Cross-district comparison (Section 8)
 
 U.S. Census Bureau, 2022 Annual Survey of School System Finances, Table 20 "current spending per pupil" for 100 largest school systems. Comparison values:
 - NYC: $35,914 (FY2022)

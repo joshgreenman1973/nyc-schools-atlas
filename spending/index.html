@@ -248,7 +248,20 @@ table.data th.num { text-align: right; }
 </section>
 
 <section>
-  <h2>2. The $40 billion, broken down (IBO)</h2>
+  <h2>2. Denominator effect: how much of the rise is just fewer pupils?</h2>
+  <p class="deck">Per-pupil spending is a ratio: total dollars on top, enrollment on the bottom. Both have moved sharply since FY2016 - total spending up, enrollment down - so the per-pupil headline overstates how fast actual spending is growing. About a quarter of the FY2016-FY2022 increase is the denominator shrinking, not the numerator expanding.</p>
+  <div class="chart-wrap">
+    <div class="chart-canvas tall"><canvas id="denominatorChart"></canvas></div>
+    <div class="chart-caption"><strong>Indexed to FY2016 = 100.</strong> District-only K-12 enrollment fell about 9% between FY2016 and FY2022 - a loss of roughly 91,000 students, most of it during the COVID years (FY2020-FY2022). Total district current spending grew about 43% in nominal dollars over the same window. Per-pupil spending is the ratio of the two: when enrollment shrinks while total spending keeps growing, per-pupil rises faster than either input on its own. Sources: per-pupil from U.S. Census F-33; enrollment from NYSED report card + NYC DOE Annual Enrollment Snapshot; total = per-pupil x enrollment.</div>
+  </div>
+  <div class="note"><strong>Why the denominator falls but personnel costs don't.</strong> Roughly two-thirds of DOE operating spending is staff compensation and benefits. Teacher headcount, contractual salary steps and longevity payments, health insurance contributions, and pension obligations are set by collective bargaining and state law - they do not automatically shrink when enrollment drops. When a school loses students it typically keeps most of its teachers (class sizes get smaller instead), and central staff, building costs, and pension burden stay the same. The pupil-to-teacher ratio fell from 12.1 in 1990 to 9.4 in FY2024 partly for this reason: enrollment fell faster than teaching headcount. The result is mechanical: a given dollar of payroll now serves fewer pupils, which raises per-pupil cost even before any real "spending increase" decision is made.</div>
+  <div class="callout">
+    <strong>Decomposition, FY2016 to FY2022.</strong> Per-pupil rose $13,064 (+57%). Had district enrollment held flat at the FY2016 level (~982K) instead of falling to ~891K, the same $32.0B of FY2022 total spending would have produced a per-pupil figure of about $32,600 instead of $35,914 - meaning roughly <strong>$3,300, or about 26% of the rise, is the denominator effect</strong>. The remaining ~74% is real growth in the numerator: federal COVID/ESSER aid, wage settlements, rising pension and health-care costs, and special-education due-process spending.
+  </div>
+</section>
+
+<section>
+  <h2>3. The $40 billion, broken down (IBO)</h2>
   <p class="deck">IBO groups the FY2024 $40B total into four buckets. The labels below describe what each bucket actually contains, rather than using IBO's internal accounting shorthand.</p>
   <div class="two-col">
     <div class="chart-wrap">
@@ -264,7 +277,7 @@ table.data th.num { text-align: right; }
 </section>
 
 <section>
-  <h2>3. Schools vs. central administration vs. everything else</h2>
+  <h2>4. Schools vs. central administration vs. everything else</h2>
   <p class="deck">The cleanest unit-of-appropriation breakdown of the DOE operating budget comes from the NYC Council Finance Division's DOE briefing, which itemizes every U/A line. Below: FY2019 figures aggregated into major spending buckets. The key finding - <strong>central administration is about 1.35% of the DOE operating budget</strong>.</p>
   <div class="note"><strong>Why staff benefits ($3.5B) are a separate bar from schools ($14.7B).</strong> In the NYC city budget, health insurance and welfare-fund contributions for DOE employees are budgeted on a single centrally-held line item (the "Fringe Benefits" U/A) rather than charged to each school's budget. <em>Economically</em>, the overwhelming majority of that $3.5B is compensation for school-based staff - teachers, paraprofessionals, guidance counselors, school aides, principals - so it is effectively part of the cost of running schools. It is shown as its own bar because that's how it appears in the public budget document, but think of it as an extension of the "Schools" bar. Combined, school-based activity plus its associated staff benefits is roughly <strong>$18.2B, or about 71% of the operating budget.</strong></div>
   <div class="chart-wrap">
@@ -277,7 +290,7 @@ table.data th.num { text-align: right; }
 </section>
 
 <section>
-  <h2>4. Where each dollar goes inside a school</h2>
+  <h2>5. Where each dollar goes inside a school</h2>
   <p class="deck">The most granular per-pupil functional breakdown NYC DOE has ever published is the School Based Expenditure Report. DOE stopped publishing SBER after FY2018 - so this is the last official functional breakdown of what gets spent on classroom instruction vs. administration vs. system overhead.</p>
   <div class="chart-wrap">
     <div class="chart-canvas tall"><canvas id="functionalChart"></canvas></div>
@@ -287,7 +300,7 @@ table.data th.num { text-align: right; }
 </section>
 
 <section>
-  <h2>5. Special education: what can and cannot be broken out</h2>
+  <h2>6. Special education: what can and cannot be broken out</h2>
   <p class="deck">Special education is the single largest driver of NYC DOE cost growth and also the least transparent line item. Here is what public sources can and cannot tell you.</p>
 
   <h3>What IS broken out publicly</h3>
@@ -314,7 +327,7 @@ table.data th.num { text-align: right; }
 </section>
 
 <section>
-  <h2>6. Why is NYC so much higher? Decomposing the $20K gap</h2>
+  <h2>7. Why is NYC so much higher? Decomposing the $20K gap</h2>
   <p class="deck">In FY2022, NYC spent $35,914 per pupil vs. the U.S. national average of $15,633 (Census F-33, current spending). That's a $20,281 gap. A common explanation is "NYC has more special-needs students." The data supports the premise but not the conclusion - higher special-ed share explains only a small slice of the premium.</p>
 
   <h3>Part A: NYC does have a higher share of students with IEPs</h3>
@@ -335,7 +348,7 @@ table.data th.num { text-align: right; }
 </section>
 
 <section>
-  <h2>7. How NYC compares to other large districts</h2>
+  <h2>8. How NYC compares to other large districts</h2>
   <p class="deck">Among the 100 largest U.S. school systems, NYC had the highest per-pupil current spending in the most recent year the U.S. Census Bureau has published district-level data (FY2022).</p>
   <div class="chart-wrap">
     <div class="chart-canvas tall"><canvas id="compareChart"></canvas></div>
@@ -392,15 +405,16 @@ const trendPP = [
   { x: 2021, y: 29931, src: 'Census F-33 FY2021' },
   { x: 2022, y: 35914, src: 'Census F-33 FY2022' }
 ];
-// Total district current spending = per-pupil x district enrollment (F-33 denominator ~980K-1.00M)
+// Total district current spending = per-pupil x district K-12 enrollment.
+// Enrollment denominator (thousands): 982, 982, 980, 977, 962, 938, 891 - NYSED report card + NYC DOE Annual Enrollment Snapshot.
 const trendTotal = [
-  { x: 2016, y: 22.4, src: 'Census F-33, district current spending total' },
-  { x: 2017, y: 23.6, src: 'Census F-33, district current spending total' },
-  { x: 2018, y: 24.7, src: 'Census F-33, district current spending total' },
-  { x: 2019, y: 26.1, src: 'Census F-33, district current spending total' },
-  { x: 2020, y: 27.4, src: 'Census F-33, district current spending total' },
-  { x: 2021, y: 29.3, src: 'Census F-33, district current spending total' },
-  { x: 2022, y: 35.2, src: 'Census F-33, district current spending total' }
+  { x: 2016, y: 22.4, src: 'Census F-33 per-pupil x ~982K enrollment' },
+  { x: 2017, y: 23.7, src: 'Census F-33 per-pupil x ~982K enrollment' },
+  { x: 2018, y: 24.7, src: 'Census F-33 per-pupil x ~980K enrollment' },
+  { x: 2019, y: 26.0, src: 'Census F-33 per-pupil x ~977K enrollment' },
+  { x: 2020, y: 26.9, src: 'Census F-33 per-pupil x ~962K enrollment' },
+  { x: 2021, y: 28.1, src: 'Census F-33 per-pupil x ~938K enrollment' },
+  { x: 2022, y: 32.0, src: 'Census F-33 per-pupil x ~891K enrollment' }
 ];
 
 let trendChart;
@@ -412,7 +426,7 @@ function renderTrend(mode) {
     ? (c => '$' + c.parsed.y + 'B - ' + points[c.dataIndex].src)
     : (c => '$' + c.parsed.y.toLocaleString() + ' / pupil - ' + points[c.dataIndex].src);
   const yMin = mode === 'total' ? 0 : 20000;
-  const yMax = mode === 'total' ? 40 : 40000;
+  const yMax = mode === 'total' ? 36 : 40000;
   if (trendChart) trendChart.destroy();
   trendChart = new Chart(document.getElementById('trendChart'), {
     type: 'line',
@@ -469,6 +483,63 @@ document.getElementById('trendBtnTot').addEventListener('click', () => {
   document.getElementById('trendBtnPP').classList.remove('trend-btn-active');
   document.getElementById('trendCaption').innerHTML = TOT_CAPTION;
   renderTrend('total');
+});
+
+// 2. Denominator effect - indexed total spending, enrollment, per-pupil (FY2016 = 100)
+new Chart(document.getElementById('denominatorChart'), {
+  type: 'line',
+  data: {
+    labels: ['FY2016','FY2017','FY2018','FY2019','FY2020','FY2021','FY2022'],
+    datasets: [
+      {
+        label: 'Per-pupil spending',
+        data: [100, 105.7, 110.3, 116.4, 122.6, 131.0, 157.2],
+        borderColor: VC.orange,
+        backgroundColor: 'transparent',
+        borderWidth: 3,
+        pointRadius: 5,
+        pointBackgroundColor: VC.orange,
+        tension: 0.2
+      },
+      {
+        label: 'Total district current spending',
+        data: [100, 105.8, 110.3, 116.1, 120.1, 125.4, 142.9],
+        borderColor: VC.cerulean,
+        backgroundColor: 'transparent',
+        borderWidth: 2.5,
+        pointRadius: 5,
+        pointBackgroundColor: VC.cerulean,
+        tension: 0.2
+      },
+      {
+        label: 'District K-12 enrollment',
+        data: [100, 100.0, 99.8, 99.5, 97.9, 95.5, 90.7],
+        borderColor: VC.charcoal,
+        backgroundColor: 'transparent',
+        borderWidth: 2.5,
+        pointRadius: 5,
+        pointBackgroundColor: VC.charcoal,
+        borderDash: [6, 4],
+        tension: 0.2
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom', labels: { boxWidth: 14, padding: 12, font: { size: 12 } } },
+      tooltip: {
+        callbacks: {
+          label: c => c.dataset.label + ': ' + c.parsed.y.toFixed(1) + ' (FY16 = 100)'
+        }
+      }
+    },
+    scales: {
+      y: { min: 85, max: 165, ticks: { callback: v => v }, grid: { color: '#eee' },
+           title: { display: true, text: 'Index (FY2016 = 100)', font: { size: 11 }, color: VC.charcoal } },
+      x: { grid: { display: false } }
+    }
+  }
 });
 
 // 3. Central admin vs schools vs other (FY2019 Council)
