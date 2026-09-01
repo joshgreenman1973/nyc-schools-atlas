@@ -4,12 +4,12 @@ const GSV_KEY = "AIzaSyBPEjOGoN9DTFfr4BaLoHNIVM_FHNQNeFI";
 const map = L.map('map', { preferCanvas: true, zoomControl: true, minZoom: 10, maxZoom: 18 })
   .setView([40.7128, -74.0060], 11);
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png?key=cb1_2r82_1_ae4e70b6166057bc41b89638', {
   attribution: '&copy; <a href="https://carto.com/">CARTO</a> &middot; &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> &middot; Schools DOE/NCES &middot; Children ACS 2018&ndash;2022',
   subdomains: 'abcd', maxZoom: 20,
 }).addTo(map);
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png', {
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png?key=cb1_2r82_1_ae4e70b6166057bc41b89638', {
   subdomains: 'abcd', maxZoom: 20, pane: 'shadowPane',
 }).addTo(map);
 
