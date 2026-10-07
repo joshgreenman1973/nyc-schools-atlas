@@ -1,4 +1,6 @@
 /* NYC schools atlas */
+// Bump with each data rebuild so browsers don't pair new code with cached data.
+const DATA_V = '2026-10-07b';
 const GSV_KEY = "AIzaSyBPEjOGoN9DTFfr4BaLoHNIVM_FHNQNeFI";
 
 const map = L.map('map', { preferCanvas: true, zoomControl: true, minZoom: 10, maxZoom: 18 })
@@ -140,7 +142,7 @@ function sectorClass(s) {
 
 // ---------- Load data ----------
 Promise.all([
-  fetch('./data/schools.json').then(r => r.json()),
+  fetch(`./data/schools.json?v=${DATA_V}`).then(r => r.json()),
   fetch('./data/zones.geojson').then(r => r.json()),
 ]).then(([schools, zones]) => {
   allSchools = schools;

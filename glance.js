@@ -22,7 +22,7 @@ let selectedDbn = null;
 const pinned = [];
 
 function loadGlance() {
-  return fetch('./data/metrics.json').then(r => r.json()).then(d => {
+  return fetch(`./data/metrics.json?v=${DATA_V}`).then(r => r.json()).then(d => {
     MX = d;
     d.metrics.forEach((m, i) => { MI[m.id] = i; m.i = i; });
     // Accessibility tags: replace the 2021 directory tags with DOE's current
