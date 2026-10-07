@@ -194,3 +194,18 @@ body.sheet-open #app{grid-template-columns:320px 1fr 420px}
 .shape-key>span{display:flex;align-items:flex-start;gap:8px}
 .shape-key .swatch{width:10px;height:10px;margin-top:2px;flex:none;display:inline-block}
 .shape-diamond{border-radius:1px;transform:rotate(45deg) scale(.85)}
+
+/* ---------- marker size follows zoom (set as --mk on #map by app.js) ---------- */
+.mk-wrap{display:flex;align-items:center;justify-content:center}
+#map .mk{width:var(--mk,12px);height:var(--mk,12px)}
+#map .mk.private,#map .mk.private.cb.nodata{
+  width:0;height:0;
+  border-left:calc(var(--mk,12px) * .58) solid transparent;
+  border-right:calc(var(--mk,12px) * .58) solid transparent;
+  border-bottom-width:var(--mk,12px);
+}
+#map .mk.public.unzoned{width:calc(var(--mk,12px) * .85);height:calc(var(--mk,12px) * .85)}
+#map.mk-small .mk{filter:none}
+#map.mk-small .mk:not(.private){border-width:1px}
+#map.mk-tiny .mk:not(.private){border-width:.75px}
+#map.mk-tiny .mk{opacity:.9}

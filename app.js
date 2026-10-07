@@ -15,6 +15,19 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.p
   subdomains: 'abcd', maxZoom: 20, pane: 'shadowPane',
 }).addTo(map);
 
+// Dots shrink when zoomed out so the city view doesn't turn into a pile.
+const MARKER_PX = { 10: 4, 11: 5, 12: 6, 13: 8, 14: 10 };
+function sizeMarkers() {
+  const z = map.getZoom();
+  const px = z >= 15 ? 12 : (MARKER_PX[z] || 4);
+  const el = map.getContainer();
+  el.style.setProperty('--mk', px + 'px');
+  el.classList.toggle('mk-small', px <= 8);
+  el.classList.toggle('mk-tiny', px <= 5);
+}
+map.on('zoomend', sizeMarkers);
+sizeMarkers();
+
 // -------------- State --------------
 let allSchools = [];
 let schoolByDbn = new Map();
