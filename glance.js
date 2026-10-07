@@ -41,13 +41,22 @@ function loadGlance() {
 // ---------- lookups ----------
 function rec(dbn) { return MX && MX.schools[dbn]; }
 function mval(dbn, id) { const r = rec(dbn); return r ? r.v[MI[id]] ?? null : null; }
-function mpct(dbn, id) { const r = rec(dbn); return r ? r.p[MI[id]] ?? null : null; }
-function peerKey(m, level) { return (MX.dist[m.id] && MX.dist[m.id][level]) ? level : 'ALL'; }
-function peerPhrase(m, level) {
-  const k = peerKey(m, level);
+// Midpoint rank, 0-100: used for colors, sorting and the top/bottom tenth.
+function mid(r, i) { return r && r.a[i] != null ? (r.a[i] + 100 - r.h[i]) / 2 : null; }
+function mpct(dbn, id) { return mid(rec(dbn), MI[id]); }
+// The peer group a school is ranked in for a measure: its level, unless the
+// build says otherwise (r.pk), e.g. charters tested in a different year.
+function peerKey(m, r) {
+  if (r.pk && r.pk[m.i]) return r.pk[m.i];
+  return (MX.dist[m.id] && MX.dist[m.id][r.level]) ? r.level : 'ALL';
+}
+function peerPhrase(m, r, others) {
+  const k = peerKey(m, r);
   const n = MX.dist[m.id][k] ? MX.dist[m.id][k].n : 0;
-  const lv = LEVEL_NAME[k];
-  return `${n.toLocaleString()} ${lv ? lv + ' ' : ''}schools`;
+  const [base, sfx] = k.split('-');
+  const lv = (LEVEL_NAME[base] || '') + (sfx === 'c25' ? (LEVEL_NAME[base] ? ' charter' : 'charter') : '');
+  const tail = sfx === 'c25' ? ' tested in spring 2025' : '';
+  return others ? `the ${(n - 1).toLocaleString()} other ${lv ? lv + ' ' : ''}schools${tail}` : `${n.toLocaleString()} ${lv ? lv + ' ' : ''}schools${tail}`;
 }
 function favorable(m, p) { return m.dir === -1 ? 100 - p : p; }
 function cellColor(m, p) {
@@ -74,16 +83,20 @@ function ordinal(n) {
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
 }
 
-function rankSentence(m, p, level) {
-  if (p == null) return '';
-  const peers = peerPhrase(m, level);
-  const r = Math.round(p);
-  return r >= 50 ? `Higher than ${r}% of ${peers}` : `Lower than ${100 - r}% of ${peers}`;
+// a = % of the other peer schools strictly lower, h = % strictly higher.
+// Every phrase is literally true, ties included.
+function rankSentence(m, r, i) {
+  const a = r.a[i], h = r.h[i];
+  if (a == null) return '';
+  const all = peerPhrase(m, r);
+  if (h === 0) return a === 100 ? `Highest of ${all}` : `Tied for highest of ${all}`;
+  if (a === 0) return h === 100 ? `Lowest of ${all}` : `Tied for lowest of ${all}`;
+  return a >= h ? `Higher than ${a}% of ${peerPhrase(m, r, true)}` : `Lower than ${h}% of ${peerPhrase(m, r, true)}`;
 }
 
 // ---------- strip: peer distribution with this school marked ----------
-function stripSVG(m, v, level, p) {
-  const d = MX.dist[m.id] && MX.dist[m.id][peerKey(m, level)];
+function stripSVG(m, v, r, p) {
+  const d = MX.dist[m.id] && MX.dist[m.id][peerKey(m, r)];
   if (!d || v == null || typeof v === 'string') return '<span class="strip-empty"></span>';
   const W = 104, H = 18, n = d.hist.length, bw = W / n, max = Math.max(...d.hist, 1);
   const [lo, hi] = MX.dist[m.id].domain;
@@ -156,6 +169,8 @@ function renderSheet(s) {
       <h2>${escapeHtml(s.name || 'Unnamed school')}</h2>
       <div class="sheet-meta"><span class="mk-mini ${sectorClass(s)}"></span>${meta}</div>
       ${s.address ? `<div class="sheet-addr">${escapeHtml(s.address)}${s.zip ? ', ' + escapeHtml(s.zip) : ''}</div>` : ''}
+      ${r && r.x && r.x.current_list ? `<div class="sheet-warn">Not on DOE&rsquo;s list of open schools as of Oct. 7, 2026. It may have closed, merged or taken a new number after 2025-26.</div>` : ''}
+      ${r && r.u && r.u.insideschools ? `<a class="sheet-review" href="${escapeHtml(r.u.insideschools)}" target="_blank" rel="noopener">Read the Insideschools review${r.x && r.x.insideschools ? ` (${escapeHtml(r.x.insideschools)})` : ''}</a>` : ''}
     </div>`;
 
   if (s.sector === 'private') {
@@ -185,7 +200,7 @@ function renderSheet(s) {
   }
 
   if (r.x && Object.keys(r.x).length) {
-    const facts = Object.entries(r.x).map(([k, v]) => `<div class="fact"><span>${escapeHtml(MX.extras[k] || k)}</span><b>${escapeHtml(String(v))}</b></div>`).join('');
+    const facts = Object.entries(r.x).filter(([k]) => k !== 'current_list').map(([k, v]) => `<div class="fact"><span>${escapeHtml(MX.extras[k] || k)}</span><b>${escapeHtml(String(v))}</b></div>`).join('');
     html += `<section class="sheet-block grp"><h3>Also on file</h3><div class="facts">${facts}</div></section>`;
   }
 
@@ -202,14 +217,14 @@ function renderSheet(s) {
 function metricRow(s, r, m) {
   const v = r.v[m.i];
   if (v == null) return '';
-  const p = r.p[m.i];
+  const p = mid(r, m.i);
   const label = escapeHtml(m.short || m.label);
   if (typeof v === 'string') {
     return `<div class="mrow text" data-m="${m.id}"><div class="ml">${label}</div><div class="mv txt">${escapeHtml(v)}</div></div>`;
   }
   return `<div class="mrow" data-m="${m.id}" tabindex="0">
     <div class="ml">${label}</div>
-    ${stripSVG(m, v, r.level, p)}
+    ${stripSVG(m, v, r, p)}
     <div class="mv">${(r.t && r.t[m.i]) || fmt(m, v)}</div>
   </div>`;
 }
@@ -217,10 +232,10 @@ function metricRow(s, r, m) {
 function renderCallouts(s, r) {
   const worst = [], best = [];
   for (const m of MX.metrics) {
-    const v = r.v[m.i], p = r.p[m.i];
+    const v = r.v[m.i], p = mid(r, m.i);
     if (v == null || p == null || !m.dir || typeof v === 'string') continue;
     const f = favorable(m, p);
-    const line = `<li><span class="sw" style="background:${cellColor(m, p)}"></span><span><b>${escapeHtml(m.short || m.label)}</b> ${(r.t && r.t[m.i]) || fmt(m, v)}. ${rankSentence(m, p, r.level)}.</span></li>`;
+    const line = `<li><span class="sw" style="background:${cellColor(m, p)}"></span><span><b>${escapeHtml(m.short || m.label)}</b> ${(r.t && r.t[m.i]) || fmt(m, v)}. ${rankSentence(m, r, m.i)}.</span></li>`;
     if (f < 10) worst.push([f, line]); else if (f >= 90) best.push([-f, line]);
   }
   for (const b of (r.b || [])) worst.push([-1, `<li><span class="sw" style="background:${FAV[0]}"></span><span>${escapeHtml(b)}</span></li>`]);
@@ -236,10 +251,27 @@ function renderCallouts(s, r) {
   return h + '</section>';
 }
 
+// Enrollment by year: one bar per year from a zero baseline, count on each bar.
+function enrollChart(trend) {
+  const pts = (trend || []).filter(t => t[1] != null);
+  if (!pts.length) return '';
+  const max = Math.max(...pts.map(t => t[1]), 1);
+  const bars = pts.map(([, v]) => `<div class="ec-col"><div class="ec-val">${v.toLocaleString()}</div><div class="ec-bar" style="height:${Math.max(1, Math.round(v / max * 56))}px"></div></div>`).join('');
+  const years = pts.map(([y]) => `<div class="ec-yr">${y}</div>`).join('');
+  let change = '';
+  if (pts.length > 1 && pts[0][1] > 0) {
+    const [y0, a] = pts[0], [y1, b] = pts[pts.length - 1];
+    const pct = Math.round((b - a) / a * 100);
+    change = pct === 0 ? `About the same as in ${y0} (${a.toLocaleString()} then, ${b.toLocaleString()} now).`
+      : `${pct > 0 ? 'Up' : 'Down'} ${Math.abs(pct)}% since ${y0}: from ${a.toLocaleString()} to ${b.toLocaleString()} students.`;
+  }
+  return `<div class="ec"><div class="ec-h">Enrollment by year</div><div class="ec-bars">${bars}</div><div class="ec-yrs">${years}</div>${change ? `<p class="ec-note">${change}</p>` : ''}</div>`;
+}
+
 function studentExtras(s) {
   const d = s.demo;
   if (!d) return '';
-  const spark = sparklineSVG(s.trend);
+  const spark = enrollChart(s.trend);
   const race = [
     ['Asian', d.pct_asian, 'var(--demo-asian)'],
     ['Black', d.pct_black, 'var(--demo-black)'],
@@ -247,14 +279,14 @@ function studentExtras(s) {
     ['White', d.pct_white, 'var(--demo-white)'],
     ['Multiracial', d.pct_multi, 'var(--demo-multi)'],
   ].filter(x => x[1] != null && x[1] > 0).map(([l, v, c]) => barRow(l, v, c)).join('');
-  return `${spark ? `<div class="enroll-spark"><div class="es-lbl">Enrollment by year</div>${spark}</div>` : ''}
-    <div class="bars">${race}</div>`;
+  return `${spark}<div class="bars">${race}</div>`;
 }
 
 function sheetLinks(s) {
   const links = [];
   if (s.website) links.push(`<a href="${ensureHttp(s.website)}" target="_blank" rel="noopener">School website</a>`);
   const u = (rec(s.dbn) || {}).u || {};
+  if (u.insideschools) links.push(`<a href="${escapeHtml(u.insideschools)}" target="_blank" rel="noopener">Insideschools review</a>`);
   if (u.authorizer) links.push(`<a href="${escapeHtml(u.authorizer)}" target="_blank" rel="noopener">Authorizer&rsquo;s page</a>`);
   if (u.nysed) links.push(`<a href="${escapeHtml(u.nysed)}" target="_blank" rel="noopener">State charter page</a>`);
   const st = (rec(s.dbn) || {}).st;
@@ -285,11 +317,11 @@ function hideTip() { tip.hidden = true; }
 
 function metricTip(m, dbn) {
   const r = rec(dbn);
-  const v = r ? r.v[m.i] : null, p = r ? r.p[m.i] : null;
-  const d = r && MX.dist[m.id] && MX.dist[m.id][peerKey(m, r.level)];
+  const v = r ? r.v[m.i] : null, p = mid(r, m.i);
+  const d = r && MX.dist[m.id] && MX.dist[m.id][peerKey(m, r)];
   return `<div class="tip-h">${escapeHtml(m.label)}</div>
-    ${v != null ? `<div class="tip-v">${(r.t && r.t[m.i]) || fmt(m, v)}${p != null ? ` <span>${rankSentence(m, p, r.level)}</span>` : ''}</div>` : '<div class="tip-v">No data</div>'}
-    ${d ? `<div class="tip-m">Median among ${LEVEL_NAME[peerKey(m, r.level)] || 'all'} schools: ${fmt(m, d.median)}</div>` : ''}
+    ${v != null ? `<div class="tip-v">${(r.t && r.t[m.i]) || fmt(m, v)}${p != null ? ` <span>${rankSentence(m, r, m.i)}</span>` : ''}</div>` : '<div class="tip-v">No data</div>'}
+    ${d ? `<div class="tip-m">Median among ${peerPhrase(m, r).replace(/^[\d,]+ /, '')}: ${fmt(m, d.median)}</div>` : ''}
     <div class="tip-d">${escapeHtml(m.def)}</div>
     <div class="tip-s">${escapeHtml(m.source)}, ${escapeHtml(m.vintage)}</div>`;
 }
@@ -444,7 +476,7 @@ function renderLineup() {
     const r = rec(s.dbn);
     const isPin = idx < pinnedRows.length;
     const cells = metrics.map(m => {
-      const p = r ? r.p[m.i] : null;
+      const p = mid(r, m.i);
       const v = r ? r.v[m.i] : null;
       const c = v == null ? '' : (cellColor(m, p) || '#2a2f3c');
       return `<td class="c${v == null ? ' na' : ''}" data-i="${m.i}"${c ? ` style="background:${c}"` : ''}></td>`;

@@ -18,6 +18,14 @@ What it does, in order:
      file for 2023-24 (the 2021-22 file before), the NYC rows of which are
      saved in data/sources. Names keep the old file's capitalization where
      the NCES PPIN matches; new schools get title case.
+  5. Brings public and charter schools up to DOE's current school list
+     (LCGMS, downloaded Oct. 7, 2026): current names; and where DOE's
+     current address differs from the map's and NYC Planning's GeoSearch
+     places that exact address more than 75 m from the map's dot, the dot
+     and address move there. Lookups are cached in data/sources so the
+     build is repeatable. P.S. Q256 (75Q256), a District 75 school in
+     Syosset, is placed with the Census Bureau geocoder.
+  6. has_zone counts shared zones, whose DBN field lists several schools.
 Also drops the old `quality` and `quality_meta` blocks. Their
 `chronic_absent` field held the share of students NOT chronically absent (see
 data/AUDIT.md); outcome measures now live in data/metrics.json.
@@ -37,6 +45,11 @@ ROOT = Path(__file__).resolve().parent.parent
 SNAP = ROOT / 'data/sources/nyc_doe_demographic_snapshot_2021-22_to_2025-26.xlsx'
 FACDB = ROOT / 'data/sources/facdb_doe_lcgms_2026-07.json'
 PSS = ROOT / 'data/sources/nces_edge_geocode_privatesch_2023-24_nyc_rows.csv'
+LCGMS = ROOT / 'data/sources/nyc_doe_lcgms_school_data_2026-10-07.xls'
+GEOCACHE = ROOT / 'data/sources/geosearch_cache_lcgms_2026-10.json'
+# Outside the city, so NYC GeoSearch can't place it; Census Bureau geocoder,
+# 525 CONVENT RD, SYOSSET, NY, 11791.
+OUTSIDE_NYC = {'75Q256': (40.821547225671, -73.485224763559, '525 Convent Road, Syosset, NY')}
 PSS_URL = 'https://nces.ed.gov/programs/edge/data/EDGE_GEOCODE_PRIVATESCH_2324.zip'
 COUNTY_BORO = {'36005': 'Bronx', '36047': 'Brooklyn', '36061': 'Manhattan', '36081': 'Queens', '36085': 'Staten Island'}
 SCHOOLS = ROOT / 'data/schools.json'
@@ -97,8 +110,152 @@ def full_name(snap_name, fac_name):
     return re.sub(r"'S\b", "'s", t)
 
 
+def street_key(a):
+    a = (a or '').upper()
+    for k, v in ((' STREET', ' ST'), (' AVENUE', ' AVE'), (' BOULEVARD', ' BLVD'), (' PLACE', ' PL'), (' ROAD', ' RD'),
+                 (' PARKWAY', ' PKWY'), ('EAST ', 'E '), ('WEST ', 'W '), ('NORTH ', 'N '), ('SOUTH ', 'S '), ('SAINT ', 'ST ')):
+        a = a.replace(k, v)
+    a = re.sub(r'(\d+)(ST|ND|RD|TH)\b', r'\1', a)
+    a = re.sub(r'(\d+)-\d+', r'\1', a)
+    return re.sub(r'[^A-Z0-9]', '', a)
+
+
+def meters(a, b, c, d):
+    import math
+    p = math.pi / 180
+    x = math.sin((c - a) * p / 2) ** 2 + math.cos(a * p) * math.cos(c * p) * math.sin((d - b) * p / 2) ** 2
+    return 2 * 6371000 * math.asin(math.sqrt(x))
+
+
+def geosearch(addr, zipc, boro, cache):
+    """NYC Planning GeoSearch. Returns a point only when the matched address is
+    the address asked for (same house number and street)."""
+    import urllib.request, urllib.parse, time
+    q = f'{addr}, {boro} {zipc}'
+    if q not in cache:
+        url = 'https://geosearch.planninglabs.nyc/v2/search?size=1&text=' + urllib.parse.quote(q)
+        for i in range(3):
+            try:
+                d = json.load(urllib.request.urlopen(url, timeout=20))
+                break
+            except Exception:
+                time.sleep(2)
+        else:
+            raise SystemExit(f'GeoSearch failed for {q}')
+        f = (d.get('features') or [None])[0]
+        cache[q] = None if not f else {'lat': f['geometry']['coordinates'][1], 'lon': f['geometry']['coordinates'][0],
+                                       'label': f['properties'].get('label')}
+        time.sleep(0.15)
+    g = cache[q]
+    if not g or street_key(g['label'].split(',')[0]) != street_key(addr):
+        return None
+    return g
+
+
+# Long moves confirmed by hand against a second source.
+CONFIRMED_MOVES = {'84K766': "Insideschools' page lists the same address, 272 Macon St."}
+
+
+def confirmed(name, g, fac):
+    """A move of more than 2 km needs a second source: NYC Planning's
+    Facilities Database (DOE records, July 2026) must have a school of the
+    same name within 250 m of the new point, or the move is listed in
+    CONFIRMED_MOVES. Otherwise the dot stays where it was."""
+    n = norm(name)
+    for f in fac:
+        fn = norm(f['facname'])
+        if (fn == n or fn.startswith(n) or n.startswith(fn)) and meters(g['lat'], g['lon'], float(f['latitude']), float(f['longitude'])) < 250:
+            return True
+    return False
+
+
+def place_from_lcgms(unplaced, latest, keep, zoned):
+    """Schools the Facilities Database couldn't place: use DOE's current
+    address if GeoSearch finds that exact address."""
+    import pandas as pd
+    t = pd.read_html(LCGMS)[0]
+    t.columns = t.iloc[0]
+    t = t[1:]
+    L = {r['ATS System Code'].strip(): r for _, r in t.iterrows() if isinstance(r['ATS System Code'], str)}
+    cache = json.load(open(GEOCACHE)) if GEOCACHE.exists() else {}
+    done = []
+    for u in unplaced:
+        d, l = u['dbn'], L.get(u['dbn'])
+        if l is None:
+            continue
+        addr, zipc = str(l['Primary Address']).strip(), str(l['Zip']).strip()[:5]
+        g = geosearch(addr, zipc, BORO[d[2]], cache)
+        if g is None:
+            continue
+        keep.append({'dbn': d, 'name': l['Location Name'], 'sector': 'charter' if d.startswith('84') else 'public',
+                     'lat': g['lat'], 'lon': g['lon'], 'address': addr.upper(), 'zip': zipc, 'boro': BORO[d[2]],
+                     'district': d[:2].lstrip('0'), 'neighborhood': None, 'grades': None, 'website': None, 'overview': None,
+                     'admission': None, 'demo': None, 'trend': [], 'programs': [], 'admission_programs': [],
+                     'has_zone': d in zoned,
+                     'location_source': "DOE LCGMS address (Oct. 7, 2026), placed by NYC Planning GeoSearch"})
+        done.append(d)
+    json.dump(cache, open(GEOCACHE, 'w'), indent=0, sort_keys=True)
+    return done
+
+
+def current_names_and_places(keep, latest, idx):
+    import pandas as pd
+    t = pd.read_html(LCGMS)[0]
+    t.columns = t.iloc[0]
+    t = t[1:]
+    L = {r['ATS System Code'].strip(): r for _, r in t.iterrows() if isinstance(r['ATS System Code'], str)}
+    cache = json.load(open(GEOCACHE)) if GEOCACHE.exists() else {}
+    fac = [f for f in json.load(open(FACDB)) if float(f.get('latitude') or 0)]
+    moved, renamed, held = [], [], []
+    for s in keep:
+        if s['sector'] == 'private':
+            continue
+        d = s['dbn']
+        if d in OUTSIDE_NYC:
+            s['lat'], s['lon'], s['address'] = OUTSIDE_NYC[d]
+            s['boro'] = 'Outside NYC'
+        l = L.get(d)
+        if l is None:
+            if d in latest and norm(latest[d][1]) != norm(s['name']) and len(latest[d][1]) < 50:
+                renamed.append({'dbn': d, 'from': s['name'], 'to': latest[d][1].strip(), 'source': 'snapshot 2025-26'})
+                s['name'] = latest[d][1].strip()
+            continue
+        gd = str(l['Geographical District Code']).strip()
+        if gd.isdigit() and int(gd) > 0:
+            s['district'] = str(int(gd))
+        if norm(l['Location Name']) != norm(s['name']):
+            renamed.append({'dbn': d, 'from': s['name'], 'to': l['Location Name'], 'source': 'LCGMS'})
+            s['name'] = l['Location Name']
+        if d in OUTSIDE_NYC:
+            continue
+        addr, zipc = str(l['Primary Address']).strip(), str(l['Zip']).strip()[:5]
+        if street_key(addr) == street_key(s.get('address')) and s.get('address'):
+            continue
+        g = geosearch(addr, zipc, BORO[d[2]], cache)
+        if g is None:
+            if not s.get('address'):
+                s['address'] = addr.upper()
+            continue
+        dist = meters(s['lat'], s['lon'], g['lat'], g['lon'])
+        if dist > 2000 and d not in CONFIRMED_MOVES and not confirmed(s['name'], g, fac):
+            held.append({'dbn': d, 'name': s['name'], 'map_address': s.get('address'), 'doe_address': addr, 'meters': round(dist)})
+            continue
+        if dist > 75:
+            moved.append({'dbn': d, 'name': s['name'], 'from': s.get('address'), 'to': addr, 'meters': round(dist)})
+            s['lat'], s['lon'] = g['lat'], g['lon']
+            s['location_source'] = "DOE LCGMS address (Oct. 7, 2026), placed by NYC Planning GeoSearch"
+        s['address'], s['zip'] = addr.upper(), zipc
+    json.dump(cache, open(GEOCACHE, 'w'), indent=0, sort_keys=True)
+    print(f'{len(renamed)} renamed to current DOE names, {len(moved)} moved to current DOE addresses, '
+          f'{len(held)} long moves held back for lack of a second source')
+    for h in held:
+        print('  held', h)
+    return moved + [dict(h, held=True) for h in held], renamed
+
+
 def smart_title(t):
     t = t.title()
+    t = re.sub(r"(\d)(St|Nd|Rd|Th)\b", lambda m: m.group(1) + m.group(2).lower(), t)
     t = re.sub(r"\b(Ii|Iii|Iv)\b", lambda m: m.group(0).upper(), t)
     t = re.sub(r"(?<=\s)(Of|And|The|For|In|At)\b", lambda m: m.group(0).lower(), t)
     return re.sub(r"'S\b", "'s", t)
@@ -125,9 +282,10 @@ def main():
         raise SystemExit(f'only {len(latest)} schools on the {LATEST} tab; expected ~1,900')
 
     schools = json.load(open(SCHOOLS))
-    seen, deduped = set(), []
+    seen, deduped, dupes = set(), [], []
     for s in schools:
         if s['sector'] != 'private' and s['dbn'] in seen:
+            dupes.append({'dbn': s['dbn'], 'name': s['name']})
             continue
         seen.add(s['dbn'])
         deduped.append(s)
@@ -150,7 +308,9 @@ def main():
             continue  # two records sit outside the city with no coordinates
         fac_by_boro.setdefault(f['boro'].title(), []).append(f)
 
-    zoned = {f['properties'].get('dbn') for f in json.load(open(ROOT / 'data/zones.geojson'))['features']}
+    # A shared zone lists every school in it, comma-separated ("09X053,09X088").
+    zoned = {d.strip() for f in json.load(open(ROOT / 'data/zones.geojson'))['features']
+             for d in (f['properties'].get('dbn') or '').split(',') if d.strip()}
     added, unplaced = [], []
     for dbn in sorted(set(latest) - have):
         r = latest[dbn]
@@ -177,10 +337,15 @@ def main():
             'location_source': 'NYC Planning Facilities Database (ji82-xba5), doe_lcgms, matched by name + borough',
         })
     keep.extend(added)
+    placed_late = place_from_lcgms(unplaced, latest, keep, zoned)
+    added += [{'dbn': d, 'name': next(k['name'] for k in keep if k['dbn'] == d)} for d in placed_late]
+    unplaced = [u for u in unplaced if u['dbn'] not in placed_late]
 
     for s in keep:
         s.pop('quality', None)
         s.pop('quality_meta', None)
+        if s['sector'] != 'private':
+            s['has_zone'] = s['dbn'] in zoned
 
     # Demographics + trend for every public/charter school
     for s in keep:
@@ -228,10 +393,11 @@ def main():
     for r in pss:
         dbn = f"PRIV-{r['PPIN']}"
         o = old_priv.get(dbn)
-        name = o['name'] if o else full_name(r['NAME'], r['NAME']) if len(r['NAME']) >= 50 else smart_title(r['NAME'])
+        # Keep the old file's capitalization only when it is the same name.
+        name = o['name'] if o and norm(o['name']) == norm(r['NAME']) else smart_title(r['NAME'])
         new_priv.append({
             'dbn': dbn, 'name': name, 'sector': 'private', 'lat': float(r['LAT']), 'lon': float(r['LON']),
-            'address': o['address'] if o and o['address'] else smart_title(r['STREET']), 'zip': r['ZIP'],
+            'address': smart_title(r['STREET']), 'zip': r['ZIP'],
             'boro': COUNTY_BORO[r['CNTY']], 'district': None, 'neighborhood': None, 'grades': None,
             'website': o.get('website') if o else None, 'overview': None, 'admission': None, 'demo': None,
             'trend': [], 'programs': [], 'admission_programs': [], 'has_zone': False,
@@ -242,10 +408,14 @@ def main():
     keep = [s for s in keep if s['sector'] != 'private'] + new_priv
     print(f'private schools: {len(new_priv)} (2023-24), {priv_added} new, {priv_dropped} no longer listed')
 
+    moved, renamed = current_names_and_places(keep, latest, idx)
+
     json.dump(keep, open(SCHOOLS, 'w'), separators=(',', ':'))
     json.dump({'source': f'DOE Demographic Snapshot {LATEST} school tab', 'removed': removed,
                'added': [{'dbn': a['dbn'], 'name': a['name']} for a in added],
-               'unplaced': unplaced}, open(REMOVED, 'w'), indent=1)
+               'unplaced': unplaced, 'duplicates_collapsed': dupes,
+               'moved_to_current_doe_address': moved, 'renamed_to_current_doe_name': renamed},
+              open(REMOVED, 'w'), indent=1)
     print(f'kept {len(keep) - len(added)}, removed {len(removed)}, added {len(added)}, unplaced {len(unplaced)}')
     for u in unplaced:
         print('  unplaced', u)

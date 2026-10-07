@@ -977,7 +977,7 @@
   },
   {
    "dbn": "84X630",
-   "name": "Girls Preparatory Charter School of the Bronx II"
+   "name": "Bronx Charter School for Excellence 8"
   },
   {
    "dbn": "84X631",
@@ -997,7 +997,7 @@
   },
   {
    "dbn": "84X637",
-   "name": "Success Academy Charter School \u2013 Bronx 5 Lower"
+   "name": "Strive Charter School"
   },
   {
    "dbn": "84X638",
@@ -1025,7 +1025,7 @@
   },
   {
    "dbn": "84X648",
-   "name": "Girls Preparatory Charter School of New York"
+   "name": "Bronx Charter School for Excellence 9"
   },
   {
    "dbn": "84X649",
@@ -1037,18 +1037,1685 @@
   },
   {
    "dbn": "84X780",
-   "name": "Success Academy Charter School - Harlem 6"
+   "name": "Success Academy Charter School - Norwood"
   },
   {
    "dbn": "84X886",
    "name": "Success Academy Charter School - NYC 7"
-  }
- ],
- "unplaced": [
+  },
   {
    "dbn": "12X626",
-   "name": "Cultivating Hearts and Minds Pre-K Center",
-   "candidates": []
+   "name": "Cultivating Hearts and Minds Pre-K Center"
+  }
+ ],
+ "unplaced": [],
+ "duplicates_collapsed": [
+  {
+   "dbn": "13K605",
+   "name": "George Westinghouse Career and Technical Education High School"
+  },
+  {
+   "dbn": "30Q228",
+   "name": "The Ivan Lafayette Early Childhood School of the Arts"
+  },
+  {
+   "dbn": "27Q480",
+   "name": "John Adams High School"
+  },
+  {
+   "dbn": "05M362",
+   "name": "Columbia Secondary School"
+  },
+  {
+   "dbn": "02M560",
+   "name": "High School M560 - City As School"
+  },
+  {
+   "dbn": "79M973",
+   "name": "Restart Academy"
+  },
+  {
+   "dbn": "24Q311",
+   "name": "Corona Arts & Sciences Academy"
+  },
+  {
+   "dbn": "13K674",
+   "name": "City Polytechnic High School of Engineering, Architecture, and Technology"
+  },
+  {
+   "dbn": "18K285",
+   "name": "I.S. 285 Meyer Levin"
+  },
+  {
+   "dbn": "02M544",
+   "name": "Independence High School"
+  },
+  {
+   "dbn": "13K915",
+   "name": "I.S. 915"
+  },
+  {
+   "dbn": "30Q070",
+   "name": "P.S. 070"
+  },
+  {
+   "dbn": "09X250",
+   "name": "Eximius College Preparatory Academy: A College Board School"
+  },
+  {
+   "dbn": "02M580",
+   "name": "Richard R. Green High School of Teaching"
+  },
+  {
+   "dbn": "84Q304",
+   "name": "VOICE Charter School of New York"
+  },
+  {
+   "dbn": "84K756",
+   "name": "Success Academy Prospect Heights (Brooklyn 6)"
+  },
+  {
+   "dbn": "11X418",
+   "name": "Bronx High School for the Visual Arts"
+  },
+  {
+   "dbn": "27Q905",
+   "name": "John Adams Evening Hs M/W"
+  },
+  {
+   "dbn": "10X091",
+   "name": "P.S. 091 Bronx"
+  },
+  {
+   "dbn": "19K292",
+   "name": "J.H.S. 292 Margaret S. Douglas"
+  },
+  {
+   "dbn": "02M551",
+   "name": "Urban Assembly New York Harbor School"
+  },
+  {
+   "dbn": "84M726",
+   "name": "KIPP STAR College Prep Charter School"
+  },
+  {
+   "dbn": "75X188",
+   "name": "P.S. X188"
+  },
+  {
+   "dbn": "30Q234",
+   "name": "P.S. 234"
+  },
+  {
+   "dbn": "20K170",
+   "name": "Ralph A. Fabrizio School"
+  },
+  {
+   "dbn": "21K303",
+   "name": "I.S. 303 Herbert S. Eisenberg"
+  },
+  {
+   "dbn": "16K681",
+   "name": "Madiba Prep Middle School"
+  },
+  {
+   "dbn": "02M316",
+   "name": "Urban Assembly School of Business for Young Women, the"
+  },
+  {
+   "dbn": "25Q024",
+   "name": "P.S. 024 Andrew Jackson"
+  },
+  {
+   "dbn": "13K902",
+   "name": "Westinghouse Evening Hs T/R"
+  },
+  {
+   "dbn": "11X096",
+   "name": "P.S. 096 Richard Rodgers"
+  },
+  {
+   "dbn": "17K138",
+   "name": "P.S. 138 Brooklyn"
+  },
+  {
+   "dbn": "30Q235",
+   "name": "Academy for New Americans"
+  },
+  {
+   "dbn": "22K152",
+   "name": "School of Science & Technology"
+  },
+  {
+   "dbn": "79M984",
+   "name": "LYFE"
+  },
+  {
+   "dbn": "02M340",
+   "name": "Sixth Avenue Elementary School"
+  },
+  {
+   "dbn": "84K744",
+   "name": "Coney Island Preparatory Public Charter School"
+  },
+  {
+   "dbn": "28Q206",
+   "name": "P.S. 206 The Horace Harding School"
+  },
+  {
+   "dbn": "11X121",
+   "name": "P.S. 121 Throop"
+  },
+  {
+   "dbn": "13K901",
+   "name": "G. Westinghouse Evening H.S."
+  },
+  {
+   "dbn": "75X811",
+   "name": "P.S. X811"
+  },
+  {
+   "dbn": "27Q377",
+   "name": "P.S. 377"
+  },
+  {
+   "dbn": "22K109",
+   "name": "P.S. 109"
+  },
+  {
+   "dbn": "09X260",
+   "name": "Bronx Center for Science and Mathematics"
+  },
+  {
+   "dbn": "02M896",
+   "name": "Lower Manhattan Community Middle School"
+  },
+  {
+   "dbn": "05M125",
+   "name": "P.S. 125 Ralph Bunche"
+  },
+  {
+   "dbn": "16K026",
+   "name": "P.S. 026 Jesse Owens"
+  },
+  {
+   "dbn": "20K069",
+   "name": "P.S. 69 Vincent D. Grippo School"
+  },
+  {
+   "dbn": "18K635",
+   "name": "Olympus Academy"
+  },
+  {
+   "dbn": "02M040",
+   "name": "P.S. 040 Augustus Saint-Gaudens"
+  },
+  {
+   "dbn": "23K041",
+   "name": "P.S. 041 Francis White"
+  },
+  {
+   "dbn": "75M721",
+   "name": "P.S. M721 - Manhattan Occupational Training Center"
+  },
+  {
+   "dbn": "22K315",
+   "name": "P.S. K315"
+  },
+  {
+   "dbn": "02M400",
+   "name": "High School for Environmental Studies"
+  },
+  {
+   "dbn": "84K912",
+   "name": "Key Collegiate Charter School"
+  },
+  {
+   "dbn": "10X280",
+   "name": "P.S./M.S. 280 Mosholu Parkway"
+  },
+  {
+   "dbn": "21K344",
+   "name": "Rachel Carson High School for Coastal Studies"
+  },
+  {
+   "dbn": "10X080",
+   "name": "J.H.S. 080 The Mosholu Parkway"
+  },
+  {
+   "dbn": "02M255",
+   "name": "M.S. 255 Salk School of Science"
+  },
+  {
+   "dbn": "03M479",
+   "name": "Beacon High School"
+  },
+  {
+   "dbn": "08X182",
+   "name": "P.S. 182"
+  }
+ ],
+ "moved_to_current_doe_address": [
+  {
+   "dbn": "17K646",
+   "name": "Aspirations Diploma Plus High School",
+   "from": "402 EASTERN PARKWAY",
+   "to": "1150 East New York Avenue",
+   "meters": 2666
+  },
+  {
+   "dbn": "84K766",
+   "name": "Brooklyn Prospect Charter School Bed-Stuy Clinton Hill Campus",
+   "from": "55 Willoughby Street",
+   "to": "272 Macon Street",
+   "meters": 4150
+  },
+  {
+   "dbn": "84M204",
+   "name": "Capital Preparatory Harlem Charter School",
+   "from": "1 EAST 104 STREET",
+   "to": "2041 Madison Avenue",
+   "meters": 2026
+  },
+  {
+   "dbn": "84K752",
+   "name": "Success Academy Charter School - Sheepshead Bay",
+   "from": "101 PARK AVENUE",
+   "to": "3000 Avenue X",
+   "meters": 11996
+  },
+  {
+   "dbn": "84R070",
+   "name": "Early College Charter School",
+   "from": "300 GENESEE AVENUE",
+   "to": "1441 South Avenue",
+   "meters": 5923
+  },
+  {
+   "dbn": "12X458",
+   "name": "Samara Community School",
+   "from": "1550 VYSE AVENUE",
+   "to": "1570 Boone Avenue",
+   "meters": 220
+  },
+  {
+   "dbn": "84M338",
+   "name": "WHIN Music Community Charter School",
+   "from": "401 WEST 164 STREET",
+   "to": "528 West 162 Street",
+   "meters": 353
+  },
+  {
+   "dbn": "05M514",
+   "name": "New Design Middle School",
+   "from": "625 WEST 133 STREET",
+   "to": "250 West 127 Street",
+   "meters": 1241
+  },
+  {
+   "dbn": "84X614",
+   "name": "Dream Charter School Mott Haven",
+   "from": "250 EAST 156 STREET",
+   "to": "20 Bruckner Boulevard",
+   "meters": 1852
+  },
+  {
+   "dbn": "13K915",
+   "name": "Bridges: A School for Exploration and Equity",
+   "from": "105 TECH PLACE",
+   "to": "29 6 Avenue",
+   "meters": 1836
+  },
+  {
+   "dbn": "84M518",
+   "name": "East Harlem Scholars Academy Charter School",
+   "from": "2050 Second Avenue",
+   "to": "2017 1 Avenue",
+   "meters": 186
+  },
+  {
+   "dbn": "84Q387",
+   "name": "Valence College Preparatory Charter School",
+   "from": "75-01 31 AVENUE",
+   "to": "97-29 64 Road",
+   "meters": 4354
+  },
+  {
+   "dbn": "30Q575",
+   "name": "Academy of American Studies",
+   "from": "28-04 41 AVENUE",
+   "to": "40-11 28 Street",
+   "meters": 113
+  },
+  {
+   "dbn": "01M315",
+   "name": "The East Village Community School",
+   "from": "610 EAST \u00a012 STREET",
+   "to": "185 1 Avenue",
+   "meters": 568
+  },
+  {
+   "dbn": "16K628",
+   "name": "Brooklyn Brownstone School",
+   "from": "272 MACDONOUGH STREET",
+   "to": "787 Lafayette Avenue",
+   "meters": 1179
+  },
+  {
+   "dbn": "84K937",
+   "name": "Brooklyn RISE Charter School",
+   "from": "473 53 STREET",
+   "to": "9 Hanover Place",
+   "meters": 5624
+  },
+  {
+   "dbn": "84X597",
+   "name": "Urban Assembly Charter School for Computer Science",
+   "from": "1300 BOYNTON AVENUE",
+   "to": "447 Wales Avenue",
+   "meters": 3535
+  },
+  {
+   "dbn": "06M278",
+   "name": "Paula Hedbavny School",
+   "from": "421 W 219TH ST",
+   "to": "3761 10 Avenue",
+   "meters": 1409
+  },
+  {
+   "dbn": "84M263",
+   "name": "New York City Charter School of the Arts",
+   "from": "26 Broadway",
+   "to": "241 WATER STREET",
+   "meters": 920
+  },
+  {
+   "dbn": "19K409",
+   "name": "East New York Family Academy",
+   "from": "145 PENNSYLVANIA AVENUE",
+   "to": "760 Van Siclen Avenue",
+   "meters": 1625
+  },
+  {
+   "dbn": "28Q687",
+   "name": "Queens High School for the Sciences at York College",
+   "from": "94-50 159 STREET",
+   "to": "165-15 88 Avenue",
+   "meters": 919
+  },
+  {
+   "dbn": "84M726",
+   "name": "KIPP S.T.A.R. College Preparatory Charter School",
+   "from": "433 WEST 123 STREET",
+   "to": "625 West 133 Street",
+   "meters": 1005
+  },
+  {
+   "dbn": "84X586",
+   "name": "Brilla Veritas Charter School",
+   "from": "452 COLLEGE AVENUE",
+   "to": "600 East 156 Street",
+   "meters": 1086
+  },
+  {
+   "dbn": "06M018",
+   "name": "P.S. 018 Park Terrace",
+   "from": "4124 9 AVENUE",
+   "to": "3761 10 Avenue",
+   "meters": 1416
+  },
+  {
+   "dbn": "84K406",
+   "name": "EMBER Charter School for Mindful Education, Innovation and Transformation",
+   "from": "616 QUINCY STREET",
+   "to": "500 MACON STREET",
+   "meters": 749
+  },
+  {
+   "dbn": "06M223",
+   "name": "The Mott Hall School",
+   "from": "71-111 CONVENT AVE",
+   "to": "401 WEST 164 STREET",
+   "meters": 2536
+  },
+  {
+   "dbn": "84X610",
+   "name": "Urban Dove Team Charter School II",
+   "from": "860 Forest Avenue",
+   "to": "671 Prospect Avenue",
+   "meters": 589
+  },
+  {
+   "dbn": "84K680",
+   "name": "Achievement First Aspire Charter School",
+   "from": "982 HEGEMAN AVENUE",
+   "to": "475 Euclid Avenue",
+   "meters": 1168
+  },
+  {
+   "dbn": "84M383",
+   "name": "Storefront Academy Harlem Charter School",
+   "from": "70 EAST 129 STREET",
+   "to": "439 East 115 Street",
+   "meters": 1435
+  },
+  {
+   "dbn": "84R067",
+   "name": "John W. Lavelle Preparatory Charter School",
+   "from": "1 TELEPORT DRIVE",
+   "to": "1441 South Avenue",
+   "meters": 361
+  },
+  {
+   "dbn": "84K486",
+   "name": "New Dawn Charter High School",
+   "from": "760 DEKALB AVENUE",
+   "to": "242 HOYT STREET",
+   "meters": 3864
+  },
+  {
+   "dbn": "03M862",
+   "name": "Mott Hall II",
+   "from": "234 WEST 109 STREET",
+   "to": "220 WEST 121 STREET",
+   "meters": 1301
+  },
+  {
+   "dbn": "17K353",
+   "name": "The Academy for Collaborative Exploration",
+   "from": "750 CLASSON AVENUE",
+   "to": "443 ST MARKS AVENUE",
+   "meters": 279
+  },
+  {
+   "dbn": "84K710",
+   "name": "Brownsville Collegiate Charter School",
+   "from": "364 SACKMAN STREET",
+   "to": "140 MONTROSE AVENUE",
+   "meters": 5355
+  },
+  {
+   "dbn": "84Q380",
+   "name": "Forte Preparatory Academy Charter School",
+   "from": "32-20 108TH STREET",
+   "to": "51-35 REEDER STREET",
+   "meters": 2804
+  },
+  {
+   "dbn": "07X359",
+   "name": "Leaders of Excellence, Advocacy and Discovery",
+   "from": "750 CONCOURSE VILLAGE WEST",
+   "to": "639 St Anns Avenue",
+   "meters": 1108
+  },
+  {
+   "dbn": "84X598",
+   "name": "KIPP Freedom Charter School",
+   "from": "2246 JEROME AVENUE",
+   "to": "1825 PROSPECT AVENUE",
+   "meters": 2016
+  },
+  {
+   "dbn": "23K522",
+   "name": "Mott Hall IV",
+   "from": "1137 HERKIMER STREET",
+   "to": "411 Thatford Avenue",
+   "meters": 2091
+  },
+  {
+   "dbn": "84M430",
+   "name": "The Equity Project Charter School",
+   "from": "549 AUDOBON AVENUE",
+   "to": "153 SHERMAN AVENUE",
+   "meters": 902
+  },
+  {
+   "dbn": "27Q317",
+   "name": "Waterside Children's Studio School",
+   "from": "190 BEACH 110 STREET",
+   "to": "140 Beach 112 Street",
+   "meters": 197
+  },
+  {
+   "dbn": "84K929",
+   "name": "East Brooklyn Ascend Charter School",
+   "from": "396 GRANT AVENUE",
+   "to": "260 SHEPHERD AVENUE",
+   "meters": 1306
+  },
+  {
+   "dbn": "84X609",
+   "name": "Zeta Charter Schools - South Bronx",
+   "from": "222 ALEXANDER AVENUE",
+   "to": "425 Westchester Avenue",
+   "meters": 1121
+  },
+  {
+   "dbn": "84X486",
+   "name": "Rosalyn Yalow Charter School",
+   "from": "116-118 EAST 169 STREET",
+   "to": "650 GRAND CONCOURSE",
+   "meters": 1924
+  },
+  {
+   "dbn": "84R012",
+   "name": "New Ventures Charter School",
+   "from": "1 TELEPORT DRIVE",
+   "to": "1441 South Avenue",
+   "meters": 361
+  },
+  {
+   "dbn": "84K785",
+   "name": "Imagine Me Leadership Charter School",
+   "from": "818 SCHENCK AVENUE",
+   "to": "39 Truxton Street",
+   "meters": 2910
+  },
+  {
+   "dbn": "84K895",
+   "name": "Hebrew Language Academy Charter School 2",
+   "from": "1870 Stillwell Avenue",
+   "to": "2286 Cropsey Avenue",
+   "meters": 1097
+  },
+  {
+   "dbn": "84X616",
+   "name": "KIPP Bronx Charter School II",
+   "from": "2246 JEROME AVENUE",
+   "to": "2720 Jerome Avenue",
+   "meters": 1347
+  },
+  {
+   "dbn": "84M168",
+   "name": "East Harlem Scholars Academy Charter School II",
+   "from": "1573 MADISON AVENUE",
+   "to": "2050 Second Avenue",
+   "meters": 648
+  },
+  {
+   "dbn": "84Q385",
+   "name": "Elm Community Charter School",
+   "from": "149-34 35 AVENUE",
+   "to": "79-17 51 Avenue",
+   "meters": 6594
+  },
+  {
+   "dbn": "84X608",
+   "name": "Bronx Charter School for Excellence 4",
+   "from": "3956 CARPENTER AVENUE",
+   "to": "4300 MURDOCK AVENUE",
+   "meters": 2083
+  },
+  {
+   "dbn": "84X208",
+   "name": "United Charter High School for the Humanities II",
+   "from": "455 SOUTHERN BLVD",
+   "to": "900 TINTON AVENUE",
+   "meters": 1298
+  },
+  {
+   "dbn": "84M202",
+   "name": "Great Oaks Kathleen Sherry Charter School",
+   "from": "38 DELANCEY STREET",
+   "to": "240 BLEECKER STREET",
+   "meters": 1529
+  },
+  {
+   "dbn": "84K876",
+   "name": "Achievement First Voyager Charter School",
+   "from": "601 PARKSIDE AVENUE",
+   "to": "35 STARR STREET",
+   "meters": 5463
+  },
+  {
+   "dbn": "75X469",
+   "name": "The Bronx School for Continuous Learners",
+   "from": "3177 WEBSTER AVENUE",
+   "to": "240 EAST 172 STREET",
+   "meters": 4694
+  },
+  {
+   "dbn": "13K492",
+   "name": "Academy of Arts and Letters",
+   "from": "225 ADELPHI STREET",
+   "to": "344 MONROE STREET",
+   "meters": 2232
+  },
+  {
+   "dbn": "84K417",
+   "name": "Urban Dove Team Charter School",
+   "from": "600 LAFAYETTE AVENUE",
+   "to": "1256 EAST 21 STREET",
+   "meters": 7474
+  },
+  {
+   "dbn": "84M373",
+   "name": "Zeta Charter Schools - Inwood",
+   "from": "652 WEST 187TH STREET",
+   "to": "401 West 218 Street",
+   "meters": 2594
+  },
+  {
+   "dbn": "84K933",
+   "name": "Flatbush Ascend Charter School",
+   "from": "870 ALBANY AVENUE",
+   "to": "123 Linden Boulevard",
+   "meters": 1232
+  },
+  {
+   "dbn": "84R073",
+   "name": "New World Preparatory Charter School",
+   "from": "26 SHARPE AVENUE",
+   "to": "285 CLOVE ROAD",
+   "meters": 1234
+  },
+  {
+   "dbn": "03M421",
+   "name": "West Prep Academy",
+   "from": "150 WEST 105 STREET",
+   "to": "220 West 108 Street",
+   "meters": 340
+  },
+  {
+   "dbn": "84X613",
+   "name": "Bold Charter School",
+   "from": "1090 Close Avenue",
+   "to": "1909 DALY AVENUE",
+   "meters": 1746
+  },
+  {
+   "dbn": "84X612",
+   "name": "Creo College Preparatory Charter School",
+   "from": "650 GRAND CONCOURSE",
+   "to": "524 COURTLANDT AVENUE",
+   "meters": 642
+  },
+  {
+   "dbn": "84Q083",
+   "name": "Central Queens Academy Charter School",
+   "from": "55-30 JUNCTION BOULEVARD",
+   "to": "88-14 Justice Avenue",
+   "meters": 747
+  },
+  {
+   "dbn": "84Q704",
+   "name": "Merrick Academy - Queens Public Charter School",
+   "from": "136-25 218 STREET",
+   "to": "221-06 Merrick Boulevard",
+   "meters": 476
+  },
+  {
+   "dbn": "84X581",
+   "name": "South Bronx Community Charter High School",
+   "from": "730 CONCOURSE VILLAGE WEST",
+   "to": "1110 Washington Avenue",
+   "meters": 1440
+  },
+  {
+   "dbn": "30Q384",
+   "name": "Hunters Point Elementary School",
+   "from": "27-35 JACKSON AVENUE",
+   "to": "1-35 57 Avenue",
+   "meters": 2025
+  },
+  {
+   "dbn": "84M341",
+   "name": "Harlem Children's Zone Promise Academy II Charter School",
+   "from": "2005 MADISON AVENUE",
+   "to": "35 East 125 Street",
+   "meters": 213
+  },
+  {
+   "dbn": "75Q023",
+   "name": "P.S. Q023 @ Queens Children Center",
+   "from": "74-03 COMMONWEALTH BOULEVARD",
+   "to": "48-25 37 Street",
+   "meters": 17300
+  },
+  {
+   "dbn": "15K428",
+   "name": "Global Innovators Academy",
+   "from": "4222 4 AVENUE",
+   "to": "4012 Fort Hamilton Parkway",
+   "meters": 1666
+  },
+  {
+   "dbn": "84K879",
+   "name": "Brooklyn Prospect Charter School Downtown Campus",
+   "map_address": "1104 FULTON STREET",
+   "doe_address": "80 WILLOUGHBY STREET",
+   "meters": 2703,
+   "held": true
+  },
+  {
+   "dbn": "84X611",
+   "name": "AECI II: NYC Charter High School for Computer Engineering and Innovation",
+   "map_address": "423 East 138th Street",
+   "doe_address": "1000 Walton Avenue",
+   "meters": 2417,
+   "held": true
+  },
+  {
+   "dbn": "84K125",
+   "name": "Success Academy Charter School - Bed-Stuy 2",
+   "map_address": "211 THROOP AVENUE",
+   "doe_address": "92-53 Springfield Boulevard",
+   "meters": 17629,
+   "held": true
+  },
+  {
+   "dbn": "84K928",
+   "name": "Brooklyn Prospect Charter School Sunset Yards Campus",
+   "map_address": "3002 FORT HAMILTON PARKWAY",
+   "doe_address": "341 39 Street",
+   "meters": 2465,
+   "held": true
+  },
+  {
+   "dbn": "84X617",
+   "name": "KIPP Bronx Charter School III",
+   "map_address": "2246 JEROME AVENUE",
+   "doe_address": "201 East 144 Street",
+   "meters": 4973,
+   "held": true
+  },
+  {
+   "dbn": "84X347",
+   "name": "International Leadership Charter High School",
+   "map_address": "3030 Riverdale Avenue",
+   "doe_address": "3511 BAINBRIDGE AVENUE",
+   "meters": 2637,
+   "held": true
+  },
+  {
+   "dbn": "84Q436",
+   "name": "Zeta Charter School \u2013 Queens 2",
+   "map_address": "55-30 JUNCTION BOULEVARD",
+   "doe_address": "133-50 41 Avenue",
+   "meters": 3801,
+   "held": true
+  },
+  {
+   "dbn": "84X635",
+   "name": "Earl Monroe New Renaissance Basketball Charter School",
+   "map_address": "1617 PARKVIEW AVENUE",
+   "doe_address": "647 Elton Avenue",
+   "meters": 7994,
+   "held": true
+  },
+  {
+   "dbn": "84X648",
+   "name": "Bronx Charter School for Excellence 9",
+   "map_address": "1160 BEACH AVENUE",
+   "doe_address": "681 Kelly Street",
+   "meters": 3394,
+   "held": true
+  }
+ ],
+ "renamed_to_current_doe_name": [
+  {
+   "dbn": "84K712",
+   "from": "Excellence Girls Charter School",
+   "to": "Uncommon Excellence Girls Charter School NYC",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "15K447",
+   "from": "The Math & Science Exploratory School",
+   "to": "The Exploratory School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "02M280",
+   "from": "Manhattan Early College School for Advertising",
+   "to": "Manhattan Early College School for Marketing and Media Arts",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84M380",
+   "from": "Harlem Village Academy West 2 Charter School",
+   "to": "Harlem Village Academy West Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84Q298",
+   "from": "Middle Village Prep Charter School",
+   "to": "Middle Village Preparatory Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "21K344",
+   "from": "Rachel Carson High School for Coastal Studies",
+   "to": "Rachel Carson High School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K879",
+   "from": "Brooklyn Prospect Charter School Downtown",
+   "to": "Brooklyn Prospect Charter School Downtown Campus",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "75K396",
+   "from": "P.S. K396",
+   "to": "Sid Miller Academy",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K777",
+   "from": "Ocean Hill Collegiate Charter School",
+   "to": "Uncommon Crown Heights Charter School NYC",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "02M135",
+   "from": "The Urban Assembly School for Emergency Management",
+   "to": "The Urban Assembly Early College High School of Emergency Medicine",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K766",
+   "from": "The International Charter School of New York",
+   "to": "Brooklyn Prospect Charter School Bed-Stuy Clinton Hill Campus",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84M204",
+   "from": "Capital Preparatory (CP) Harlem Charter School",
+   "to": "Capital Preparatory Harlem Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K752",
+   "from": "Success Academy Fort Greene (Brooklyn 5)",
+   "to": "Success Academy Charter School - Sheepshead Bay",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X592",
+   "from": "Amber Charter School II",
+   "to": "Amber Charter School Kingsbridge",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K792",
+   "from": "The Cultural Arts Academy at Spring Creek Charter School",
+   "to": "Cultural Arts Academy Charter School At Spring Creek",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "09X594",
+   "from": "M.S. 594",
+   "to": "New Pathways Academy",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84Q337",
+   "from": "Success Academy Charter School - Rosedale - New York 5",
+   "to": "Success Academy Charter School - Rosedale",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K775",
+   "from": "Leadership Preparatory Ocean Hill Charter School",
+   "to": "Uncommon Brownsville North Charter School NYC",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "06M368",
+   "from": "Hamilton Heights School",
+   "to": "The William Lynch School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84R070",
+   "from": "Lois and Richard Nicotra Early College Charter School",
+   "to": "Early College Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84M068",
+   "from": "KIPP Washington Heights Middle School",
+   "to": "KIPP NYC Washington Heights Academy Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84M174",
+   "from": "Success Academy Union Square (Manhattan 1)",
+   "to": "Success Academy Charter School - Union Square",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "02M198",
+   "from": "P.S. 198 Isador E. Ida Straus",
+   "to": "P.S. 198 Isidor E. Ida Straus",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "13K054",
+   "from": "P.S. 054 Samuel C. Barnes",
+   "to": "P.S. 54 The Detective Rafael Ramos School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "30Q280",
+   "from": "P.S. 280",
+   "to": "PS280Q: Home of the Lionhearts",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X585",
+   "from": "Legacy College Preparatory",
+   "to": "Legacy College Preparatory Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84M338",
+   "from": "WHIN Music Community",
+   "to": "WHIN Music Community Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X124",
+   "from": "Children's Aid College Prep Charter School",
+   "to": "Children's Aid College Preparatory Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X614",
+   "from": "DREAM Mott Haven Charter School",
+   "to": "Dream Charter School Mott Haven",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X465",
+   "from": "Boys Preparatory Charter School of New York",
+   "to": "Bronx Charter School for Excellence 7",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "13K915",
+   "from": "I.S. 915",
+   "to": "Bridges: A School for Exploration and Equity",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84M433",
+   "from": "Renaissance Charter High School for Innovation",
+   "to": "Innovation Charter High School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X185",
+   "from": "Bronx Lighthouse Charter School",
+   "to": "Pharos Academy Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K756",
+   "from": "Success Academy Prospect Heights (Brooklyn 6)",
+   "to": "Success Academy Charter School - Prospect Heights",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "02M011",
+   "from": "P.S. 011 William T. Harris",
+   "to": "P.S. 011: The Sarah J. Garnet Elementary School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K357",
+   "from": "KIPP AMP Charter School",
+   "to": "KIPP Always Mentally Prepared Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K724",
+   "from": "Leadership Prep Canarsie Charter School (Leadership Prep CS 4)",
+   "to": "Uncommon Canarsie Charter School NYC",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "10X237",
+   "from": "The Marie Curie School for Medicine, Nursing, and Health Professions",
+   "to": "The Marie Curie High School for Medicine, Nursing, and Health Professions",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "21K559",
+   "from": "Life Academy High School for Film and Music",
+   "to": "Life Academy High School for Business and Technology",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84M265",
+   "from": "Success Academy Charter School - Washington Heights - New York 1",
+   "to": "Success Academy Charter School - Washington Heights",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X597",
+   "from": "The Urban Assembly Charter School for Computer Science",
+   "to": "Urban Assembly Charter School for Computer Science",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K928",
+   "from": "Brooklyn Prospect Charter School 15.2",
+   "to": "Brooklyn Prospect Charter School Sunset Yards Campus",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "02M655",
+   "from": "Life Sciences Secondary School",
+   "to": "The High School for Climate Justice",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X407",
+   "from": "Bronx Charter School for Children",
+   "to": "Access Bronx Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84M382",
+   "from": "DREAM Charter School",
+   "to": "DREAM Charter School East Harlem",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "27Q253",
+   "from": "P.S. 253",
+   "to": "The Randolph Holder School for Social Justice",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84M726",
+   "from": "KIPP STAR College Prep Charter School",
+   "to": "KIPP S.T.A.R. College Preparatory Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K648",
+   "from": "Bedford Stuyvesant Collegiate Charter School",
+   "to": "Uncommon Bed-Stuy East Charter School NYC",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "23K697",
+   "from": "Teachers Preparatory High School",
+   "to": "Legacy Leadership High School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "17K770",
+   "from": "P.S. 770 New American Academy",
+   "to": "P.S. 770: H.E.A.R.T.S Brooklyn",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X464",
+   "from": "Success Academy Charter School - Bronx 4 - New York 2",
+   "to": "Success Academy Charter School - Bronx 4",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "24Q077",
+   "from": "I.S. 077",
+   "to": "Joseph F. Quinn Intermediate School 77",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "30Q555",
+   "from": "Newcomers High School",
+   "to": "ATLAS",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "06M173",
+   "from": "P.S. 173",
+   "to": "P.S./I.S. 173 Fort Washington School in the Heights",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "79M331",
+   "from": "JUDITH S. KAYE SCHOOL - D79",
+   "to": "The Judith S. Kaye School - D79",
+   "source": "snapshot 2025-26"
+  },
+  {
+   "dbn": "84M170",
+   "from": "Success Academy Hell's Kitchen (Manhattan 2)",
+   "to": "Success Academy Charter School - Hell's Kitchen",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "04M372",
+   "from": "Esperanza Preparatory Academy",
+   "to": "Esperanza Preparatory Magnet School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K788",
+   "from": "Achievement First Linden Elementary School",
+   "to": "Achievement First Linden Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X553",
+   "from": "New Visions Charter High School for the Humanities",
+   "to": "United Charter High School for the Humanities",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "31R026",
+   "from": "P.S. 026 The Carteret School",
+   "to": "P.S./I.S. 26 The Carteret School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "75K053",
+   "from": "P.S. K053",
+   "to": "Dominick Della Rocca School for the Arts",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "28Q048",
+   "from": "P.S. 048 William Wordsworth",
+   "to": "David N. Dinkins School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "17K353",
+   "from": "Elijah Stroud Middle School",
+   "to": "The Academy for Collaborative Exploration",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K593",
+   "from": "Excellence Boys Charter School",
+   "to": "Uncommon Excellence Boys Charter School NYC",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K781",
+   "from": "Success Academy Charter School - Bergen Beach - New York 4",
+   "to": "Success Academy Charter School - Bergen Beach",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84M481",
+   "from": "Democracy Prep Harlem Charter School",
+   "to": "Democracy Preparatory Harlem Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "07X179",
+   "from": "P.S. 179",
+   "to": "Academy of Exploratory Arts",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "10X535",
+   "from": "Rose Hill Pre-K Center",
+   "to": "Rose Hill Early Childhood Academies",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "17K138",
+   "from": "P.S. 138 Brooklyn",
+   "to": "The Dr. Jean Pierre-Louis School of Excellence",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "15K261",
+   "from": "P.S. 261 Philip Livingston",
+   "to": "P.S. 261 Zipporiah Mills",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84Q373",
+   "from": "New Visions Charter High School for the Humanities IV",
+   "to": "United Charter High School for the Humanities lV",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K807",
+   "from": "Collegiate Academy for Math and Personal Awareness\u00a0Charter School",
+   "to": "Collegiate Academy for Mathematics and Personal Awareness Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "20K609",
+   "from": "Urban Assembly School for Criminal Justice",
+   "to": "Urban Assembly School for Leadership and Empowerment",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "07X359",
+   "from": "Concourse Village Elementary School",
+   "to": "Leaders of Excellence, Advocacy and Discovery",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X394",
+   "from": "Mott Haven Academy Charter School",
+   "to": "Mott Haven Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "13K008",
+   "from": "P.S. 008 Robert Fulton",
+   "to": "The Emily Warren Roebling School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "14K478",
+   "from": "The High School for Enterprise, Business and Technology",
+   "to": "Brooklyn Nexus High School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K930",
+   "from": "LEEP Dual Language Academy",
+   "to": "LEEP Dual Language Academy Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84M430",
+   "from": "The Equity Project Charter School (TEP)",
+   "to": "The Equity Project Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84M279",
+   "from": "The Opportunity Charter School",
+   "to": "Opportunity Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "20K201",
+   "from": "J.H.S. 201 The Dyker Heights",
+   "to": "The Madeleine Brennan School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X609",
+   "from": "Zeta Charter Schools - New York City 2",
+   "to": "Zeta Charter Schools - South Bronx",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K803",
+   "from": "Brooklyn LAB\u00a0Charter School",
+   "to": "Brooklyn Laboratory Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84M705",
+   "from": "Amber Charter School",
+   "to": "Amber Charter School East Harlem",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "24Q089",
+   "from": "P.S. 089 Elmhurst",
+   "to": "P.S. 89Q: The Jose Peralta School of Dreamers",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X539",
+   "from": "New Visions Charter High School for Advanced Math and Science",
+   "to": "United Charter High School for Advanced Math and Science",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "27Q377",
+   "from": "P.S. 377",
+   "to": "S.T.A.R. Leadership Academy",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X579",
+   "from": "Bronx Charter School for Excellence II",
+   "to": "Bronx Charter School for Excellence 2",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X461",
+   "from": "Metropolitan Lighthouse Charter School",
+   "to": "Nuasin Next Generation Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K608",
+   "from": "Kings Collegiate Charter School",
+   "to": "Uncommon Kings Charter School NYC",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "14K059",
+   "from": "P.S. 059 William Floyd",
+   "to": "P.S. 059 The Dawn Best School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K772",
+   "from": "Success Academy Charter School - Bensonhurst - New York 3",
+   "to": "Success Academy Charter School - Bensonhurst",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "30Q398",
+   "from": "P.S. 398",
+   "to": "The Hector Figueroa School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84M522",
+   "from": "Broome Street Academy Charter School",
+   "to": "Broome Street Academy Charter High School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K757",
+   "from": "Unity Prep Charter School",
+   "to": "Unity Preparatory Charter School of Brooklyn",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X616",
+   "from": "KIPP Elements",
+   "to": "KIPP Bronx Charter School II",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "06M210",
+   "from": "P.S./I.S. 210 - Twenty-first Century Academy for Community Leadership",
+   "to": "The Evelyn Linares Academy for Community Leadership",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K711",
+   "from": "Leadership Preparatory Brownsville Charter School",
+   "to": "Uncommon Brownsville South Charter School NYC",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84M350",
+   "from": "Democracy Prep Charter School",
+   "to": "Democracy Preparatory Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X617",
+   "from": "KIPP All",
+   "to": "KIPP Bronx Charter School III",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K517",
+   "from": "Leadership Prep Bedford Stuyvesant Uncommon Prep Charter School",
+   "to": "Uncommon Bed-Stuy West Charter School NYC",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K784",
+   "from": "Achievement First North Brooklyn Prep Charter School",
+   "to": "Achievement First North Brooklyn Preparatory Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "15K172",
+   "from": "P.S. 172 Beacon School of Excellence",
+   "to": "P.S. 172 The Annette Hendrickson Beacon School of Excellence",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X460",
+   "from": "Atmosphere Charter School",
+   "to": "Atmosphere Academy Public Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "13K301",
+   "from": "Satellite East Middle School",
+   "to": "Restoration Academy",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84M284",
+   "from": "Harlem Children's Zone Promise Academy 1 Charter School",
+   "to": "Harlem Children's Zone Promise Academy Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X208",
+   "from": "New Visions Charter High School for the Humanities II",
+   "to": "United Charter High School for the Humanities II",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "31R078",
+   "from": "P.S. 78",
+   "to": "P.S. 78 The Stapleton Lighthouse Community School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X487",
+   "from": "Girls Preparatory Charter School of the Bronx",
+   "to": "Bronx Charter School for Excellence 6",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84M202",
+   "from": "Great Oaks Charter School",
+   "to": "Great Oaks Kathleen Sherry Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X165",
+   "from": "Grand Concourse Charter School",
+   "to": "Grand Concourse Academy Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "04M310",
+   "from": "THE JUDITH S. KAYE HIGH SCHOOL",
+   "to": "The Judith S. Kaye School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K355",
+   "from": "Williamsburg Collegiate Charter School",
+   "to": "Uncommon Williamsburg Charter School NYC",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "75X469",
+   "from": "P469X - The Bronx School for Continuous Learners",
+   "to": "The Bronx School for Continuous Learners",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "29Q259",
+   "from": "Pathways College Preparatory School: A College Board School",
+   "to": "Pathways Early College World School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K417",
+   "from": "Urban Dove Charter School",
+   "to": "Urban Dove Team Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84M373",
+   "from": "Zeta Charter Schools - New York City 1",
+   "to": "Zeta Charter Schools - Inwood",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K933",
+   "from": "Lefferts Gardens Ascend Charter School",
+   "to": "Flatbush Ascend Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "02M507",
+   "from": "Urban Assembly Gateway School for Technology",
+   "to": "Gateway Tech",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "13K009",
+   "from": "P.S. 009 Teunis G. Bergen",
+   "to": "Public School 9 The Sarah Smith Garnet School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K741",
+   "from": "Success Academy Crown Heights (Brooklyn 7)",
+   "to": "Success Academy Charter School - Crown Heights",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K738",
+   "from": "New Visions Charter High School for Advanced Math and Science III",
+   "to": "United Charter High School for Advanced Math and Science lll",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84M709",
+   "from": "Harlem Village Academy West Charter School",
+   "to": "Harlem Village Academy North Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X717",
+   "from": "Icahn Charter School",
+   "to": "Icahn Charter School 1",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "08X562",
+   "from": "Blueprint Middle School",
+   "to": "Pugsley Preparatory Academy",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "27Q336",
+   "from": "Curious Young Learners Pre-K Center",
+   "to": "District 27 Pre-K Center",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "13K350",
+   "from": "Urban Assembly School for Music and Art",
+   "to": "Creators Academy",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X387",
+   "from": "Brilla College Prep Charter School",
+   "to": "Brilla College Preparatory Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "26Q133",
+   "from": "P.S. 133 Queens",
+   "to": "P.S. 133 The Bellerose School of Excellence",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X345",
+   "from": "Hyde Leadership Charter School",
+   "to": "Leaders In Our Neighborhood Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84Q320",
+   "from": "New Visions Charter High School for Advanced Math and Science IV",
+   "to": "United Charter High School for Advanced Math and Science lV",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "08X424",
+   "from": "The Hunts Point School",
+   "to": "Bronx Academy for Multi-Media",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "23K137",
+   "from": "P.S./I.S. 137 Rachel Jean Mitchell",
+   "to": "P.S. 137 Rachel Jean Mitchell",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X581",
+   "from": "South Bronx Community Charter School",
+   "to": "South Bronx Community Charter High School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "30Q384",
+   "from": "P.S. 384",
+   "to": "Hunters Point Elementary School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "03M199",
+   "from": "P.S. 199 Jessie Isador Straus",
+   "to": "P.S. 199 Jesse Isidor Straus",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X202",
+   "from": "New Visions Charter High School for Advanced Math and Science II",
+   "to": "United Charter High School for Advanced Math and Science ll",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "06M293",
+   "from": "City College Academy of the Arts",
+   "to": "City College Magnet School of the Arts",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "29Q498",
+   "from": "Humanities & Arts Magnet High School",
+   "to": "Health, Arts, Robotics, and Technology High School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84K892",
+   "from": "Brooklyn Emerging Leaders Academy",
+   "to": "Brooklyn Emerging Leaders Academy Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X630",
+   "from": "Girls Preparatory Charter School of the Bronx II",
+   "to": "Bronx Charter School for Excellence 8",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X637",
+   "from": "Success Academy Charter School \u2013 Bronx 5 Lower",
+   "to": "Strive Charter School",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X648",
+   "from": "Girls Preparatory Charter School of New York",
+   "to": "Bronx Charter School for Excellence 9",
+   "source": "LCGMS"
+  },
+  {
+   "dbn": "84X780",
+   "from": "Success Academy Charter School - Harlem 6",
+   "to": "Success Academy Charter School - Norwood",
+   "source": "LCGMS"
   }
  ]
 }

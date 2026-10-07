@@ -2,11 +2,12 @@
 the one file the map reads for the school sheet, the lineup and "color dots by".
 
 For every measure it records the source, vintage and definition; for every
-school it stores the value and the school's percentile among schools of the
+school it stores the value and where it sits among the other schools of the
 same level (elementary, middle, high, transfer high, District 75, early
-childhood). Percentile = share of peer schools with a lower value, counting
-ties as half (0-100). If a level has fewer than MIN_PEERS schools with the
-measure, the school is ranked against all schools that have it.
+childhood): a = % of the other schools with a strictly lower value, h = % with
+a strictly higher value, both floored to whole percents. The map's colors use
+the midpoint (a + 100 - h) / 2. If a level has fewer than MIN_PEERS schools
+with the measure, the school is ranked against all schools that have it.
 
 Measures derived here (not published as such by the source):
   impact / performance  DOE's EMS, HS or HST score, whichever matches the
@@ -23,7 +24,8 @@ Measures derived here (not published as such by the source):
 
 Run from the repo root after the per-source builds:  python3 scripts/build_metrics.py
 """
-import json, re, sys
+import json, math, re, sys
+from html import unescape as html_unescape
 from pathlib import Path
 from bisect import bisect_left, bisect_right
 
@@ -60,7 +62,7 @@ def load(key):
 
 SRC = {k: load(k) for k in ['survey', 'attendance', 'graduation', 'sqr', 'tests', 'class_size',
                             'counselors', 'spending', 'pta', 'capacity', 'suspensions',
-                            'accessibility', 'charters']}
+                            'accessibility', 'charters', 'insideschools']}
 schools = [s for s in json.load(open(ROOT / 'data/schools.json')) if s['sector'] != 'private']
 by_dbn = {s['dbn']: s for s in schools}
 
@@ -80,6 +82,63 @@ def get(key, dbn, name):
 
 def src_name(key):
     return SRC[key]['source'] if SRC.get(key) else ''
+
+
+# ---------- DOE's current school list (LCGMS, Oct. 7, 2026) ----------
+def _lcgms():
+    import pandas as pd
+    t = pd.read_html(ROOT / 'data/sources/nyc_doe_lcgms_school_data_2026-10-07.xls')[0]
+    t.columns = t.iloc[0]
+    t = t[1:]
+    return {r['ATS System Code'].strip(): {'building': str(r['Building Code']).strip().upper()}
+            for _, r in t.iterrows() if isinstance(r['ATS System Code'], str)}
+
+
+LCG = _lcgms()
+
+
+def _access_list():
+    """DOE's Building Accessibility Profile list, sheet 'Current Accessible
+    School List': (DBN, building) pairs and each listed building's rating."""
+    import openpyxl
+    wb = openpyxl.load_workbook(ROOT / 'data/sources/nyc_doe_building_accessibility_profile_list_2026-08-14.xlsm', read_only=True, data_only=True)
+    rows = list(wb['Current Accessible School List'].iter_rows(values_only=True))
+    h = rows[2]
+    ix = {c: i for i, c in enumerate(h) if c}
+    pair, bldg, by_dbn = {}, {}, {}
+    for r in rows[3:]:
+        dbn = (r[ix['School DBN']] or '').strip().upper()
+        b = (r[ix['Building Code']] or '').strip().upper()
+        desc = r[ix['Accessibility Description']]
+        if not b or not desc:
+            continue
+        pair[(dbn, b)] = desc
+        bldg.setdefault(b, desc)
+        by_dbn.setdefault(dbn, set()).add(b)
+    return pair, bldg, by_dbn
+
+
+ACC_PAIR, ACC_BLDG, ACC_DBN = _access_list()
+
+
+def _nysed_pages():
+    import tarfile
+    out = {}
+    with tarfile.open(ROOT / 'data/sources/nysed_charter_school_pages_nyc_2026-10-07.tar.gz') as t:
+        for mem in t.getmembers():
+            if mem.isfile() and mem.name.endswith('.html'):
+                out[Path(mem.name).stem] = t.extractfile(mem).read().decode('utf-8', 'ignore')
+    return out
+
+
+NYSED_PAGES = _nysed_pages()
+# The charter directory missed this school's NYSED page.
+NYSED_URL_ADD = {'84X638': 'https://www.nysed.gov/charter-schools/success-academy-charter-school-bronx-5-upper'}
+# Authorizer links that don't reach the school's own page, checked Oct. 7,
+# 2026: a logo image (84K737, 84M320), SUNY's generic school finder or list
+# (84M704, 84M080, 84X345, 84X491, 84X637, 84X638), a 404 (84K970) or a
+# malformed address on NYSED's page (84X597).
+DEAD_AUTH = {'84K737', '84M320', '84M704', '84M080', '84X345', '84X491', '84X637', '84X638', '84K970', '84X597'}
 
 
 # ---------- levels ----------
@@ -117,6 +176,11 @@ def level_of(s):
 
 
 LEVEL = {d: level_of(s) for d, s in by_dbn.items()}
+SHARED_BLDG = {}
+for _d in by_dbn:
+    _b = get('capacity', _d, 'building_id')
+    if _b:
+        SHARED_BLDG[_b] = SHARED_BLDG.get(_b, 0) + 1
 
 
 # ---------- measure definitions ----------
@@ -136,6 +200,14 @@ def by_level(key, names):
     return f
 
 
+def test_year_group(dbn):
+    """Charter test results are spring 2025 (NYSED's newest bulk file) while
+    district results are spring 2026, and scores fell in 2026, so charters are
+    ranked only against other charters."""
+    y = get('tests', dbn, 'year')
+    return '-c25' if y in (2025, '2025') else ''
+
+
 def tests_or_sqr(test_field, sqr_field):
     use_tests = SRC.get('tests') and test_field in SRC['tests']['fields']
     def f(dbn):
@@ -153,12 +225,37 @@ def trend_of(dbn, year):
     return None
 
 
+def _k12_2024_25():
+    """2024-25 enrollment minus 3-K and pre-K (who can't be suspended), from
+    the Demographic Snapshot's school tab."""
+    import openpyxl
+    wb = openpyxl.load_workbook(ROOT / 'data/sources/nyc_doe_demographic_snapshot_2021-22_to_2025-26.xlsx', read_only=True)
+    rows = wb['School'].iter_rows(values_only=True)
+    h = next(rows)
+    ix = {c: i for i, c in enumerate(h)}
+    out = {}
+    for r in rows:
+        if r[ix['Year']] == '2024-25' and r[0]:
+            out[r[0].strip().upper()] = (r[ix['Total Enrollment']] or 0) - (r[ix['Grade 3K']] or 0) - (r[ix['Grade PK (Half Day & Full Day)']] or 0)
+    return out
+
+
+K12_2425 = _k12_2024_25()
+SUSP_FILE = set(SRC['suspensions']['schools']) if SRC.get('suspensions') else set()
+
+
 def suspensions(dbn):
-    t = get('suspensions', dbn, 'total_suspensions')
-    e = trend_of(dbn, '2024-25')
-    if t is None or not e:
+    if dbn.startswith('84') or not SRC.get('suspensions'):
+        return None  # charter schools aren't in DOE's discipline report
+    e = K12_2425.get(dbn)
+    if not e:
         return None
-    return round(t / e * 100, 2)
+    if dbn not in SUSP_FILE:
+        return "Not listed in DOE's report"
+    t = get('suspensions', dbn, 'total_suspensions')
+    if t is None:
+        return 'Redacted by DOE (it hides counts of 1 to 5)'
+    return t / e * 100
 suspensions.key, suspensions.name = 'suspensions', 'total_suspensions'
 
 
@@ -175,12 +272,19 @@ def enroll_change(dbn):
 
 
 def access(dbn):
-    v = get('accessibility', dbn, 'accessibility')
-    if v:
-        return v
-    if get('accessibility', dbn, 'listed_sites') == 0:
+    """DOE's accessibility list, read against the building DOE's current
+    school list gives for the school. DOE leaves inaccessible buildings off
+    the list."""
+    b = LCG.get(dbn, {}).get('building')
+    if b and b not in ('NAN', ''):
+        if (dbn, b) in ACC_PAIR:
+            return ACC_PAIR[(dbn, b)]
+        if b in ACC_BLDG:
+            return ACC_BLDG[b]  # listed under a school it shares the building with
+        if ACC_DBN.get(dbn):
+            return "Main building not on DOE's accessible list; another of its sites is"
         return "Not on DOE's accessible-buildings list"
-    return None
+    return get('accessibility', dbn, 'accessibility')  # not on DOE's current list; use the August roster match
 access.key, access.name = 'accessibility', 'accessibility'
 
 
@@ -197,7 +301,7 @@ M = []
 
 
 def add(id, group, fn, label, short=None, unit='pct', dir=0, dp=None, definition=None, source=None,
-        vintage=None, text=None):
+        vintage=None, text=None, split=None):
     key = getattr(fn, 'key', None)
     if key and not SRC.get(key):
         return
@@ -209,7 +313,7 @@ def add(id, group, fn, label, short=None, unit='pct', dir=0, dp=None, definition
         'source': source or getattr(fn, 'source', None) or (src_name(key) if key else ''),
         'source_url': SRC[key].get('source_url') if key else None,
         'vintage': vintage or getattr(fn, 'vintage', None) or (SRC[key]['vintage'] if key else ''),
-        'fn': fn, 'text': text,
+        'fn': fn, 'text': text, 'split': split,
     })
 
 
@@ -225,29 +329,31 @@ add('chronic', 'quick', from_src('attendance', 'chronic_absent'),
 
 add('impact', 'learning', by_level('sqr', {'HS': 'hs_impact_score', 'HST': 'hst_impact_score', 'other': 'ems_impact_score'}),
     "DOE impact score: progress against similar students", 'Impact score (DOE)', unit='num', dp=2, dir=1,
-    definition="DOE's value-added score: the school's results minus what the same students would be expected to achieve at an average city school, given incoming test scores, poverty, disability and English learner status. Standardized within school type; 0.50 is the median.",
+    definition="DOE's value-added score: the school's results minus what the same students would be expected to achieve at an average city school, given incoming test scores, poverty, disability and English learner status. DOE scales it within each school type so a typical school is near 0.50; a few scores run above 1.0. High schools with only a middle-grades report have no high school score and are left blank rather than ranked against high schools.",
     source='DOE School Quality Report')
 add('performance', 'learning', by_level('sqr', {'HS': 'hs_performance_score', 'HST': 'hst_performance_score', 'other': 'ems_performance_score'}),
     'DOE performance score: results against all schools of its type', 'Performance score (DOE)', unit='num', dp=2, dir=1,
-    definition="DOE's score for raw results (test scores, or graduation and college readiness for high schools), standardized within school type; 0.50 is the median. It doesn't adjust for who the students are.",
+    definition="DOE's score for raw results, without adjusting for who the students are. Elementary and middle schools: state English and math test scores. High schools: English and Algebra I Regents scores, the four-year graduation rate and college enrollment within six months, a quarter each. Transfer schools: English and Algebra I Regents (a quarter each) and the six-year graduation rate (half). DOE scales it within each school type so a typical school is near 0.50; a few scores run above 1.0.",
     source='DOE School Quality Report')
 add('ela', 'learning', tests_or_sqr('ela_prof', 'ela_prof_pct'),
-    'Students proficient in English (state test, grades 3-8)', 'Proficient in English', dir=1,
+    'Students proficient in English (state test, grades 3-8)', 'Proficient in English', dir=1, split=test_year_group,
     definition='Share of students tested in grades 3-8 who scored at Level 3 or 4 on the state English test. District schools: spring 2026, from DOE. Charter schools: spring 2025, from NYSED, whose 2026 school file is not out yet.')
 add('math', 'learning', tests_or_sqr('math_prof', 'math_prof_pct'),
-    'Students proficient in math (state test, grades 3-8)', 'Proficient in math', dir=1,
+    'Students proficient in math (state test, grades 3-8)', 'Proficient in math', dir=1, split=test_year_group,
     definition='Share of students tested in grades 3-8 who scored at Level 3 or 4 on the state math test. Eighth graders who took the Algebra I Regents instead are not counted, so at some middle schools this describes only part of the grade. District schools: spring 2026, from DOE. Charter schools: spring 2025, from NYSED.')
 add('grad4', 'learning', from_src('graduation', 'grad_4yr'),
-    'Four-year graduation rate', 'Graduate in 4 years', dir=1, source='DOE graduation results', vintage='Class of 2025')
+    'Four-year graduation rate', 'Graduate in 4 years', dir=1, source='DOE graduation results', vintage='Class of 2025',
+    definition='Share of students who entered 9th grade in 2021-22 (Cohort 2021) who earned a Local or Regents diploma within four years, including August graduates. Transfer high schools are shown with this standard rate, not the separate rate DOE computes for them, and are ranked only against other transfer schools. Charter schools are not in DOE\'s school-level file.')
 add('ccr', 'learning', from_src('graduation', 'ccr_4yr'),
     'College and career readiness score (0-100)', 'College readiness score', unit='num', dp=0, dir=1,
     source='DOE School Quality Report', vintage='2024-25, Class of 2025')
 add('advanced', 'learning', from_src('sqr', 'adv_any_enrolled_pct'),
-    'Students taking an advanced course (AP, IB, college credit)', 'Take an advanced course', dir=1,
+    'Students taking an advanced course (AP, IB, college credit, or Algebra II, calculus, chemistry or physics)', 'Take an advanced course', dir=1,
     source='DOE School Quality Report')
 add('cte', 'learning', from_src('sqr', 'hs_industry_assessment_pct'),
     'Students who passed an industry-recognized technical (CTE) exam', 'Passed a CTE exam', dir=0,
-    source='DOE School Quality Report')
+    definition="Share of the Class of 2025 (students who entered 9th grade in 2021-22) who passed an industry-recognized technical assessment, the career and technical education certification exam. Mostly zero outside CTE schools. Transfer schools are left out because DOE measures them against a different cohort.",
+    source='DOE School Quality Report', vintage='2024-25, Class of 2025')
 
 add('safe', 'climate', from_src('survey', 'student_safe'),
     'Students who feel safe in the hallways and cafeteria', 'Students feel safe', dir=1,
@@ -260,15 +366,17 @@ add('trusted_adult', 'climate', from_src('survey', 'student_trusted_adult'),
     source='NYC School Survey', vintage='spring 2026')
 add('vaping', 'climate', from_src('survey', 'student_vaping_often'),
     'Students who say classmates vape often', 'Say classmates vape often', dir=-1,
+    definition='Share of responding students answering "Very often" or "Often" to "How often do students in this school vape?" DOE lists it under Additional Questions and does not score it.',
     source='NYC School Survey', vintage='spring 2026')
 add('families', 'climate', from_src('survey', 'parent_satisfied'),
     "Families satisfied with their child's education", 'Families satisfied', dir=1,
+    definition='Share of responding families answering "Satisfied" or "Very satisfied" to "How satisfied are you with ... the education my child has received this year?" Answers of "I don\'t know" are left out.',
     source='NYC School Survey', vintage='spring 2026')
 add('attendance', 'climate', from_src('attendance', 'attendance_rate'),
     'Average daily attendance', 'Attendance rate', unit='pct1', dir=1, source='DOE attendance data')
 add('suspensions', 'climate', suspensions,
     'Suspensions per 100 students', 'Suspensions per 100', unit='num', dp=1, dir=0,
-    definition="Principal's and superintendent's suspensions in 2024-25 per 100 students enrolled. DOE redacts counts of 1 to 5, so schools with few suspensions often have no figure. Neither high nor low is good on its own: a high rate can mean strict discipline, and a low one doesn't guarantee a calm school.",
+    definition="Principal's and superintendent's suspensions in 2024-25 per 100 students in kindergarten through 12th grade (3-K and pre-K children, who can't be suspended, are left out of the count). DOE redacts counts of 1 to 5, so schools with few suspensions show \"redacted\" instead of a rate; some schools aren't in DOE's report at all. Neither high nor low is good on its own: a high rate can mean strict discipline, and a low one doesn't guarantee a calm school.",
     source='DOE Local Law 93 discipline report; enrollment from DOE Demographic Snapshot', vintage='2024-25')
 
 add('experience', 'staff', from_src('sqr', 'pct_teachers_3plus_years'),
@@ -277,17 +385,51 @@ add('experience', 'staff', from_src('sqr', 'pct_teachers_3plus_years'),
 add('class_size', 'staff', from_src('class_size', 'avg_class_size_overall'),
     'Average class size', 'Average class size', unit='num', dp=1, dir=-1,
     source='DOE class size report', vintage='2025-26 (June)')
-add('class_cap', 'staff', from_src('class_size', 'cap_pct_at_or_below'),
+def class_cap(dbn):
+    v = get('class_size', dbn, 'cap_pct_at_or_below')
+    ex = get('class_size', dbn, 'cap_n_exempt_classes') or 0
+    ne = get('class_size', dbn, 'cap_n_nonexempt_classes') or 0
+    if ex and ex >= ne:
+        return f'{ex:,} of {ex + ne:,} classes exempted from the cap'
+    return v
+class_cap.key, class_cap.name = 'class_size', 'cap_pct_at_or_below'
+
+
+add('class_cap', 'staff', class_cap,
     "Classes within the state's class-size cap", 'Classes within state cap', dir=1,
+    definition="Share of a school's non-exempt classes at or below the state cap (20 students in K-3, 23 in grades 4-8, 25 in high school). DOE exempts some classes, mostly for lack of space; exempt classes are left out of the share, so where half or more of a school's classes are exempt the map shows the exempt count instead of a share. Self-contained special education classes aren't covered.",
     source='DOE state class-size report', vintage='Oct. 31, 2025')
-add('counselor', 'staff', from_src('counselors', 'students_per_counselor'),
+def counselor(dbn):
+    v = get('counselors', dbn, 'students_per_counselor')
+    n = get('counselors', dbn, 'n_counselors_total')
+    e = get('counselors', dbn, 'enrollment_basis')
+    if v is None and n and 0 < n < 1 and e:
+        return e / n  # DOE's file shows enrollment / 1 here; this is enrollment / actual counselors
+    if v is not None and n and e:
+        return e / n  # same as DOE's ratio, unrounded, so the page rounds only once
+    return v
+counselor.key, counselor.name = 'counselors', 'students_per_counselor'
+
+
+add('counselor', 'staff', counselor,
     'Students per guidance counselor', 'Students per counselor', unit='num', dp=0, dir=-1,
+    definition="2024-25 enrollment divided by full- and part-time guidance counselors on staff in 2025-26 (social workers not counted). Part-time and shared counselors count as fractions. Where a school has less than one counselor, the map divides by the actual fraction; DOE's own file divides by one there. Schools with no counselor say so. The guide cites a recommended 250 students per counselor, fewer at high-need schools.",
     source='DOE guidance counselor report (Local Law 56)', vintage='2025-26')
 add('per_pupil', 'staff', from_src('spending', 'per_pupil'),
     'Spending per student', 'Spending per student', unit='dollars', dir=0,
+    definition="Total federal, state and local spending at the school in 2024-25 divided by its BEDS-day enrollment, as reported to the state (NYSED's ESSA financial transparency data). It includes a share of districtwide costs. Charter schools report their own spending and district schools are reported by DOE, so the two don't compare cleanly; small schools losing students can look flush under the city's hold-harmless budget rules.",
     source='NYSED school-level spending report', vintage='2024-25')
-add('pta', 'staff', from_src('pta', 'pta_per_student'),
+def pta(dbn):
+    v = get('pta', dbn, 'pta_per_student')
+    if v == 0 and not get('pta', dbn, 'pta_expenses') and not get('pta', dbn, 'pta_ending_balance'):
+        return '$0 reported (every money column is zero)'
+    return v
+pta.key, pta.name = 'pta', 'pta_per_student'
+
+
+add('pta', 'staff', pta,
     'PTA money raised per student', 'PTA money per student', unit='dollars', dir=0,
+    definition="Total PTA or parent association income in 2024-25 divided by the school's 2024-25 enrollment. The figures are self-reported: parent groups file paper reports that principals or parent coordinators key in. Schools whose report has zeros in every money column are shown as such and not ranked, since that can mean an unfiled report as easily as nothing raised. Charter schools aren't covered.",
     source='DOE PTA financial report (Local Law 171)', vintage='2024-25')
 
 add('enrollment', 'students', enroll, 'Students enrolled', 'Enrollment', unit='count', dir=0,
@@ -297,7 +439,9 @@ add('enroll_change', 'students', enroll_change, 'Enrollment change since 2021-22
     source=SNAP, vintage='2021-22 to 2025-26')
 if SRC.get('capacity'):
     add('utilization', 'students', from_src('capacity', 'utilization'),
-        'Building use: enrollment as a share of capacity', 'Building use vs. capacity', dir=0, source='School Construction Authority')
+        "Space use: the school's enrollment as a share of the capacity SCA assigns it", 'Space use', dir=0,
+        definition="The School Construction Authority's 'target' utilization for the school: its Oct. 31, 2025 enrollment divided by the seats SCA counts for it. Many schools share a building; this is the school's own share, and the building as a whole can be more or less crowded (shown under \"Also on file\"). Over 100% means more students than seats.",
+        source='School Construction Authority Blue Book', vintage='2025-26')
 add('eni', 'students', demo('eni', 100), 'Economic need index', 'Economic need index', dir=0,
     definition="DOE's estimate of the share of students facing economic hardship (public assistance, temporary housing, recent immigration or a high-poverty census tract).",
     source=SNAP, vintage='2025-26')
@@ -311,6 +455,7 @@ add('iep_programs', 'sped', from_src('sqr', 'iep_all_programs_pct'),
     source='DOE School Quality Report')
 add('iep_services', 'sped', from_src('sqr', 'iep_all_related_services_pct'),
     'Students with IEPs fully receiving related services (speech, OT, counseling)', 'IEP services fully delivered', dir=1,
+    definition="Share of students with IEPs receiving all the related services (such as speech, occupational therapy or counseling) their IEP recommends, as of June 2025. Charter schools are not included in DOE's figures.",
     source='DOE School Quality Report')
 add('ict_size', 'sped', from_src('class_size', 'avg_class_size_ict'),
     'Average co-taught (ICT) class', 'Co-taught (ICT) class size', unit='num', dp=1, dir=0,
@@ -330,15 +475,20 @@ for m in M:
 
 # ---------- extras shown as plain facts ----------
 EXTRAS = {
-    'ip_rating': 'DOE rating: instruction and performance',
-    'ssc_rating': 'DOE rating: safety and school climate',
-    'rwf_rating': 'DOE rating: relationships with families',
+    'ip_rating': 'DOE rating, 2024-25: instruction and performance',
+    'ssc_rating': 'DOE rating, 2024-25: safety and school climate',
+    'rwf_rating': 'DOE rating, 2024-25: relationships with families',
+    'impact_note': 'DOE impact and performance scores',
     'pta_total': 'PTA money raised, 2024-25',
     'counselors': 'Guidance counselors, 2025-26',
     'social_workers': 'Social workers, 2025-26',
     'teacher_responses': 'Teachers who answered the 2026 survey',
     'authorizer': 'Charter authorizer',
     'year_opened': 'Charter school opened',
+    'insideschools': 'Insideschools review',
+    'building_use': 'Whole building, all schools in it',
+    'current_list': "On DOE's current school list",
+    'spending_note': 'About the spending figure',
 }
 
 
@@ -346,13 +496,20 @@ def extras(dbn):
     x = {}
     lv = LEVEL[dbn]
     pre = 'hs' if lv == 'HS' else 'hst' if lv == 'HST' else 'ems'
+    rt = get('sqr', dbn, 'report_type') or ''
     for k in ('ip', 'ssc', 'rwf'):
         v = get('sqr', dbn, f'{pre}_{k}_rating')
         if v:
-            x[f'{k}_rating'] = v
+            # 6-12 and K-12 schools get a separate middle-grades rating; say which one this is.
+            x[f'{k}_rating'] = v + (' (high school grades)' if rt == 'EMS+HS' else '')
+        elif lv == 'HS' and get('sqr', dbn, f'ems_{k}_rating'):
+            x[f'{k}_rating'] = get('sqr', dbn, f'ems_{k}_rating') + ' (middle grades; no high school report)'
+    if lv == 'HS' and get('sqr', dbn, 'hs_impact_score') is None and get('sqr', dbn, 'ems_impact_score') is not None:
+        x['impact_note'] = "Not shown: DOE's 2024-25 report covered only this school's middle grades, so its scores can't be ranked against high schools"
+
     v = get('pta', dbn, 'pta_revenue')
     if v is not None:
-        x['pta_total'] = f'${round(v):,}'
+        x['pta_total'] = f'${hu(v):,}'
     v = get('counselors', dbn, 'n_counselors_total')
     if v is not None:
         x['counselors'] = f'{v:g}'
@@ -362,11 +519,24 @@ def extras(dbn):
     v = get('survey', dbn, 'teacher_responses')
     if v is not None:
         rr = get('survey', dbn, 'teacher_response_rate')
-        x['teacher_responses'] = f'{v}' + (f' ({round(rr * 100)}%)' if rr is not None else '')
+        x['teacher_responses'] = f'{v}' + (f' ({hu(rr * 100)}%)' if rr is not None else '')
     for k in ('authorizer', 'year_opened'):
         v = get('charters', dbn, k)
         if v:
             x[k] = str(v)
+    if get('insideschools', dbn, 'review'):
+        first = get('insideschools', dbn, 'review_date')
+        last = get('insideschools', dbn, 'review_latest_year')
+        former = get('insideschools', dbn, 'former_name')
+        x['insideschools'] = ((first or 'undated') + (f', updated {last}' if last and first and str(last) not in first else '')
+                              + (f'; written when the school was called {former}' if former else ''))
+    bu, bid = get('capacity', dbn, 'building_utilization'), get('capacity', dbn, 'building_id')
+    if bu is not None and bid and SHARED_BLDG.get(bid, 0) > 1:
+        x['building_use'] = f'{hu(bu * 100)}% of capacity (building {bid}, shared by {SHARED_BLDG[bid]} schools)'
+    if dbn not in LCG:
+        x['current_list'] = 'No. It is missing from DOE\'s list of open schools as of Oct. 7, 2026, so it may have closed, merged or taken a new number after 2025-26.'
+    if dbn == '84K964':
+        x['spending_note'] = "NYSED's $4,470 for this first-year school is about a third of the next-lowest school's; treat it with caution."
     return x
 
 
@@ -376,7 +546,25 @@ def links(dbn):
         v = get('charters', dbn, f)
         if v:
             u[k] = v
+    if dbn in NYSED_URL_ADD:
+        u['nysed'] = NYSED_URL_ADD[dbn]
+    if 'authorizer' not in u and u.get('nysed'):
+        page = NYSED_PAGES.get(u['nysed'].rstrip('/').split('/')[-1], '')
+        m = re.search(r'<a href="([^"]+)">\s*(?:School\s+)?(?:Information|Profile)?[^<]{0,40}[Mm]aintained\s+[Bb]y', page)
+        if m and 'nysed.gov' not in m.group(1) and re.match(r'https?://[^\s]+$', m.group(1)):
+            u['authorizer'] = html_unescape(m.group(1))
+    if dbn in DEAD_AUTH:
+        u.pop('authorizer', None)
+    v = get('insideschools', dbn, 'review_url')
+    if v:
+        u['insideschools'] = v
     return u
+
+
+def hu(x):
+    """Round half up, as the browser's Math.round and toFixed do, so a sentence
+    never shows a different whole number from the row beside it."""
+    return math.floor(x + 0.5)
 
 
 def benchmarks(dbn, vals):
@@ -386,26 +574,44 @@ def benchmarks(dbn, vals):
     if n_gc == 0:
         b.append('No guidance counselor on staff in 2025-26 (social workers are counted separately).')
     elif spc is not None and spc > 250:
-        b.append(f'About {round(spc):,} students per guidance counselor. The guide cites a recommended 250.')
+        b.append(f'About {hu(spc):,} students per guidance counselor. The guide cites a recommended 250.')
     tr = vals.get('teacher_rec')
     if tr is not None and tr <= 0.5:
-        b.append(f'Only {round(tr * 100)}% of teachers would recommend the school. The guide flags schools where half or more would not.')
+        b.append(f'Only {hu(tr * 100)}% of teachers would recommend the school. The guide flags schools where half or more would not.')
     u = vals.get('utilization')
     if u is not None and u > 1.0:
-        b.append(f'The building is at {round(u * 100)}% of its capacity, per the School Construction Authority.')
+        bu, bid = get('capacity', dbn, 'building_utilization'), get('capacity', dbn, 'building_id')
+        shared = bu is not None and SHARED_BLDG.get(bid, 0) > 1
+        b.append(f"The school's enrollment is {hu(u * 100)}% of the capacity the School Construction Authority assigns it"
+                 + (f' (its shared building is at {hu(bu * 100)}%).' if shared else '.'))
     return b
 
 
 # ---------- compute ----------
-def pctl(sorted_vals, v):
+def shares(sorted_vals, v):
+    """Share of the OTHER peer schools with a strictly lower value, and with a
+    strictly higher value, each floored to a whole percent. A school tied at
+    the top gets higher-share 0, so the sheet can say "tied for highest"."""
     lo, hi = bisect_left(sorted_vals, v), bisect_right(sorted_vals, v)
-    return round(100 * (lo + 0.5 * (hi - lo)) / len(sorted_vals), 1)
+    others = len(sorted_vals) - 1
+    if others < 1:
+        return None, None
+    return 100 * lo // others, 100 * (len(sorted_vals) - hi) // others
+
+
+def store_round(v):
+    """The precision written to metrics.json: enough digits that the browser
+    rounds the true value once for display (no double rounding). Ranks are
+    computed on these same stored values."""
+    if isinstance(v, float):
+        return round(v, 5) if abs(v) < 10 else round(v, 3)
+    return v
 
 
 values = {d: {} for d in by_dbn}
 for m in M:
     for d in by_dbn:
-        v = m['fn'](d)
+        v = store_round(m['fn'](d))
         if v is not None:
             values[d][m['id']] = v
 
@@ -413,8 +619,10 @@ dist, out_metrics = {}, []
 for m in M:
     vals = {d: values[d][m['id']] for d in by_dbn if m['id'] in values[d]}
     if m['unit'] == 'text':
-        out_metrics.append({k: v for k, v in m.items() if k not in ('fn', 'text')})
+        out_metrics.append({k: v for k, v in m.items() if k not in ('fn', 'text', 'split')})
         continue
+    # Text values (redacted, exempt, all-zero reports) are shown but never ranked.
+    vals = {k: v for k, v in vals.items() if not isinstance(v, str)}
     allv = sorted(vals.values())
     if len(allv) < 30:
         print(f'  dropping {m["id"]}: only {len(allv)} schools')
@@ -423,11 +631,19 @@ for m in M:
     hi_d = allv[int(0.99 * (len(allv) - 1))]
     if m['unit'] in ('pct', 'pct1') and allv[0] >= 0 and allv[-1] <= 1:
         lo_d, hi_d = (0.0 if lo_d < 0.15 else lo_d), (1.0 if hi_d > 0.85 else hi_d)
-    groups = {'ALL': allv}
-    for lv in set(LEVEL.values()):
-        g = sorted(v for d, v in vals.items() if LEVEL[d] == lv)
+    sp = m.get('split') or (lambda d: '')
+    sfx = {d: sp(d) for d in vals}
+    groups = {'ALL': sorted(v for d, v in vals.items() if not sfx[d])} if any(sfx.values()) else {'ALL': allv}
+    for suf in sorted(set(sfx.values()) - {''}):
+        g = sorted(v for d, v in vals.items() if sfx[d] == suf)
         if len(g) >= MIN_PEERS:
-            groups[lv] = g
+            groups['ALL' + suf] = g
+    for lv in set(LEVEL.values()):
+        for suf in set(sfx.values()):
+            g = sorted(v for d, v in vals.items() if LEVEL[d] == lv and sfx[d] == suf)
+            if len(g) >= MIN_PEERS:
+                groups[lv + suf] = g
+    m['_sfx'] = sfx
     dm = {'domain': [lo_d, hi_d]}
     for lv, g in groups.items():
         hist = [0] * BINS
@@ -438,7 +654,7 @@ for m in M:
                   'hist': hist}
     m['_groups'] = groups
     dist[m['id']] = dm
-    out_metrics.append({k: v for k, v in m.items() if k not in ('fn', 'text', '_groups')})
+    out_metrics.append({k: v for k, v in m.items() if k not in ('fn', 'text', '_groups', 'split', '_sfx')})
 
 ids = [m['id'] for m in out_metrics]
 mobj = {m['id']: m for m in M}
@@ -447,19 +663,25 @@ for d in by_dbn:
     vals = values[d]
     if not vals:
         continue
-    v_arr, p_arr = [], []
+    v_arr, a_arr, h_arr, pk = [], [], [], {}
     for mid in ids:
         v = vals.get(mid)
-        if isinstance(v, float):
-            v = round(v, 4) if abs(v) < 10 else round(v, 1) if abs(v) < 1000 else round(v)
         v_arr.append(v)
         g = mobj[mid].get('_groups')
         if v is None or g is None or isinstance(v, str):
-            p_arr.append(None)
+            a_arr.append(None)
+            h_arr.append(None)
             continue
-        peer = g.get(LEVEL[d], g['ALL'])
-        p_arr.append(round(pctl(peer, vals[mid])))
-    rec = {'level': LEVEL[d], 'v': v_arr, 'p': p_arr}
+        suf = mobj[mid]['_sfx'].get(d, '')
+        key = next(k for k in (LEVEL[d] + suf, 'ALL' + suf, 'ALL') if k in g)
+        if key != (LEVEL[d] if LEVEL[d] in g else 'ALL'):  # the page's default peer group
+            pk[ids.index(mid)] = key
+        a, h = shares(g[key], vals[mid])
+        a_arr.append(a)
+        h_arr.append(h)
+    rec = {'level': LEVEL[d], 'v': v_arr, 'a': a_arr, 'h': h_arr}
+    if pk:
+        rec['pk'] = pk
     x = extras(d)
     if x:
         rec['x'] = x

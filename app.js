@@ -1,6 +1,6 @@
 /* NYC schools atlas */
 // Bump with each data rebuild so browsers don't pair new code with cached data.
-const DATA_V = '2026-10-07b';
+const DATA_V = '2026-10-07c';
 const GSV_KEY = "AIzaSyBPEjOGoN9DTFfr4BaLoHNIVM_FHNQNeFI";
 
 const map = L.map('map', { preferCanvas: true, zoomControl: true, minZoom: 10, maxZoom: 18 })
@@ -148,10 +148,11 @@ Promise.all([
   allSchools = schools;
   zonesIndex = new Map();
   for (const f of zones.features) {
-    const dbn = f.properties && f.properties.dbn;
-    if (!dbn) continue;
-    if (!zonesIndex.has(dbn)) zonesIndex.set(dbn, []);
-    zonesIndex.get(dbn).push(f);
+    // A shared zone lists every school in it: "09X053,09X088".
+    for (const dbn of String((f.properties && f.properties.dbn) || '').split(',').map(x => x.trim()).filter(Boolean)) {
+      if (!zonesIndex.has(dbn)) zonesIndex.set(dbn, []);
+      zonesIndex.get(dbn).push(f);
+    }
   }
   for (const s of schools) { s._bands = detectBand(s); schoolByDbn.set(s.dbn, s); }
   computeLargest();
@@ -414,13 +415,12 @@ function showZonedForPoint(lat, lon) {
   // list zoned schools in address-result tray
   const tray = document.getElementById('addr-result');
   if (!tray) return;
-  tray.innerHTML = hit.map(f => {
-    const dbn = f.properties.dbn;
-    const s = allSchools.find(x => x.dbn === dbn);
+  tray.innerHTML = hit.flatMap(f => String(f.properties.dbn || '').split(',').map(x => x.trim()).filter(Boolean).map(dbn => {
+    const s = schoolByDbn.get(dbn);
     const lvl = f.properties.zone_type || '';
-    if (!s) return `<div class="zone-hit"><b>${escapeHtml(dbn)}</b> ${escapeHtml(lvl)}</div>`;
+    if (!s) return '';  // a zone polygon for a school that has since closed
     return `<div class="zone-hit" data-dbn="${dbn}"><b>${escapeHtml(s.name)}</b><span class="muted"> &middot; ${escapeHtml(lvl)}</span></div>`;
-  }).join('');
+  })).join('');
   tray.querySelectorAll('.zone-hit[data-dbn]').forEach(el => {
     el.addEventListener('click', () => {
       const s = schoolByDbn.get(el.dataset.dbn);
@@ -634,29 +634,6 @@ function barRow(label, value, color) {
     <div class="bar-wrap"><div class="bar-fill" style="width:${w.toFixed(1)}%;background:${color}"></div></div>
     <div class="bar-val">${w < 1 && w > 0 ? '<1%' : Math.round(w) + '%'}</div>
   </div>`;
-}
-
-function sparklineSVG(trend) {
-  const pts = (trend || []).filter(r => r[1] != null);
-  if (pts.length < 2) return '';
-  const w = 180, h = 38, pad = 2, labelBand = 12;
-  const plotH = h - labelBand;
-  const vals = pts.map(p => p[1]);
-  const min = Math.min(...vals), max = Math.max(...vals);
-  const range = Math.max(1, max - min);
-  const dx = (w - pad * 2) / (pts.length - 1);
-  const yAt = v => pad + (plotH - pad * 2) * (1 - (v - min) / range);
-  const path = pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${(pad + i * dx).toFixed(1)},${yAt(p[1]).toFixed(1)}`).join(' ');
-  const lastX = pad + (pts.length - 1) * dx;
-  const lastY = yAt(pts[pts.length - 1][1]);
-  const dir = pts[pts.length - 1][1] >= pts[0][1] ? '#5ca57a' : '#c0604e';
-  const firstYr = pts[0][0], lastYr = pts[pts.length - 1][0];
-  return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
-    <path d="${path}" fill="none" stroke="${dir}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="${lastX}" cy="${lastY}" r="2.4" fill="${dir}"/>
-    <text x="${pad}" y="${h-2}" font-size="9" fill="#676d7e">${firstYr}</text>
-    <text x="${w-2}" y="${h-2}" font-size="9" fill="#676d7e" text-anchor="end">${lastYr}</text>
-  </svg>`;
 }
 
 function haversine(lat1, lon1, lat2, lon2) {
