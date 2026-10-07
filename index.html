@@ -9,8 +9,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./shared/chrome.css?v=15" />
-<link rel="stylesheet" href="./style.css?v=20" />
-<link rel="stylesheet" href="./glance.css?v=20" />
+<link rel="stylesheet" href="./style.css?v=21" />
+<link rel="stylesheet" href="./glance.css?v=21" />
 </head>
 <body data-section="map" data-no-footer="true">
 
@@ -49,6 +49,10 @@
     <div class="panel">
       <div class="panel-title">Sector</div>
       <label class="chk"><input type="checkbox" data-filter="sector" value="public" checked /><span class="swatch shape-circle ink-public"></span>Public district</label>
+      <div class="shape-key">
+        <span><span class="swatch shape-circle ink-public"></span>has an attendance zone</span>
+        <span><span class="swatch shape-diamond ink-public"></span>no zone: choice or screened admission, including most middle and high schools</span>
+      </div>
       <label class="chk"><input type="checkbox" data-filter="sector" value="charter" checked /><span class="swatch shape-square ink-charter"></span>Charter</label>
       <label class="chk"><input type="checkbox" data-filter="sector" value="private" checked /><span class="swatch shape-triangle ink-private"></span>Private / independent / parochial</label>
     </div>
@@ -178,7 +182,7 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="./shared/chrome.js?v=15"></script>
-<script src="./app.js?v=20"></script>
-<script src="./glance.js?v=20"></script>
+<script src="./app.js?v=21"></script>
+<script src="./glance.js?v=21"></script>
 </body>
 </html>

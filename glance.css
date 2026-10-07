@@ -178,3 +178,9 @@ body.sheet-open #app{grid-template-columns:320px 1fr 420px}
   .lu-scroll th.nm-h,.lu-scroll td.nm{min-width:160px;max-width:160px}
   .lineup-btn{top:auto;bottom:24px;right:10px}
 }
+
+/* ---------- public-school shape key ---------- */
+.shape-key{display:flex;flex-direction:column;gap:4px;margin:0 0 6px 24px;font-size:11.5px;color:var(--muted);line-height:1.35}
+.shape-key>span{display:flex;align-items:flex-start;gap:8px}
+.shape-key .swatch{width:10px;height:10px;margin-top:2px;flex:none;display:inline-block}
+.shape-diamond{border-radius:1px;transform:rotate(45deg) scale(.85)}
