@@ -338,7 +338,7 @@ EXTRAS = {
     'social_workers': 'Social workers, 2025-26',
     'teacher_responses': 'Teachers who answered the 2026 survey',
     'authorizer': 'Charter authorizer',
-    'charter_term': 'Current charter runs through',
+    'year_opened': 'Charter school opened',
 }
 
 
@@ -363,11 +363,20 @@ def extras(dbn):
     if v is not None:
         rr = get('survey', dbn, 'teacher_response_rate')
         x['teacher_responses'] = f'{v}' + (f' ({round(rr * 100)}%)' if rr is not None else '')
-    for k, f in (('authorizer', 'authorizer'), ('charter_term', 'charter_term_end')):
+    for k in ('authorizer', 'year_opened'):
+        v = get('charters', dbn, k)
+        if v:
+            x[k] = str(v)
+    return x
+
+
+def links(dbn):
+    u = {}
+    for k, f in (('authorizer', 'authorizer_url'), ('nysed', 'nysed_url')):
         v = get('charters', dbn, f)
         if v:
-            x[k] = v
-    return x
+            u[k] = v
+    return u
 
 
 def benchmarks(dbn, vals):
@@ -457,6 +466,13 @@ for d in by_dbn:
     b = benchmarks(d, vals)
     if b:
         rec['b'] = b
+    u = links(d)
+    if u:
+        rec['u'] = u
+    # DOE's snapshot URL needs the report type: tools.nycenet.edu/snapshot/2025/<DBN>/<EMS|HS|HST|EC|D75>/
+    rt = get('sqr', d, 'report_type')
+    if rt:
+        rec['st'] = ('HS' if LEVEL[d] == 'HS' else 'EMS') if rt == 'EMS+HS' else rt
     t = {}
     dm = by_dbn[d].get('demo') or {}
     if dm.get('eni_mask') == 'above' and 'eni' in ids:

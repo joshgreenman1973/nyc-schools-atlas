@@ -103,7 +103,9 @@ def main():
         if n not in rh:
             raise ValueError(f"Column {n!r} missing from {RAW_SHEET!r}")
     bix, aix = rh.index("Building Code"), rh.index("ATS Code")
+    racc = rh.index("Accessibility Description")
     main_bldg = {}
+    roster_acc = {}  # used only to quantify how stale the roster is, never as a value
     for r in raw[1:]:
         dbn = s(r[aix]).upper()
         if not dbn:
@@ -113,6 +115,7 @@ def main():
         if dbn in main_bldg:
             raise ValueError(f"Duplicate ATS code {dbn} in {RAW_SHEET}")
         main_bldg[dbn] = s(r[bix]).upper()
+        roster_acc[dbn] = s(r[racc])
     if len(main_bldg) < EXPECTED_MIN_ROSTER:
         raise RuntimeError(f"Only {len(main_bldg)} roster schools; expected >= {EXPECTED_MIN_ROSTER}")
 
@@ -152,6 +155,8 @@ def main():
             "accessibility_source_year": "2026",
         }
 
+    stale = sum(1 for d, rec in schools.items()
+                if rec["listed_sites"] == 0 and roster_acc.get(d) in ALLOWED)
     out = {
         "key": "accessibility",
         "title": "Building accessibility",
@@ -214,11 +219,12 @@ def main():
         "notes": [
             "Downloaded from the public 'Anyone with the link' SharePoint folder that schools.nyc.gov links as 'Download the department-wide BAP List' (folder link https://nycdoe.sharepoint.com/:f:/s/BAP/Epw2-AKp5K5LvWC6XLT7NO4BZ65mBbicLyNQv3uIm7OnMQ). No login was needed. The workbook is macro-enabled (.xlsm); it was read as data only and no macros were run.",
             f"The list has {n_list_rows:,} school-by-building rows covering {len(listed):,} school codes. It includes charter schools in DOE buildings (84 DBNs) and District 75 and 79 programs with many sites.",
-            "The list only includes buildings with some accessibility. DOE: 'There are school buildings that are not accessible and, therefore, do not have a BAP. Non-accessible buildings are not included on the BAP List.' Schools in the roster with no listed building have accessibility null and listed_sites 0. This script doesn't write 'Not accessible', because the roster is not fully current (see below). The lead can choose to show listed_sites = 0 as 'not on DOE's accessible-buildings list.'",
+            f"The list only includes buildings with some accessibility. DOE: 'There are school buildings that are not accessible and, therefore, do not have a BAP. Non-accessible buildings are not included on the BAP List.' Schools in the roster with no listed building have accessibility null and listed_sites 0. This script doesn't write 'Not accessible', because the two sheets don't fully agree: {stale} roster schools whose main building the roster itself marks Fully or Partially Accessible have no building on the list. The lead can choose to show listed_sites = 0 as 'not on DOE's accessible-buildings list.'",
             "Main building: the hidden 'RAW Data' sheet lists one row per school code ('ATS Code') with its building code; non-primary sites have blank ATS codes. It's used only to pick the main building. Its own 'Accessibility Description' column disagrees with the published list for hundreds of buildings (usually 'No Accessibility' where the list now shows a rating), so it was ignored. The hidden 'BAP MASTER' and 'March_2023 (2)' sheets are older and were also ignored.",
             "When a school's main building isn't on the list but another of its sites is, accessibility is null, main_building_listed is false and listed_sites is 1 or more. This is common for District 75 programs, which are spread across many buildings.",
             "Rule counts: " + ", ".join(f"{k} = {v}" for k, v in sorted(tally.items())) + ".",
             "Ratings are per building, so co-located schools share their building's rating and BAP link.",
+            f"Charter schools: {sum(1 for d in schools if d.startswith('84')):,} charter DBNs appear (roster or list). The roster and list cover DOE-owned or DOE-leased buildings, so charters in private space have no record here. Missing is not the same as inaccessible.",
             "Fully vs. partially: in this edition every 'Fully Accessible' row is rated 9 or 10 and every 'Partially Accessible' row 1 to 8.",
             "The atlas's older 'Fully/Partially/Not accessible' program tags come from the 2021 DOE directories, a different and older source.",
         ],

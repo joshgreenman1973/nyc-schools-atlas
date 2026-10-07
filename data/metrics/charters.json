@@ -1,0 +1,2992 @@
+{
+ "key": "charters",
+ "title": "Charter school authorizer and opening year",
+ "source": "New York State Education Department, NYS Charter School Directory (Excel, as of Sept. 2, 2025) and NYSED charter school pages; DBN crosswalk from NYC DOE LCGMS and NYC Open Data 2019-20 School Locations",
+ "source_url": "https://www.nysed.gov/charter-schools/charter-schools-directory",
+ "file_url": "https://www.nysed.gov/sites/default/files/programs/charter-schools/nys-charter-school-directory-as-of-09-02-2025.xlsx",
+ "vintage": "2025-26 directory, as of 2025-09-02",
+ "fetched": "2026-10-07",
+ "fields": {
+  "authorizer": {
+   "label": "Charter authorizer",
+   "definition": "The body that granted and oversees the school's charter. Readable label for the directory's Authorizer code: SUNY = SUNY Charter Schools Institute (SUNY trustees), Regents = NYS Board of Regents (through NYSED's Charter School Office), NYCDOE = NYC Department of Education (Chancellor).",
+   "source_field": "Authorizer (Sheet1, NYS Charter School Directory xlsx)",
+   "unit": "text",
+   "direction": "neutral"
+  },
+  "authorizer_code": {
+   "label": "Authorizer (as listed)",
+   "definition": "Authorizer exactly as written in NYSED's Excel directory: SUNY, Regents or NYCDOE.",
+   "source_field": "Authorizer (Sheet1, NYS Charter School Directory xlsx)",
+   "unit": "text",
+   "direction": "neutral"
+  },
+  "year_opened": {
+   "label": "Year opened",
+   "definition": "Year the school opened, per NYSED. Values of 2026 were listed on NYSED's web page as 'Opening in 2026' (approved but not yet operating when the directory was compiled).",
+   "source_field": "Year Opened (Sheet1, NYS Charter School Directory xlsx)",
+   "unit": "number",
+   "direction": "neutral"
+  },
+  "authorizer_url": {
+   "label": "Authorizer's page for this school",
+   "definition": "SUNY and NYC DOE schools: the 'School Information Maintained by ...' link on the school's NYSED page (SUNY school profile or schools.nyc.gov school page). Regents schools: the NYSED school page itself, since NYSED's Charter School Office oversees schools for the Board of Regents. Null when NYSED gives no school-specific link.",
+   "source_field": "link text 'School Information Maintained by ...' on https://www.nysed.gov/charter-schools/<school> pages",
+   "unit": "text",
+   "direction": "neutral"
+  },
+  "nysed_url": {
+   "label": "NYSED charter page",
+   "definition": "The school's page in NYSED's Charter Schools Directory (annual reports, financial statements, renewal reports, links to state data).",
+   "source_field": "school-name link on https://www.nysed.gov/charter-schools/charter-schools-directory",
+   "unit": "text",
+   "direction": "neutral"
+  },
+  "sed_code": {
+   "label": "NYSED BEDS code",
+   "definition": "NYSED's 12-digit institution code for the school, used to match it to a DOE DBN.",
+   "source_field": "SED Code (Sheet1, NYS Charter School Directory xlsx)",
+   "unit": "text",
+   "direction": "neutral"
+  },
+  "nysed_name": {
+   "label": "Name in NYSED directory",
+   "definition": "School name as NYSED lists it (can differ from the DOE name).",
+   "source_field": "Charter School Name (Sheet1, NYS Charter School Directory xlsx)",
+   "unit": "text",
+   "direction": "neutral"
+  },
+  "crosswalk": {
+   "label": "DBN match method",
+   "definition": "How the NYSED code was matched to the DBN: lcgms_beds, locations_2019_20_beds, lcgms_charter_number, locations_2019_20_charter_number or manual. See notes.",
+   "source_field": "derived",
+   "unit": "text",
+   "direction": "neutral"
+  }
+ },
+ "notes": [
+  "Charter term / renewal end date: NOT included. Neither NYSED's Excel directory nor its web directory gives a term or expiration date. SUNY's school pages show grades and enrollment 'at End of Charter Term' but not the date; NYSED's pages for Regents schools list authorized grades by school year but don't label the end of the term. No bulk source was found.",
+  "The Excel file is the current one on NYSED's directory page as of 2026-10-07. NYSED labels it the 2025-2026 directory, as of Sept. 2, 2025; it has not been updated for 2026-27, so schools that opened in fall 2026 may be listed with year 2026 and some may be missing.",
+  "Crosswalk counts: lcgms_beds = 268, lcgms_charter_number = 15, locations_2019_20_beds = 6, locations_2019_20_charter_number = 1, manual = 1. 291 of 299 NYSED NYC rows matched.",
+  "Matches by rules 2-4 where the NYSED and DOE names differ beyond punctuation: 84X487: NYSED 'Girls Preparatory Charter School of the Bronx' / DOE 'Bronx Charter School for Excellence 6' (lcgms_charter_number); 84X630: NYSED 'Girls Preparatory Charter School of the Bronx II' / DOE 'Bronx Charter School for Excellence 8' (lcgms_charter_number). The two Girls Preparatory Bronx schools now run under Bronx Charter School for Excellence names. SUNY's authorizer page for 'Girls Preparatory Charter School of the Bronx' (girls-prep-charter-school-bronx) is now titled 'Bronx Charter School for Excellence 6', which matches DOE's 84X487.",
+  "Manual matches: 342700861100 -> 84Q422: NYSED 'Success Academy Charter School-NYC 14' = LCGMS 84Q422 'Success Academy Charter School - NYC 14'. LCGMS's BEDS field for 84Q422 holds the malformed '38400010422', and the charter-number suffix 861100 is shared with another NYSED NYC row (South Bronx Community Charter High School), so rules 1-3 can't match it.",
+  "Unmatched NYSED NYC rows (no DBN found in LCGMS or 2019-20 School Locations; mostly schools opening in 2025 or 2026): Achievement First Charter School 11 (SED 331600861085, opened 2025, SUNY); Explore Enrich Charter School (SED 331700861047, opened 2025, SUNY); Lamad Averne Academy Charter School (SED 320700861202, opened 2025, SUNY); Next Generation Charter School (SED 321200861203, opened 2026, SUNY); South Bronx Classical Charter School VI (SED 321100861138, opened 2025, Regents); Success Academy Charter School – NYC 15 (SED 331700861038, opened 2025, SUNY); Success Academy Charter School - NYC 18 (SED 321000861206, opened 2026, SUNY); Uncommon New York City Charter School #1 (SED 331300861119, opened 2025, SUNY).",
+  "DOE LCGMS charter codes with no NYSED NYC directory match: 84OBIG Intellectus Preparatory Charter School; 84X554 Choice Charter School.",
+  "authorizer_url: on 2026-10-07, 206 of the 207 distinct 'School Information Maintained by' links resolved (HTTP 200). One returned 404 and is left null: https://www.newyorkcharters.org/math-engineering-and-science-academy-charter-high-school-2-2/. The generic SUNY link (newyorkcharters.org/charter-schools/) is also left null.",
+  "Authorizer conflicts between NYSED's Excel file and its school pages: 84X461 Nuasin Next Generation Charter School: Excel authorizer SUNY, but its NYSED page says the school information is maintained by the NYC-DoE (https://www.schools.nyc.gov/schools/X461); authorizer kept from the Excel file, authorizer_url left null.",
+  "Cross-check: for 34 DOE-authorized schools, NYSED's link to schools.nyc.gov/schools/<location code> agrees with the crosswalk DBN ('84' + location code) in every case.",
+  "Every school in this file is a charter. The atlas's charter records come from DOE lists, so a few DOE charter DBNs may not appear here."
+ ],
+ "schools": {
+  "84K037": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2012,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/beginning-with-children-charter-school-2/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/beginning-children-charter-school-ii",
+   "sed_code": "331400861021",
+   "nysed_name": "Beginning with Children Charter School II",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K125": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2012,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-bedford-stuyvesant-2/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-bed-stuy-2",
+   "sed_code": "331400861022",
+   "nysed_name": "Success Academy Charter School-Bed Stuy 2",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K129": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2012,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-cobble-hill/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-cobble-hill",
+   "sed_code": "331500861023",
+   "nysed_name": "Success Academy Charter School-Cobble Hill",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K182": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2012,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-williamsburg/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-williamsburg",
+   "sed_code": "331400861024",
+   "nysed_name": "Success Academy Charter School-Williamsburg",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K333": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2012,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/explore-exceed-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/explore-exceed-charter-school",
+   "sed_code": "331700861027",
+   "nysed_name": "Explore Exceed Charter School",
+   "crosswalk": "locations_2019_20_beds"
+  },
+  "84K355": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2005,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/williamsburg-collegiate-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/uncommon-williamsburg-charter-school-nyc",
+   "sed_code": "331400860885",
+   "nysed_name": "Uncommon Williamsburg Charter School NYC",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K356": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2005,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/achievement-first-crown-heights-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/achievement-first-crown-heights-charter-school",
+   "sed_code": "331700860879",
+   "nysed_name": "Achievement First Crown Heights Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K357": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2005,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/kipp-always-mentally-prepared-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/kipp-always-mentally-prepared-charter-school",
+   "sed_code": "331700860882",
+   "nysed_name": "KIPP Always Mentally Prepared Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K358": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2005,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/achievement-first-east-new-york-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/achievement-first-east-new-york-charter-school",
+   "sed_code": "331900860880",
+   "nysed_name": "Achievement First East New York Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K360": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2012,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/launch-expeditionary-learning-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/launch-expeditionary-learning-charter-school",
+   "sed_code": "331600861003",
+   "nysed_name": "Launch Expeditionary Learning Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K362": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2005,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/hellenic-classical-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/hellenic-classical-charter-school",
+   "sed_code": "331500860878",
+   "nysed_name": "Hellenic Classical Charter School Park Slope",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K367": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2011,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-bedford-stuyvesant-1/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-bed-stuy-1",
+   "sed_code": "331400861007",
+   "nysed_name": "Success Academy Charter School - Bed Stuy 1",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K379": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2011,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/explore-excel-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/explore-excel-charter-school",
+   "sed_code": "331800860702",
+   "nysed_name": "Explore Excel Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K406": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2011,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/ember-charter-school-mindful-education-innovation-and-transformation",
+   "sed_code": "331600860975",
+   "nysed_name": "Ember Charter School for Mindful Education, Innovation and Transformation",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K417": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2012,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/urban-dove-team-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/urban-dove-team-charter-school",
+   "sed_code": "332200861006",
+   "nysed_name": "Urban Dove Team Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K473": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2004,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/williamsburg-charter-high-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/williamsburg-charter-high-school",
+   "sed_code": "331400860865",
+   "nysed_name": "Williamsburg Charter High School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K486": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2012,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/new-dawn-charter-high-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/new-dawn-charter-high-school",
+   "sed_code": "331500861016",
+   "nysed_name": "New Dawn Charter High School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K508": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2006,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/achievement-first-endeavor-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/achievement-first-endeavor-charter-school",
+   "sed_code": "331300860902",
+   "nysed_name": "Achievement First Endeavor Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K517": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2006,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/leadership-prep-bedford-stuyvesant-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/uncommon-bed-stuy-west-charter-school-nyc",
+   "sed_code": "331300860901",
+   "nysed_name": "Uncommon Bed-Stuy West Charter School NYC",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K536": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2006,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/K536",
+   "nysed_url": "https://www.nysed.gov/charter-schools/community-roots-charter-school",
+   "sed_code": "331300860893",
+   "nysed_name": "Community Roots Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K538": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2006,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/achievement-first-bushwick-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/achievement-first-bushwick-charter-school",
+   "sed_code": "333200860906",
+   "nysed_name": "Achievement First Bushwick Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K593": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2004,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/excellence-boys-charter-school-bedford-stuyvesant",
+   "nysed_url": "https://www.nysed.gov/charter-schools/uncommon-excellence-boys-charter-school-nyc",
+   "sed_code": "331600860860",
+   "nysed_name": "Uncommon Excellence Boys Charter School NYC",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K608": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2007,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/kings-collegiate-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/uncommon-kings-charter-school-nyc",
+   "sed_code": "331800860908",
+   "nysed_name": "Uncommon Kings Charter School NYC",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K626": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2008,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/achievement-first-brownsville-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/achievement-first-brownsville-charter-school",
+   "sed_code": "332300860912",
+   "nysed_name": "Achievement First Brownsville Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K648": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2008,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/bedford-stuyvesant-collegiate-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/uncommon-bed-stuy-east-charter-school-nyc",
+   "sed_code": "331600860918",
+   "nysed_name": "Uncommon Bed-Stuy East Charter School NYC",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K649": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2008,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/la-cima-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/la-cima-charter-school",
+   "sed_code": "331600860924",
+   "nysed_name": "La Cima Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K651": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2008,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/pave-academy-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/pave-academy-charter-school",
+   "sed_code": "331500860927",
+   "nysed_name": "Pave Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K652": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2008,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/brooklyn-ascend-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/brooklyn-ascend-charter-school",
+   "sed_code": "332300860916",
+   "nysed_name": "Brooklyn Ascend Charter School",
+   "crosswalk": "lcgms_charter_number"
+  },
+  "84K680": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2013,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/achievement-first-aspire-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/achievement-first-aspire-charter-school",
+   "sed_code": "331900860993",
+   "nysed_name": "Achievement First Aspire Charter School",
+   "crosswalk": "locations_2019_20_beds"
+  },
+  "84K693": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2009,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/northside-charter-high-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/northside-charter-high-school",
+   "sed_code": "331400860945",
+   "nysed_name": "Northside Charter High School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K701": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2004,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/K701",
+   "nysed_url": "https://www.nysed.gov/charter-schools/brooklyn-charter-school",
+   "sed_code": "331400860809",
+   "nysed_name": "Brooklyn Charter School (The)",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K702": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2000,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/community-partnership-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/community-partnership-charter-school",
+   "sed_code": "331300860810",
+   "nysed_name": "Community Partnership Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K704": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2002,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/explore-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/explore-charter-school",
+   "sed_code": "331700860841",
+   "nysed_name": "Explore Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K707": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2009,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/brooklyn-prospect-charter-school-csd-15",
+   "sed_code": "331800860935",
+   "nysed_name": "Brooklyn Prospect Charter School-CSD 15",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K710": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2009,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/brownsville-collegiate-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/brownsville-collegiate-charter-school",
+   "sed_code": "332300860939",
+   "nysed_name": "Brownsville Collegiate  Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K711": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2009,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/leadership-prep-brownsville-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/uncommon-brownsville-south-charter-school-nyc",
+   "sed_code": "332300860942",
+   "nysed_name": "Uncommon Brownsville South Charter School NYC",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K712": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2009,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/excellence-girls-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/uncommon-excellence-girls-charter-school-nyc",
+   "sed_code": "331600860938",
+   "nysed_name": "Uncommon Excellence Girls Charter School NYC",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K724": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2013,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/leadership-preparatory-canarsie-charter-school-fmr-lp-flatbush-fmr-lp-4/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/uncommon-canarsie-charter-school-nyc",
+   "sed_code": "331800860943",
+   "nysed_name": "Uncommon Canarsie Charter School NYC",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K730": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2009,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/K730",
+   "nysed_url": "https://www.nysed.gov/charter-schools/summit-academy-charter-school",
+   "sed_code": "331500860953",
+   "nysed_name": "Summit Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K731": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2003,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/brooklyn-excelsior-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/brooklyn-excelsior-charter-school",
+   "sed_code": "331600860847",
+   "nysed_name": "Brooklyn Excelsior Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K733": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2013,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/math-engineering-and-science-academy-charter-high-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/math-engineering-and-science-academy-charter-high-school",
+   "sed_code": "333200861059",
+   "nysed_name": "Math, Engineering and Science Academy Charter High School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K736": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2013,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/new-american-academy-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/new-american-academy-charter-school",
+   "sed_code": "331800861057",
+   "nysed_name": "New American Academy Charter School (The)",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K737": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2009,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/brownsville-ascend-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/brownsville-ascend-charter-school",
+   "sed_code": "332300860954",
+   "nysed_name": "Brownsville Ascend Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K738": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2013,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/united-charter-high-school-advanced-math-and-science-iii",
+   "nysed_url": "https://www.nysed.gov/charter-schools/united-charter-high-school-advanced-math-and-science-iii",
+   "sed_code": "332200861053",
+   "nysed_name": "United Charter High School for Advanced Math and Science III",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K740": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2009,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/K740",
+   "nysed_url": "https://www.nysed.gov/charter-schools/brooklyn-scholars-charter-school",
+   "sed_code": "331900860958",
+   "nysed_name": "Brooklyn Scholars Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K741": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2013,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-crown-heights/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-crown-heights",
+   "sed_code": "331700861041",
+   "nysed_name": "Success Academy Charter School-Crown Heights",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K742": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2009,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/explore-empower-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/explore-empower-charter-school",
+   "sed_code": "331700860950",
+   "nysed_name": "Explore Empower Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K744": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2009,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/coney-island-preparatory-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/coney-island-preparatory-public-charter-school",
+   "sed_code": "332100860949",
+   "nysed_name": "Coney Island Preparatory Public Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K746": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2009,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/K746",
+   "nysed_url": "https://www.nysed.gov/charter-schools/hebrew-language-academy-charter-school",
+   "sed_code": "332200860955",
+   "nysed_name": "Hebrew Language Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K752": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2013,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-ft-greene/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-sheepshead-bay",
+   "sed_code": "332200861039",
+   "nysed_name": "Success Academy Charter School - Sheepshead Bay",
+   "crosswalk": "lcgms_charter_number"
+  },
+  "84K756": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2013,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-prospect-heights/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-prospect-heights",
+   "sed_code": "331700861040",
+   "nysed_name": "Success Academy Charter School-Prospect Heights",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K757": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2013,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/unity-preparatory-charter-school-brooklyn",
+   "nysed_url": "https://www.nysed.gov/charter-schools/unity-preparatory-charter-school-brooklyn",
+   "sed_code": "331300861056",
+   "nysed_name": "Unity Preparatory Charter School of Brooklyn",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K758": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2013,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/brooklyn-urban-garden-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/brooklyn-urban-garden-charter-school",
+   "sed_code": "331500861011",
+   "nysed_name": "Brooklyn Urban Garden Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K759": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2013,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/canarsie-ascend-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/canarsie-ascend-charter-school",
+   "sed_code": "331800861033",
+   "nysed_name": "Canarsie Ascend Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K766": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2015,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/the-international-charter-school-of-new-york/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/brooklyn-prospect-charter-school-csd-132",
+   "sed_code": "331300861079",
+   "nysed_name": "Brooklyn Prospect Charter School - CSD 13.2",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K769": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2010,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/K769",
+   "nysed_url": "https://www.nysed.gov/charter-schools/hyde-leadership-charter-school-brooklyn",
+   "sed_code": "331900860972",
+   "nysed_name": "Hyde Leadership Charter School - Brooklyn",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K772": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2014,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-bensonhurst/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-bensonhurst",
+   "sed_code": "332100861075",
+   "nysed_name": "Success Academy Charter School - Bensonhurst",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K774": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2010,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/achievement-first-apollo-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/achievement-first-apollo-charter-school",
+   "sed_code": "331900860933",
+   "nysed_name": "Achievement First Apollo Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K775": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2010,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/leadership-prep-ocean-hill-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/uncommon-brownsville-north-charter-school-nyc",
+   "sed_code": "332300860941",
+   "nysed_name": "Uncommon Brownsville North Charter School NYC",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K777": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2010,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/ocean-hill-collegiate-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/uncommon-crown-heights-charter-school-nyc",
+   "sed_code": "332300860936",
+   "nysed_name": "Uncommon Crown Heights Charter School NYC",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K781": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2014,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-bergen-beach/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-cs-bergen-beach",
+   "sed_code": "332200861076",
+   "nysed_name": "Success Academy Charter School - Bergen Beach",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K782": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2010,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/bedford-stuyvesant-new-beginnings-charter-school",
+   "sed_code": "331600860971",
+   "nysed_name": "Bedford Stuyvesant New Beginnings Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K784": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2014,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/achievement-first-north-brooklyn-prep-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/achievement-first-north-brooklyn-preparatory-charter-school",
+   "sed_code": "333200861045",
+   "nysed_name": "Achievement First North Brooklyn Preparatory Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K785": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2010,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/K785",
+   "nysed_url": "https://www.nysed.gov/charter-schools/imagine-me-leadership-charter-school",
+   "sed_code": "331900860973",
+   "nysed_name": "Imagine Me Leadership Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K788": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2014,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/achievement-first-linden-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/achievement-first-linden-charter-school",
+   "sed_code": "331900861072",
+   "nysed_name": "Achievement First Linden Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K789": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2014,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/compass-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/compass-charter-school",
+   "sed_code": "331300861066",
+   "nysed_name": "Compass Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K790": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2014,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/central-brooklyn-ascend-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/central-brooklyn-ascend-charter-school",
+   "sed_code": "332200861050",
+   "nysed_name": "Central Brooklyn Ascend Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K791": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2010,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/brooklyn-dreams-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/brooklyn-dreams-charter-school",
+   "sed_code": "332200860978",
+   "nysed_name": "Brooklyn Dreams Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K792": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2010,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/K792",
+   "nysed_url": "https://www.nysed.gov/charter-schools/cultural-arts-academy-charter-school-spring-creek",
+   "sed_code": "331800860988",
+   "nysed_name": "Cultural Arts Academy Charter School at Spring Creek",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K793": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2010,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/bushiwck-ascend-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/bushwick-ascend-charter-school",
+   "sed_code": "333200860987",
+   "nysed_name": "Bushwick Ascend Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K803": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2014,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/brooklyn-laboratory-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/brooklyn-laboratory-charter-school",
+   "sed_code": "331300861063",
+   "nysed_name": "Brooklyn Laboratory Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K807": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2016,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/math-engineering-and-science-academy-charter-high-school-east-new-york",
+   "nysed_url": "https://www.nysed.gov/charter-schools/math-engineering-and-science-academy-charter-high-school-east-new-york",
+   "sed_code": "331900861065",
+   "nysed_name": "Collegiate Academy for Mathematics and Personal Awareness Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K876": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2016,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/achievement-first-voyager-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/achievement-first-voyager-charter-school",
+   "sed_code": "331700861086",
+   "nysed_name": "Achievement First Voyager Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K879": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2016,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/brooklyn-prospect-charter-school-downtown/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/brooklyn-prospect-charter-school-csd-13",
+   "sed_code": "331300861077",
+   "nysed_name": "Brooklyn Prospect Charter School-CSD 13",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K882": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2016,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-bushwick",
+   "sed_code": "333200861096",
+   "nysed_name": "Success Academy Charter School-Bushwick",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K883": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2016,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-bed-stuy-3",
+   "sed_code": "331600861095",
+   "nysed_name": "Success Academy Charter School-Bed Stuy 3",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K886": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2016,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-flatbush/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-flatbush",
+   "sed_code": "331700861094",
+   "nysed_name": "Success Academy Charter School-Flatbush",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K892": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2017,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/brooklyn-emerging-leaders-academy-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/brooklyn-emerging-leaders-academy-charter-school",
+   "sed_code": "331600861112",
+   "nysed_name": "Brooklyn Emerging Leaders Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K895": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2017,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/hebrew-language-academy-charter-school-2",
+   "nysed_url": "https://www.nysed.gov/charter-schools/hebrew-language-academy-charter-school-2",
+   "sed_code": "332100861123",
+   "nysed_name": "Hebrew Language Academy Charter School 2",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K910": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2018,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/central-brooklyn-ascend-charter-school-2/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/cypress-hills-ascend-charter-school",
+   "sed_code": "331900861131",
+   "nysed_name": "Cypress Hills Ascend Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K911": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2018,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/edmund-w-gordon-brooklyn-laboratory-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/edmund-w-gordon-brooklyn-laboratory-charter-school",
+   "sed_code": "331300861110",
+   "nysed_name": "Edmund W Gordon Brooklyn Laboratory Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K927": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2019,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/ivy-hill-preparatory-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/ivy-hill-preparatory-charter-school",
+   "sed_code": "331800861146",
+   "nysed_name": "Ivy Hill Preparatory Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K928": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2019,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/brooklyn-prospect-charter-school-csd-15-2/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/brooklyn-prospect-charter-school-csd-152",
+   "sed_code": "331500861162",
+   "nysed_name": "Brooklyn Prospect Charter School - CSD 15.2",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K929": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2019,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/central-brooklyn-ascend-charter-school-3/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/east-brooklyn-ascend-charter-school-ebacs",
+   "sed_code": "331900861132",
+   "nysed_name": "East Brooklyn Ascend Charter School (Ebacs)",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K930": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2019,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/leep-dual-language-academy-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/leep-dual-language-academy-charter-school",
+   "sed_code": "331500861158",
+   "nysed_name": "LEEP Dual Language Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K933": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2019,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/central-brooklyn-ascend-4-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/flatbush-ascend-charter-school",
+   "sed_code": "331700861164",
+   "nysed_name": "Flatbush Ascend Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K934": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2019,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/central-brooklyn-ascend-charter-school-5/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/east-flatbush-ascend-charter-school-efacs",
+   "sed_code": "331800861165",
+   "nysed_name": "East Flatbush Ascend Charter School (Efacs)",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K937": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2019,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/brooklyn-rise-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/brooklyn-rise-charter-school",
+   "sed_code": "331500861156",
+   "nysed_name": "Brooklyn Rise Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K956": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2020,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/lamad-academy-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/lamad-academy-charter-school",
+   "sed_code": "331800861168",
+   "nysed_name": "Lamad Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K964": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2024,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/brooklyn-ascend-charter-school-6",
+   "nysed_url": "https://www.nysed.gov/charter-schools/brooklyn-ascend-charter-school-6",
+   "sed_code": "331800861177",
+   "nysed_name": "Brooklyn Ascend Charter School 6",
+   "crosswalk": "lcgms_charter_number"
+  },
+  "84K966": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2024,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/bedford-stuyvesant-new-beginnings-charter-school-2-2/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/bedford-stuyvesant-new-beginnings-charter-school-2",
+   "sed_code": "331600861197",
+   "nysed_name": "Bedford Stuyvesant New Beginnings Charter School 2",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K970": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2025,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/math-engineering-and-science-academy-charter-high-school-2",
+   "sed_code": "332000861201",
+   "nysed_name": "Math, Engineering, and Science Academy Charter High School 2",
+   "crosswalk": "lcgms_beds"
+  },
+  "84K978": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2025,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/kwenda-collegiate-girls-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/kwenda-collegiate-girls-charter-school",
+   "sed_code": "332200861199",
+   "nysed_name": "Kwenda Collegiate Girls Charter School",
+   "crosswalk": "lcgms_charter_number"
+  },
+  "84K979": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2025,
+   "authorizer_url": null,
+   "nysed_url": null,
+   "sed_code": "331300861210",
+   "nysed_name": "Urban Dove Team Charter School V",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M068": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2012,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/kipp-nyc-washington-heights-academy-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/kipp-nyc-washington-heights-academy-charter-school",
+   "sed_code": "310600861013",
+   "nysed_name": "KIPP NYC Washington Heights Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M080": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2012,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/manhattan-charter-school-2/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/manhattan-charter-school-ii",
+   "sed_code": "310100861031",
+   "nysed_name": "Manhattan Charter School II",
+   "crosswalk": "locations_2019_20_beds"
+  },
+  "84M085": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2012,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/global-community-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/global-community-charter-school",
+   "sed_code": "310500861012",
+   "nysed_name": "Global Community Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M100": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2012,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/neighborhood-charter-school-harlem",
+   "nysed_url": "https://www.nysed.gov/charter-schools/neighborhood-charter-school-harlem",
+   "sed_code": "310600861015",
+   "nysed_name": "Neighborhood Charter School of Harlem",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M168": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2013,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/east-harlem-scholars-academy-charter-school-2/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/east-harlem-scholars-academy-charter-school-ii",
+   "sed_code": "310400861046",
+   "nysed_name": "East Harlem Scholars Academy Charter School II",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M170": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2013,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-hells-kitchen/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-hells-kitchen",
+   "sed_code": "310200861043",
+   "nysed_name": "Success Academy Charter School-Hell's Kitchen",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M174": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2013,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-union-square/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-union-square",
+   "sed_code": "310200861042",
+   "nysed_name": "Success Academy Charter School-Union Square",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M202": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2013,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/great-oaks-kathleen-sherry-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/great-oaks-kathleen-sherry-charter-school",
+   "sed_code": "310200861055",
+   "nysed_name": "Great Oaks Kathleen Sherry Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M204": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2016,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/capital-preparatory-harlem-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/capital-preparatory-cp-harlem-charter-school",
+   "sed_code": "310500861081",
+   "nysed_name": "Capital Preparatory CP Harlem Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M263": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2016,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/new-york-city-charter-school-arts",
+   "sed_code": "310200861104",
+   "nysed_name": "New York City Charter School of the Arts",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M265": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2014,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-schools-washington-heights/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-washington-heights",
+   "sed_code": "310600861073",
+   "nysed_name": "Success Academy Charter School - Washington Heights",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M279": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2004,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/M279",
+   "nysed_url": "https://www.nysed.gov/charter-schools/opportunity-charter-school",
+   "sed_code": "310300860871",
+   "nysed_name": "Opportunity Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M284": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2004,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/M284",
+   "nysed_url": "https://www.nysed.gov/charter-schools/harlem-childrens-zone-promise-academy-charter-school",
+   "sed_code": "310500860864",
+   "nysed_name": "Harlem Children's Zone Promise Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M295": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2016,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/school-square-public-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/school-square-public-charter-school",
+   "sed_code": "310600861101",
+   "nysed_name": "School  in the Square Public Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M320": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2005,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/manhattan-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/manhattan-charter-school",
+   "sed_code": "310100860873",
+   "nysed_name": "Manhattan Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M329": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2005,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/harlem-link-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/harlem-link-charter-school",
+   "sed_code": "310300860875",
+   "nysed_name": "Harlem Link Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M335": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2005,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/harlem-village-academy-east-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/harlem-village-academy-east-charter-school",
+   "sed_code": "310400860849",
+   "nysed_name": "Harlem Village Academy East Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M336": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2005,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/kipp-infinity-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/kipp-infinity-charter-school",
+   "sed_code": "310500860883",
+   "nysed_name": "KIPP Infinity Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M337": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2005,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/new-york-center-for-autism-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/nyc-autism-charter-school-east-harlem",
+   "sed_code": "310400861061",
+   "nysed_name": "NYC Autism Charter School East Harlem",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M338": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2017,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/whin-music-community-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/whin-music-community-charter-school",
+   "sed_code": "310600861111",
+   "nysed_name": "WHIN Music Community Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M341": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2005,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/M341",
+   "nysed_url": "https://www.nysed.gov/charter-schools/harlem-childrens-zone-promise-academy-ii-charter-school",
+   "sed_code": "310500860886",
+   "nysed_name": "Harlem Children's Zone Promise Academy II Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M350": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2006,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/democracy-preparatory-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/democracy-preparatory-charter-school",
+   "sed_code": "310500860894",
+   "nysed_name": "Democracy Preparatory Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M351": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2006,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-harlem-1/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-harlem-1",
+   "sed_code": "310300860897",
+   "nysed_name": "Success Academy Charter School-Harlem 1",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M353": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2006,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/M353",
+   "nysed_url": "https://www.nysed.gov/charter-schools/new-heights-academy-charter-school",
+   "sed_code": "310600860887",
+   "nysed_name": "New Heights Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M358": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2017,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-hudson-yards",
+   "sed_code": "310200861087",
+   "nysed_name": "Success Academy Charter School-Hudson Yards",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M373": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2018,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/zeta-charter-schools-new-york-city-inwood",
+   "nysed_url": "https://www.nysed.gov/charter-schools/zeta-charter-schools-inwood",
+   "sed_code": "310600861140",
+   "nysed_name": "Zeta Charter School - Inwood",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M380": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2019,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/harlem-village-academy-west-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/harlem-village-academy-west-charter-school",
+   "sed_code": "310500861149",
+   "nysed_name": "Harlem Village Academy West Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M382": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2008,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/dream-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/dream-charter-school-east-harlem",
+   "sed_code": "310400860919",
+   "nysed_name": "Dream Charter School East Harlem",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M383": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2019,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/storefront-academy-harlem-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/storefront-academy-harlem-charter-school",
+   "sed_code": "310400861171",
+   "nysed_name": "Storefront Academy Harlem Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M384": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2008,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-harlem-2/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-harlem-2",
+   "sed_code": "310500860921",
+   "nysed_name": "Success Academy Charter School-Harlem 2",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M385": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2008,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-harlem-3/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-harlem-3",
+   "sed_code": "310400860922",
+   "nysed_name": "Success Academy Charter School-Harlem 3",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M386": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2008,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-harlem-4/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-harlem-4",
+   "sed_code": "310300860923",
+   "nysed_name": "Success Academy Charter School-Harlem 4",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M387": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2025,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/american-dream-charter-school-ii",
+   "nysed_url": "https://www.nysed.gov/charter-schools/american-dream-charter-school-ii",
+   "sed_code": "310600861157",
+   "nysed_name": "American Dream Charter School II",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M388": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2008,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/M388",
+   "nysed_url": "https://www.nysed.gov/charter-schools/st-hope-leadership-academy-charter-school",
+   "sed_code": "310500860928",
+   "nysed_name": "St. Hope Leadership Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M389": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2021,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/kipp-beyond-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/kipp-beyond-charter-school",
+   "sed_code": "310300861180",
+   "nysed_name": "KIPP Beyond Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M390": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2021,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/amber-charter-school-iii/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/amber-charter-school-inwood",
+   "sed_code": "310600861176",
+   "nysed_name": "Amber Charter School Inwood",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M424": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2012,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/roads-1/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/urban-dove-team-charter-school-iv",
+   "sed_code": "310400861007",
+   "nysed_name": "Urban Dove Team Charter School IV",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M430": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2009,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/M430",
+   "nysed_url": "https://www.nysed.gov/charter-schools/equity-project-charter-school",
+   "sed_code": "310600860929",
+   "nysed_name": "Equity Project Charter School (The)",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M433": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2010,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/M433",
+   "nysed_url": "https://www.nysed.gov/charter-schools/innovation-charter-high-school",
+   "sed_code": "310400860968",
+   "nysed_name": "Innovation Charter High School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M478": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2010,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/M478",
+   "nysed_url": "https://www.nysed.gov/charter-schools/inwood-academy-leadership-charter-school",
+   "sed_code": "310600860966",
+   "nysed_name": "Inwood Academy for Leadership Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M481": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2010,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/democracy-preparatory-charter-school-harlem/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/democracy-prep-harlem-charter-school",
+   "sed_code": "310500860989",
+   "nysed_name": "Democracy Prep Harlem Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M482": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2010,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-harlem-5/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-harlem-5",
+   "sed_code": "310500860979",
+   "nysed_name": "Success Academy Charter School-Harlem 5",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M483": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2010,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/M483",
+   "nysed_url": "https://www.nysed.gov/charter-schools/new-york-french-american-charter-school",
+   "sed_code": "310300860963",
+   "nysed_name": "New York French-American Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M518": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2011,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/east-harlem-scholars-academy-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/east-harlem-scholars-academy-charter-school",
+   "sed_code": "310400860995",
+   "nysed_name": "East Harlem Scholars Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M522": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2011,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/broome-street-academy-charter-high-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/broome-street-academy-charter-high-school",
+   "sed_code": "310200860992",
+   "nysed_name": "Broome Street Academy Charter High School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M523": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2011,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-upper-west-fmr-success-academy-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-upper-west",
+   "sed_code": "310300861008",
+   "nysed_name": "Success Academy Charter School-Upper West",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M702": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 1999,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/sisulu-walker-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/sisulu-walker-charter-school-harlem",
+   "sed_code": "310500860804",
+   "nysed_name": "Sisulu-Walker Charter School of Harlem",
+   "crosswalk": "locations_2019_20_charter_number"
+  },
+  "84M704": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2000,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/harbor-science-arts-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/harbor-science-and-arts-charter-school",
+   "sed_code": "310400860812",
+   "nysed_name": "Harbor Science and Arts Charter School",
+   "crosswalk": "locations_2019_20_beds"
+  },
+  "84M705": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2002,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/amber-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/amber-charter-school-east-harlem",
+   "sed_code": "310400860806",
+   "nysed_name": "Amber Charter School East Harlem",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M707": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2000,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/M707",
+   "nysed_url": "https://www.nysed.gov/charter-schools/john-v-lindsay-wildcat-academy-charter-school",
+   "sed_code": "310200860819",
+   "nysed_name": "John V Lindsay Wildcat Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M708": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2001,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/harlem-prep-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/harlem-prep-charter-school",
+   "sed_code": "310400860840",
+   "nysed_name": "Harlem Prep Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M709": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2003,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/harlem-village-academy-west-2-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/harlem-village-academy-north-charter-school",
+   "sed_code": "310500860848",
+   "nysed_name": "Harlem Village Academy North Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M726": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2003,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/kipp-s-t-a-r-college-prep-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/kipp-star-college-prep-charter-school",
+   "sed_code": "310500860858",
+   "nysed_name": "KIPP STAR College Prep Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84M861": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2005,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/M861",
+   "nysed_url": "https://www.nysed.gov/charter-schools/future-leaders-institute-charter-school",
+   "sed_code": "310300860881",
+   "nysed_name": "Future Leaders Institute Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q083": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2012,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/central-queens-academy-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/central-queens-academy-charter-school",
+   "sed_code": "342400861025",
+   "nysed_name": "Central Queens Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q170": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2004,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/Q170",
+   "nysed_url": "https://www.nysed.gov/charter-schools/peninsula-preparatory-academy-charter-school",
+   "sed_code": "342700860869",
+   "nysed_name": "Peninsula Preparatory Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q298": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2013,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/middle-village-preparatory-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/middle-village-preparatory-charter-school",
+   "sed_code": "342400861048",
+   "nysed_name": "Middle Village Preparatory Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q304": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2008,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/Q304",
+   "nysed_url": "https://www.nysed.gov/charter-schools/voice-charter-school-new-york",
+   "sed_code": "343000860932",
+   "nysed_name": "Voice Charter School of New York",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q320": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2015,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/united-charter-high-school-advanced-math-and-science-iv",
+   "nysed_url": "https://www.nysed.gov/charter-schools/united-charter-high-school-advanced-math-and-science-iv",
+   "sed_code": "342700861054",
+   "nysed_name": "United Charter High School for Advanced Math and Science IV",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q321": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2009,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/growing-green-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/growing-green-charter-school",
+   "sed_code": "343000860952",
+   "nysed_name": "Growing Up Green Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q337": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2014,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-rosendale/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-rosedale",
+   "sed_code": "342900861077",
+   "nysed_name": "Success Academy Charter School - Rosedale",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q339": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2014,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-springfield-garden/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-springfield-gardens",
+   "sed_code": "342900861078",
+   "nysed_name": "Success Academy Charter School - Springfield Gardens",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q340": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2010,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/Q340",
+   "nysed_url": "https://www.nysed.gov/charter-schools/challenge-preparatory-charter-school",
+   "sed_code": "342700860990",
+   "nysed_name": "Challenge Preparatory Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q341": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2010,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/Q341",
+   "nysed_url": "https://www.nysed.gov/charter-schools/riverton-street-charter-school",
+   "sed_code": "342900860974",
+   "nysed_name": "Riverton Street Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q342": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2010,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/Q342",
+   "nysed_url": "https://www.nysed.gov/charter-schools/rochdale-early-advantage-charter-school",
+   "sed_code": "342800860969",
+   "nysed_name": "Rochdale Early Advantage Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q359": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2011,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/academy-of-the-city-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/academy-city-charter-school",
+   "sed_code": "343000860998",
+   "nysed_name": "Academy of the City Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q372": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2016,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/growing-green-charter-school-ii",
+   "nysed_url": "https://www.nysed.gov/charter-schools/growing-green-charter-school-ii",
+   "sed_code": "342800860824",
+   "nysed_name": "Growing Up Green Charter School II",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q373": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2017,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/united-charter-high-school-humanities-iv",
+   "nysed_url": "https://www.nysed.gov/charter-schools/united-charter-high-school-humanities-iv",
+   "sed_code": "342700861052",
+   "nysed_name": "United Charter High School for the Humanities IV",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q374": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2016,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-south-jamaica",
+   "sed_code": "342700861099",
+   "nysed_name": "Success Academy Charter School-South Jamaica",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q375": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2016,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-far-rockaway",
+   "sed_code": "342700861090",
+   "nysed_name": "Success Academy Charter School-Far Rockaway",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q380": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2017,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/forte-preparatory-academy-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/forte-preparatory-academy-charter-school",
+   "sed_code": "342400861113",
+   "nysed_name": "Forte Preparatory Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q385": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2018,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/elm-community-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/elm-community-charter-school",
+   "sed_code": "342400861133",
+   "nysed_name": "Elm Community Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q386": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2018,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/our-world-neighborhood-charter-school-2/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/our-world-neighborhood-charter-school-2",
+   "sed_code": "342700861118",
+   "nysed_name": "Our World Neighborhood Charter School 2",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q387": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2019,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/valence-college-preparatory-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/valence-college-preparatory-charter-school",
+   "sed_code": "342800861152",
+   "nysed_name": "Valence College Preparatory Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q388": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2019,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/new-dawn-charter-high-school-ii",
+   "nysed_url": "https://www.nysed.gov/charter-schools/new-dawn-charter-high-school-ii",
+   "sed_code": "342800861147",
+   "nysed_name": "New Dawn Charter High School II",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q414": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2020,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/renaissance-charter-school-2",
+   "nysed_url": "https://www.nysed.gov/charter-schools/renaissance-charter-school-2",
+   "sed_code": "342400861128",
+   "nysed_name": "Renaissance Charter School 2 (The)",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q416": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2021,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/achievement-first-charter-school-10/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/achievement-first-legacy-charter-school",
+   "sed_code": "331600861082",
+   "nysed_name": "Achievement First Legacy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q418": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2022,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/our-world-neighborhood-charter-school-3/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/our-world-neighborhood-charter-school-3",
+   "sed_code": "342400861170",
+   "nysed_name": "Our World Neighborhood Charter School 3",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q422": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2024,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-nyc-14",
+   "sed_code": "342700861100",
+   "nysed_name": "Success Academy Charter School-NYC 14",
+   "crosswalk": "manual"
+  },
+  "84Q423": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2024,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/central-queens-academy-charter-school-ii",
+   "nysed_url": "https://www.nysed.gov/charter-schools/central-queens-academy-charter-school-ii",
+   "sed_code": "342400861198",
+   "nysed_name": "Central Queens Academy Charter School II",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q428": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2012,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/roads-2/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/urban-dove-team-charter-school-iii",
+   "sed_code": "343000861010",
+   "nysed_name": "Urban Dove Team Charter School III",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q433": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2025,
+   "authorizer_url": null,
+   "nysed_url": null,
+   "sed_code": "342400861209",
+   "nysed_name": "Zeta Charter School - Queens Jamaica",
+   "crosswalk": "lcgms_charter_number"
+  },
+  "84Q434": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2025,
+   "authorizer_url": null,
+   "nysed_url": null,
+   "sed_code": "342400861207",
+   "nysed_name": "Zeta Charter School - Queens Elmhurst",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q436": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2025,
+   "authorizer_url": null,
+   "nysed_url": null,
+   "sed_code": "342400861208",
+   "nysed_name": "Zeta Charter School - Queens 2",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q518": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2026,
+   "authorizer_url": null,
+   "nysed_url": null,
+   "sed_code": "321000861205",
+   "nysed_name": "Success Academy Charter School - NYC 17",
+   "crosswalk": "lcgms_charter_number"
+  },
+  "84Q704": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2000,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/merrick-academy-queens-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/merrick-academy-queens-public-charter-school",
+   "sed_code": "342900860821",
+   "nysed_name": "Merrick Academy-Queens Public Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q705": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2000,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/Q705",
+   "nysed_url": "https://www.nysed.gov/charter-schools/renaissance-charter-school",
+   "sed_code": "343000860822",
+   "nysed_name": "Renaissance Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84Q706": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2002,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/our-world-neighborhood-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/our-world-neighborhood-charter-school",
+   "sed_code": "343000860836",
+   "nysed_name": "Our World Neighborhood Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84R012": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2015,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/new-ventures-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/new-ventures-charter-school",
+   "sed_code": "353100861083",
+   "nysed_name": "New Ventures Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84R067": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2009,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/john-w-lavelle-preparatory-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/john-w-lavelle-preparatory-charter-school",
+   "sed_code": "353100860959",
+   "nysed_name": "John W Lavelle Preparatory Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84R070": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2018,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/early-college-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/early-college-charter-school",
+   "sed_code": "353100861136",
+   "nysed_name": "Early College Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84R073": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2010,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/new-world-prep-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/new-world-preparatory-charter-school",
+   "sed_code": "353100860984",
+   "nysed_name": "New World Preparatory Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84R076": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2019,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/bridge-preparatory-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/bridge-preparatory-charter-school",
+   "sed_code": "353100861144",
+   "nysed_name": "Bridge Preparatory Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84R077": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2019,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/hellenic-classical-charter-school-staten-island",
+   "nysed_url": "https://www.nysed.gov/charter-schools/hellenic-classical-charter-school-staten-island",
+   "sed_code": "353100861175",
+   "nysed_name": "Hellenic Classical Charter School - Staten Island",
+   "crosswalk": "lcgms_beds"
+  },
+  "84R083": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2021,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/richmond-preparatory-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/richmond-preparatory-charter-school",
+   "sed_code": "353100861148",
+   "nysed_name": "Richmond Preparatory Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84R088": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2022,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/staten-island-hebrew-public-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/staten-island-hebrew-public-charter-school",
+   "sed_code": "353100861159",
+   "nysed_name": "Staten Island Hebrew Public Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X124": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2012,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/childrens-aid-college-prep-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/childrens-aid-college-prep-charter-school",
+   "sed_code": "321200861026",
+   "nysed_name": "Children's Aid College Preparatory Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X133": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2012,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/icahn-charter-school-6/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/icahn-charter-school-6",
+   "sed_code": "320900861029",
+   "nysed_name": "Icahn Charter School 6",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X165": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2004,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/grand-concourse-academy-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/grand-concourse-academy-charter-school",
+   "sed_code": "320800860872",
+   "nysed_name": "Grand Concourse Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X177": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2012,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/mott-hall-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/mott-hall-charter-school",
+   "sed_code": "320900861004",
+   "nysed_name": "Mott Hall Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X185": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2004,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/X185",
+   "nysed_url": "https://www.nysed.gov/charter-schools/pharos-academy-charter-school",
+   "sed_code": "321200860870",
+   "nysed_name": "Pharos Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X202": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2012,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/united-charter-high-school-advanced-math-and-science-ii",
+   "nysed_url": "https://www.nysed.gov/charter-schools/united-charter-high-school-advanced-math-and-science-ii",
+   "sed_code": "320800861017",
+   "nysed_name": "United Charter High School for Advanced Math and Science II",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X208": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2012,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/united-charter-high-school-humanities-ii",
+   "nysed_url": "https://www.nysed.gov/charter-schools/united-charter-high-school-humanities-ii",
+   "sed_code": "320800861018",
+   "nysed_name": "United Charter High School for the Humanities II",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X233": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2012,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/family-life-academy-charter-school-2/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/family-life-academy-charter-school-ii",
+   "sed_code": "320700861028",
+   "nysed_name": "Family Life Academy Charter School II",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X255": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2004,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/bronx-charter-school-for-excellence/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/bronx-charter-school-excellence",
+   "sed_code": "321100860859",
+   "nysed_name": "Bronx Charter School for Excellence",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X309": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2005,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/X309",
+   "nysed_url": "https://www.nysed.gov/charter-schools/south-bronx-charter-school-international-cultures-and-arts",
+   "sed_code": "320700860889",
+   "nysed_name": "South Bronx Charter School for International Cultures and the Arts",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X345": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2006,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/hyde-leadership-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/leaders-our-neighborhood-charter-school",
+   "sed_code": "320800860903",
+   "nysed_name": "Leaders  in Our Neighborhood Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X346": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2006,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/south-bronx-classical-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/south-bronx-classical-charter-school",
+   "sed_code": "321200860898",
+   "nysed_name": "South Bronx Classical Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X347": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2006,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/international-leadership-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/international-leadership-charter-high-school",
+   "sed_code": "321000860904",
+   "nysed_name": "International Leadership Charter  High School",
+   "crosswalk": "locations_2019_20_beds"
+  },
+  "84X362": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2013,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/icahn-charter-school-7/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/icahn-charter-school-7",
+   "sed_code": "320800861030",
+   "nysed_name": "Icahn Charter School 7",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X364": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2013,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/south-bronx-classical-charter-school-ii",
+   "nysed_url": "https://www.nysed.gov/charter-schools/south-bronx-classical-charter-school-ii",
+   "sed_code": "320700861035",
+   "nysed_name": "South Bronx Classical Charter School II",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X378": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2007,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/icahn-charter-school-2/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/icahn-charter-school-2",
+   "sed_code": "321100860909",
+   "nysed_name": "Icahn Charter School 2",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X380": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2013,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-bronx-3/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-bronx-3",
+   "sed_code": "320800861044",
+   "nysed_name": "Success Academy Charter School-Bronx 3",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X387": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2013,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/brilla-college-preparatory-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/brilla-college-preparatory-charter-school",
+   "sed_code": "320700861014",
+   "nysed_name": "Brilla College Preparatory Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X389": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2008,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/X389",
+   "nysed_url": "https://www.nysed.gov/charter-schools/bronx-global-learning-institute-girls-charter-school-shirley-rodriguez-remeneski",
+   "sed_code": "320700860915",
+   "nysed_name": "Bronx Global Learning Institute for Girls Charter School, the Shirley Rodrguez-Remeneski School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X393": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2008,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/university-prep-charter-high-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/university-prep-charter-high-school",
+   "sed_code": "320700860920",
+   "nysed_name": "University Prep Charter High School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X394": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2008,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/X394",
+   "nysed_url": "https://www.nysed.gov/charter-schools/mott-haven-academy-charter-school",
+   "sed_code": "320700860925",
+   "nysed_name": "Mott Haven Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X395": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2008,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/new-york-city-charter-high-school-architecture-engineering-construction-industries",
+   "nysed_url": "https://www.nysed.gov/charter-schools/new-york-city-charter-high-school-architecture-engineering-construction-industries",
+   "sed_code": "320700860926",
+   "nysed_name": "New York City Charter High School for Architecture, Engineering & Construction Industries",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X398": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2008,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/X398",
+   "nysed_url": "https://www.nysed.gov/charter-schools/bronx-community-charter-school",
+   "sed_code": "321000860914",
+   "nysed_name": "Bronx Community Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X407": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2004,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/access-bronx-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/access-bronx-charter-school",
+   "sed_code": "320700860852",
+   "nysed_name": "Access Bronx Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X419": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2008,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/X419",
+   "nysed_url": "https://www.nysed.gov/charter-schools/bronx-academy-promise-charter-school",
+   "sed_code": "320900860913",
+   "nysed_name": "Bronx Academy of Promise Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X422": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2008,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/icahn-charter-school-3/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/icahn-charter-school-3",
+   "sed_code": "321100860917",
+   "nysed_name": "Icahn Charter School 3",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X429": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2015,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/charter-high-school-law-and-social-justice",
+   "nysed_url": "https://www.nysed.gov/charter-schools/charter-high-school-law-and-social-justice",
+   "sed_code": "321000861064",
+   "nysed_name": "Charter High School for Law and Social Justice",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X460": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2015,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/atmosphere-academy-public-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/atmosphere-academy-public-charter-school",
+   "sed_code": "321000861075",
+   "nysed_name": "Atmosphere Academy Public Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X461": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2010,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/nuasin-next-generation-charter-school",
+   "sed_code": "320900860962",
+   "nysed_name": "Nuasin Next Generation Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X464": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2014,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-bronx-4/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-bronx-4",
+   "sed_code": "320800861074",
+   "nysed_name": "Success Academy Charter School - Bronx 4",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X465": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2014,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/boys-preparatory-charter-school-of-new-york/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/boys-preparatory-charter-school-new-york",
+   "sed_code": "320700860994",
+   "nysed_name": "Boys Preparatory Charter School of New York",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X471": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2014,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/american-dream-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/american-dream-charter-school",
+   "sed_code": "320700861062",
+   "nysed_name": "American Dream Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X472": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2014,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/family-life-academy-charter-school-3/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/family-life-academy-charter-school-iii",
+   "sed_code": "320700861070",
+   "nysed_name": "Family Life Academy Charter School III",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X482": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2010,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/X482",
+   "nysed_url": "https://www.nysed.gov/charter-schools/dr-richard-izquierdo-health-and-science-charter-school",
+   "sed_code": "321200860965",
+   "nysed_name": "Dr Richard Izquierdo Health and Science Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X484": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2015,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/bronx-charter-school-for-better-learning-ii/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/bronx-charter-school-better-learning-ii",
+   "sed_code": "321100861076",
+   "nysed_name": "Bronx Charter School for Better Learning II",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X486": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2015,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/rosalyn-yalow-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/rosalyn-yalow-charter-school",
+   "sed_code": "320700861073",
+   "nysed_name": "Rosalyn Yalow Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X487": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2009,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/girls-prep-charter-school-bronx/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/girls-preparatory-charter-school-bronx",
+   "sed_code": "321200860940",
+   "nysed_name": "Girls Preparatory Charter School of the Bronx",
+   "crosswalk": "lcgms_charter_number"
+  },
+  "84X488": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2009,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/X488",
+   "nysed_url": "https://www.nysed.gov/charter-schools/equality-charter-school",
+   "sed_code": "321100860956",
+   "nysed_name": "Equality Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X489": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2015,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/south-bronx-classical-charter-school-iii",
+   "nysed_url": "https://www.nysed.gov/charter-schools/south-bronx-classical-charter-school-iii",
+   "sed_code": "320900861084",
+   "nysed_name": "South Bronx Classical Charter School III",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X491": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2009,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/academic-leadership-charter-school",
+   "sed_code": "320700860957",
+   "nysed_name": "Academic Leadership Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X492": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2015,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/south-bronx-early-college-academy-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/south-bronx-early-college-academy-charter-school",
+   "sed_code": "320800861068",
+   "nysed_name": "South Bronx Early College Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X493": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2010,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-bronx-1/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-bronx-1",
+   "sed_code": "320700860981",
+   "nysed_name": "Success Academy Charter School-Bronx 1",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X494": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2010,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/success-academy-charter-school-bronx-2/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-bronx-2",
+   "sed_code": "320900860980",
+   "nysed_name": "Success Academy Charter School-Bronx 2",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X496": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2009,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/icahn-charter-school-4/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/icahn-charter-school-4",
+   "sed_code": "321100860948",
+   "nysed_name": "Icahn Charter School 4",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X497": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2015,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/storefront-academy-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/storefront-academy-charter-school",
+   "sed_code": "320700861080",
+   "nysed_name": "Storefront Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X538": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2011,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/icahn-charter-school-5/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/icahn-charter-school-5",
+   "sed_code": "321100860982",
+   "nysed_name": "Icahn Charter School 5",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X539": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2011,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/new-visions-charter-high-school-for-advanced-math-and-science/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/united-charter-high-school-advanced-math-and-science",
+   "sed_code": "321000860999",
+   "nysed_name": "United Charter High School for Advanced Math and Science",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X553": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2011,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/new-visions-charter-high-school-for-the-humanities/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/united-charter-high-school-humanities",
+   "sed_code": "321000860704",
+   "nysed_name": "United Charter High School for the Humanities",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X579": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2016,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/bronx-charter-school-for-excellence-2/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/bronx-charter-school-excellence-2",
+   "sed_code": "321100861103",
+   "nysed_name": "Bronx Charter School for Excellence 2",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X581": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2016,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/south-bronx-community-charter-high-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/south-bronx-community-charter-high-school",
+   "sed_code": "320900861100",
+   "nysed_name": "South Bronx Community Charter High School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X585": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2017,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/legacy-college-preparatory-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/legacy-college-preparatory-charter-school",
+   "sed_code": "320700861114",
+   "nysed_name": "Legacy College Preparatory Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X586": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2017,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/brilla-college-preparatory-charter-school-veritas/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/brilla-veritas-charter-school",
+   "sed_code": "320700861106",
+   "nysed_name": "Brilla Veritas Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X587": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2017,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/new-york-center-for-autism-charter-school-bronx/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/nyc-autism-charter-school-bronx",
+   "sed_code": "321200861108",
+   "nysed_name": "NYC Autism Charter School Bronx",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X588": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2017,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/south-bronx-classical-charter-school-iv",
+   "nysed_url": "https://www.nysed.gov/charter-schools/south-bronx-classical-charter-school-iv",
+   "sed_code": "320700861122",
+   "nysed_name": "South Bronx Classical Charter School IV",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X589": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2017,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/bronx-charter-school-for-excellence-3/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/bronx-charter-school-excellence-3",
+   "sed_code": "321100861115",
+   "nysed_name": "Bronx Charter School for Excellence 3",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X592": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2016,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/amber-charter-school-ii/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/amber-charter-school-kingsbridge",
+   "sed_code": "321000861074",
+   "nysed_name": "Amber Charter School Kingsbridge",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X597": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2018,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/urban-assembly-charter-school-computer-science",
+   "sed_code": "320700861107",
+   "nysed_name": "Urban Assembly Charter School for Computer Science",
+   "crosswalk": "lcgms_charter_number"
+  },
+  "84X598": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2018,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/kipp-freedom-charter-school",
+   "sed_code": "321000861135",
+   "nysed_name": "KIPP Freedom Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X599": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2019,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/cardinal-mccloskey-community-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/cardinal-mccloskey-community-charter-school",
+   "sed_code": "321000861130",
+   "nysed_name": "Cardinal Mccloskey Community Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X606": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2018,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/emblaze-academy-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/emblaze-academy-charter-school",
+   "sed_code": "320800861126",
+   "nysed_name": "Emblaze Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X608": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2018,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/bronx-charter-school-for-excellence-4/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/bronx-charter-school-excellence-4",
+   "sed_code": "321100861120",
+   "nysed_name": "Bronx Charter School for Excellence 4",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X609": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2018,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/zeta-charter-schools-south-bronx",
+   "nysed_url": "https://www.nysed.gov/charter-schools/zeta-charter-schools-south-bronx",
+   "sed_code": "320700861141",
+   "nysed_name": "Zeta Charter School -South Bronx",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X610": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2018,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/urban-dove-team-charter-school-ii",
+   "nysed_url": "https://www.nysed.gov/charter-schools/urban-dove-team-charter-school-ii",
+   "sed_code": "320800861139",
+   "nysed_name": "Urban Dove Team Charter School II",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X611": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2019,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/aeci-ii-nyc-charter-high-school-computer-engineering-and-innovation",
+   "nysed_url": "https://www.nysed.gov/charter-schools/aeci-ii-nyc-charter-high-school-computer-engineering-and-innovation",
+   "sed_code": "320900861154",
+   "nysed_name": "AECI II:  NYC Charter High School for Computer Engineering and Innovation",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X612": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2019,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/creo-college-preparatory-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/creo-college-preparatory-charter-school",
+   "sed_code": "320700861145",
+   "nysed_name": "Creo College Preparatory Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X613": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2019,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/bold-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/bold-charter-school",
+   "sed_code": "321200861143",
+   "nysed_name": "Bold Charter School",
+   "crosswalk": "lcgms_charter_number"
+  },
+  "84X614": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2019,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/dream-charter-school-mott-haven/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/dream-charter-school-mott-haven",
+   "sed_code": "320700861167",
+   "nysed_name": "Dream Charter School Mott Haven",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X615": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2019,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/university-prep-charter-middle-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/university-prep-charter-middle-school",
+   "sed_code": "320700861173",
+   "nysed_name": "University Prep Charter Middle School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X616": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2019,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/kipp-freedom-charter-school-ii/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/kipp-bronx-charter-school-ii",
+   "sed_code": "321000861150",
+   "nysed_name": "KIPP Bronx Charter School II",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X617": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2019,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/kipp-freedom-charter-school-iii/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/kipp-bronx-charter-school-iii",
+   "sed_code": "320900861151",
+   "nysed_name": "KIPP Bronx Charter School III",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X619": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2019,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/bronx-arts-and-science-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/bronx-arts-and-science-charter-school",
+   "sed_code": "320800861155",
+   "nysed_name": "Bronx Arts and Science Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X620": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2019,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/bronx-charter-school-for-excellence-5/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/bronx-charter-school-excellence-5",
+   "sed_code": "321000861121",
+   "nysed_name": "Bronx Charter School for Excellence 5",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X623": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2019,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/neighborhood-charter-school-bronx",
+   "nysed_url": "https://www.nysed.gov/charter-schools/neighborhood-charter-school-bronx",
+   "sed_code": "320700861137",
+   "nysed_name": "Neighborhood Charter School-Bronx",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X627": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2020,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/capital-preparatory-bronx-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/capital-preparatory-bronx-charter-school",
+   "sed_code": "321100861163",
+   "nysed_name": "Capital Preparatory Bronx Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X628": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2020,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/brilla-caritas",
+   "nysed_url": "https://www.nysed.gov/charter-schools/brilla-caritas-charter-school",
+   "sed_code": "321000861160",
+   "nysed_name": "Brilla Caritas Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X629": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2020,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/brilla-pax-and-caritas/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/brilla-pax-charter-school",
+   "sed_code": "321000861161",
+   "nysed_name": "Brilla Pax Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X630": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2020,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/girls-preparatory-charter-school-of-the-bronx-ii/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/girls-preparatory-charter-school-bronx-ii",
+   "sed_code": "321000861179",
+   "nysed_name": "Girls Preparatory Charter School of the Bronx II",
+   "crosswalk": "lcgms_charter_number"
+  },
+  "84X631": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2020,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/zeta-charter-school-mount-eden",
+   "nysed_url": "https://www.nysed.gov/charter-schools/zeta-charter-school-bronx-mount-eden",
+   "sed_code": "320900861181",
+   "nysed_name": "Zeta Charter School - Bronx  Mount Eden",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X632": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2020,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/zeta-charter-school-tremont-park",
+   "nysed_url": "https://www.nysed.gov/charter-schools/zeta-charter-school-bronx-tremont-park",
+   "sed_code": "321200861182",
+   "nysed_name": "Zeta Charter School -  Bronx Tremont Park",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X633": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2020,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/wildflower-new-york-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/wildflower-new-york-charter-school",
+   "sed_code": "320900861174",
+   "nysed_name": "Wildflower New York Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X635": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2021,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/earl-monroe-new-renaissance-basketball-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/earl-monroe-new-renaissance-basketball-charter-school",
+   "sed_code": "320700861169",
+   "nysed_name": "Earl Monroe New Renaissance Basketball Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X637": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2022,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-bronx-5-lower",
+   "sed_code": "320700861089",
+   "nysed_name": "Success Academy Charter School-Bronx 5 Lower",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X638": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2022,
+   "authorizer_url": null,
+   "nysed_url": null,
+   "sed_code": "320700861097",
+   "nysed_name": "Success Academy Charter School-Bronx 5 Upper",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X639": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2022,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/dream-charter-school-highbridge",
+   "nysed_url": "https://www.nysed.gov/charter-schools/dream-charter-school-highbridge",
+   "sed_code": "320900861166",
+   "nysed_name": "Dream Charter School Highbridge",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X640": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2022,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/family-life-academy-charter-school-iv/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/family-life-academy-charter-schools-high-school",
+   "sed_code": "320900861178",
+   "nysed_name": "Family Life Academy Charter Schools High School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X645": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2024,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-nyc-5",
+   "sed_code": "321100861091",
+   "nysed_name": "Success Academy Charter School-NYC 5",
+   "crosswalk": "lcgms_charter_number"
+  },
+  "84X646": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2024,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-nyc-6",
+   "sed_code": "321100861092",
+   "nysed_name": "Success Academy Charter School-NYC 6",
+   "crosswalk": "lcgms_charter_number"
+  },
+  "84X647": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2024,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-nyc-12",
+   "sed_code": "320800861098",
+   "nysed_name": "Success Academy Charter School-NYC 12",
+   "crosswalk": "lcgms_charter_number"
+  },
+  "84X648": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2005,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/girls-prep-charter-school-new-york/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/girls-preparatory-charter-school-new-york",
+   "sed_code": "321200860866",
+   "nysed_name": "Girls Preparatory Charter School of New York",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X649": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2012,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/democracy-prep-endurance-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/democracy-prep-endurance-charter-school",
+   "sed_code": "321200861001",
+   "nysed_name": "Democracy Prep Endurance Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X652": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2025,
+   "authorizer_url": "https://www.newyorkcharters.org/charter-schools/haven-charter-high-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/haven-charter-high-school",
+   "sed_code": "321100861200",
+   "nysed_name": "Haven Charter High School",
+   "crosswalk": "lcgms_charter_number"
+  },
+  "84X653": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2025,
+   "authorizer_url": null,
+   "nysed_url": null,
+   "sed_code": "320800861204",
+   "nysed_name": "South Bronx Classical Charter School V",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X703": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2000,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/bronx-preparatory-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/bronx-preparatory-charter-school",
+   "sed_code": "320900860807",
+   "nysed_name": "Bronx Preparatory Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X704": {
+   "authorizer": "NYC Department of Education (Chancellor)",
+   "authorizer_code": "NYCDOE",
+   "year_opened": 2000,
+   "authorizer_url": "https://www.schools.nyc.gov/schools/X704",
+   "nysed_url": "https://www.nysed.gov/charter-schools/kipp-academy-charter-school",
+   "sed_code": "320700860820",
+   "nysed_name": "KIPP Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X705": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2001,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/family-life-academy-charter-school/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/family-life-academy-charter-school",
+   "sed_code": "320900860839",
+   "nysed_name": "Family Life Academy Charter School",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X706": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2001,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/harriet-tubman-charter-school",
+   "nysed_url": "https://www.nysed.gov/charter-schools/harriet-tubman-charter-school",
+   "sed_code": "320900860823",
+   "nysed_name": "Harriet Tubman Charter School",
+   "crosswalk": "locations_2019_20_beds"
+  },
+  "84X717": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2001,
+   "authorizer_url": "http://www.newyorkcharters.org/charter-schools/icahn-charter-school-1/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/icahn-charter-school-1",
+   "sed_code": "320900860835",
+   "nysed_name": "Icahn Charter School 1",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X718": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2003,
+   "authorizer_url": "http://www.newyorkcharters.org/suny-authorized-schools/bronx-charter-school-for-better-learning/",
+   "nysed_url": "https://www.nysed.gov/charter-schools/bronx-charter-school-better-learning",
+   "sed_code": "321100860855",
+   "nysed_name": "Bronx Charter School for Better Learning",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X730": {
+   "authorizer": "NYS Board of Regents (NYSED)",
+   "authorizer_code": "Regents",
+   "year_opened": 2003,
+   "authorizer_url": "https://www.nysed.gov/charter-schools/bronx-charter-school-arts",
+   "nysed_url": "https://www.nysed.gov/charter-schools/bronx-charter-school-arts",
+   "sed_code": "320800860846",
+   "nysed_name": "Bronx Charter School for the Arts",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X780": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2017,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-norwood",
+   "sed_code": "321000861088",
+   "nysed_name": "Success Academy Charter School - Norwood",
+   "crosswalk": "lcgms_beds"
+  },
+  "84X886": {
+   "authorizer": "SUNY Charter Schools Institute",
+   "authorizer_code": "SUNY",
+   "year_opened": 2024,
+   "authorizer_url": null,
+   "nysed_url": "https://www.nysed.gov/charter-schools/success-academy-charter-school-nyc-7",
+   "sed_code": "321000861093",
+   "nysed_name": "Success Academy Charter School-NYC 7",
+   "crosswalk": "lcgms_charter_number"
+  }
+ }
+}

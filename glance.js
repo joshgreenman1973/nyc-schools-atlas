@@ -254,8 +254,12 @@ function studentExtras(s) {
 function sheetLinks(s) {
   const links = [];
   if (s.website) links.push(`<a href="${ensureHttp(s.website)}" target="_blank" rel="noopener">School website</a>`);
+  const u = (rec(s.dbn) || {}).u || {};
+  if (u.authorizer) links.push(`<a href="${escapeHtml(u.authorizer)}" target="_blank" rel="noopener">Authorizer&rsquo;s page</a>`);
+  if (u.nysed) links.push(`<a href="${escapeHtml(u.nysed)}" target="_blank" rel="noopener">State charter page</a>`);
+  const st = (rec(s.dbn) || {}).st;
+  if (st) links.push(`<a href="https://tools.nycenet.edu/snapshot/2025/${encodeURIComponent(s.dbn)}/${st}/" target="_blank" rel="noopener">DOE quality snapshot</a>`);
   if (s.sector !== 'private') {
-    links.push(`<a href="https://tools.nycenet.edu/snapshot/2025/${encodeURIComponent(s.dbn)}/" target="_blank" rel="noopener">DOE quality snapshot</a>`);
     links.push(`<a href="https://www.google.com/search?q=${encodeURIComponent(s.name + ' ' + s.dbn + ' site:chalkbeat.org OR site:thecityreporter.nyc')}" target="_blank" rel="noopener">News coverage</a>`);
   }
   links.push(`<a href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lon}" target="_blank" rel="noopener">Map</a>`);
