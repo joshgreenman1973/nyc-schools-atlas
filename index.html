@@ -9,14 +9,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./shared/chrome.css?v=15" />
-<link rel="stylesheet" href="./style.css?v=15" />
+<link rel="stylesheet" href="./style.css?v=18" />
+<link rel="stylesheet" href="./glance.css?v=18" />
 </head>
 <body data-section="map" data-no-footer="true">
 
 <div id="site-header"></div>
 
 <div class="map-subhead">
-  <div class="sub">Every public, charter and private K&ndash;12 school in New York City &mdash; mapped with demographics, programs, attendance zones and the neighborhood children they serve.</div>
+  <div class="sub">Every public, charter and private school in New York City. Click a school to see every measure the city and state publish about it, from teacher trust in the principal to chronic absence, class size and spending, each set against similar schools. Built around <a href="https://www.chalkbeat.org/newyork/2026/10/07/how-to-find-nyc-public-schools-parents-guide/" target="_blank" rel="noopener">Chalkbeat and The City Reporter&rsquo;s guide to vetting a school</a>.</div>
   <button id="about-btn" class="btn ghost">Map sources</button>
 </div>
 
@@ -37,6 +38,12 @@
       </div>
       <div id="addr-msg" class="count"></div>
       <div id="addr-result"></div>
+    </div>
+
+    <div class="panel colorby-panel">
+      <div class="panel-title">Color dots by</div>
+      <select id="colorby" aria-label="Color dots by"></select>
+      <div id="colorby-legend" hidden></div>
     </div>
 
     <div class="panel">
@@ -101,66 +108,76 @@
     </div>
 
     <div class="panel muted">
-      <div class="panel-title">Compare</div>
-      <div id="compare-empty">Shift-click any two schools to compare demographics side by side.</div>
+      <div class="panel-title">Pin to the lineup</div>
+      <div id="compare-empty">Shift-click schools on the map to pin them to the top of the lineup, wherever they are in the city.</div>
       <div id="compare-tray" hidden></div>
     </div>
   </aside>
 
-  <div id="map"></div>
+  <div id="map-wrap">
+    <div id="map"></div>
+    <button id="lineup-btn" class="lineup-btn" type="button">Line up schools in view</button>
+    <section id="lineup" hidden aria-label="Schools in view">
+      <div class="lu-top">
+        <h3>Schools in view</h3>
+        <span class="lu-count"></span>
+        <span class="lu-key"><span class="sw" style="background:#ee5f53"></span>least favorable <span class="sw" style="background:#4893e8"></span>most favorable <span class="sw" style="background:#a89be5"></span>no better or worse</span>
+        <button id="lineup-close" type="button" aria-label="Close lineup">&times;</button>
+      </div>
+      <div class="lu-scroll"></div>
+    </section>
+  </div>
+  <aside id="sheet" hidden aria-label="School details"></aside>
 </div>
 
 <div id="about" class="modal" hidden>
   <div class="modal-card">
     <button class="modal-close" data-close>&times;</button>
     <h2>About this map</h2>
-    <p>This atlas combines 2,524 New York City K&ndash;12 schools &mdash; public district, charter and private/parochial/independent &mdash; with demographic data, attendance zones, program tags and the number of children living in each census tract. It is designed as a reference tool for parents, journalists and researchers, not as an endorsement of any school.</p>
+    <p>Every public, charter and private school in New York City, with every school-level measure the city and state publish for all schools at once. The measures follow <a href="https://www.chalkbeat.org/newyork/2026/10/07/how-to-find-nyc-public-schools-parents-guide/" target="_blank" rel="noopener">Chalkbeat and The City Reporter&rsquo;s Oct. 7, 2026 guide to vetting a school</a>. It&rsquo;s a reference tool, not a ranking or an endorsement.</p>
 
-    <h3>What&rsquo;s in each tooltip</h3>
+    <h3>How to read a school</h3>
     <ul>
-      <li><b>Enrollment trend</b>: total students over the last six reported school years (2019&ndash;20 through 2024&ndash;25), sourced from NYSED&rsquo;s annual BEDS Day enrollment database, plotted as a small sparkline.</li>
-      <li><b>Demographics</b>: race/ethnicity, students with disabilities (SWD), English language learners (ELL), poverty and the Economic Need Index &mdash; from the latest DOE Demographic Snapshot available on NYC Open Data (2021&ndash;22).</li>
-      <li><b>Programs &amp; designations</b>: Specialized High School, International Baccalaureate (IB), Career and Technical Education (CTE), ASD Nest (from NYU Steinhardt&rsquo;s published roster), Dual Language, Gifted and Talented, District 75, accessibility status, AP courses, language classes &mdash; extracted from DOE directory files.</li>
-      <li><b>Attendance zone</b>: for schools that are zoned (elementary and middle), the catchment polygon shades in on hover.</li>
-      <li><b>Building photo</b>: Google Street View static image, loaded only when the tooltip opens.</li>
-      <li><b>Links</b>: official website when known, Google News search for the school, and a Wikipedia lookup (good for notable high schools with alumni pages).</li>
+      <li><b>Click a school</b> to open its sheet. Each row is one measure: the gray shape is every school of the same level (elementary, middle, high, transfer high, District 75), the dashed line is the median and the colored mark is this school. Hover a row for the definition, source and year.</li>
+      <li><b>Red to blue</b> marks measures with a clear better and worse, by fifth of the school&rsquo;s peers; blue is always the more favorable end. <b>Purple</b> marks measures where neither high nor low is better, such as spending or suspensions.</li>
+      <li><b>Worth asking about</b> lists measures in the least favorable tenth of peers, plus benchmarks the guide names: more than 250 students per guidance counselor, half or more of teachers not recommending the school, or a building over capacity.</li>
+      <li><b>Line up schools in view</b> turns every public and charter school on screen into a row and every measure into a column. Click a column to sort; shift-click schools on the map to pin them to the top.</li>
+      <li><b>Color dots by</b> any measure to see it across the city.</li>
     </ul>
 
-    <h3>Data sources</h3>
+    <h3>Sources</h3>
     <ul>
-      <li><b>School locations (public, charter)</b>: NYC DOE &ldquo;School Locations&rdquo; (Socrata <code>a3nt-yts4</code>).</li>
-      <li><b>Demographics</b>: NYC DOE &ldquo;2017&ndash;18 to 2021&ndash;22 Demographic Snapshot&rdquo; (Socrata <code>c7ru-d68s</code>).</li>
-      <li><b>Outcomes (attendance, chronic absence, 4-year graduation, college &amp; career ready)</b>: NYC DOE &ldquo;End-of-Year Attendance and Chronic Absenteeism Data&rdquo; and the matching graduation/CCR files, 2023&ndash;24 school year, from <a href="https://infohub.nyced.org/reports/students-and-schools/school-quality/information-and-data-overview/end-of-year-attendance-and-chronic-absenteeism-data" target="_blank" rel="noopener">NYC DOE InfoHub</a>. Each school&rsquo;s tooltip records the exact source and vintage in a <code>quality_meta</code> field. Build script: <code>scripts/build_quality.py</code>. See <code>data/METHODOLOGY.md</code> for the full field-by-field provenance.</li>
-      <li><b>Enrollment 2019&ndash;20 through 2024&ndash;25</b>: NYSED BEDS Day Enrollment database (<code>data.nysed.gov</code>).</li>
-      <li><b>High-school programs</b>: NYC DOE &ldquo;2021 High School Directory&rdquo; (Socrata <code>8b6c-7uty</code>).</li>
-      <li><b>Middle-school programs</b>: NYC DOE &ldquo;2021 Middle School Directory&rdquo; (Socrata <code>f6s7-vytj</code>).</li>
-      <li><b>Elementary programs</b>: NYC DOE &ldquo;2021 Kindergarten Admissions Guide&rdquo; (Socrata <code>e7es-jx5j</code>) &mdash; note this is thinner than the HS/MS directories.</li>
-      <li><b>Attendance zones</b>: NYC DOE &ldquo;School Zones 2024&ndash;25&rdquo; (Socrata <code>cmjf-yawu</code> elementary, <code>t26j-jbq7</code> middle).</li>
-      <li><b>Private schools</b>: National Center for Education Statistics (NCES) EDGE Geocoded Private Schools 2021&ndash;22.</li>
-      <li><b>Child population</b>: U.S. Census Bureau American Community Survey (ACS) 5-year 2020&ndash;2024, table B09001 (&ldquo;population under 18 years by age&rdquo;) by census tract.</li>
-      <li><b>Tract boundaries</b>: NYC Planning &ldquo;2020 Census Tracts&rdquo;.</li>
+      <li><b>NYC School Survey, spring 2026</b> (DOE public data files): teacher trust in the principal, teachers who&rsquo;d recommend the school, student safety, support and vaping, family satisfaction.</li>
+      <li><b>DOE end-of-year attendance, 2024-25</b>: attendance and chronic absence.</li>
+      <li><b>DOE School Quality Reports, 2024-25</b>: impact and performance scores, state test proficiency (spring 2025), teacher experience, advanced courses, CTE exams, special education services, DOE&rsquo;s three ratings.</li>
+      <li><b>DOE graduation results, Class of 2025</b>, and the quality reports&rsquo; college and career readiness score.</li>
+      <li><b>DOE class size report, 2025-26</b>, and DOE&rsquo;s state class-size cap report (Oct. 31, 2025).</li>
+      <li><b>DOE guidance counselor report (Local Law 56), 2025-26</b>; <b>PTA financial report (Local Law 171), 2024-25</b>; <b>discipline report (Local Law 93), 2024-25</b>.</li>
+      <li><b>NYSED school-level spending, 2024-25</b> (ESSA financial transparency data).</li>
+      <li><b>School Construction Authority Blue Book, 2025-26</b>: building capacity and use.</li>
+      <li><b>DOE Building Accessibility Profile list</b>, August 2026.</li>
+      <li><b>DOE Demographic Snapshot, 2021-22 to 2025-26</b>: enrollment, race, disability, English learners, economic need.</li>
+      <li><b>Locations</b>: DOE school locations, plus NYC Planning&rsquo;s Facilities Database for schools opened since; private schools from the 2023-24 federal Private School Survey; attendance zones 2024-25 (NYC Open Data); children per census tract from the Census Bureau&rsquo;s 2020-2024 American Community Survey.</li>
+    </ul>
+    <p>Every raw file, build script and field definition is in the <a href="https://github.com/joshgreenman1973/nyc-schools-atlas" target="_blank" rel="noopener">project repository</a>. The <a href="https://github.com/joshgreenman1973/nyc-schools-atlas/blob/main/data/METHODOLOGY.md" target="_blank" rel="noopener">methodology</a> explains the comparisons, and <a href="https://github.com/joshgreenman1973/nyc-schools-atlas/blob/main/data/MEASURES.md" target="_blank" rel="noopener">the measures list</a> gives each one&rsquo;s source, year, coverage and definition.</p>
+
+    <h3>Limits</h3>
+    <ul>
+      <li><b>Charter schools</b> aren&rsquo;t in DOE&rsquo;s attendance, class size, counselor, PTA or discipline reports. <b>Private schools</b> report none of these measures.</li>
+      <li><b>Test proficiency tracks demographics.</b> The impact score, which compares students with similar students elsewhere, is the fairer read on what a school adds.</li>
+      <li><b>DOE redacts small counts</b> (suspensions of 1 to 5, survey groups under 5 respondents, attendance for very small groups), so some schools have gaps.</li>
+      <li><b>Program and admissions tags</b> still come from DOE&rsquo;s 2021 directories; a missing tag isn&rsquo;t proof a program doesn&rsquo;t exist.</li>
+      <li><b>Student survey results</b> are from a rewritten 2026 survey and shouldn&rsquo;t be compared with earlier years.</li>
     </ul>
 
-    <h3>Honest limitations</h3>
-    <ul>
-      <li><b>Latest DOE demographic snapshot on Open Data is 2021&ndash;22.</b> Newer data exists internally at DOE but is not on the public API. A FOIL request would unlock 2024&ndash;25.</li>
-      <li><b>Private schools carry no demographic breakdown.</b> NCES gives location and name; race/poverty data is not systematically published for private schools. Their tooltips will say so explicitly.</li>
-      <li><b>&ldquo;Where students come from&rdquo; is only knowable for zoned schools.</b> Charter and unzoned/screened public schools draw citywide or by district; we don&rsquo;t publish the student-residence data that would be needed to show actual draw areas.</li>
-      <li><b>Attendance zones are the 2024&ndash;25 boundaries.</b> If a school has been rezoned since 2021&ndash;22, its demographic snapshot and zone may not match exactly.</li>
-      <li><b>Program tags are extracted from the DOE directory narrative</b> except for ASD Nest, which uses NYU Steinhardt&rsquo;s published school list (DOE&rsquo;s Nest partner). The absence of a tag is not proof the program does not exist at a school.</li>
-      <li><b>ASD Horizon is not mapped</b> because NYCPS does not publish a school list. Placement is assigned centrally through ASDprograms@schools.nyc.gov. A school tagged ASD Nest may also host a Horizon program &mdash; the two are often paired.</li>
-      <li><b>Per-pupil spending is not included in round one.</b> The cleanest source is DOE&rsquo;s annual School Based Expenditure Report, which is not currently on the Open Data API in a usable form. Adding it is on the round-two list rather than shipping something that would be wrong.</li>
-      <li><b>Notable alumni</b> are surfaced through a Wikipedia search link rather than scraped in bulk &mdash; alumni coverage on Wikipedia is patchy and biased toward famous high schools.</li>
-      <li><b>The child-population dots are a visual estimate.</b> ACS figures are 5-year estimates with margins of error, and each dot is placed randomly within its census tract &mdash; not at actual child addresses.</li>
-    </ul>
-
-    <h3>Colophon</h3>
-    <p>Basemap: CARTO Dark Matter (no labels). Map library: Leaflet 1.9. Fonts: Fraunces (display) and Inter (body). Build script and source data live in the project repository.</p>
+    <h3>Correction</h3>
+    <p>Until Oct. 7, 2026, this map showed the share of students who were not chronically absent under the label &ldquo;chronic absence.&rdquo; P.S. 188 Kingsbury, for example, showed 94%; its actual rate is 7%. Chronic absence now comes directly from DOE&rsquo;s end-of-year attendance data.</p>
   </div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="./shared/chrome.js?v=15"></script>
-<script src="./app.js?v=15"></script>
+<script src="./app.js?v=18"></script>
+<script src="./glance.js?v=18"></script>
 </body>
 </html>

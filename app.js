@@ -5,7 +5,7 @@ const map = L.map('map', { preferCanvas: true, zoomControl: true, minZoom: 10, m
   .setView([40.7128, -74.0060], 11);
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png?key=cb1_2r82_1_ae4e70b6166057bc41b89638', {
-  attribution: '&copy; <a href="https://carto.com/">CARTO</a> &middot; &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> &middot; Schools DOE/NCES &middot; Children ACS 2018&ndash;2022',
+  attribution: '&copy; <a href="https://carto.com/">CARTO</a> &middot; &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> &middot; Schools DOE/NCES &middot; Children ACS 2020&ndash;2024',
   subdomains: 'abcd', maxZoom: 20,
 }).addTo(map);
 
@@ -15,12 +15,11 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.p
 
 // -------------- State --------------
 let allSchools = [];
+let schoolByDbn = new Map();
 let markerIndex = new Map();
-let compareIds = [];
 let activeHoverZoneLayer = null;
 let activeAddressPin = null;
 let zonesIndex = null;
-let dotsLayer = null;
 let choroLayer = null;
 
 const filters = {
@@ -114,7 +113,6 @@ const ADMISSIONS_LIST = [
 ];
 
 // ---------- Utilities ----------
-const fmtPct = v => (v == null) ? '—' : `${Math.round(v * (v <= 1 ? 100 : 1))}%`;
 const fmtNum = v => (v == null) ? '—' : Math.round(v).toLocaleString();
 
 function detectBand(s) {
@@ -153,11 +151,14 @@ Promise.all([
     if (!zonesIndex.has(dbn)) zonesIndex.set(dbn, []);
     zonesIndex.get(dbn).push(f);
   }
-  for (const s of schools) s._bands = detectBand(s);
+  for (const s of schools) { s._bands = detectBand(s); schoolByDbn.set(s.dbn, s); }
   computeLargest();
   wireTrajectory();
   buildProgramFilters();
   buildAdmissionFilters();
+  renderSchools();
+  return loadGlance().catch(err => console.error('metrics failed to load', err));
+}).then(() => {
   renderSchools();
   handleDeepLink();
 }).catch(err => {
@@ -281,9 +282,7 @@ function hideQSuggest() { qSuggest.hidden = true; qMatches = []; qActiveIdx = -1
 function selectQ(s) {
   if (!s) return;
   hideQSuggest();
-  const m = markerIndex.get(s.dbn);
-  if (m) { map.setView(m.getLatLng(), 15); m.openPopup(); }
-  else { map.setView([s.lat, s.lon], 15); }
+  openSheet(s, { zoom: 15 });
 }
 document.getElementById('lyr-zone').addEventListener('change', e => { filters.showZones = e.target.checked; });
 document.getElementById('lyr-choro').addEventListener('change', e => toggleChoropleth(e.target.checked));
@@ -422,9 +421,8 @@ function showZonedForPoint(lat, lon) {
   }).join('');
   tray.querySelectorAll('.zone-hit[data-dbn]').forEach(el => {
     el.addEventListener('click', () => {
-      const dbn = el.dataset.dbn;
-      const m = markerIndex.get(dbn);
-      if (m) { m.openPopup(); map.setView(m.getLatLng(), 16); }
+      const s = schoolByDbn.get(el.dataset.dbn);
+      if (s) openSheet(s);
     });
   });
 }
@@ -492,8 +490,13 @@ function renderSchools() {
     const cls = sectorClass(s);
     const tcls = trajectoryClass(s);
     const fadeCls = trajActive && !isHit ? ' faded' : '';
+    let fill = '';
+    if (colorBy) {
+      const c = markerFill(s);
+      fill = c ? ` cb" style="${s.sector === 'private' ? 'border-bottom-color' : 'background'}:${c}` : ' cb nodata';
+    }
     const icon = L.divIcon({
-      html: `<div class="mk ${cls}${fadeCls} ${tcls}" data-dbn="${s.dbn}"></div>`,
+      html: `<div class="mk ${cls}${fadeCls} ${tcls}${fill}" data-dbn="${s.dbn}"></div>`,
       className: 'mk-wrap',
       iconSize: [14, 14],
       iconAnchor: [7, 7],
@@ -502,14 +505,14 @@ function renderSchools() {
     m.on('mouseover', () => { showZone(s); });
     m.on('mouseout', () => { hideZone(); });
     m.on('click', (e) => onSchoolClick(e, s));
-    m.bindPopup(() => renderCard(s), { maxWidth: 380, autoPan: true, closeButton: true, offset: [0, -4] });
-    m.on('popupopen', () => { window.location.hash = `school=${encodeURIComponent(s.dbn)}`; wireUpCardEvents(s); });
     m.addTo(markerLayer);
     markerIndex.set(s.dbn, m);
   }
   const base = `${count.toLocaleString()} of ${allSchools.length.toLocaleString()} schools shown`;
   document.getElementById('result-count').textContent =
     filters.trajectory === 'all' ? base : `${base} · ${hitCount.toLocaleString()} highlighted`;
+  if (typeof markSelected === 'function') markSelected();
+  if (typeof renderLineup === 'function' && !document.getElementById('lineup').hidden) renderLineup();
 }
 
 // ---------- Zone hover ----------
@@ -556,84 +559,7 @@ function toggleAllZones(level, on) {
   fetch('./data/zones.geojson').then(r => r.json()).then(z => { allZonesRaw = z; build(z); });
 }
 
-// ---------- Photo with fallback ----------
-function photoUrls(s) {
-  const gsv = `https://maps.googleapis.com/maps/api/streetview?size=380x170&location=${s.lat},${s.lon}&fov=75&pitch=5&key=${GSV_KEY}`;
-  const mapillaryQ = `https://graph.mapillary.com/images?access_token=MLY|4142433049200173|72206abe5035850d6743b23a49c41333&fields=id&limit=1&bbox=${s.lon-0.001},${s.lat-0.001},${s.lon+0.001},${s.lat+0.001}`;
-  return { gsv, mapillaryQ };
-}
-
-// ---------- Card ----------
-function renderCard(s) {
-  const div = document.createElement('div');
-  div.className = 'card';
-  const photo = `<div class="photo" data-photo data-lat="${s.lat}" data-lon="${s.lon}" style="display:none"></div>`;
-
-  const sectorLabel = s.sector === 'public' ? 'Public' : s.sector === 'charter' ? 'Charter' : 'Private';
-  const metaBits = [
-    s.grades ? `Grades ${escapeHtml(s.grades)}` : '',
-    s.boro ? escapeHtml(s.boro) : '',
-    s.neighborhood ? escapeHtml(s.neighborhood) : '',
-    s.dbn && !s.dbn.startsWith('PRIV-') ? `${s.dbn}` : '',
-  ].filter(Boolean).join('<span class="sep">&middot;</span>');
-
-  const tabs = [
-    ['overview', 'Overview'],
-    ['academics', 'Academics'],
-    ['admissions', 'Admissions'],
-    ['community', 'Community'],
-  ];
-  const tabBar = `<div class="tabs">${tabs.map(([k,l],i) =>
-    `<button class="tab ${i===0?'active':''}" data-tab="${k}">${l}</button>`).join('')}</div>`;
-
-  div.innerHTML = `
-    ${photo}
-    <div class="body">
-      <div class="header-row">
-        <h3>${escapeHtml(s.name || 'Unnamed school')}</h3>
-        <span class="sector-badge ${s.sector}">${sectorLabel}</span>
-      </div>
-      <div class="meta">${metaBits}</div>
-      ${tabBar}
-      <div class="tab-panes">
-        <div class="pane active" data-pane="overview">${renderOverviewPane(s)}</div>
-        <div class="pane" data-pane="academics">${renderAcademicsPane(s)}</div>
-        <div class="pane" data-pane="admissions">${renderAdmissionsPane(s)}</div>
-        <div class="pane" data-pane="community">${renderCommunityPane(s)}</div>
-      </div>
-      ${renderLinks(s)}
-      ${s.address ? `<div class="note">${escapeHtml(s.address)}${s.zip ? ', ' + escapeHtml(s.zip) : ''}</div>` : ''}
-    </div>`;
-  return div;
-}
-
-function wireUpCardEvents(s) {
-  const root = document.querySelector('.leaflet-popup-content .card');
-  if (!root) return;
-  const photo = root.querySelector('[data-photo]');
-  if (photo) loadPhoto(s, photo);
-}
-
-// Delegated click handler for popup cards — survives popup rebuilds
-document.addEventListener('click', (e) => {
-  const tab = e.target.closest('.leaflet-popup-content .tab');
-  if (tab) {
-    const card = tab.closest('.card');
-    if (!card) return;
-    card.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
-    card.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
-    tab.classList.add('active');
-    const pane = card.querySelector(`.pane[data-pane="${tab.dataset.tab}"]`);
-    if (pane) pane.classList.add('active');
-    return;
-  }
-  const chip = e.target.closest('.leaflet-popup-content .nearby-chip');
-  if (chip && chip.dataset.dbn) {
-    const m = markerIndex.get(chip.dataset.dbn);
-    if (m) { m.openPopup(); map.panTo(m.getLatLng()); }
-  }
-});
-
+// ---------- Photo: Street View, else a Wikipedia article about the school ----------
 function loadPhoto(s, photoEl) {
   const lat = photoEl.dataset.lat, lon = photoEl.dataset.lon;
   const metaUrl = `https://maps.googleapis.com/maps/api/streetview/metadata?location=${lat},${lon}&key=${GSV_KEY}`;
@@ -661,7 +587,9 @@ function tryWikipediaPhoto(s, photoEl) {
       const pages = data && data.query && data.query.pages;
       if (!pages) return showEmpty(photoEl);
       const title = Object.values(pages)[0]?.title;
-      if (!title) return showEmpty(photoEl);
+      // Only use an article about a school. Searching "P.S. 307 Daniel Hale
+      // Williams" otherwise returns a portrait of the school's namesake.
+      if (!title || !/school|academy|high|campus|institute|college|lyc[eé]e/i.test(title)) return showEmpty(photoEl);
       return fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`)
         .then(r => r.json())
         .then(summary => {
@@ -683,118 +611,9 @@ function showEmpty(photoEl) {
   photoEl.style.display = 'none';
 }
 
-function renderOverviewPane(s) {
-  const d = s.demo;
-  let html = '';
-  const latestEnroll = (d && d.enrollment_latest != null) ? d.enrollment_latest : (d && d.enrollment);
-  const latestYear = (d && d.year_enrollment) ? d.year_enrollment : (d && d.year);
-  if (latestEnroll != null) {
-    const spark = sparklineSVG(s.trend);
-    html += `<div class="section enrollment-row">
-      <div>
-        <div class="enrollment-num">${fmtNum(latestEnroll)}</div>
-        <div class="enrollment-label">enrolled (${escapeHtml(latestYear || '')})</div>
-      </div>
-      <div class="spark-wrap">${spark}</div>
-    </div>`;
-  }
-  if (d) {
-    const rows = [
-      ['Asian', d.pct_asian, 'var(--demo-asian)'],
-      ['Black', d.pct_black, 'var(--demo-black)'],
-      ['Hispanic', d.pct_hispanic, 'var(--demo-hisp)'],
-      ['White', d.pct_white, 'var(--demo-white)'],
-      ['Multi / other', d.pct_multi, 'var(--demo-multi)'],
-    ].filter(r => r[1] != null && r[1] > 0).map(([l,v,c]) => barRow(l,v,c)).join('');
-    html += `<div class="section"><h4>Race / ethnicity</h4><div class="bars">${rows || '<div class="note">Not reported</div>'}</div></div>`;
-  } else if (s.sector === 'private') {
-    html += `<div class="section note">Private schools do not report demographic data publicly. NCES provides only location and school name. Tuition is published on each school&rsquo;s own website.</div>`;
-  }
-  if (s.overview) html += `<div class="section note">${escapeHtml(truncate(s.overview, 320))}</div>`;
-  html += renderNearby(s);
-  return html;
-}
-
-function renderAcademicsPane(s) {
-  let html = '';
-  const q = s.quality;
-  const qm = s.quality_meta;
-  if (q) {
-    const items = [];
-    if (q.attendance != null) items.push(stat('Avg attendance', fmtPct(q.attendance)));
-    if (q.chronic_absent != null) items.push(stat('Chronic absence', fmtPct(q.chronic_absent)));
-    if (q.grad_4yr != null) items.push(stat('4-yr graduation', fmtPct(q.grad_4yr)));
-    if (q.ccr_4yr != null) items.push(stat('College &amp; career ready', fmtPct(q.ccr_4yr / 100)));
-    const vintage = (qm && qm.vintage) ? escapeHtml(qm.vintage) : '';
-    const sourceLine = (qm && qm.source)
-      ? `<div class="note source-line">Source: ${escapeHtml(qm.source)}${vintage ? ' &middot; ' + vintage : ''}. Chronic absence = students absent 10%+ of enrolled days.</div>`
-      : '';
-    html += `<div class="section"><h4>Outcomes${vintage ? ' (' + vintage + ')' : ''}</h4><div class="stat-grid">${items.join('')}</div>${sourceLine}</div>`;
-  } else {
-    html += `<div class="section note">No quality metrics published for this school (common for charters, private schools, and very small programs).</div>`;
-  }
-  if (s.programs && s.programs.length) {
-    const chips = s.programs.slice(0, 24).map(p => {
-      let cls = 'tag';
-      if (p === 'Specialized High School' || p === 'International Baccalaureate') cls += ' special';
-      else if (p.startsWith('District 75')) cls += ' d75';
-      else if (p === 'Fully accessible') cls += ' acc';
-      return `<span class="${cls}">${escapeHtml(truncate(p, 60))}</span>`;
-    }).join('');
-    html += `<div class="section"><h4>Programs &amp; designations</h4><div class="tags">${chips}</div></div>`;
-  }
-  return html || '<div class="note">No academic data available.</div>';
-}
-
-function renderAdmissionsPane(s) {
-  let html = '';
-  if (s.admission) {
-    html += `<div class="section"><h4>Admissions method</h4><div class="tags"><span class="tag">${escapeHtml(s.admission)}</span></div></div>`;
-  }
-  if (s.admission_programs && s.admission_programs.length) {
-    const rows = s.admission_programs.slice(0, 8).map(p => {
-      const head = `<div class="adm-head"><b>${escapeHtml(p.name || p.code || 'Program')}</b>${p.method ? ` <span class="muted">&middot; ${escapeHtml(p.method)}</span>` : ''}</div>`;
-      const stats = [];
-      if (p.seats) stats.push(`<span>${escapeHtml(String(p.seats))} seats</span>`);
-      if (p.applicants) stats.push(`<span>${escapeHtml(String(p.applicants))} applicants</span>`);
-      if (p.apps_per_seat) stats.push(`<span>${escapeHtml(String(p.apps_per_seat))}:1</span>`);
-      if (p.offer_rate) stats.push(`<span>${escapeHtml(String(p.offer_rate))}</span>`);
-      const priorities = [p.priority1, p.priority2].filter(Boolean).map(t => `<div class="pri">${escapeHtml(truncate(t, 140))}</div>`).join('');
-      return `<div class="adm-row">${head}<div class="adm-stats">${stats.join('')}</div>${priorities}</div>`;
-    }).join('');
-    html += `<div class="section"><h4>Programs offered</h4>${rows}</div>`;
-  }
-  if (!html) html = `<div class="note">Admissions information not published for this school.</div>`;
-  return html;
-}
-
-function renderCommunityPane(s) {
-  let html = '';
-  const d = s.demo;
-  if (d) {
-    const svcRows = [
-      ['Students w/ disabilities', d.pct_swd, '#e06c75'],
-      ['English learners', d.pct_ell, '#56b6c2'],
-      ['Poverty', d.poverty, '#d19a66'],
-      ['Economic Need Index', d.eni, '#c678dd'],
-    ].filter(r => r[1] != null).map(([l,v,c]) => barRow(l,v,c)).join('');
-    html += `<div class="section"><h4>Student body</h4><div class="bars">${svcRows || '<div class="note">Not reported</div>'}</div></div>`;
-  }
-  if (s.sector === 'public' && s.has_zone) {
-    html += `<div class="section note">This school has an attendance zone &mdash; hover the marker to see it. Students who live inside the zone have priority.</div>`;
-  } else if (s.sector === 'public' && !s.has_zone) {
-    html += `<div class="section note">This school is unzoned or screened &mdash; students apply from across the district or citywide.</div>`;
-  } else if (s.sector === 'charter') {
-    html += `<div class="section note">Charter schools admit by lottery across their district or citywide, not by residential zone.</div>`;
-  } else if (s.sector === 'private') {
-    html += `<div class="section note">Private school &mdash; tuition, admissions and enrollment details are set by the school. Visit the school&rsquo;s website for specifics.</div>`;
-  }
-  return html || '<div class="note">No community data available.</div>';
-}
-
 function renderNearby(s) {
   // 4 nearest same-sector + same-band schools (excluding this one)
-  const myBand = [...s._bands || []][0] || 'ES';
+  const myBand = ['ES', 'MS', 'HS', 'PK'].find(b => s._bands && s._bands.has(b)) || 'ES';
   const near = allSchools
     .filter(x => x.dbn !== s.dbn && x._bands && x._bands.has(myBand))
     .map(x => ({ s: x, d: haversine(s.lat, s.lon, x.lat, x.lon) }))
@@ -803,17 +622,6 @@ function renderNearby(s) {
   if (!near.length) return '';
   const chips = near.map(n => `<span class="nearby-chip" data-dbn="${n.s.dbn}"><span class="mk-mini ${sectorClass(n.s)}"></span>${escapeHtml(truncate(n.s.name, 26))}<span class="muted"> ${n.d.toFixed(1)}mi</span></span>`).join('');
   return `<div class="section"><h4>Nearby schools (${myBand})</h4><div class="nearby">${chips}</div></div>`;
-}
-
-function renderLinks(s) {
-  return `<div class="links">
-    ${s.website ? `<a href="${ensureHttp(s.website)}" target="_blank" rel="noopener">Official site</a>` : ''}
-    <a href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lon}" target="_blank" rel="noopener">Map</a>
-  </div>`;
-}
-
-function stat(label, value) {
-  return `<div class="stat"><div class="stat-label">${label}</div><div class="stat-val">${value}</div></div>`;
 }
 
 function barRow(label, value, color) {
@@ -863,69 +671,14 @@ function escapeHtml(s) {
 function ensureHttp(u) { return /^https?:/.test(u) ? u : 'https://' + u; }
 function truncate(s, n) { s = String(s||''); return s.length > n ? s.slice(0, n - 1).trimEnd() + '…' : s; }
 
-// ---------- Compare (shift-click) ----------
+// ---------- Click: open the sheet; shift-click pins to the lineup ----------
 function onSchoolClick(e, s) {
   if (e.originalEvent && e.originalEvent.shiftKey) {
     e.originalEvent.preventDefault();
-    toggleCompare(s);
+    togglePin(s);
     return false;
   }
-}
-function toggleCompare(s) {
-  const i = compareIds.findIndex(x => x.dbn === s.dbn);
-  if (i >= 0) compareIds.splice(i, 1);
-  else if (compareIds.length < 2) compareIds.push(s);
-  else compareIds = [compareIds[1], s];
-  renderCompareTray();
-  renderComparePanel();
-}
-function renderCompareTray() {
-  const empty = document.getElementById('compare-empty');
-  const tray = document.getElementById('compare-tray');
-  if (!compareIds.length) { empty.style.display = ''; tray.hidden = true; return; }
-  empty.style.display = 'none'; tray.hidden = false;
-  tray.innerHTML = compareIds.map(s => `
-    <div class="cmp-pill"><span>${escapeHtml(s.name)}</span><span class="x" data-dbn="${s.dbn}">&times;</span></div>
-  `).join('');
-  tray.querySelectorAll('.x').forEach(x => x.addEventListener('click', () => {
-    compareIds = compareIds.filter(s => s.dbn !== x.dataset.dbn);
-    renderCompareTray(); renderComparePanel();
-  }));
-}
-function renderComparePanel() {
-  let panel = document.getElementById('cmp-panel');
-  if (!panel) { panel = document.createElement('div'); panel.id = 'cmp-panel'; document.body.appendChild(panel); }
-  if (compareIds.length < 2) { panel.classList.remove('active'); panel.innerHTML=''; return; }
-  const [a, b] = compareIds;
-  const metrics = [
-    ['Enrollment', s => s.demo ? fmtNum(s.demo.enrollment) : '—'],
-    ['% Asian', s => s.demo ? fmtPct(s.demo.pct_asian) : '—'],
-    ['% Black', s => s.demo ? fmtPct(s.demo.pct_black) : '—'],
-    ['% Hispanic', s => s.demo ? fmtPct(s.demo.pct_hispanic) : '—'],
-    ['% White', s => s.demo ? fmtPct(s.demo.pct_white) : '—'],
-    ['% SWD', s => s.demo ? fmtPct(s.demo.pct_swd) : '—'],
-    ['% ELL', s => s.demo ? fmtPct(s.demo.pct_ell) : '—'],
-    ['Poverty', s => s.demo ? fmtPct(s.demo.poverty) : '—'],
-    ['Attendance', s => s.quality && s.quality.attendance != null ? fmtPct(s.quality.attendance) : '—'],
-    ['Graduation', s => s.quality && s.quality.grad_4yr != null ? fmtPct(s.quality.grad_4yr) : '—'],
-    ['Grade span', s => s.grades || '—'],
-    ['Admission', s => s.admission || '—'],
-  ];
-  const rows = metrics.map(([label, fn]) => `<tr><td style="color:#676d7e">${label}</td><td>${fn(a)}</td><td>${fn(b)}</td></tr>`).join('');
-  panel.innerHTML = `
-    <button class="close" onclick="document.getElementById('cmp-panel').classList.remove('active')">&times;</button>
-    <div class="cmp-grid">
-      <div><div class="col-head">Comparing</div><h4>${escapeHtml(a.name)}</h4><div style="color:#676d7e;font-size:11px">${escapeHtml(a.boro||'')}</div></div>
-      <div><div class="col-head">vs.</div><h4>${escapeHtml(b.name)}</h4><div style="color:#676d7e;font-size:11px">${escapeHtml(b.boro||'')}</div></div>
-      <div>
-        <div class="col-head">Metrics</div>
-        <table style="width:100%;font-size:12px;border-collapse:collapse">
-          <thead><tr><th></th><th style="text-align:left">A</th><th style="text-align:left">B</th></tr></thead>
-          <tbody>${rows}</tbody>
-        </table>
-      </div>
-    </div>`;
-  panel.classList.add('active');
+  openSheet(s, { noPan: true });
 }
 
 // ---------- Choropleth: children per tract ----------
@@ -968,35 +721,12 @@ function toggleChoropleth(on) {
   }
 }
 
-function toggleDots(on) {
-  document.getElementById('dot-legend').hidden = !on;
-  if (on) {
-    if (dotsLayer) { dotsLayer.addTo(map); return; }
-    fetch('./data/dots.json').then(r => r.json()).then(dots => {
-      const renderer = L.canvas({ padding: 0.5 });
-      const fg = L.layerGroup();
-      const COLOR = { a: '#ff9a9e', b: '#fad0c4', c: '#a1c4fd' };
-      for (const [lat, lon, cat] of dots) {
-        L.circleMarker([lat, lon], {
-          renderer, radius: 1.4, color: COLOR[cat], fillColor: COLOR[cat],
-          weight: 0, fillOpacity: 0.75, interactive: false,
-        }).addTo(fg);
-      }
-      dotsLayer = fg;
-      dotsLayer.addTo(map);
-    });
-  } else {
-    if (dotsLayer) map.removeLayer(dotsLayer);
-  }
-}
-
 // ---------- Deep link ----------
 function handleDeepLink() {
   const m = (window.location.hash || '').match(/school=([^&]+)/);
   if (!m) return;
-  const dbn = decodeURIComponent(m[1]);
-  const marker = markerIndex.get(dbn);
-  if (marker) { map.setView(marker.getLatLng(), 15); marker.openPopup(); }
+  const s = schoolByDbn.get(decodeURIComponent(m[1]));
+  if (s && s.dbn !== selectedDbn) openSheet(s, { zoom: 15 });
 }
 window.addEventListener('hashchange', handleDeepLink);
 

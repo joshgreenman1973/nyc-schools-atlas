@@ -1,0 +1,1054 @@
+{
+ "source": "DOE Demographic Snapshot 2025-26 school tab",
+ "removed": [
+  {
+   "dbn": "28Q904",
+   "name": "Jamaica Evening High School T/",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "02M902",
+   "name": "Washington Irving Evng Hs T/R @NTHS",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79K987",
+   "name": "ALC - John Jay",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79K755",
+   "name": "Adult and Continuing Education",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "75K503",
+   "name": "Home Instruction - Brooklyn",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "09X328",
+   "name": "New Millennium Bronx Academy of the Arts",
+   "sector": "public",
+   "last_trend_year": "2024-25",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79X997",
+   "name": "ALC - PAL Longwood",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79M998",
+   "name": "ALC - Thompkins Park",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "01M019",
+   "name": "P.S. 019 Asher Levy",
+   "sector": "public",
+   "last_trend_year": "2021-22",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79Q987",
+   "name": "ALC - JAMAICA ACADEMY",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "84X256",
+   "name": "Heketi Community Charter School",
+   "sector": "charter",
+   "last_trend_year": "2019-20",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79X993",
+   "name": "ALC - JANE ADDAMS HS",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "16K028",
+   "name": "P.S. 028 The Warren Prep Academy",
+   "sector": "public",
+   "last_trend_year": "2019-20",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "03M505",
+   "name": "Edward A. Reynolds West Side High School",
+   "sector": "public",
+   "last_trend_year": "2021-22",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "13K902",
+   "name": "Westinghouse Evening Hs T/R",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79R971",
+   "name": "ALC - ST. Marks Place",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "11X253",
+   "name": "Bronx High School for Writing and Communication Arts",
+   "sector": "public",
+   "last_trend_year": "2021-22",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79Q995",
+   "name": "ALC - August Martin HS",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "13K305",
+   "name": "P.S. 305 Dr. Peter Ray",
+   "sector": "public",
+   "last_trend_year": "2019-20",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79K981",
+   "name": "ALC- W.E.B Dubois",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "84X554",
+   "name": "New York City Montessori Charter School",
+   "sector": "charter",
+   "last_trend_year": "2020-21",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "84M330",
+   "name": "Girls Preparatory Charter School of New York",
+   "sector": "charter",
+   "last_trend_year": "2020-21",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79Q985",
+   "name": "ALC - LINDEN ACADEMY",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79K952",
+   "name": "ALC - Park Place Academy",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "08X559",
+   "name": "School for Tourism and Hospitality",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79X985",
+   "name": "ALC - M.S. 145",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "04M610",
+   "name": "Young Women's Leadership School",
+   "sector": "public",
+   "last_trend_year": "2021-22",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "02M893",
+   "name": "Jacob Riis School",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "27Q905",
+   "name": "John Adams Evening Hs M/W",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79M921",
+   "name": "District 79 Youth Justice and Treatment Programs Transitions",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79K993",
+   "name": "ALC - M.S. 246",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79K988",
+   "name": "ALC - Fundamentals Academy",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "84K780",
+   "name": "Brooklyn East Collegiate Charter School",
+   "sector": "charter",
+   "last_trend_year": "2020-21",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "11X901",
+   "name": "Evander Childs Evening H.S.",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "33K891",
+   "name": "Brooklyn Navy Yard STEAM Center",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79M991",
+   "name": "ALC - Boys Club",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "31R901",
+   "name": "New Dorp Evening Hs M/W",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "84M065",
+   "name": "Democracy Prep Endurance Charter School",
+   "sector": "charter",
+   "last_trend_year": "2020-21",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79K982",
+   "name": "ALC - Albany",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79Q997",
+   "name": "ALC - I.S. 126",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "84M357",
+   "name": "Success Academy Charter School - Harlem 6",
+   "sector": "charter",
+   "last_trend_year": "2021-22",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79Q994",
+   "name": "ALC - Sutphin HS ALC",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "10X903",
+   "name": "T. Roosevelt Evening Hs M/W",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "13K901",
+   "name": "G. Westinghouse Evening H.S.",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "75R405",
+   "name": "Hospital Schools - Staten Island",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79Q975",
+   "name": "ALC - Royal 180 Academy",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "03M250",
+   "name": "M.S. 250 West Side Collaborative Middle School",
+   "sector": "public",
+   "last_trend_year": "2022-23",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79X996",
+   "name": "ALC - Stevenson Campus",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "75Q404",
+   "name": "Hospital Schools - Queens",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "84K707",
+   "name": "Brooklyn Prospect Charter School",
+   "sector": "charter",
+   "last_trend_year": "2020-21",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79M607",
+   "name": "ALC - EAST HARLEM",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79M984",
+   "name": "LYFE",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "84M186",
+   "name": "Harlem Hebrew Language Charter School",
+   "sector": "charter",
+   "last_trend_year": "2021-22",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "84X200",
+   "name": "New Visions A.I.M. Charter High School II",
+   "sector": "charter",
+   "last_trend_year": "2021-22",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "16K025",
+   "name": "P.S. 025 Eubie Blake School",
+   "sector": "public",
+   "last_trend_year": "2024-25",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "09X404",
+   "name": "School for Excellence",
+   "sector": "public",
+   "last_trend_year": "2021-22",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "06M349",
+   "name": "Harbor Heights",
+   "sector": "public",
+   "last_trend_year": "2022-23",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79X607",
+   "name": "ALC - Lafayette Academy",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "01M509",
+   "name": "Marta Valle High School",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "84K333",
+   "name": "Explore Exceed Charter School",
+   "sector": "charter",
+   "last_trend_year": "2023-24",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "75R505",
+   "name": "Home Instruction - S.I.",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "03M299",
+   "name": "The Maxine Greene HS for Imaginative Inquiry",
+   "sector": "public",
+   "last_trend_year": "2021-22",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79X966",
+   "name": "ALC - BRONX EDUCATIONAL CENTER",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "20K920",
+   "name": "New Utrecht Evening Hs M/W",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79M992",
+   "name": "ALC - Choir Academy",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "02M933",
+   "name": "City Knoll Middle School",
+   "sector": "public",
+   "last_trend_year": "2023-24",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79K991",
+   "name": "ALC - P.S. 138K ANNEX",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79K992",
+   "name": "ALC - Brooklyn Choices",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "84K739",
+   "name": "New Visions Charter High School for the Humanities III",
+   "sector": "charter",
+   "last_trend_year": "2020-21",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79X995",
+   "name": "ALC - Monroe Campus",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "75Q504",
+   "name": "Home Instruction - Queen",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "02M972",
+   "name": "Office of Academic Policy",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79K983",
+   "name": "ALC - M.S. 258",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "13K499",
+   "name": "ACORN Community High School",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "93M359",
+   "name": "Dream Program",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "84K395",
+   "name": "New Visions A.I.M. Charter High School I",
+   "sector": "charter",
+   "last_trend_year": "2021-22",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "10X382",
+   "name": "Elementary School for Math, Science, and Technology",
+   "sector": "public",
+   "last_trend_year": "2023-24",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "12X212",
+   "name": "P.S. 212",
+   "sector": "public",
+   "last_trend_year": "2019-20",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "25Q901",
+   "name": "Flushing Evening High Schl M/W",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "84K359",
+   "name": "The Uft Charter School",
+   "sector": "charter",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79M993",
+   "name": "ALC - Laurel Hill",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "10X307",
+   "name": "Luisa Pineiro Fuentes School of Science and Discovery",
+   "sector": "public",
+   "last_trend_year": "2022-23",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "84K912",
+   "name": "Key Collegiate Charter School",
+   "sector": "charter",
+   "last_trend_year": "2021-22",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "75K403",
+   "name": "Hospital Schools - Brooklyn",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "10X904",
+   "name": "T. Roosevelt Evening Hs T/R",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79K984",
+   "name": "ALC- Brighton Academy",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "11X534",
+   "name": "District 11 Pre-K Center",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79Q988",
+   "name": "ALC - R F WAGNER HS",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79K607",
+   "name": "ALC - Melrose Academy",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "19K364",
+   "name": "I.S. 364 Gateway",
+   "sector": "public",
+   "last_trend_year": "2023-24",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "20K921",
+   "name": "New Utrecht Evening Hs T/R",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79X994",
+   "name": "ALC -",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79M982",
+   "name": "ALC - BATTERY PARK",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79Q996",
+   "name": "ALC - Beach Channel Educational Complex",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "17K531",
+   "name": "School for Human Rights, The",
+   "sector": "public",
+   "last_trend_year": "2021-22",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "03M076",
+   "name": "P.S. 076 A. Philip Randolph",
+   "sector": "public",
+   "last_trend_year": "2024-25",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "19K504",
+   "name": "High School for Civil Rights",
+   "sector": "public",
+   "last_trend_year": "2021-22",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "28Q903",
+   "name": "Jamaica Evening High School M/",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79M994",
+   "name": "ALC - Cloisters",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "11X287",
+   "name": "North Bronx School of Empowerment",
+   "sector": "public",
+   "last_trend_year": "2024-25",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79M971",
+   "name": "ALC - Washington Heights",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "79R991",
+   "name": "ALC - Mount Loretto",
+   "sector": "public",
+   "last_trend_year": null,
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "12X098",
+   "name": "J.H.S. 098 Herman Ridder",
+   "sector": "public",
+   "last_trend_year": "2023-24",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  },
+  {
+   "dbn": "07X151",
+   "name": "J.H.S. 151 Lou Gehrig",
+   "sector": "public",
+   "last_trend_year": "2020-21",
+   "reason": "Not on the DOE 2025-26 Demographic Snapshot school tab"
+  }
+ ],
+ "added": [
+  {
+   "dbn": "02M395",
+   "name": "A School Without Walls"
+  },
+  {
+   "dbn": "03M610",
+   "name": "Young Women's Leadership School"
+  },
+  {
+   "dbn": "04M505",
+   "name": "Edward A. Reynolds West Side High School"
+  },
+  {
+   "dbn": "05M371",
+   "name": "School of Earth Exploration and Discovery Harlem (Seed Harlem)"
+  },
+  {
+   "dbn": "07X625",
+   "name": "Bronx Legacy High School"
+  },
+  {
+   "dbn": "07X642",
+   "name": "South Bronx Literacy Academy"
+  },
+  {
+   "dbn": "08X636",
+   "name": "Virtual Innovators Academy"
+  },
+  {
+   "dbn": "09X644",
+   "name": "Bronx Debate Academy"
+  },
+  {
+   "dbn": "12X641",
+   "name": "Bard High School Early College Bronx"
+  },
+  {
+   "dbn": "13K482",
+   "name": "Albee Square Montessori Public School"
+  },
+  {
+   "dbn": "13K963",
+   "name": "Design Works High School"
+  },
+  {
+   "dbn": "15K428",
+   "name": "Global Innovators Academy"
+  },
+  {
+   "dbn": "15K456",
+   "name": "The Elizabeth Jennings School for Bold Explorers"
+  },
+  {
+   "dbn": "15K958",
+   "name": "P.S. 958"
+  },
+  {
+   "dbn": "17K969",
+   "name": "Central Brooklyn Literacy Academy (CBLA)"
+  },
+  {
+   "dbn": "18K961",
+   "name": "Lenox Academy M. S. 961"
+  },
+  {
+   "dbn": "19K935",
+   "name": "M.S. 935"
+  },
+  {
+   "dbn": "19K938",
+   "name": "P.S. 938"
+  },
+  {
+   "dbn": "19K953",
+   "name": "The East New York Arts and Civics High School"
+  },
+  {
+   "dbn": "19K965",
+   "name": "Bard High School Early College Brooklyn"
+  },
+  {
+   "dbn": "20K331",
+   "name": "The Detective Wenjian Liu School of Civics and Entrepreneurship"
+  },
+  {
+   "dbn": "20K407",
+   "name": "School of Technology, Arts, and Research"
+  },
+  {
+   "dbn": "20K413",
+   "name": "Joanne Seminara School of Law and Medicine"
+  },
+  {
+   "dbn": "20K936",
+   "name": "MS 936 Arts Off 3rd"
+  },
+  {
+   "dbn": "20K939",
+   "name": "Sunset School of Cultural Learning"
+  },
+  {
+   "dbn": "21K968",
+   "name": "Middle School of Innovation"
+  },
+  {
+   "dbn": "24Q419",
+   "name": "MS 419"
+  },
+  {
+   "dbn": "24Q849",
+   "name": "Queens International Secondary School"
+  },
+  {
+   "dbn": "26Q390",
+   "name": "The CIVIC School of Bayside Hills"
+  },
+  {
+   "dbn": "29Q427",
+   "name": "HBCU Early College Prep"
+  },
+  {
+   "dbn": "30Q367",
+   "name": "Motion Picture Technical High School"
+  },
+  {
+   "dbn": "30Q417",
+   "name": "Gotham Tech High School"
+  },
+  {
+   "dbn": "30Q429",
+   "name": "Sunnyside Middle School"
+  },
+  {
+   "dbn": "30Q472",
+   "name": "Northwell School of Health Sciences"
+  },
+  {
+   "dbn": "31R084",
+   "name": "The Waverly Academy of Empowered Learners"
+  },
+  {
+   "dbn": "31R085",
+   "name": "The Young Women's Leadership School of Staten Island"
+  },
+  {
+   "dbn": "75R089",
+   "name": "Staten Island Rise Academy"
+  },
+  {
+   "dbn": "75X643",
+   "name": "P.S. X643"
+  },
+  {
+   "dbn": "84K956",
+   "name": "Lamad Academy Charter School"
+  },
+  {
+   "dbn": "84K964",
+   "name": "Brooklyn Ascend Charter School 6"
+  },
+  {
+   "dbn": "84K966",
+   "name": "Bedford Stuyvesant New Beginnings Charter School II"
+  },
+  {
+   "dbn": "84K970",
+   "name": "Math, Engineering, and Science Academy Charter High School 2"
+  },
+  {
+   "dbn": "84M389",
+   "name": "KIPP Beyond Charter School"
+  },
+  {
+   "dbn": "84M390",
+   "name": "Amber Charter School Inwood"
+  },
+  {
+   "dbn": "84M424",
+   "name": "Urban Dove Team Charter School IV"
+  },
+  {
+   "dbn": "84Q414",
+   "name": "Renaissance Charter School 2"
+  },
+  {
+   "dbn": "84Q416",
+   "name": "Achievement First Legacy Charter School"
+  },
+  {
+   "dbn": "84Q418",
+   "name": "Our World Neighborhood Charter School 3"
+  },
+  {
+   "dbn": "84Q422",
+   "name": "Success Academy Charter School - NYC 14"
+  },
+  {
+   "dbn": "84Q423",
+   "name": "Central Queens Academy Charter School II"
+  },
+  {
+   "dbn": "84Q428",
+   "name": "Urban Dove Team Charter School III"
+  },
+  {
+   "dbn": "84Q433",
+   "name": "Zeta Charter School \u2013 Queens Jamaica"
+  },
+  {
+   "dbn": "84Q434",
+   "name": "Zeta Charter School \u2013 Queens Elmhurst"
+  },
+  {
+   "dbn": "84Q436",
+   "name": "Zeta Charter School \u2013 Queens 2"
+  },
+  {
+   "dbn": "84R083",
+   "name": "Richmond Preparatory Charter School"
+  },
+  {
+   "dbn": "84R088",
+   "name": "Staten Island Hebrew Public Charter School"
+  },
+  {
+   "dbn": "84X489",
+   "name": "South Bronx Classical Charter School III"
+  },
+  {
+   "dbn": "84X588",
+   "name": "South Bronx Classical Charter School IV"
+  },
+  {
+   "dbn": "84X627",
+   "name": "Capital Preparatory Bronx Charter School"
+  },
+  {
+   "dbn": "84X628",
+   "name": "Brilla Caritas Charter School"
+  },
+  {
+   "dbn": "84X629",
+   "name": "Brilla Pax Charter School"
+  },
+  {
+   "dbn": "84X630",
+   "name": "Girls Preparatory Charter School of the Bronx II"
+  },
+  {
+   "dbn": "84X631",
+   "name": "Zeta Charter School \u2013 Mount Eden"
+  },
+  {
+   "dbn": "84X632",
+   "name": "Zeta Charter School \u2013 Tremont Park"
+  },
+  {
+   "dbn": "84X633",
+   "name": "Wildflower New York Charter School"
+  },
+  {
+   "dbn": "84X635",
+   "name": "Earl Monroe New Renaissance Basketball Charter School"
+  },
+  {
+   "dbn": "84X637",
+   "name": "Success Academy Charter School \u2013 Bronx 5 Lower"
+  },
+  {
+   "dbn": "84X638",
+   "name": "Success Academy Charter School \u2013 Bronx 5 Upper"
+  },
+  {
+   "dbn": "84X639",
+   "name": "Dream Charter School Highbridge"
+  },
+  {
+   "dbn": "84X640",
+   "name": "Family Life Academy Charter Schools High School"
+  },
+  {
+   "dbn": "84X645",
+   "name": "Success Academy Charter School - NYC 5"
+  },
+  {
+   "dbn": "84X646",
+   "name": "Success Academy Charter School - NYC 6"
+  },
+  {
+   "dbn": "84X647",
+   "name": "Success Academy Charter School - NYC 12"
+  },
+  {
+   "dbn": "84X648",
+   "name": "Girls Preparatory Charter School of New York"
+  },
+  {
+   "dbn": "84X649",
+   "name": "Democracy Preparatory Endurance Charter School"
+  },
+  {
+   "dbn": "84X652",
+   "name": "Haven Charter High School"
+  },
+  {
+   "dbn": "84X780",
+   "name": "Success Academy Charter School - Harlem 6"
+  },
+  {
+   "dbn": "84X886",
+   "name": "Success Academy Charter School - NYC 7"
+  }
+ ],
+ "unplaced": [
+  {
+   "dbn": "12X626",
+   "name": "Cultivating Hearts and Minds Pre-K Center",
+   "candidates": []
+  }
+ ]
+}

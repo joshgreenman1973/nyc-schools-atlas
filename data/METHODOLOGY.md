@@ -1,106 +1,75 @@
-# NYC Schools Atlas — methodology
+# NYC schools atlas: methodology
 
-This document records, field by field, where every value in `data/schools.json` comes from. If a number appears anywhere in the atlas, you should be able to trace it back through this document to a public source.
+Last rebuilt Oct. 7, 2026. This file explains where every number on the map comes from, how the comparisons are made and what the map can't tell you. The full list of measures, with each one's source, year, coverage and definition, is generated from the data in [`MEASURES.md`](MEASURES.md).
 
-If something in the live tool ever conflicts with this document, this document is the source of truth — file an issue and the data will be regenerated from the source files in `data/sources/`.
+The measures follow [Chalkbeat and The City Reporter's Oct. 7, 2026 guide to vetting a New York City public school](https://www.chalkbeat.org/newyork/2026/10/07/how-to-find-nyc-public-schools-parents-guide/). The aim is to put every number that guide recommends, where a school-level file exists for all schools at once, on one screen.
 
-## How to verify any number in the atlas
+## What's on the map
 
-1. Open the school's tooltip — note the metric, the value, and the vintage shown.
-2. Look up the field name below to find the source dataset and the source field name.
-3. Open the matching CSV/JSON in `data/sources/`, filter on `dbn`, and confirm.
+- **Schools.** Public and charter schools come from the DOE Demographic Snapshot's 2025-26 school tab, which DOE says lists every school open in 2025-26. Locations come from the older DOE location file the map already used, and for 78 schools new since then, from NYC Planning's Facilities Database (Socrata `ji82-xba5`, DOE school records, July 2026), matched by name and borough. One new pre-K center (12X626) had no match and is left off. Private schools are the federal Private School Survey's 2023-24 locations (NCES EDGE, 539 in the city), replacing the 2021-22 list. The survey only lists schools that respond, so a private school can drop off one edition and return in the next; 132 schools on the old list aren't on the new one, and 139 are new.
+- **Removed.** 104 records were dropped because their DBN isn't on the 2025-26 snapshot: closed or merged schools, schools that took a new DBN, evening high schools, District 79 alternative learning centers and hospital and home instruction sites. 61 duplicate records (one school drawn twice at the same point) were collapsed. Both lists are in `data/removed_schools.json`. One exception is kept: 15K418 The Children's School, which shares a building with District 75's 75K372; DOE reports the building's enrollment under 75K372, but 15K418 has its own 2026 survey results.
+- **Demographics and enrollment.** DOE Demographic Snapshot 2021-22 to 2025-26 (InfoHub, version Aug. 20, 2026). Race, disability, English learner, poverty and Economic Need Index figures are 2025-26. The enrollment line covers 2021-22 to 2025-26. DOE masks poverty and need index values above 95% or below 5%; the map shows those as "over 95%" or "under 5%".
+- **Measures.** 35 (36 once state test files and charter details are merged; see below), listed in `MEASURES.md`. Each comes from a build script in `scripts/metrics/` that reads a raw file saved in `data/sources/` and writes `data/metrics/<key>.json`. `scripts/build_metrics.py` merges them into `data/metrics.json`, which the map reads.
 
-## Data dictionary
+## How a school is compared
 
-### Top-level fields
+Every measure is shown against schools of the same **level**, so an elementary school's chronic absence is compared with other elementary schools, not with high schools:
 
-| Field | Type | Source | Vintage | Notes |
-|---|---|---|---|---|
-| `dbn` | string | NYC DOE School Locations (Socrata `a3nt-yts4`) | 2024–25 | Borough + district + school code. Primary key for joining to all DOE data. |
-| `name`, `address`, `zip`, `boro`, `district`, `lat`, `lon` | strings/floats | NYC DOE School Locations (`a3nt-yts4`) for public/charter; NCES EDGE Geocoded Private Schools 2021–22 for private | 2024–25 / 2021–22 | |
-| `sector` | enum | Derived: `public` from DOE; `charter` from DOE charter list; `private` from NCES | — | |
-| `grades`, `website`, `overview`, `programs`, `admission`, `admission_programs` | various | NYC DOE 2021 directories (HS `8b6c-7uty`, MS `f6s7-vytj`, K `e7es-jx5j`) | 2021 | Program tags extracted from directory narratives. Not exhaustive. |
-| `has_zone` | bool | Derived from NYC DOE School Zones 2024–25 (`cmjf-yawu`, `t26j-jbq7`) | 2024–25 | |
+| Level | Rule |
+|---|---|
+| District 75 | DBN starts with 75 |
+| Transfer high | DOE files a transfer-high-school quality report for it |
+| Early childhood | serves only 3-K and pre-K |
+| High | serves any grade from 9 to 12 (includes 6-12 and K-12 schools) |
+| Middle | lowest grade is 5 or higher, highest is 8 or lower |
+| Elementary | everything else, including K-8 |
 
-### `demo` block — student demographics
+Grades come from the 2025-26 snapshot's grade-by-grade enrollment.
 
-**Source:** NYC DOE *2017–18 to 2021–22 Demographic Snapshot* (Socrata `c7ru-d68s`).
-**Vintage:** 2021–22 (the latest year DOE publishes on Open Data as of 2026-05-06).
-**Known limitation:** Demographics are 4 years stale. DOE has more recent data internally; a FOIL request would unlock 2024–25. Tracked on the backlog.
+**Percentile.** For each measure, a school's percentile is the share of same-level schools with a lower value, counting ties as half. If fewer than 25 same-level schools have the measure, the school is ranked against every school that has it, and the sheet says so.
 
-| Field | DOE source field | Definition |
-|---|---|---|
-| `enrollment` | `total_enrollment` | Headcount, 2021–22. |
-| `pct_asian`, `pct_black`, `pct_hispanic`, `pct_white`, `pct_multi`, `pct_native` | `% Asian`, `% Black`, etc. | Decimal share, 0–1. |
-| `pct_female`, `pct_male` | `% Female`, `% Male` | Decimal share. |
-| `pct_swd` | `% Students with Disabilities` | |
-| `pct_ell` | `% English Language Learners` | |
-| `poverty` | `% Poverty` | Percent (0–100). |
-| `eni` | `Economic Need Index` | DOE's composite poverty/need score. Higher = higher need. |
-| `enrollment_latest`, `year_enrollment` | NYSED BEDS | More recent enrollment from NYSED (see next section), tacked onto the same block for convenience. |
+**The bar on each row** is a histogram of every same-level school's value (24 bins between the 1st and 99th percentile of all schools, so a few extreme values don't flatten it). The dashed line is the median. The colored mark is the school.
 
-### `trend` array — six-year enrollment
+**Colors.** Measures with a direction nobody disputes (attendance, teacher trust in the principal, graduation, students per counselor and so on) are colored on a red-to-blue scale by fifth of the peer group, oriented so blue is always the more favorable end; for chronic absence, vaping and class size, lower is more favorable. Measures with no agreed direction (spending, PTA money, suspensions, enrollment, demographics, building use, CTE exams, special class sizes) use a separate purple scale from lowest to highest, so the color never implies a judgment. The palette was checked for color-blind separation with the dataviz validator.
 
-**Source:** NYSED BEDS Day Enrollment database (`data.nysed.gov`).
-**Vintage:** 2019–20 through 2024–25.
-**Format:** `[["2019-20", 368], ["2020-21", 331], ...]`
+**"Worth asking about" and "Stands out"** list measures where the school is in the least or most favorable tenth of its peers. "Worth asking about" also lists three benchmarks the guide names or implies:
+- more than 250 students per guidance counselor (the guide's recommended ratio), or no guidance counselor at all;
+- half or more of teachers not recommending the school (the guide counts 56 such schools in 2026; the data here finds the same 56);
+- a building over 100% of its School Construction Authority capacity.
 
-NYSED publishes BEDS Day enrollment on a roughly one-year lag and is the most current source available without a FOIL request.
+These are prompts for questions on a tour, not grades.
 
-### `quality` block — outcomes (Phase 2 audit, May 2026)
+## Derived measures
 
-**Source:** NYC DOE *End-of-Year Attendance and Chronic Absenteeism Data* and the matching graduation / college-readiness files, downloaded from [NYC DOE InfoHub](https://infohub.nyced.org/reports/students-and-schools/school-quality/information-and-data-overview/end-of-year-attendance-and-chronic-absenteeism-data). Raw file: `data/sources/nyc_doe_eoy_attendance_2023-24.json`. Build script: `scripts/build_quality.py`.
-**Vintage:** 2023–24 school year.
-**Per-school provenance:** every school with a `quality` block also has a `quality_meta` block recording `vintage`, `source`, `source_url`, and `fetched`. The tooltip reads `quality_meta.vintage` directly so the displayed year can never drift from the underlying data.
+Computed here rather than published as such:
 
-| Field | DOE source field | Definition |
-|---|---|---|
-| `attendance` | `attendance_k8_all` (or `attendance_hs_all` for high schools) | Average daily attendance rate, all students, decimal 0–1. |
-| `chronic_absent` | `chronic_absent_ems_all` (or `chronic_absent_all` for high schools) | Share of enrolled students absent for **10% or more** of school days during the year. Federal/state standard definition. Decimal 0–1. |
-| `grad_4yr` | `grad_pct_4_all` | Four-year graduation rate, all students, decimal 0–1. High schools only. |
-| `ccr_4yr` | `ccr_4yr_all` | College & career readiness rate, all students, percent (0–100). High schools only. |
+- **Impact and performance scores** use DOE's elementary/middle, high school or transfer-school score, whichever matches the school's level. DOE standardizes each within its report type, so the three are never ranked together.
+- **Suspensions per 100 students** = (principal's + superintendent's suspensions, 2024-25) / 2024-25 enrollment from the Demographic Snapshot x 100. DOE redacts counts of 1 to 5, so a school gets a figure only when both counts are shown; 561 schools have one. Charter schools aren't in DOE's discipline report.
+- **Enrollment change** = (2025-26 enrollment - 2021-22 enrollment) / 2021-22 enrollment, only where 2021-22 enrollment was at least 20.
+- **PTA money per student** = PTA/PA income / 2024-25 enrollment, both from DOE's Local Law 171 workbook.
+- **Students per counselor** is DOE's own ratio, except where a school has less than one counselor; DOE's file shows the whole enrollment as the ratio there, so the map shows "no counselor" or leaves it blank.
+- **Building accessibility** comes from DOE's current Building Accessibility Profile list. DOE leaves inaccessible buildings off the list, so a school in DOE's roster whose building isn't listed reads "Not on DOE's accessible-buildings list" rather than "not accessible." The sidebar's "Fully accessible" filter now uses this list instead of the 2021 directory tags.
 
-#### Why the school-by-school median looks higher than the citywide rate
+## What's missing, and why
 
-The citywide chronic-absenteeism rate NYC DOE reports for 2023–24 is **34.8%** ([Chalkbeat coverage](https://www.chalkbeat.org/newyork/2025/09/17/nyc-public-schools-chronic-absenteeism-remains-high/)). The median across the 1,335 individual schools in this file is **67.0%**. Both numbers are correct; they measure different things.
+- **Charter schools** are absent from DOE's attendance, class size, counselor, PTA and discipline reports, and DOE posts charter graduation rates separately (not yet up for the Class of 2025). Charters do have survey, spending, enrollment and, where reported, test and quality-report data.
+- **Private schools** report none of these measures.
+- **Galaxy budget detail** (librarians, art teachers, therapists by school) and **Budget at a Glance** are per-school web apps with no bulk download; the sheet links to DOE's school pages instead. Per-student spending uses NYSED's school-level spending report for 2024-25, which covers district and charter schools alike.
+- **The six old DOE framework ratings** (Rigorous Instruction, Trust and so on) were retired after 2022-23. DOE now rates three areas, shown under "Also on file": instruction and performance, safety and school climate, and relationships with families.
+- **Programs and admissions tags** still come from DOE's 2021 school directories.
+- **School survey results for students** come from a rewritten 2026 survey that DOE says is a new baseline; don't compare them with earlier years. Elementary schools have no student survey.
+- **Proficiency tracks demographics.** Use the impact score, which compares students with similar students elsewhere, to judge what a school adds.
 
-- The **citywide rate** is student-weighted: every NYC public-school student counts once, so large lower-rate schools (most high schools) pull the average down.
-- The **per-school median** treats every school equally, regardless of size. Most schools are small elementary/middle schools in higher-poverty areas, where chronic absence runs much higher.
-
-When a tooltip shows a school's chronic-absence rate, that's the rate at *that specific school*, computed by DOE — not the citywide rate. A high number is not a data error; it reflects real conditions at that school.
-
-### `quality_meta` block (added Phase 2)
-
-Per-school provenance for the `quality` block. Schema:
-
-```json
-{
-  "vintage": "2023-24",
-  "source": "NYC DOE End-of-Year Attendance & Chronic Absenteeism",
-  "source_url": "https://infohub.nyced.org/...",
-  "fetched": "2026-05-06"
-}
-```
-
-`null` if the school has no quality data (charters that don't report, private schools, very small programs, suppressed cells where n<5).
-
-## Reproducing this build
-
-All source files live in `data/sources/`. To rebuild `data/schools.json` from those sources:
+## Rebuilding
 
 ```bash
-python3 scripts/build_quality.py
+python3 scripts/build_refresh.py          # school list, demographics, enrollment
+python3 scripts/metrics/build_<key>.py    # one per source, any order
+python3 scripts/build_metrics.py --strict # merge; --strict fails if a source is missing
 ```
 
-The script joins on DBN, replaces every school's `quality` block, and stamps `quality_meta` on every record. Idempotent — run it as many times as you like.
+Each per-source script stops with an error if it reads fewer rows than expected or finds an unknown suppression marker, so a broken download can't silently produce an empty map.
 
-## Audit history
+## Corrections
 
-- **2026-05-06** — Quality block audited against the authoritative DOE source after a tooltip spot-check. Values verified to match DOE 2023–24 EOY Attendance file 100%. `quality_meta` provenance block added. Full audit notes in `data/AUDIT.md`.
-
-## Backlog (known data gaps)
-
-- **Demographics are 2021–22.** Awaiting DOE Open Data update or a FOIL release of the 2024–25 snapshot.
-- **Per-pupil spending** not included — DOE School Based Expenditure Report is not on Open Data in a usable form.
-- **Programs and admissions** are 2021 directories — DOE has stopped publishing the K admissions guide annually.
-- **Notable alumni** surfaced via Wikipedia link only, not bulk-scraped.
+**Oct. 7, 2026: chronic absence was inverted.** From May to October 2026 the map's "chronic absence" figure was the share of students who were not chronically absent. P.S. 188 Kingsbury showed 94%; its real rate is 7%. The source field, DOE's `chronic_absent_ems_all`, is labeled "Percentage of Students with >90% Attendance" in DOE's own metadata, and the file was also mislabeled as 2023-24 end-of-year data when it was the 2024-25 School Quality Report. The May audit (`AUDIT.md`) checked that the numbers matched the file but not what the file measured, and explained the implausible 67% median as a weighting effect. It wasn't. Chronic absence now comes straight from DOE's end-of-year attendance file; the median school is at 37%, close to the citywide 33%.

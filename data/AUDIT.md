@@ -1,5 +1,8 @@
 # Quality-data audit — NYC Schools Atlas
 
+> **Correction, Oct. 7, 2026: this audit reached the wrong conclusion.** It confirmed that the atlas's values matched the source file, but the field it called chronic absence, `chronic_absent_ems_all`, is DOE's "Percentage of Students with >90% Attendance": the share of students who are not chronically absent. The source file was also not 2023-24 end-of-year data; it was a subset of NYC Open Data's School Quality Reports dataset (`dnpx-dfnc`) for 2024-25. P.S. 188 Kingsbury's real chronic absence rate in DOE's end-of-year file is 7.3% (2024-25), not 93.8%, and the median school is at 36.6%, not 67%. The "school-weighted versus student-weighted" explanation below is wrong. The map now takes chronic absence from DOE's end-of-year attendance file (`scripts/metrics/build_attendance.py`), which refuses to build if chronic absence doesn't fall as attendance rises; the old `scripts/build_quality.py` and its source file have been removed. See `METHODOLOGY.md`, "Corrections."
+
+
 **Date:** 2026-05-06
 **Scope:** Verifying `quality.attendance` and `quality.chronic_absent` in `data/schools.json` against the authoritative NYC DOE source.
 
