@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NYC K-12 Enrollment Shifts (1940-2025)</title>
+    <title>New York City school enrollment, 1976-77 to 2025-26</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/prop-types@15.8.1/prop-types.min.js"></script>
     <script src="https://unpkg.com/recharts@2.1.9/umd/Recharts.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.10/babel.min.js"></script>
     <style>
         :root {
             --vc-black: #050507;
@@ -54,7 +54,7 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--vc-cloud); border-radius: 2px; }
     </style>
-  <link rel="stylesheet" href="../shared/chrome.css?v=15" />
+  <link rel="stylesheet" href="../shared/chrome.css?v=17" />
 </head>
 <body data-section="enrollment">
 <div id="site-header"></div>
@@ -63,189 +63,214 @@
         const { useState, useEffect } = React;
         const { AreaChart, Area, BarChart, Bar, LineChart, Line, ComposedChart, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } = window.Recharts;
 
-        const compositionData = [
-            { year: 1940, public: 980000, charter: 0, religious: 250000, nonReligious: 20000, homeschool: 0 },
-            { year: 1941, public: 965000, charter: 0, religious: 252000, nonReligious: 20000, homeschool: 0 },
-            { year: 1942, public: 950000, charter: 0, religious: 254000, nonReligious: 20500, homeschool: 0 },
-            { year: 1943, public: 935000, charter: 0, religious: 256000, nonReligious: 20500, homeschool: 0 },
-            { year: 1944, public: 920000, charter: 0, religious: 258000, nonReligious: 21000, homeschool: 0 },
-            { year: 1945, public: 900000, charter: 0, religious: 260000, nonReligious: 21000, homeschool: 0 },
-            { year: 1946, public: 895000, charter: 0, religious: 265000, nonReligious: 21500, homeschool: 0 },
-            { year: 1947, public: 890000, charter: 0, religious: 270000, nonReligious: 22000, homeschool: 0 },
-            { year: 1948, public: 895000, charter: 0, religious: 275000, nonReligious: 23000, homeschool: 0 },
-            { year: 1949, public: 905000, charter: 0, religious: 280000, nonReligious: 24000, homeschool: 0 },
-            { year: 1950, public: 920000, charter: 0, religious: 285000, nonReligious: 25000, homeschool: 0 },
-            { year: 1951, public: 930000, charter: 0, religious: 295000, nonReligious: 25000, homeschool: 0 },
-            { year: 1952, public: 940000, charter: 0, religious: 305000, nonReligious: 25000, homeschool: 0 },
-            { year: 1953, public: 950000, charter: 0, religious: 315000, nonReligious: 25000, homeschool: 0 },
-            { year: 1954, public: 960000, charter: 0, religious: 325000, nonReligious: 25000, homeschool: 0 },
-            { year: 1955, public: 975000, charter: 0, religious: 335000, nonReligious: 25500, homeschool: 0 },
-            { year: 1956, public: 990000, charter: 0, religious: 345000, nonReligious: 26000, homeschool: 0 },
-            { year: 1957, public: 1005000, charter: 0, religious: 355000, nonReligious: 26500, homeschool: 0 },
-            { year: 1958, public: 1020000, charter: 0, religious: 365000, nonReligious: 27000, homeschool: 0 },
-            { year: 1959, public: 1035000, charter: 0, religious: 375000, nonReligious: 27500, homeschool: 0 },
-            { year: 1960, public: 1050000, charter: 0, religious: 385000, nonReligious: 28000, homeschool: 0 },
-            { year: 1961, public: 1060000, charter: 0, religious: 390000, nonReligious: 28500, homeschool: 0 },
-            { year: 1962, public: 1070000, charter: 0, religious: 395000, nonReligious: 29000, homeschool: 0 },
-            { year: 1963, public: 1080000, charter: 0, religious: 398000, nonReligious: 29500, homeschool: 0 },
-            { year: 1964, public: 1090000, charter: 0, religious: 400000, nonReligious: 30000, homeschool: 0 },
-            { year: 1965, public: 1100000, charter: 0, religious: 395000, nonReligious: 30500, homeschool: 0 },
-            { year: 1966, public: 1110000, charter: 0, religious: 390000, nonReligious: 31000, homeschool: 0 },
-            { year: 1967, public: 1115000, charter: 0, religious: 385000, nonReligious: 31000, homeschool: 0 },
-            { year: 1968, public: 1120000, charter: 0, religious: 380000, nonReligious: 31000, homeschool: 0 },
-            { year: 1969, public: 1125000, charter: 0, religious: 380000, nonReligious: 31000, homeschool: 0 },
-            { year: 1970, public: 1130000, charter: 0, religious: 385000, nonReligious: 31000, homeschool: 0 },
-            { year: 1971, public: 1125000, charter: 0, religious: 385000, nonReligious: 30500, homeschool: 0 },
-            { year: 1972, public: 1115000, charter: 0, religious: 385000, nonReligious: 30000, homeschool: 0 },
-            { year: 1973, public: 1105000, charter: 0, religious: 385000, nonReligious: 29500, homeschool: 0 },
-            { year: 1974, public: 1095000, charter: 0, religious: 385000, nonReligious: 29000, homeschool: 0 },
-            { year: 1975, public: 1080000, charter: 0, religious: 385000, nonReligious: 30000, homeschool: 100 },
-            { year: 1976, public: 1060000, charter: 0, religious: 375000, nonReligious: 30500, homeschool: 150 },
-            { year: 1977, public: 1040000, charter: 0, religious: 365000, nonReligious: 31000, homeschool: 200 },
-            { year: 1978, public: 1010000, charter: 0, religious: 355000, nonReligious: 31000, homeschool: 250 },
-            { year: 1979, public: 980000, charter: 0, religious: 345000, nonReligious: 31500, homeschool: 300 },
-            { year: 1980, public: 960000, charter: 0, religious: 335000, nonReligious: 31500, homeschool: 400 },
-            { year: 1981, public: 945000, charter: 0, religious: 325000, nonReligious: 31500, homeschool: 500 },
-            { year: 1982, public: 938000, charter: 0, religious: 315000, nonReligious: 32000, homeschool: 600 },
-            { year: 1983, public: 935000, charter: 0, religious: 305000, nonReligious: 32000, homeschool: 700 },
-            { year: 1984, public: 933000, charter: 0, religious: 295000, nonReligious: 32000, homeschool: 800 },
-            { year: 1985, public: 934000, charter: 0, religious: 285000, nonReligious: 32000, homeschool: 900 },
-            { year: 1986, public: 936000, charter: 0, religious: 278000, nonReligious: 32000, homeschool: 1000 },
-            { year: 1987, public: 940000, charter: 0, religious: 273000, nonReligious: 32000, homeschool: 1100 },
-            { year: 1988, public: 943000, charter: 0, religious: 267000, nonReligious: 33000, homeschool: 1200 },
-            { year: 1989, public: 948000, charter: 0, religious: 262000, nonReligious: 33000, homeschool: 1300 },
-            { year: 1990, public: 956000, charter: 0, religious: 256000, nonReligious: 34000, homeschool: 1400 },
-            { year: 1991, public: 965000, charter: 0, religious: 254000, nonReligious: 34000, homeschool: 1500 },
-            { year: 1992, public: 978000, charter: 0, religious: 250000, nonReligious: 35000, homeschool: 1600 },
-            { year: 1993, public: 990000, charter: 0, religious: 247000, nonReligious: 35000, homeschool: 1700 },
-            { year: 1994, public: 1002000, charter: 0, religious: 244000, nonReligious: 36000, homeschool: 1800 },
-            { year: 1995, public: 1014000, charter: 0, religious: 242000, nonReligious: 36000, homeschool: 1900 },
-            { year: 1996, public: 1030000, charter: 0, religious: 238000, nonReligious: 37000, homeschool: 2000 },
-            { year: 1997, public: 1045000, charter: 0, religious: 235000, nonReligious: 37000, homeschool: 2200 },
-            { year: 1998, public: 1058000, charter: 0, religious: 231000, nonReligious: 38000, homeschool: 2400 },
-            { year: 1999, public: 1065000, charter: 1000, religious: 229000, nonReligious: 38000, homeschool: 2600 },
-            { year: 2000, public: 1073000, charter: 2500, religious: 226000, nonReligious: 39000, homeschool: 2800 },
-            { year: 2001, public: 1068000, charter: 4000, religious: 224000, nonReligious: 39000, homeschool: 3000 },
-            { year: 2002, public: 1060000, charter: 6000, religious: 221000, nonReligious: 40000, homeschool: 3200 },
-            { year: 2003, public: 1055000, charter: 8000, religious: 219000, nonReligious: 40000, homeschool: 3400 },
-            { year: 2004, public: 1050000, charter: 10000, religious: 216000, nonReligious: 41000, homeschool: 3600 },
-            { year: 2005, public: 1045000, charter: 12500, religious: 215000, nonReligious: 41000, homeschool: 3800 },
-            { year: 2006, public: 1040000, charter: 15000, religious: 213000, nonReligious: 42000, homeschool: 4000 },
-            { year: 2007, public: 1035000, charter: 20000, religious: 210000, nonReligious: 42000, homeschool: 4200 },
-            { year: 2008, public: 1030000, charter: 25000, religious: 206000, nonReligious: 43000, homeschool: 4500 },
-            { year: 2009, public: 1025000, charter: 32000, religious: 204000, nonReligious: 43000, homeschool: 4800 },
-            { year: 2010, public: 1020000, charter: 40000, religious: 205000, nonReligious: 43000, homeschool: 5000 },
-            { year: 2011, public: 1015000, charter: 50000, religious: 203000, nonReligious: 43000, homeschool: 5200 },
-            { year: 2012, public: 1005000, charter: 60000, religious: 197900, nonReligious: 44000, homeschool: 5500 },
-            { year: 2013, public: 1002000, charter: 70000, religious: 196000, nonReligious: 44000, homeschool: 5800 },
-            { year: 2014, public: 1000000, charter: 83000, religious: 194000, nonReligious: 44000, homeschool: 6100 },
-            { year: 2015, public: 995000, charter: 95000, religious: 192000, nonReligious: 44000, homeschool: 6400 },
-            { year: 2016, public: 990000, charter: 106000, religious: 191000, nonReligious: 44000, homeschool: 6800 },
-            { year: 2017, public: 985000, charter: 114000, religious: 190000, nonReligious: 44000, homeschool: 7100 },
-            { year: 2018, public: 975000, charter: 120000, religious: 188000, nonReligious: 45000, homeschool: 7500 },
-            { year: 2019, public: 965000, charter: 129000, religious: 185000, nonReligious: 45000, homeschool: 7800 },
-            { year: 2020, public: 935000, charter: 135000, religious: 180000, nonReligious: 45000, homeschool: 12000 },
-            { year: 2021, public: 890000, charter: 142000, religious: 175000, nonReligious: 45000, homeschool: 14800 },
-            { year: 2022, public: 870000, charter: 145000, religious: 173000, nonReligious: 45000, homeschool: 15500 },
-            { year: 2023, public: 855000, charter: 148000, religious: 170000, nonReligious: 45000, homeschool: 16000 },
-            { year: 2024, public: 845000, charter: 150500, religious: 169000, nonReligious: 45000, homeschool: 16500 },
-            { year: 2025, public: 835000, charter: 152000, religious: 168000, nonReligious: 45000, homeschool: 16800 }
+        // K-12 enrollment in New York City public schools, BEDS Day (early October) counts from the New York State
+        // Education Department (NYSED), Information and Reporting Services. district = non-charter public schools (NYC
+        // geographic districts, District 75, high school and alternative districts); charter = NYC charter schools in NYSED's
+        // school-level files (none appear before 2000-01). K-12 = kindergarten through grade 12 plus ungraded; pre-K excluded.
+        // Rebuilt Oct. 7, 2026 from the NYSED files; the earlier 1940-2025 series could not be traced to any source.
+        const longRunData = [
+            { year: '1976-77', district: 1074851, charter: 0 },
+            { year: '1977-78', district: 1033813, charter: 0 },
+            { year: '1978-79', district: 996577, charter: 0 },
+            { year: '1979-80', district: 960242, charter: 0 },
+            { year: '1980-81', district: 941159, charter: 0 },
+            { year: '1981-82', district: 920911, charter: 0 },
+            { year: '1982-83', district: 914782, charter: 0 },
+            { year: '1983-84', district: 921131, charter: 0 },
+            { year: '1984-85', district: 927130, charter: 0 },
+            { year: '1985-86', district: 931246, charter: 0 },
+            { year: '1986-87', district: 932341, charter: 0 },
+            { year: '1987-88', district: 933206, charter: 0 },
+            { year: '1988-89', district: 925246, charter: 0 },
+            { year: '1989-90', district: 918011, charter: 0 },
+            { year: '1990-91', district: 931910, charter: 0 },
+            { year: '1991-92', district: 950452, charter: 0 },
+            { year: '1992-93', district: 971690, charter: 0 },
+            { year: '1993-94', district: 992992, charter: 0 },
+            { year: '1994-95', district: 1008593, charter: 0 },
+            { year: '1995-96', district: 1032787, charter: 0 },
+            { year: '1996-97', district: 1049873, charter: 0 },
+            { year: '1997-98', district: 1057608, charter: 0 },
+            { year: '1998-99', district: 1058593, charter: 0 },
+            { year: '1999-00', district: 1056726, charter: 0 },
+            { year: '2000-01', district: 1048170, charter: 1821 },
+            { year: '2001-02', district: 1040917, charter: 3141 },
+            { year: '2002-03', district: 1030000, charter: 4442 },
+            { year: '2003-04', district: 1025816, charter: 5849 },
+            { year: '2004-05', district: 1017951, charter: 7733 },
+            { year: '2005-06', district: 996250, charter: 11825 },
+            { year: '2006-07', district: 978416, charter: 15639 },
+            { year: '2007-08', district: 969431, charter: 19815 },
+            { year: '2008-09', district: 960032, charter: 26374 },
+            { year: '2009-10', district: 969266, charter: 32048 },
+            { year: '2010-11', district: 973694, charter: 40407 },
+            { year: '2011-12', district: 965057, charter: 47738 },
+            { year: '2012-13', district: 963019, charter: 58493 },
+            { year: '2013-14', district: 959578, charter: 71422 },
+            { year: '2014-15', district: 957672, charter: 84179 },
+            { year: '2015-16', district: 955003, charter: 94332 },
+            { year: '2016-17', district: 944709, charter: 103908 },
+            { year: '2017-18', district: 936807, charter: 112725 },
+            { year: '2018-19', district: 921388, charter: 118886 },
+            { year: '2019-20', district: 904720, charter: 128949 },
+            { year: '2020-21', district: 869362, charter: 138248 },
+            { year: '2021-22', district: 818129, charter: 139309 },
+            { year: '2022-23', district: 797844, charter: 139274 },
+            { year: '2023-24', district: 794626, charter: 143563 },
+            { year: '2024-25', district: 799752, charter: 146995 },
+            { year: '2025-26', district: 780402, charter: 149870 },
         ];
 
+        // All K-12 students in schools located in New York City, by type of school, 2000-01 to 2025-26.
+        // district and charter: NYSED public enrollment (as above). religious and independent: NYSED nonpublic enrollment by
+        // grade, schools in the five boroughs, kindergarten to grade 12, by NYSED affiliation (Hunter College Campus Schools,
+        // which NYSED lists with nonpublic schools but which are public, are left out). homeschool: NYSED count of children
+        // of compulsory school age instructed at home, NYC districts, reported from 2014-15 only.
+        const sectorData = [
+            { year: '2000-01', district: 1048170, charter: 1821, religious: 233408, independent: 34720, homeschool: null, catholic: 140517, jewish: 70550, otherReligious: 22341 },
+            { year: '2001-02', district: 1040917, charter: 3141, religious: 233422, independent: 34936, homeschool: null, catholic: 139308, jewish: 71803, otherReligious: 22311 },
+            { year: '2002-03', district: 1030000, charter: 4442, religious: 230406, independent: 34594, homeschool: null, catholic: 134948, jewish: 73254, otherReligious: 22204 },
+            { year: '2003-04', district: 1025816, charter: 5849, religious: 226091, independent: 35452, homeschool: null, catholic: 129777, jewish: 74330, otherReligious: 21984 },
+            { year: '2004-05', district: 1017951, charter: 7733, religious: 223417, independent: 36198, homeschool: null, catholic: 126015, jewish: 75810, otherReligious: 21592 },
+            { year: '2005-06', district: 996250, charter: 11825, religious: 219815, independent: 36382, homeschool: null, catholic: 121923, jewish: 77295, otherReligious: 20597 },
+            { year: '2006-07', district: 978416, charter: 15639, religious: 216968, independent: 36592, homeschool: null, catholic: 116950, jewish: 79996, otherReligious: 20022 },
+            { year: '2007-08', district: 969431, charter: 19815, religious: 213499, independent: 37579, homeschool: null, catholic: 112986, jewish: 81299, otherReligious: 19214 },
+            { year: '2008-09', district: 960032, charter: 26374, religious: 211707, independent: 37619, homeschool: null, catholic: 107316, jewish: 85463, otherReligious: 18928 },
+            { year: '2009-10', district: 969266, charter: 32048, religious: 206157, independent: 37405, homeschool: null, catholic: 100846, jewish: 87097, otherReligious: 18214 },
+            { year: '2010-11', district: 973694, charter: 40407, religious: 202752, independent: 38824, homeschool: null, catholic: 94628, jewish: 89911, otherReligious: 18213 },
+            { year: '2011-12', district: 965057, charter: 47738, religious: 201120, independent: 40737, homeschool: null, catholic: 90398, jewish: 92800, otherReligious: 17922 },
+            { year: '2012-13', district: 963019, charter: 58493, religious: 198665, independent: 41205, homeschool: null, catholic: 87301, jewish: 94130, otherReligious: 17234 },
+            { year: '2013-14', district: 959578, charter: 71422, religious: 196147, independent: 41634, homeschool: null, catholic: 83542, jewish: 95996, otherReligious: 16609 },
+            { year: '2014-15', district: 957672, charter: 84179, religious: 195357, independent: 42550, homeschool: 3667, catholic: 80008, jewish: 98603, otherReligious: 16746 },
+            { year: '2015-16', district: 955003, charter: 94332, religious: 193928, independent: 42945, homeschool: 3157, catholic: 76360, jewish: 101167, otherReligious: 16401 },
+            { year: '2016-17', district: 944709, charter: 103908, religious: 191583, independent: 44080, homeschool: 4128, catholic: 74291, jewish: 101427, otherReligious: 15865 },
+            { year: '2017-18', district: 936807, charter: 112725, religious: 187058, independent: 44317, homeschool: 4533, catholic: 71411, jewish: 100350, otherReligious: 15297 },
+            { year: '2018-19', district: 921388, charter: 118886, religious: 185640, independent: 44405, homeschool: 5275, catholic: 68599, jewish: 102041, otherReligious: 15000 },
+            { year: '2019-20', district: 904720, charter: 128949, religious: 182323, independent: 44346, homeschool: 6758, catholic: 65050, jewish: 102991, otherReligious: 14282 },
+            { year: '2020-21', district: 869362, charter: 138248, religious: 178069, independent: 42545, homeschool: 8982, catholic: 60387, jewish: 104817, otherReligious: 12865 },
+            { year: '2021-22', district: 818129, charter: 139309, religious: 176127, independent: 42458, homeschool: 12870, catholic: 58718, jewish: 104438, otherReligious: 12971 },
+            { year: '2022-23', district: 797844, charter: 139274, religious: 174866, independent: 42118, homeschool: 14781, catholic: 56885, jewish: 105009, otherReligious: 12972 },
+            { year: '2023-24', district: 794626, charter: 143563, religious: 174577, independent: 42706, homeschool: 13991, catholic: 55305, jewish: 106189, otherReligious: 13083 },
+            { year: '2024-25', district: 799752, charter: 146995, religious: 174078, independent: 42373, homeschool: 15283, catholic: 53728, jewish: 107201, otherReligious: 13149 },
+            { year: '2025-26', district: 780402, charter: 149870, religious: 172449, independent: 41500, homeschool: 13079, catholic: 50702, jewish: 108751, otherReligious: 12996 },
+        ];
+
+        // 3-K and pre-K enrollment, NYC Department of Education Demographic Snapshot, citywide tab including charter schools,
+        // October 31 audited register (Nov. 13, 2020, and Nov. 12, 2021). Half-day and full-day, including NYC Early Education
+        // Centers. Newest snapshot vintage used for each year. k12 = kindergarten to grade 12 on the same basis.
         const earlyChildhoodData = [
-            { year: 2012, preK: 18000, threeK: 0 },
-            { year: 2013, preK: 19000, threeK: 0 },
-            { year: 2014, preK: 53000, threeK: 0 },
-            { year: 2015, preK: 68000, threeK: 0 },
-            { year: 2016, preK: 70000, threeK: 0 },
-            { year: 2017, preK: 70000, threeK: 1500 },
-            { year: 2018, preK: 69000, threeK: 5000 },
-            { year: 2019, preK: 68000, threeK: 15000 },
-            { year: 2020, preK: 60000, threeK: 25000 },
-            { year: 2021, preK: 58000, threeK: 35000 },
-            { year: 2022, preK: 56000, threeK: 40000 },
-            { year: 2023, preK: 55000, threeK: 42000 },
-            { year: 2024, preK: 54000, threeK: 40000 },
-            { year: 2025, preK: 52000, threeK: 38000 }
+            { year: '2010-11', preK: 57250, threeK: 0, k12: 1026070 },
+            { year: '2011-12', preK: 57518, threeK: 0, k12: 1032019 },
+            { year: '2012-13', preK: 54990, threeK: 0, k12: 1039955 },
+            { year: '2013-14', preK: 55734, threeK: 0, k12: 1048745 },
+            { year: '2014-15', preK: 66403, threeK: 0, k12: 1056380 },
+            { year: '2015-16', preK: 71847, threeK: 0, k12: 1062116 },
+            { year: '2016-17', preK: 72553, threeK: 0, k12: 1068679 },
+            { year: '2017-18', preK: 70704, threeK: 824, k12: 1063806 },
+            { year: '2018-19', preK: 70590, threeK: 3314, k12: 1052597 },
+            { year: '2019-20', preK: 69894, threeK: 17586, k12: 1044388 },
+            { year: '2020-21', preK: 60501, threeK: 15480, k12: 1018157 },
+            { year: '2021-22', preK: 57315, threeK: 34740, k12: 966833 },
+            { year: '2022-23', preK: 59255, threeK: 39821, k12: 948819 },
+            { year: '2023-24', preK: 59182, threeK: 39200, k12: 959679 },
+            { year: '2024-25', preK: 57596, threeK: 38282, k12: 958459 },
+            { year: '2025-26', preK: 56713, threeK: 39229, k12: 939556 },
         ];
 
-        // Chronic absenteeism: students missing 10%+ of school days
-        // Uses NYSED-aligned definition (excludes suspensions and extended medical absences)
-        // Sources: NYC DOE InfoHub, Manhattan Institute, Chalkbeat, Empire Center
+        // Chronic absenteeism: share of students with attendance of 90 percent or less.
+        // Source: NYC Public Schools, End-of-Year Attendance and Chronic Absenteeism Data, citywide file
+        // 2018-19 through 2024-25 (public-citywide-attendance-results-2019-2025.xlsx), sheet "All Students",
+        // Grade = "All Grades", column "% Chronically Absent", rounded to one decimal.
+        // Covers Districts 1-32 and 75; excludes charter schools and District 79. "All Grades" includes pre-K
+        // in K-12 schools and, from 2022-23, district pre-K centers.
         const absenteeismData = [
             { year: '2018-19', rate: 26.5, era: 'pre' },
-            { year: '2019-20', rate: null, era: 'covid', note: 'No data: schools closed March 2020' },
-            { year: '2020-21', rate: 30, era: 'covid', note: '61% of students fully remote; attendance tracking inconsistent' },
-            { year: '2021-22', rate: 40.2, era: 'post' },
-            { year: '2022-23', rate: 36, era: 'post' },
+            { year: '2019-20', rate: 25.1, era: 'covid', note: 'Partial year: September 2019 to March 13, 2020, before school buildings closed' },
+            { year: '2020-21', rate: 29.7, era: 'covid', note: 'Counts remote and in-person days; more than 60 percent of students were fully remote by spring 2021' },
+            { year: '2021-22', rate: 40.3, era: 'post' },
+            { year: '2022-23', rate: 36.2, era: 'post' },
             { year: '2023-24', rate: 34.8, era: 'post' },
-            { year: '2024-25', rate: 33, era: 'post', note: 'Preliminary (Mayor\'s Management Report, Sept. 2025)' },
+            { year: '2024-25', rate: 33.3, era: 'post' },
         ];
 
+        // Enrollment by grade in district public schools (charter schools not included), NYC DOE Demographic Snapshot,
+        // October 31 audited register: 2019-20 from the 2019-20 to 2023-24 snapshot ("Citywide" tab, which excludes charters),
+        // 2025-26 from the 2021-22 to 2025-26 snapshot ("Citywide" tab).
         const gradeData = [
-            { grade: 'K',  y2019: 72000, y2025: 56000 },
-            { grade: '1',  y2019: 74000, y2025: 59000 },
-            { grade: '2',  y2019: 75000, y2025: 61000 },
-            { grade: '3',  y2019: 74000, y2025: 63000 },
-            { grade: '4',  y2019: 76000, y2025: 64000 },
-            { grade: '5',  y2019: 76000, y2025: 65000 },
-            { grade: '6',  y2019: 75000, y2025: 66000 },
-            { grade: '7',  y2019: 74000, y2025: 67000 },
-            { grade: '8',  y2019: 73000, y2025: 68000 },
-            { grade: '9',  y2019: 82000, y2025: 76000 },
-            { grade: '10', y2019: 78000, y2025: 73000 },
-            { grade: '11', y2019: 70000, y2025: 67000 },
-            { grade: '12', y2019: 66000, y2025: 64000 }
+            { grade: 'K', y2019: 65370, y2026: 52525 },
+            { grade: '1', y2019: 66041, y2026: 55350 },
+            { grade: '2', y2019: 67985, y2026: 56017 },
+            { grade: '3', y2019: 67757, y2026: 56404 },
+            { grade: '4', y2019: 69359, y2026: 57571 },
+            { grade: '5', y2019: 70361, y2026: 57418 },
+            { grade: '6', y2019: 68163, y2026: 56074 },
+            { grade: '7', y2019: 69961, y2026: 56956 },
+            { grade: '8', y2019: 68927, y2026: 59594 },
+            { grade: '9', y2019: 81437, y2026: 71889 },
+            { grade: '10', y2019: 79935, y2026: 74557 },
+            { grade: '11', y2019: 67899, y2026: 65907 },
+            { grade: '12', y2019: 72097, y2026: 69656 },
         ];
 
-        // Workforce data: NYC traditional public-school pedagogical staff vs. enrollment, 2000-01 to 2022-23.
-        // Teacher counts 2000-01 to 2011-12 from IBO Fiscal Brief, May 2014 (Table 1).
-        // Teacher counts 2015-16 to 2022-23 from IBO Roll Call, September 2023.
-        // Years 2012-13, 2013-14, 2014-15 (italicized in tooltip) are linear interpolations between IBO endpoints.
-        // Total pedagogical and non-pedagogical from NYC OMB (via NYC Council Finance Division), available FY15+ only.
-        // Enrollment from IBO endpoints with linear interpolation for missing years; matches DOE Demographic Snapshot within ~1%.
+        // Workforce data, school years 2000-01 to 2022-23.
+        // genEd, sped: teachers employed by the NYC Department of Education (DOE), counted by the NYC Independent Budget
+        //   Office (IBO) from DOE personnel files. 2000-01 to 2011-12: IBO Fiscal Brief, May 2014, Table 1.
+        //   2012-13 to 2014-15: IBO, "New York City Public School Indicators: Teachers," June 2017, p. 1.
+        //   2015-16 to 2022-23: IBO, "Roll Call," September 2023, table on p. 3. Charter-school teachers and teachers employed
+        //   by community-based pre-K centers are not included.
+        // totalPed, nonPed: DOE actual full-time headcount as of June of each fiscal year, NYC Office of Management and Budget,
+        //   as charted in the City Council Finance Division's report on the DOE Fiscal 2025 Preliminary Budget (March 2024),
+        //   Charts 6 and 7. Fiscal year N is plotted at school year N-1 to N. Covers all of DOE, including central offices.
+        // enrollment: K-12 students in district (non-charter) public schools, NYSED BEDS Day counts (same as longRunData).
+        const longRunByYear = Object.fromEntries(longRunData.map(d => [d.year, d.district]));
         const workforceData = [
-            { year: '2000-01', genEd: 63905, sped: 13183, totalPed: null, nonPed: null, enrollment: 1105240 },
-            { year: '2001-02', genEd: 64743, sped: 13305, totalPed: null, nonPed: null, enrollment: 1099436 },
-            { year: '2002-03', genEd: 64421, sped: 13711, totalPed: null, nonPed: null, enrollment: 1093633 },
-            { year: '2003-04', genEd: 61448, sped: 13913, totalPed: null, nonPed: null, enrollment: 1087829 },
-            { year: '2004-05', genEd: 62641, sped: 14415, totalPed: null, nonPed: null, enrollment: 1082025 },
-            { year: '2005-06', genEd: 62111, sped: 14823, totalPed: null, nonPed: null, enrollment: 1076222 },
-            { year: '2006-07', genEd: 62522, sped: 15364, totalPed: null, nonPed: null, enrollment: 1070418 },
-            { year: '2007-08', genEd: 62867, sped: 15949, totalPed: null, nonPed: null, enrollment: 1064614 },
-            { year: '2008-09', genEd: 62374, sped: 16508, totalPed: null, nonPed: null, enrollment: 1058811 },
-            { year: '2009-10', genEd: 59402, sped: 17141, totalPed: null, nonPed: null, enrollment: 1053007 },
-            { year: '2010-11', genEd: 56825, sped: 17855, totalPed: null, nonPed: null, enrollment: 1047204 },
-            { year: '2011-12', genEd: 54778, sped: 18595, totalPed: null, nonPed: null, enrollment: 1041437 },
-            // Interpolated:
-            { year: '2012-13', genEd: 54691, sped: 19426, totalPed: null, nonPed: null, enrollment: 1025828, interpolated: true },
-            { year: '2013-14', genEd: 54604, sped: 20257, totalPed: null, nonPed: null, enrollment: 1010219, interpolated: true },
-            { year: '2014-15', genEd: 54517, sped: 21088, totalPed: 112271, nonPed: 11656, enrollment: 994609, interpolated: true },
-            // IBO 2023 series:
-            { year: '2015-16', genEd: 54430, sped: 21919, totalPed: 115799, nonPed: 12248, enrollment: 979000 },
-            { year: '2016-17', genEd: 54602, sped: 22677, totalPed: 118671, nonPed: 12528, enrollment: 980000 },
-            { year: '2017-18', genEd: 54782, sped: 23430, totalPed: 119900, nonPed: 12799, enrollment: 974000 },
-            { year: '2018-19', genEd: 54128, sped: 24107, totalPed: 120398, nonPed: 13218, enrollment: 967000 },
-            { year: '2019-20', genEd: 52984, sped: 25190, totalPed: 121077, nonPed: 13607, enrollment: 962000 },
-            { year: '2020-21', genEd: 51589, sped: 25440, totalPed: 119210, nonPed: 13173, enrollment: 938000 },
-            { year: '2021-22', genEd: 51650, sped: 25960, totalPed: 117004, nonPed: 12717, enrollment: 893000 },
-            { year: '2022-23', genEd: 49607, sped: 26047, totalPed: 116660, nonPed: 12780, enrollment: 881000 },
-        ].map(d => ({
-            ...d,
-            otherPed: d.totalPed != null ? d.totalPed - d.genEd - d.sped : null,
-            studentsPerTeacher: d.enrollment / (d.genEd + d.sped),
-            parasAndStaffPer1k: d.totalPed != null ? ((d.totalPed - d.genEd - d.sped) / d.enrollment) * 1000 : null,
-            nonPedPer1k: d.nonPed != null ? (d.nonPed / d.enrollment) * 1000 : null,
-        }));
+            { year: '2000-01', genEd: 63905, sped: 13183, totalPed: null, nonPed: null },
+            { year: '2001-02', genEd: 64743, sped: 13305, totalPed: null, nonPed: null },
+            { year: '2002-03', genEd: 64421, sped: 13711, totalPed: null, nonPed: null },
+            { year: '2003-04', genEd: 61448, sped: 13913, totalPed: null, nonPed: null },
+            { year: '2004-05', genEd: 62641, sped: 14415, totalPed: null, nonPed: null },
+            { year: '2005-06', genEd: 62111, sped: 14823, totalPed: null, nonPed: null },
+            { year: '2006-07', genEd: 62522, sped: 15364, totalPed: null, nonPed: null },
+            { year: '2007-08', genEd: 62867, sped: 15949, totalPed: null, nonPed: null },
+            { year: '2008-09', genEd: 62374, sped: 16508, totalPed: null, nonPed: null },
+            { year: '2009-10', genEd: 59402, sped: 17141, totalPed: null, nonPed: null },
+            { year: '2010-11', genEd: 56825, sped: 17855, totalPed: null, nonPed: null },
+            { year: '2011-12', genEd: 54778, sped: 18595, totalPed: null, nonPed: null },
+            { year: '2012-13', genEd: 54535, sped: 19254, totalPed: null, nonPed: null },
+            { year: '2013-14', genEd: 53917, sped: 20181, totalPed: null, nonPed: null },
+            { year: '2014-15', genEd: 54008, sped: 21032, totalPed: 112271, nonPed: 11656 },
+            { year: '2015-16', genEd: 54430, sped: 21919, totalPed: 115799, nonPed: 12248 },
+            { year: '2016-17', genEd: 54602, sped: 22677, totalPed: 118671, nonPed: 12528 },
+            { year: '2017-18', genEd: 54782, sped: 23430, totalPed: 119900, nonPed: 12799 },
+            { year: '2018-19', genEd: 54128, sped: 24107, totalPed: 120398, nonPed: 13218 },
+            { year: '2019-20', genEd: 52984, sped: 25190, totalPed: 121077, nonPed: 13607 },
+            { year: '2020-21', genEd: 51589, sped: 25440, totalPed: 119210, nonPed: 13173 },
+            { year: '2021-22', genEd: 51650, sped: 25960, totalPed: 117004, nonPed: 12717 },
+            { year: '2022-23', genEd: 49607, sped: 26047, totalPed: 116660, nonPed: 12780 },
+        ].map(d => {
+            var enrollment = longRunByYear[d.year];
+            return {
+                ...d,
+                enrollment: enrollment,
+                otherPed: d.totalPed != null ? d.totalPed - d.genEd - d.sped : null,
+                studentsPerTeacher: enrollment / (d.genEd + d.sped),
+                parasAndStaffPer1k: d.totalPed != null ? ((d.totalPed - d.genEd - d.sped) / enrollment) * 1000 : null,
+                nonPedPer1k: d.nonPed != null ? (d.nonPed / enrollment) * 1000 : null,
+            };
+        });
 
-        // 2019-20 school-based snapshot from the November 2019 DOE Local Law 226 headcount report.
-        // The only year with a clean published decomposition of the "other pedagogical" bucket.
+        // School-based and borough field-support staff in selected titles, October 2019 (fiscal 2020).
+        // Source: NYC DOE, "FY 2020 October Headcount Report," Nov. 15, 2019, submitted to the City Council under its
+        // budget terms and conditions, "Details" sheet, column "Total" (full-time and part-time, by line title).
+        // Paraprofessionals = Educational Paraprofessional (5,401) + IEP Educational Paraprofessional (11,024.73).
+        // Principals = the eight "Principal - ..." titles (1,625); Principal Administrative Associate, a clerical title, excluded.
         const workforceSnapshot2019 = [
             { role: 'Teachers', count: 72158 },
             { role: 'Paraprofessionals', count: 16426 },
-            { role: 'School aides', count: 5580 },
+            { role: 'School aides (hourly)', count: 5580 },
+            { role: 'Assistant principals', count: 3293 },
             { role: 'Guidance counselors', count: 2728 },
-            { role: 'Principals', count: 1640 },
+            { role: 'Principals', count: 1625 },
             { role: 'Social workers', count: 860 },
             { role: 'School psychologists', count: 513 },
         ];
@@ -259,7 +284,7 @@
             preK: '#217ebe',
             threeK: '#cea9be',
             y2019: '#dddddd',
-            y2025: '#e7466d',
+            y2026: '#e7466d',
             absentPre: '#217ebe',
             absentCovid: '#cea9be',
             absentPost: '#e7466d',
@@ -273,24 +298,25 @@
 
         const formatNumber = (n) => n.toLocaleString();
 
-        const CustomTooltip = ({ active, payload, label }) => {
-            if (!active || !payload || !payload.length || payload[0].value === undefined) return null;
-            var displayLabel = typeof label === 'number' ? Math.floor(label) : label;
-            var total = payload.reduce((sum, e) => sum + e.value, 0);
+        const CustomTooltip = ({ active, payload, label, noTotal }) => {
+            if (!active || !payload) return null;
+            var rows = payload.filter(e => e.value != null);
+            if (!rows.length) return null;
+            var total = rows.reduce((sum, e) => sum + e.value, 0);
             return (
                 <div style={{ background: '#050507', color: '#fff', padding: '16px 20px', minWidth: '240px', fontFamily: 'var(--font-primary)', boxShadow: '0 8px 32px rgba(0,0,0,0.24)' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', borderBottom: '1px solid rgba(255,255,255,0.15)', paddingBottom: '10px', marginBottom: '10px' }}>
-                        <span style={{ fontWeight: 900, fontSize: '20px', letterSpacing: '-0.02em' }}>{displayLabel}</span>
-                        <span style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#dde44c' }}>{total.toLocaleString()} total</span>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', borderBottom: '1px solid rgba(255,255,255,0.15)', paddingBottom: '10px', marginBottom: '10px', gap: '12px' }}>
+                        <span style={{ fontWeight: 900, fontSize: '20px', letterSpacing: '-0.02em' }}>{label}</span>
+                        {!noTotal && <span style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#dde44c' }}>{total.toLocaleString()} total</span>}
                     </div>
-                    {[...payload].reverse().map((entry, i) => {
+                    {[...rows].reverse().map((entry, i) => {
                         var pct = ((entry.value / total) * 100).toFixed(1);
                         return (
                             <div key={i} style={{ display: 'flex', alignItems: 'center', fontSize: '13px', marginBottom: '5px' }}>
                                 <div style={{ width: '10px', height: '10px', borderRadius: '2px', background: entry.color, marginRight: '8px', flexShrink: 0 }} />
                                 <span style={{ color: 'rgba(255,255,255,0.7)', marginRight: 'auto' }}>{entry.name}</span>
                                 <span style={{ fontWeight: 700, marginLeft: '12px', fontVariantNumeric: 'tabular-nums' }}>{entry.value.toLocaleString()}</span>
-                                <span style={{ fontWeight: 600, marginLeft: '8px', fontSize: '11px', color: 'rgba(255,255,255,0.45)', width: '40px', textAlign: 'right' }}>{pct}%</span>
+                                {!noTotal && <span style={{ fontWeight: 600, marginLeft: '8px', fontSize: '11px', color: 'rgba(255,255,255,0.45)', width: '40px', textAlign: 'right' }}>{pct}%</span>}
                             </div>
                         );
                     })}
@@ -312,8 +338,6 @@
 
         const App = () => {
             const [activeTab, setActiveTab] = useState('composition');
-            const [progress, setProgress] = useState(2025);
-            const [isPlaying, setIsPlaying] = useState(false);
             const [workforceYZero, setWorkforceYZero] = useState(false);
             const [wfProgress, setWfProgress] = useState(workforceData.length - 1);
             const [wfPlaying, setWfPlaying] = useState(false);
@@ -337,55 +361,17 @@
                 return () => cancelAnimationFrame(raf);
             }, [wfPlaying]);
 
-            useEffect(() => {
-                var raf;
-                var last = performance.now();
-                var tick = (now) => {
-                    var dt = now - last;
-                    last = now;
-                    setProgress(prev => {
-                        var next = prev + (dt / 120);
-                        if (next >= 2025) { setIsPlaying(false); return 2025; }
-                        return next;
-                    });
-                    raf = requestAnimationFrame(tick);
-                };
-                if (isPlaying) { last = performance.now(); raf = requestAnimationFrame(tick); }
-                return () => cancelAnimationFrame(raf);
-            }, [isPlaying]);
-
-            const handlePlayPause = () => {
-                if (progress >= 2025 && !isPlaying) { setProgress(1940); setIsPlaying(true); }
-                else { setIsPlaying(!isPlaying); }
-            };
-            const handleReset = () => { setIsPlaying(false); setProgress(1940); };
-
-            var yr = Math.floor(progress);
-            var frac = progress - yr;
-            var animatedData = compositionData.filter(d => d.year <= yr);
-            if (yr < 2025) {
-                var prev = compositionData.find(p => p.year === yr);
-                var next = compositionData.find(p => p.year === yr + 1);
-                if (prev && next && frac > 0) {
-                    var lerp = (a, b) => a + (b - a) * frac;
-                    animatedData.push({
-                        year: yr + frac,
-                        public: lerp(prev.public, next.public),
-                        religious: lerp(prev.religious, next.religious),
-                        nonReligious: lerp(prev.nonReligious, next.nonReligious),
-                        charter: lerp(prev.charter, next.charter),
-                        homeschool: lerp(prev.homeschool, next.homeschool),
-                    });
-                }
-            }
-
-            var currentEntry = animatedData[animatedData.length - 1] || compositionData[0];
-            var currentTotal = currentEntry.public + currentEntry.religious + currentEntry.nonReligious + currentEntry.charter + currentEntry.homeschool;
-            var peakEntry = compositionData.reduce((max, d) => {
-                var t = d.public + d.religious + d.nonReligious + d.charter + d.homeschool;
-                return t > (max.public + max.religious + max.nonReligious + max.charter + max.homeschool) ? d : max;
-            });
-            var peakTotal = peakEntry.public + peakEntry.religious + peakEntry.nonReligious + peakEntry.charter + peakEntry.homeschool;
+            // Figures quoted in headlines and stat cards, computed from the data arrays above.
+            var lrBy = Object.fromEntries(longRunData.map(d => [d.year, d]));
+            var lrLatest = longRunData[longRunData.length - 1];
+            var high1990s = lrBy['1998-99'];
+            var distDrop = high1990s.district - lrLatest.district;
+            var distDropPct = (distDrop / high1990s.district) * 100;
+            var combinedLatest = lrLatest.district + lrLatest.charter;
+            var combinedDropPct = ((high1990s.district - combinedLatest) / high1990s.district) * 100;
+            var secLatest = sectorData[sectorData.length - 1];
+            var secTotal = secLatest.district + secLatest.charter + secLatest.religious + secLatest.independent + (secLatest.homeschool || 0);
+            var pctOf = (v) => ((v / secTotal) * 100).toFixed(1) + '%';
 
             var tabs = [
                 { id: 'composition', label: 'Composition' },
@@ -401,10 +387,10 @@
                 <div style={{ maxWidth: '960px', margin: '0 auto', padding: '24px 16px 60px' }}>
                     <div style={{ marginBottom: '40px' }}>
                         <h1 style={{ fontSize: 'clamp(28px, 5vw, 44px)', fontWeight: 900, lineHeight: 1.05, letterSpacing: '-0.03em', color: '#050507', marginBottom: '12px', maxWidth: '700px' }}>
-                            {"The city\u2019s schools are shrinking\u2014but this isn\u2019t just a pandemic story"}
+                            New York City’s public schools were shrinking before the pandemic, and the decline sped up after it
                         </h1>
-                        <p style={{ fontFamily: 'var(--font-secondary)', fontSize: 'clamp(16px, 2.5vw, 20px)', color: '#707175', lineHeight: 1.5, maxWidth: '600px' }}>
-                            85 years of enrollment data, from Baby Boom to pandemic exodus
+                        <p style={{ fontFamily: 'var(--font-secondary)', fontSize: 'clamp(16px, 2.5vw, 20px)', color: '#707175', lineHeight: 1.5, maxWidth: '640px' }}>
+                            Fifty years of state enrollment counts, with charter, private and home-schooled students, 3-K and pre-K, chronic absenteeism and school staffing
                         </p>
                     </div>
 
@@ -425,101 +411,149 @@
                     {/* TAB 1: COMPOSITION - uses display toggle */}
                     <div style={{ display: activeTab === 'composition' ? 'block' : 'none' }}>
                         <h2 style={{ fontSize: '22px', fontWeight: 900, letterSpacing: '-0.02em', marginBottom: '4px' }}>
-                            NYC lost 300,000 K-12 students from peak to present
+                            District public schools have lost more than a quarter of their K-12 students since 1998-99
                         </h2>
                         <p style={{ fontSize: '13px', color: '#707175', marginBottom: '24px' }}>
-                            {"Total enrollment by sector, 1940\u20132025 (estimated)"}
+                            Kindergarten through 12th grade enrollment in New York City public schools, 1976-77 to 2025-26, from the state’s October counts. Charter schools appear in the state’s data starting in 2000-01.
                         </p>
 
-                        {(() => {
-                            var latest = compositionData[compositionData.length - 1];
-                            var latestTotal = latest.public + latest.religious + latest.nonReligious + latest.charter + latest.homeschool;
-                            return (
-                                <div style={{ display: 'flex', gap: '12px', marginBottom: '28px', flexWrap: 'wrap' }}>
-                                    <StatCard label="Total Students (2025)" value={formatYAxis(Math.round(latestTotal))} detail={'Peak: ' + formatYAxis(peakTotal) + ' in ' + peakEntry.year} />
-                                    <StatCard label="Public School Share" value={((latest.public / latestTotal) * 100).toFixed(0) + '%'} detail={formatNumber(Math.round(latest.public)) + ' students'} color="#dde44c" />
-                                    <StatCard label="Charter Share" value={((latest.charter / latestTotal) * 100).toFixed(1) + '%'} detail={formatNumber(Math.round(latest.charter)) + ' students'} color="#ff7c53" />
-                                    <StatCard label="Religious / Parochial" value={((latest.religious / latestTotal) * 100).toFixed(0) + '%'} detail={formatNumber(Math.round(latest.religious)) + ' students'} color="#394882" />
-                                </div>
-                            );
-                        })()}
+                        <div style={{ display: 'flex', gap: '12px', marginBottom: '28px', flexWrap: 'wrap' }}>
+                            <StatCard label={'District schools, ' + lrLatest.year} value={formatNumber(lrLatest.district)} detail={'Down ' + formatNumber(distDrop) + ' (' + distDropPct.toFixed(1) + '%) from 1998-99'} color="#8a8f1f" />
+                            <StatCard label={'Charter schools, ' + lrLatest.year} value={formatNumber(lrLatest.charter)} detail="First counted by the state in 2000-01" color="#ff7c53" />
+                            <StatCard label="District and charter combined" value={formatNumber(combinedLatest)} detail={combinedDropPct.toFixed(1) + '% below the 1998-99 district total'} />
+                        </div>
 
-                        <div style={{ height: '420px', width: '100%' }}>
+                        <div style={{ height: '400px', width: '100%' }}>
                             <ResponsiveContainer width="100%" height="100%">
-                                <AreaChart data={compositionData} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
+                                <AreaChart data={longRunData} margin={{ top: 10, right: 30, left: 10, bottom: 0 }}>
                                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
-                                    <XAxis dataKey="year" type="number" domain={[1940, 2025]} ticks={[1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020]} tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} />
-                                    <YAxis tickFormatter={formatYAxis} tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} width={45} />
+                                    <XAxis dataKey="year" ticks={['1976-77', '1985-86', '1995-96', '2005-06', '2015-16', '2025-26']} interval={0} tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} />
+                                    <YAxis tickFormatter={formatYAxis} tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} width={45} domain={[0, 1200000]} ticks={[0, 300000, 600000, 900000, 1200000]} />
                                     <Tooltip content={<CustomTooltip />} />
                                     <Legend iconType="square" iconSize={10} wrapperStyle={{ paddingTop: '16px', fontSize: '12px' }} />
-                                    <Area isAnimationActive={false} type="monotone" dataKey="public" name="Traditional Public" stackId="1" stroke="#dde44c" fill="#dde44c" fillOpacity={0.9} />
-                                    <Area isAnimationActive={false} type="monotone" dataKey="religious" name="Religious / Parochial" stackId="1" stroke="#394882" fill="#394882" fillOpacity={0.85} />
-                                    <Area isAnimationActive={false} type="monotone" dataKey="nonReligious" name="Independent (Secular)" stackId="1" stroke="#9b9fbc" fill="#9b9fbc" fillOpacity={0.8} />
-                                    <Area isAnimationActive={false} type="monotone" dataKey="charter" name="Charter" stackId="1" stroke="#ff7c53" fill="#ff7c53" fillOpacity={0.9} />
-                                    <Area isAnimationActive={false} type="monotone" dataKey="homeschool" name="Homeschool" stackId="1" stroke="#e7466d" fill="#e7466d" fillOpacity={0.85} />
+                                    <Area isAnimationActive={false} type="linear" dataKey="district" name="District public schools" stackId="1" stroke="#dde44c" fill="#dde44c" fillOpacity={0.9} />
+                                    <Area isAnimationActive={false} type="linear" dataKey="charter" name="Charter schools" stackId="1" stroke="#ff7c53" fill="#ff7c53" fillOpacity={0.9} />
                                 </AreaChart>
                             </ResponsiveContainer>
                         </div>
 
-                        <div style={{ marginTop: '16px', fontSize: '11px', color: '#707175', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-                            <div>
-                                <span style={{ fontWeight: 600 }}>Source:</span>{' '}
-                                <a href="https://data.nysed.gov/" style={{ color: '#707175', textDecoration: 'underline' }}>NYS Education Dept.</a>,{' '}
-                                <a href="https://ibo.nyc.ny.us/" style={{ color: '#707175', textDecoration: 'underline' }}>NYC IBO</a>,{' '}
-                                <a href="https://infohub.nyced.org/" style={{ color: '#707175', textDecoration: 'underline' }}>DOE InfoHub</a>
-                                <br /><em>Note: Pre-2000 data are historical estimates.</em>
-                            </div>
+                        <p style={{ fontSize: '13px', color: '#505257', lineHeight: 1.6, marginTop: '16px', maxWidth: '720px' }}>
+                            District enrollment bottomed out at 914,782 in 1982-83 and rose to 1,058,593 in 1998-99. It fell by 68,974 from 2010-11 to 2019-20 and by another 124,318 from 2019-20 to 2025-26. Counting charter schools, public school enrollment fell 1.5 percent from 2015-16 to 2019-20 and 10.0 percent from 2019-20 to 2025-26. A federal survey counted 1,149,068 students in kindergarten through 12th grade in fall 1971, more than in any year shown here, but it was compiled on a different basis, so it is not plotted.
+                        </p>
+
+                        <h3 style={{ fontSize: '17px', fontWeight: 900, letterSpacing: '-0.02em', marginTop: '40px', marginBottom: '4px' }}>
+                            All K-12 students, by type of school, 2000-01 to 2025-26
+                        </h3>
+                        <p style={{ fontSize: '13px', color: '#707175', marginBottom: '20px' }}>
+                            Students in public, charter and private schools located in New York City, plus home-schooled children of compulsory school age, who are counted from 2014-15 on
+                        </p>
+
+                        <div style={{ display: 'flex', gap: '12px', marginBottom: '28px', flexWrap: 'wrap' }}>
+                            <StatCard label={'All K-12 students, ' + secLatest.year} value={formatNumber(secTotal)} detail="All five types combined" />
+                            <StatCard label="District share" value={pctOf(secLatest.district)} detail={formatNumber(secLatest.district) + ' students'} color="#8a8f1f" />
+                            <StatCard label="Charter share" value={pctOf(secLatest.charter)} detail={formatNumber(secLatest.charter) + ' students'} color="#ff7c53" />
+                            <StatCard label="Private share" value={pctOf(secLatest.religious + secLatest.independent)} detail={formatNumber(secLatest.religious) + ' religious, ' + formatNumber(secLatest.independent) + ' independent'} color="#394882" />
+                            <StatCard label="Home-schooled" value={pctOf(secLatest.homeschool)} detail={formatNumber(secLatest.homeschool) + ' children'} color="#e7466d" />
+                        </div>
+
+                        <div style={{ height: '420px', width: '100%' }}>
+                            <ResponsiveContainer width="100%" height="100%">
+                                <AreaChart data={sectorData} margin={{ top: 10, right: 30, left: 10, bottom: 0 }}>
+                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
+                                    <XAxis dataKey="year" ticks={['2000-01', '2005-06', '2010-11', '2015-16', '2020-21', '2025-26']} interval={0} tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} />
+                                    <YAxis tickFormatter={formatYAxis} tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} width={45} domain={[0, 1400000]} ticks={[0, 350000, 700000, 1050000, 1400000]} />
+                                    <Tooltip content={<CustomTooltip />} />
+                                    <Legend iconType="square" iconSize={10} wrapperStyle={{ paddingTop: '16px', fontSize: '12px' }} />
+                                    <Area isAnimationActive={false} type="linear" dataKey="district" name="District public" stackId="1" stroke="#dde44c" fill="#dde44c" fillOpacity={0.9} />
+                                    <Area isAnimationActive={false} type="linear" dataKey="charter" name="Charter" stackId="1" stroke="#ff7c53" fill="#ff7c53" fillOpacity={0.9} />
+                                    <Area isAnimationActive={false} type="linear" dataKey="religious" name="Religious private" stackId="1" stroke="#394882" fill="#394882" fillOpacity={0.85} />
+                                    <Area isAnimationActive={false} type="linear" dataKey="independent" name="Independent private" stackId="1" stroke="#9b9fbc" fill="#9b9fbc" fillOpacity={0.8} />
+                                    <Area isAnimationActive={false} type="linear" dataKey="homeschool" name="Home-schooled" stackId="1" stroke="#e7466d" fill="#e7466d" fillOpacity={0.85} />
+                                </AreaChart>
+                            </ResponsiveContainer>
+                        </div>
+
+                        <p style={{ fontSize: '13px', color: '#505257', lineHeight: 1.6, marginTop: '16px', maxWidth: '720px' }}>
+                            Within private schools, Catholic schools enrolled 140,517 K-12 students in 2000-01 and 50,702 in 2025-26. Jewish schools grew from 70,550 to 108,751 over the same years.
+                        </p>
+
+                        <div style={{ marginTop: '12px', fontSize: '11px', color: '#707175', lineHeight: 1.6 }}>
+                            <span style={{ fontWeight: 600 }}>Sources:</span>{' '}
+                            New York State Education Department (NYSED), <a href="https://www.p12.nysed.gov/irs/statistics/enroll-n-staff/home.html" style={{ color: '#707175', textDecoration: 'underline' }}>public school enrollment</a> (district and school files, 1976-77 to 2025-26; earlier years on the <a href="https://www.p12.nysed.gov/irs/statistics/enroll-n-staff/ArchiveEnrollmentData1976-1994.html" style={{ color: '#707175', textDecoration: 'underline' }}>1976-1994</a>, <a href="https://www.p12.nysed.gov/irs/statistics/enroll-n-staff/ArchiveEnrollmentData1994-2011.html" style={{ color: '#707175', textDecoration: 'underline' }}>1994-2011</a> and <a href="https://www.p12.nysed.gov/irs/statistics/enroll-n-staff/ArchiveEnrollmentData.html" style={{ color: '#707175', textDecoration: 'underline' }}>2012-2025</a> archive pages), <a href="https://www.p12.nysed.gov/irs/statistics/nonpublic/home.html" style={{ color: '#707175', textDecoration: 'underline' }}>nonpublic school enrollment</a> and <a href="https://www.p12.nysed.gov/irs/statistics/HomeSchooled/home.html" style={{ color: '#707175', textDecoration: 'underline' }}>children instructed at home</a>. Fall 1971: National Center for Education Statistics, <a href="https://files.eric.ed.gov/fulltext/ED075958.pdf" style={{ color: '#707175', textDecoration: 'underline' }}>Statistics of Public Elementary and Secondary Day Schools, Fall 1971</a>, Table 4. See the Methodology tab for definitions.
                         </div>
                     </div>
 
                     {/* TAB 2: EARLY CHILDHOOD */}
-                    {activeTab === 'prek' && <div>
+                    {activeTab === 'prek' && (() => {
+                        var ec = earlyChildhoodData;
+                        var ecBy = Object.fromEntries(ec.map(d => [d.year, d]));
+                        var ecLatest = ec[ec.length - 1];
+                        var maxBy = (f) => ec.reduce((m, d) => (f(d) > f(m) ? d : m));
+                        var pkPeak = maxBy(d => d.preK);
+                        var tkPeak = maxBy(d => d.threeK);
+                        var bothPeak = maxBy(d => d.preK + d.threeK);
+                        var a = ecBy['2016-17'], b = ecBy['2019-20'];
+                        var earlyGain = (b.preK + b.threeK) - (a.preK + a.threeK);
+                        var k12Loss = a.k12 - b.k12;
+                        return <div>
                         <h2 style={{ fontSize: '22px', fontWeight: 900, letterSpacing: '-0.02em', marginBottom: '4px' }}>
-                            The early childhood boom masked the K-12 decline
+                            3-K and pre-K grew while kindergarten through 12th grade shrank
                         </h2>
                         <p style={{ fontSize: '13px', color: '#707175', marginBottom: '28px' }}>
-                            Universal Pre-K launched in 2014; 3-K for All began in 2017
+                            Children in New York City public 3-K and pre-K, half-day and full-day, including community-based centers and charter schools, 2010-11 to 2025-26
                         </p>
 
                         <div style={{ display: 'flex', gap: '12px', marginBottom: '28px', flexWrap: 'wrap' }}>
-                            <StatCard label="Pre-K Peak" value="70k" detail={"2016\u20132017"} color="#217ebe" />
-                            <StatCard label="Pre-K 2025" value="52k" detail="-26% from peak" color="#217ebe" />
-                            <StatCard label="3-K Peak" value="42k" detail="2023" color="#cea9be" />
-                            <StatCard label="Combined 2025" value="90k" detail="Down from 97k peak" />
+                            <StatCard label="Pre-K high" value={formatNumber(pkPeak.preK)} detail={pkPeak.year} color="#217ebe" />
+                            <StatCard label={'Pre-K, ' + ecLatest.year} value={formatNumber(ecLatest.preK)} detail={(((ecLatest.preK - pkPeak.preK) / pkPeak.preK) * 100).toFixed(1) + '% from ' + pkPeak.year} color="#217ebe" />
+                            <StatCard label={'3-K, ' + ecLatest.year} value={formatNumber(ecLatest.threeK)} detail={'High: ' + formatNumber(tkPeak.threeK) + ' in ' + tkPeak.year} color="#a0708c" />
+                            <StatCard label={'Both, ' + ecLatest.year} value={formatNumber(ecLatest.preK + ecLatest.threeK)} detail={'High: ' + formatNumber(bothPeak.preK + bothPeak.threeK) + ' in ' + bothPeak.year} />
                         </div>
 
                         <div style={{ height: '400px', width: '100%' }}>
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart data={earlyChildhoodData} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
                                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
-                                    <XAxis dataKey="year" tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} />
-                                    <YAxis tickFormatter={formatYAxis} tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} width={40} />
+                                    <XAxis dataKey="year" tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} interval={1} />
+                                    <YAxis tickFormatter={formatYAxis} tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} width={40} domain={[0, 100000]} ticks={[0, 25000, 50000, 75000, 100000]} />
                                     <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(221,228,76,0.1)' }} />
                                     <Legend iconType="square" iconSize={10} wrapperStyle={{ paddingTop: '16px', fontSize: '12px' }} />
-                                    <Bar isAnimationActive={false} dataKey="preK" name="Pre-K Enrollment" stackId="a" fill="#217ebe" />
-                                    <Bar isAnimationActive={false} dataKey="threeK" name="3-K Enrollment" stackId="a" fill="#cea9be" radius={[3, 3, 0, 0]} />
+                                    <Bar isAnimationActive={false} dataKey="preK" name="Pre-K" stackId="a" fill="#217ebe" />
+                                    <Bar isAnimationActive={false} dataKey="threeK" name="3-K" stackId="a" fill="#cea9be" radius={[3, 3, 0, 0]} />
                                 </BarChart>
                             </ResponsiveContainer>
                         </div>
 
-                        <div style={{ marginTop: '16px', fontSize: '11px', color: '#707175', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-                            <div><span style={{ fontWeight: 600 }}>Source:</span>{' '}<a href="https://infohub.nyced.org/reports/school-quality/information-and-data-overview" style={{ color: '#707175', textDecoration: 'underline' }}>NYC DOE Demographic Snapshots</a></div>
+                        <p style={{ fontSize: '13px', color: '#505257', lineHeight: 1.6, marginTop: '16px', maxWidth: '720px' }}>
+                            From 2016-17 to 2019-20, 3-K and pre-K enrollment rose by {formatNumber(earlyGain)} while kindergarten through 12th grade fell by {formatNumber(k12Loss)}, so the two together fell by {formatNumber(k12Loss - earlyGain)}. Pre-K for All began in fall 2014, when the city enrolled 53,000 4-year-olds in full-day seats; the counts here also include half-day seats, which is why pre-K was already near 55,000 before the expansion. 3-K for All began in fall 2017 in District 7 in the South Bronx and District 23 in Brooklyn. The pre-K class of 2025-26 was born in 2021, when 99,262 babies were born to New York City residents; the class of 2016-17 was born in 2012, when there were 123,231 births.
+                        </p>
+
+                        <div style={{ marginTop: '12px', fontSize: '11px', color: '#707175', lineHeight: 1.6 }}>
+                            <span style={{ fontWeight: 600 }}>Sources:</span>{' '}
+                            New York City Department of Education (DOE), Demographic Snapshot (<a href="https://infohub.nyced.org/reports/students-and-schools/school-quality/information-and-data-overview" style={{ color: '#707175', textDecoration: 'underline' }}>2021-22 to 2025-26</a>; earlier editions on <a href="https://data.cityofnewyork.us/browse?q=demographic%20snapshot" style={{ color: '#707175', textDecoration: 'underline' }}>NYC Open Data</a>), citywide tab including charter schools. Pre-K for All: <a href="https://www.edweek.org/leadership/n-y-c-plows-forward-on-pre-k-initiative/2015/01" style={{ color: '#707175', textDecoration: 'underline' }}>Education Week, Jan. 3, 2015</a>. 3-K for All: <a href="https://www.chalkbeat.org/newyork/2017/7/18/21100699/new-york-city-s-3-k-for-all-preschool-program-starts-this-fall-here-are-five-things-we-know-so-far/" style={{ color: '#707175', textDecoration: 'underline' }}>Chalkbeat, July 18, 2017</a>. Births: New York City Health Department, Summary of Vital Statistics <a href="https://www.nyc.gov/assets/doh/downloads/pdf/vs/2016sum.pdf" style={{ color: '#707175', textDecoration: 'underline' }}>2016</a> (Table PC1) and <a href="https://www.nyc.gov/assets/doh/downloads/pdf/vs/2022sum.pdf" style={{ color: '#707175', textDecoration: 'underline' }}>2022</a> (Table PO11).
                         </div>
-                    </div>}
+                    </div>;
+                    })()}
 
                     {/* TAB 3: GRADES */}
-                    {activeTab === 'grades' && <div>
+                    {activeTab === 'grades' && (() => {
+                        var sum = (key, from, to) => gradeData.slice(from, to).reduce((s, d) => s + d[key], 0);
+                        var k8a = sum('y2019', 0, 9), k8b = sum('y2026', 0, 9);
+                        var hsa = sum('y2019', 9, 13), hsb = sum('y2026', 9, 13);
+                        var pctChg = (a, b) => (((b - a) / a) * 100).toFixed(1) + '%';
+                        var kg = gradeData[0];
+                        return <div>
                         <h2 style={{ fontSize: '22px', fontWeight: 900, letterSpacing: '-0.02em', marginBottom: '4px' }}>
-                            {"Lower grades got hollowed out\u2014the ripple hasn\u2019t stopped"}
+                            Kindergarten through 8th grade lost a far larger share of students than high school
                         </h2>
                         <p style={{ fontSize: '13px', color: '#707175', marginBottom: '28px' }}>
-                            Public school enrollment by grade, 2019 vs. 2025
+                            Enrollment by grade in district public schools (charter schools not included), 2019-20 and 2025-26
                         </p>
 
                         <div style={{ display: 'flex', gap: '12px', marginBottom: '28px', flexWrap: 'wrap' }}>
-                            <StatCard label="Kindergarten Drop" value="-22%" detail={"72k \u2192 56k"} color="#e7466d" />
-                            <StatCard label="Grade 1 Drop" value="-20%" detail={"74k \u2192 59k"} color="#e7466d" />
-                            <StatCard label="Grade 12 Drop" value="-3%" detail={"66k \u2192 64k"} color="#707175" />
+                            <StatCard label="Kindergarten to 8th grade" value={pctChg(k8a, k8b)} detail={formatNumber(k8a) + ' → ' + formatNumber(k8b)} color="#e7466d" />
+                            <StatCard label="9th to 12th grade" value={pctChg(hsa, hsb)} detail={formatNumber(hsa) + ' → ' + formatNumber(hsb)} color="#707175" />
+                            <StatCard label="Kindergarten" value={pctChg(kg.y2019, kg.y2026)} detail={formatNumber(kg.y2019) + ' → ' + formatNumber(kg.y2026)} color="#e7466d" />
                         </div>
 
                         <div style={{ height: '400px', width: '100%' }}>
@@ -527,34 +561,50 @@
                                 <BarChart data={gradeData} margin={{ top: 10, right: 10, left: 10, bottom: 0 }} barCategoryGap="20%">
                                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
                                     <XAxis dataKey="grade" tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} />
-                                    <YAxis tickFormatter={formatYAxis} tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} width={40} />
-                                    <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(221,228,76,0.1)' }} />
+                                    <YAxis tickFormatter={formatYAxis} tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} width={40} domain={[0, 90000]} ticks={[0, 30000, 60000, 90000]} />
+                                    <Tooltip content={({ active, payload, label }) => {
+                                        if (!active || !payload || !payload.length) return null;
+                                        var d = payload[0].payload;
+                                        return (
+                                            <div style={{ background: '#050507', color: '#fff', padding: '12px 16px', fontFamily: 'var(--font-primary)', fontSize: '13px', boxShadow: '0 8px 32px rgba(0,0,0,0.24)' }}>
+                                                <div style={{ fontWeight: 900, fontSize: '16px', marginBottom: '6px' }}>{label === 'K' ? 'Kindergarten' : 'Grade ' + label}</div>
+                                                <div>2019-20: <strong>{formatNumber(d.y2019)}</strong></div>
+                                                <div>2025-26: <strong>{formatNumber(d.y2026)}</strong></div>
+                                                <div style={{ color: 'rgba(255,255,255,0.7)', marginTop: '4px' }}>Change: {pctChg(d.y2019, d.y2026)}</div>
+                                            </div>
+                                        );
+                                    }} cursor={{ fill: 'rgba(221,228,76,0.1)' }} />
                                     <Legend iconType="square" iconSize={10} wrapperStyle={{ paddingTop: '16px', fontSize: '12px' }} />
-                                    <Bar isAnimationActive={false} dataKey="y2019" name="2019 Enrollment" fill="#dddddd" radius={[3, 3, 0, 0]} />
-                                    <Bar isAnimationActive={false} dataKey="y2025" name="2025 Enrollment" fill="#e7466d" radius={[3, 3, 0, 0]} />
+                                    <Bar isAnimationActive={false} dataKey="y2019" name="2019-20" fill="#bbbbbb" radius={[3, 3, 0, 0]} />
+                                    <Bar isAnimationActive={false} dataKey="y2026" name="2025-26" fill="#e7466d" radius={[3, 3, 0, 0]} />
                                 </BarChart>
                             </ResponsiveContainer>
                         </div>
 
-                        <div style={{ marginTop: '16px', fontSize: '11px', color: '#707175', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-                            <div><span style={{ fontWeight: 600 }}>Source:</span>{' '}<a href="https://infohub.nyced.org/" style={{ color: '#707175', textDecoration: 'underline' }}>NYC DOE InfoHub</a></div>
+                        <p style={{ fontSize: '13px', color: '#505257', lineHeight: 1.6, marginTop: '16px', maxWidth: '720px' }}>
+                            In 2025-26, every grade from kindergarten through 8th enrolled fewer students than any high school grade.
+                        </p>
+
+                        <div style={{ marginTop: '12px', fontSize: '11px', color: '#707175' }}>
+                            <span style={{ fontWeight: 600 }}>Source:</span>{' '}New York City Department of Education, Demographic Snapshot, October 31 audited register. 2025-26: <a href="https://infohub.nyced.org/reports/students-and-schools/school-quality/information-and-data-overview" style={{ color: '#707175', textDecoration: 'underline' }}>2021-22 to 2025-26 edition</a>, citywide tab, which leaves out charter schools. 2019-20: the <a href="https://data.cityofnewyork.us/d/ycfm-qijh" style={{ color: '#707175', textDecoration: 'underline' }}>2019-20 citywide file</a> minus charter schools (District 84) in the <a href="https://data.cityofnewyork.us/d/8jzu-ady5" style={{ color: '#707175', textDecoration: 'underline' }}>2019-20 district file</a> on NYC Open Data.
                         </div>
-                    </div>}
+                    </div>;
+                    })()}
 
                     {/* TAB 4: CHRONIC ABSENTEEISM */}
                     {activeTab === 'absenteeism' && <div>
                         <h2 style={{ fontSize: '22px', fontWeight: 900, letterSpacing: '-0.02em', marginBottom: '4px' }}>
-                            Chronic absenteeism surged after the pandemic and hasn't recovered
+                            Chronic absenteeism jumped after the pandemic and is still above its 2018-19 level
                         </h2>
                         <p style={{ fontSize: '13px', color: '#707175', marginBottom: '28px' }}>
-                            Share of NYC public school students missing 10% or more of school days
+                            Percent of students in district public schools who missed 10 percent or more of the days they were enrolled, 2018-19 to 2024-25 (charter schools not included)
                         </p>
 
                         <div style={{ display: 'flex', gap: '12px', marginBottom: '28px', flexWrap: 'wrap' }}>
-                            <StatCard label="Pre-pandemic" value="26.5%" detail="2018-19 (last full year)" color="#217ebe" />
-                            <StatCard label="Post-pandemic peak" value="40.2%" detail="2021-22 (first full year back)" color="#e7466d" />
-                            <StatCard label="Latest" value="~33%" detail="2024-25 (preliminary)" color="#e7466d" />
-                            <StatCard label="Gap vs. baseline" value="+6.5 pts" detail="Still well above pre-pandemic" color="#707175" />
+                            <StatCard label="Before the pandemic" value="26.5%" detail="2018-19, the last full school year before March 2020" color="#217ebe" />
+                            <StatCard label="Post-pandemic high" value="40.3%" detail="2021-22, the first full year back in buildings" color="#e7466d" />
+                            <StatCard label="Latest" value="33.3%" detail="2024-25" color="#e7466d" />
+                            <StatCard label="Change from 2018-19" value="+6.8 points" detail="2024-25 compared with 2018-19" color="#707175" />
                         </div>
 
                         <div style={{ height: '400px', width: '100%' }}>
@@ -562,7 +612,7 @@
                                 <BarChart data={absenteeismData} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
                                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
                                     <XAxis dataKey="year" tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} />
-                                    <YAxis tickFormatter={(v) => v + '%'} tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} width={40} domain={[0, 50]} />
+                                    <YAxis tickFormatter={(v) => v + '%'} tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} width={40} domain={[0, 50]} ticks={[0, 10, 20, 30, 40, 50]} />
                                     <Tooltip content={({ active, payload, label }) => {
                                         if (!active || !payload || !payload.length) return null;
                                         var d = absenteeismData.find(r => r.year === label);
@@ -575,10 +625,10 @@
                                                             <span style={{ color: 'rgba(255,255,255,0.7)' }}>Chronic absenteeism rate: </span>
                                                             <span style={{ fontWeight: 700 }}>{d.rate}%</span>
                                                         </div>
-                                                        {d.note && <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)', marginTop: '6px', fontStyle: 'italic' }}>{d.note}</div>}
+                                                        {d.note && <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.6)', marginTop: '6px', maxWidth: '240px', lineHeight: 1.4 }}>{d.note}</div>}
                                                     </div>
                                                 ) : (
-                                                    <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)', fontStyle: 'italic' }}>{d && d.note}</div>
+                                                    <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.6)' }}>{d && d.note}</div>
                                                 )}
                                             </div>
                                         );
@@ -601,7 +651,7 @@
                                 <div style={{ width: '10px', height: '10px', borderRadius: '2px', background: '#217ebe' }} /> Pre-pandemic
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', color: '#707175' }}>
-                                <div style={{ width: '10px', height: '10px', borderRadius: '2px', background: '#cea9be' }} /> COVID-disrupted (not comparable)
+                                <div style={{ width: '10px', height: '10px', borderRadius: '2px', background: '#cea9be' }} /> Partial or mostly remote year (not comparable)
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', color: '#707175' }}>
                                 <div style={{ width: '10px', height: '10px', borderRadius: '2px', background: '#e7466d' }} /> Post-pandemic
@@ -609,21 +659,18 @@
                         </div>
 
                         <div style={{ background: '#f8f8f8', border: '1px solid #ddd', padding: '16px 20px', marginTop: '8px', fontSize: '12px', color: '#707175', lineHeight: 1.6 }}>
-                            <div style={{ fontWeight: 700, marginBottom: '6px', color: '#050507', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Important caveats</div>
+                            <div style={{ fontWeight: 700, marginBottom: '6px', color: '#050507', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>What the numbers cover</div>
                             <ul style={{ margin: 0, paddingLeft: '18px' }}>
-                                <li><strong>2019-20:</strong> No end-of-year data. Schools closed mid-March 2020.</li>
-                                <li><strong>2020-21:</strong> 61% of students were fully remote. How "present" was defined varied by school (logging into a virtual class, completing assignments, etc.). This year's rate is not meaningfully comparable to in-person years.</li>
-                                <li><strong>Definition:</strong> Uses NYSED's chronic absenteeism measure (attendance rate of 90% or less). NYS excludes suspensions and extended medical absences, so these figures are not directly comparable to federal chronic absenteeism data from the U.S. Department of Education.</li>
-                                <li><strong>2024-25:</strong> Preliminary figure from the Mayor's Management Report (September 2025). Final school-level data not yet published by DOE.</li>
+                                <li><strong>Definition:</strong> The Department of Education (DOE) uses the New York State Education Department's definition: a student is chronically absent with an attendance rate of 90 percent or less. Only students enrolled at least 10 days and present at least one day are counted. DOE switched to this definition in 2020-21 and applied it to the earlier years in the file.</li>
+                                <li><strong>Who is counted:</strong> District public schools in Districts 1 to 32 and District 75 (special education). Charter schools and District 79 (alternative schools) are not included. The rate covers all grades, including pre-K classes in K-12 schools; district pre-K centers were added starting in 2022-23. Pre-K rates are high (50.5 percent in 2024-25), so for kindergarten through 12th grade alone the rate was 26.0 percent in 2018-19 and 32.4 percent in 2024-25.</li>
+                                <li><strong>2019-20:</strong> DOE's figure covers September 2019 to March 13, 2020, when school buildings closed.</li>
+                                <li><strong>2020-21:</strong> DOE counted remote and in-person days together. More than 60 percent of students, about 600,000, were fully remote by spring 2021, according to Chalkbeat. This year is not comparable with in-person years.</li>
                             </ul>
                         </div>
 
                         <div style={{ marginTop: '16px', fontSize: '11px', color: '#707175' }}>
-                            <span style={{ fontWeight: 600 }}>Sources:</span>{' '}
-                            <a href="https://infohub.nyced.org/reports/students-and-schools/school-quality/information-and-data-overview" style={{ color: '#707175', textDecoration: 'underline' }}>NYC DOE InfoHub</a>,{' '}
-                            <a href="https://manhattan.institute/article/chronic-absenteeism-hampering-school-improvement-efforts-new-york-city" style={{ color: '#707175', textDecoration: 'underline' }}>Manhattan Institute</a>,{' '}
-                            <a href="https://www.chalkbeat.org/newyork/2025/09/17/nyc-public-schools-chronic-absenteeism-remains-high/" style={{ color: '#707175', textDecoration: 'underline' }}>Chalkbeat</a>,{' '}
-                            <a href="https://www.empirecenter.org/publications/schools-out-forever/" style={{ color: '#707175', textDecoration: 'underline' }}>Empire Center</a>
+                            <span style={{ fontWeight: 600 }}>Source:</span>{' '}
+                            <a href="https://infohub.nyced.org/reports/students-and-schools/school-quality/information-and-data-overview/end-of-year-attendance-and-chronic-absenteeism-data" style={{ color: '#707175', textDecoration: 'underline' }}>NYC Public Schools, End-of-Year Attendance and Chronic Absenteeism Data</a> (<a href="https://infohub.nyced.org/docs/default-source/default-document-library/public-citywide-attendance-results-2019-2025.xlsx" style={{ color: '#707175', textDecoration: 'underline' }}>citywide file, 2018-19 to 2024-25</a>). Remote-learning share: <a href="https://www.chalkbeat.org/newyork/2021/5/24/22452134/remote-learning-nyc-schools/" style={{ color: '#707175', textDecoration: 'underline' }}>Chalkbeat, May 24, 2021</a>.
                         </div>
                     </div>}
 
@@ -633,7 +680,7 @@
                             New York City public school staff and student enrollment, 2000-01 to 2022-23
                         </h2>
                         <p style={{ fontSize: '13px', color: '#707175', marginBottom: '24px' }}>
-                            Headcount of pedagogical and non-pedagogical staff in traditional public (district) schools, against student enrollment. Press play to watch how each line moves.
+                            Teachers and other Department of Education (DOE) staff, against kindergarten-through-12th-grade enrollment in district public schools. Charter schools are not included. The series ends in 2022-23, the last year in the Independent Budget Office’s teacher counts. Press play to watch how each line moves.
                         </p>
 
                         {(() => {
@@ -649,7 +696,7 @@
                             };
                             return (
                                 <div style={{ display: 'flex', gap: '12px', marginBottom: '28px', flexWrap: 'wrap' }}>
-                                    <StatCard label="Students" value={Math.round(last.enrollment / 1000) + 'k'} detail={detail('enrollment')} color="#dde44c" />
+                                    <StatCard label="K-12 students" value={formatNumber(last.enrollment)} detail={detail('enrollment')} color="#8a8f1f" />
                                     <StatCard label="Gen-ed teachers" value={formatNumber(last.genEd)} detail={detail('genEd')} color="#394882" />
                                     <StatCard label="Special-ed teachers" value={formatNumber(last.sped)} detail={detail('sped')} color="#9b9fbc" />
                                     <StatCard label="Other pedagogical" value={formatNumber(last.otherPed)} detail={detail('otherPed')} color="#e7466d" />
@@ -717,19 +764,19 @@
                             </label>
                             <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', cursor: 'pointer' }}>
                                 <input type="checkbox" checked={workforceYZero} onChange={e => setWorkforceYZero(e.target.checked)} />
-                                Y-axis from zero
+                                Start y-axis at zero
                             </label>
                         </div>
 
-                        <div style={{ fontSize: '11px', color: '#707175', marginBottom: '10px' }}>Source: NYC IBO (teachers), NYC OMB (total headcount), NYC DOE Demographic Snapshot (enrollment)</div>
+                        <div style={{ fontSize: '11px', color: '#707175', marginBottom: '10px' }}>Sources: New York City Independent Budget Office (teachers), New York City Office of Management and Budget via the City Council Finance Division (pedagogical and non-pedagogical headcount), New York State Education Department (K-12 enrollment).</div>
 
                         <div style={{ height: '420px', width: '100%' }}>
                             <ResponsiveContainer width="100%" height="100%">
                                 <ComposedChart data={chartData} margin={{ top: 10, right: 60, left: 10, bottom: 0 }}>
                                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
                                     <XAxis dataKey="year" tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} />
-                                    <YAxis yAxisId="staff" tickFormatter={wfIndexed ? (v => v.toFixed(0) + '%') : formatYAxis} tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} width={50} domain={wfIndexed ? [70, 220] : (workforceYZero ? [0, 'auto'] : ['auto', 'auto'])} label={{ value: wfIndexed ? '% of first year' : 'Staff', angle: -90, position: 'insideLeft', fill: '#707175', fontSize: 11 }} />
-                                    <YAxis yAxisId="students" orientation="right" tickFormatter={wfIndexed ? (v => v.toFixed(0) + '%') : formatYAxis} tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} width={50} domain={wfIndexed ? [70, 220] : (workforceYZero ? [0, 'auto'] : ['auto', 'auto'])} label={{ value: wfIndexed ? '% of first year' : 'Students', angle: 90, position: 'insideRight', fill: '#707175', fontSize: 11 }} />
+                                    <YAxis yAxisId="staff" tickFormatter={wfIndexed ? (v => v.toFixed(0) + '%') : formatYAxis} tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} width={50} domain={wfIndexed ? [workforceYZero ? 0 : 60, 220] : (workforceYZero ? [0, 'auto'] : ['auto', 'auto'])} label={{ value: wfIndexed ? '% of first year' : 'Staff', angle: -90, position: 'insideLeft', fill: '#707175', fontSize: 11 }} />
+                                    <YAxis yAxisId="students" orientation="right" tickFormatter={wfIndexed ? (v => v.toFixed(0) + '%') : formatYAxis} tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} width={50} domain={wfIndexed ? [workforceYZero ? 0 : 60, 220] : (workforceYZero ? [0, 'auto'] : ['auto', 'auto'])} label={{ value: wfIndexed ? '% of first year' : 'K-12 students', angle: 90, position: 'insideRight', fill: '#707175', fontSize: 11 }} />
                                     {wfIndexed && <ReferenceLine yAxisId="staff" y={100} stroke="#bbb" strokeDasharray="2 4" />}
                                     <Tooltip wrapperStyle={{ outline: 'none' }} content={({ active, payload, label }) => {
                                         if (!active || !payload || !payload.length) return null;
@@ -750,9 +797,9 @@
                                     <Legend iconType="square" iconSize={10} wrapperStyle={{ paddingTop: '16px', fontSize: '12px' }} />
                                     <Line yAxisId="staff" type="monotone" dataKey="genEd" name="General-education teachers (district)" stroke="#394882" strokeWidth={2.5} dot={{ r: 3 }} isAnimationActive={false} />
                                     <Line yAxisId="staff" type="monotone" dataKey="sped" name="Special-education teachers (district)" stroke="#9b9fbc" strokeWidth={2.5} dot={{ r: 3 }} isAnimationActive={false} />
-                                    <Line yAxisId="staff" type="monotone" dataKey="otherPed" name="Other pedagogical (paras, counselors, Pre-K, etc.)" stroke="#e7466d" strokeWidth={2.5} dot={{ r: 3 }} isAnimationActive={false} />
-                                    <Line yAxisId="staff" type="monotone" dataKey="nonPed" name="Non-pedagogical (school aides, secretaries, etc.)" stroke="#707175" strokeWidth={2} strokeDasharray="4 4" dot={{ r: 3 }} isAnimationActive={false} />
-                                    <Line yAxisId="students" type="monotone" dataKey="enrollment" name="Student enrollment (district)" stroke="#dde44c" strokeWidth={3} dot={{ r: 3 }} isAnimationActive={false} />
+                                    <Line yAxisId="staff" type="monotone" dataKey="otherPed" name="Other pedagogical (all DOE pedagogical staff minus teachers)" stroke="#e7466d" strokeWidth={2.5} dot={{ r: 3 }} isAnimationActive={false} />
+                                    <Line yAxisId="staff" type="monotone" dataKey="nonPed" name="Non-pedagogical staff (all DOE)" stroke="#707175" strokeWidth={2} strokeDasharray="4 4" dot={{ r: 3 }} isAnimationActive={false} />
+                                    <Line yAxisId="students" type="monotone" dataKey="enrollment" name="K-12 enrollment (district schools)" stroke="#dde44c" strokeWidth={3} dot={{ r: 3 }} isAnimationActive={false} />
                                 </ComposedChart>
                             </ResponsiveContainer>
                         </div>
@@ -763,9 +810,13 @@
                         <h3 style={{ fontSize: '17px', fontWeight: 900, letterSpacing: '-0.02em', marginTop: '40px', marginBottom: '4px' }}>
                             Staff per 1,000 students, and students per teacher
                         </h3>
-                        <p style={{ fontSize: '13px', color: '#707175', marginBottom: '20px' }}>
-                            When students fall faster than staff, ratios shift. These three measures show by how much.
+                        <p style={{ fontSize: '13px', color: '#707175', marginBottom: '12px' }}>
+                            When students fall faster than staff, ratios shift. These three measures show by how much. Students are kindergarten-through-12th-grade students in district schools; teachers include those teaching DOE pre-K classes, which the published counts do not separate.
                         </p>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', cursor: 'pointer', marginBottom: '16px' }}>
+                            <input type="checkbox" checked={workforceYZero} onChange={e => setWorkforceYZero(e.target.checked)} />
+                            Start y-axes at zero
+                        </label>
 
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
                             {[
@@ -792,7 +843,7 @@
                                         <ResponsiveContainer width="100%" height="100%">
                                             <LineChart data={workforceData} margin={{ top: 6, right: 6, left: 0, bottom: 0 }}>
                                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
-                                                <XAxis dataKey="year" tick={{ fill: '#707175', fontSize: 10 }} axisLine={false} tickLine={false} interval={1} />
+                                                <XAxis dataKey="year" ticks={['2000-01', '2011-12', '2022-23']} interval={0} tick={{ fill: '#707175', fontSize: 10 }} axisLine={false} tickLine={false} />
                                                 <YAxis tickFormatter={spec.fmt} tick={{ fill: '#707175', fontSize: 10 }} axisLine={false} tickLine={false} width={36} domain={workforceYZero ? [0, 'auto'] : ['auto', 'auto']} />
                                                 <Tooltip formatter={(v) => spec.fmt(v)} />
                                                 <Line type="monotone" dataKey={spec.key} stroke={spec.color} strokeWidth={2.5} dot={{ r: 3 }} isAnimationActive={false} name={spec.name} />
@@ -804,42 +855,38 @@
                         </div>
 
                         <h3 style={{ fontSize: '17px', fontWeight: 900, letterSpacing: '-0.02em', marginTop: '40px', marginBottom: '4px' }}>
-                            What is inside "other pedagogical"? A 2019-20 snapshot
+                            Who works in the schools: selected titles, October 2019
                         </h3>
                         <p style={{ fontSize: '13px', color: '#707175', marginBottom: '20px' }}>
-                            The DOE's November 2019 Local Law 226 headcount report is the only recent year with a clean public decomposition of school-based staff. It does not break out central / non-school-based instructional specialists, which the budget documents place in a separate "categorical" pedagogical bucket of roughly 4,000 to 7,000 positions.
+                            School-based and borough field-support staff in selected job titles, full-time and part-time, from a DOE headcount report to the City Council. It gives a sense of what sits in the “other pedagogical” line above; it is not a full count of DOE employees, and school aides are hourly non-pedagogical workers.
                         </p>
 
-                        <div style={{ height: '320px', width: '100%' }}>
+                        <div style={{ height: '340px', width: '100%' }}>
                             <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={workforceSnapshot2019} layout="vertical" margin={{ top: 10, right: 30, left: 100, bottom: 10 }}>
+                                <BarChart data={workforceSnapshot2019} layout="vertical" margin={{ top: 10, right: 30, left: 20, bottom: 10 }}>
                                     <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#eee" />
-                                    <XAxis type="number" tickFormatter={formatYAxis} tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} />
-                                    <YAxis type="category" dataKey="role" tick={{ fill: '#050507', fontSize: 12 }} axisLine={false} tickLine={false} width={140} />
-                                    <Tooltip formatter={(v) => v.toLocaleString()} />
+                                    <XAxis type="number" domain={[0, 'auto']} tickFormatter={formatYAxis} tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} />
+                                    <YAxis type="category" dataKey="role" tick={{ fill: '#050507', fontSize: 12 }} axisLine={false} tickLine={false} width={150} />
+                                    <Tooltip formatter={(v) => [v.toLocaleString(), 'Staff']} />
                                     <Bar dataKey="count" fill="#e7466d" isAnimationActive={false} radius={[0, 3, 3, 0]} />
                                 </BarChart>
                             </ResponsiveContainer>
                         </div>
 
                         <div style={{ background: '#f8f8f8', border: '1px solid #ddd', padding: '16px 20px', marginTop: '24px', fontSize: '12px', color: '#707175', lineHeight: 1.6 }}>
-                            <div style={{ fontWeight: 700, marginBottom: '6px', color: '#050507', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>What this chart can and cannot show</div>
+                            <div style={{ fontWeight: 700, marginBottom: '6px', color: '#050507', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>What these charts can and cannot show</div>
                             <ul style={{ margin: 0, paddingLeft: '18px' }}>
-                                <li>Year-by-year district teacher counts come from the NYC Independent Budget Office (IBO), September 2023, using individual-level DOE data. They cover traditional public (district) schools only, not charter schools.</li>
-                                <li>"Other pedagogical" is computed as: total NYC DOE pedagogical headcount (NYC Office of Management and Budget, OMB) minus general-education and special-education teachers (IBO). This bucket contains paraprofessionals, counselors, social workers, school psychologists, librarians, principals and assistant principals, Pre-K and 3-K teachers, and central / field-office pedagogical staff. It cannot be broken out by year in publicly released sources at the granularity requested.</li>
-                                <li>Charter-school teachers are not included. NYSED publishes charter teacher counts but only as part of statewide BEDS personnel files, which require additional processing. Charter enrollment is shown on the Composition tab.</li>
-                                <li>Pre-K and 3-K teachers are included inside "other pedagogical." The OMB pedagogical breakdown for fiscal 2024 reports 6,605 actual Early Childhood pedagogical positions, 1,515 in School Support and Other, and 4,441 in Categorical Programs (which includes the Absent Teacher Reserve and centrally funded specialists).</li>
-                                <li>To get year-by-year counts of paraprofessionals, central / non-school-based instructional staff, or charter teachers specifically would require a Freedom of Information Law (FOIL) request to the NYC Department of Education or processing of NYSED Personnel Master File raw data.</li>
+                                <li>Teacher counts come from three Independent Budget Office (IBO) reports built from DOE personnel files: a May 2014 brief (2000-01 to 2011-12), a June 2017 indicators report (2012-13 to 2014-15) and a September 2023 report (2015-16 to 2022-23). They cover teachers employed by DOE, including District 75 and District 79. Charter-school teachers and teachers employed by community-based pre-K centers are not DOE employees and are not counted.</li>
+                                <li>"Other pedagogical" is calculated: DOE's total pedagogical headcount from the Office of Management and Budget (OMB), as of June of each fiscal year and covering all of DOE, minus IBO's teacher count for the school year. The two counts are taken at different times, so the difference is approximate. OMB's totals are not itemized by title in the City Council reports used here.</li>
+                                <li>For fiscal 2024, as of January 2024, OMB reported 6,605 filled early childhood pedagogical positions (8,024 budgeted), 4,441 in categorical programs and 1,515 in school support and other areas. The City Council's Finance Division describes categorical programs as federal, state and private funds, most of which go directly to schools.</li>
+                                <li>The Mayor’s Management Report, which counts teachers differently from IBO, reports 77,585 teachers in 2024-25 and 81,249 in 2025-26, an increase of nearly 5 percent that the report attributes to hiring to comply with the state class size law. Those years are not on the chart because IBO has not published comparable counts for them.</li>
+                                <li>The title counts in the bar chart come from DOE’s October 2019 report. Paraprofessionals combine the educational paraprofessional and IEP (individualized education program) paraprofessional titles; principals combine the eight principal titles; assistant principals are DOE’s “assistant principal titles” line.</li>
                             </ul>
                         </div>
 
-                        <div style={{ marginTop: '16px', fontSize: '11px', color: '#707175' }}>
+                        <div style={{ marginTop: '16px', fontSize: '11px', color: '#707175', lineHeight: 1.6 }}>
                             <span style={{ fontWeight: 600 }}>Sources:</span>{' '}
-                            <a href="https://www.ibo.nyc.ny.us/iboreports/roll-call-recent-trends-in-teacher-retention-and-hiring-in-new-york-city-public-schools-september-2023.pdf" style={{ color: '#707175', textDecoration: 'underline' }}>IBO, Roll Call (Sept. 2023)</a>,{' '}
-                            <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2024/03/040-DOE.pdf" style={{ color: '#707175', textDecoration: 'underline' }}>NYC Council Finance Division, DOE FY25 Preliminary Budget</a>,{' '}
-                            <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2020/04/040-DOE.pdf" style={{ color: '#707175', textDecoration: 'underline' }}>NYC Council, DOE FY21 Executive Budget</a>,{' '}
-                            <a href="https://infohub.nyced.org/reports/government-reports/report-on-school-based-staff-demographics" style={{ color: '#707175', textDecoration: 'underline' }}>NYC DOE School-Based Staff Demographics</a>,{' '}
-                            <a href="https://infohub.nyced.org/" style={{ color: '#707175', textDecoration: 'underline' }}>NYC DOE InfoHub</a>
+                            IBO, <a href="https://a860-gpp.nyc.gov/concern/nyc_government_publications/q237hs926" style={{ color: '#707175', textDecoration: 'underline' }}>Demographics and Work Experience: A Statistical Portrait of New York City’s Public School Teachers</a> (May 2014), Table 1; IBO, New York City Public School Indicators: Teachers (June 2017), p. 1; IBO, <a href="https://www.ibo.nyc.gov/assets/ibo/downloads/pdf/education/2023/2023-september-roll-call-recent-trends-in-teacher-retention-and-hiring-in-new-york-city-public-schools.pdf" style={{ color: '#707175', textDecoration: 'underline' }}>Roll Call</a> (September 2023), p. 3; City Council Finance Division, <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2024/03/040-DOE.pdf" style={{ color: '#707175', textDecoration: 'underline' }}>Report on the DOE Fiscal 2025 Preliminary Budget</a> (March 2024), Charts 6 and 7 and Table 3; City Council Finance Division, <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2020/04/040-DOE.pdf" style={{ color: '#707175', textDecoration: 'underline' }}>Report on the DOE Fiscal 2021 Executive Budget</a> (categorical programs); DOE, <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2019/11/Department-of-Education-Headcount-Report-1-of-2.xlsx" style={{ color: '#707175', textDecoration: 'underline' }}>FY 2020 October Headcount Report</a> (Nov. 15, 2019); <a href="https://www.nyc.gov/assets/operations/downloads/pdf/mmr2026/doe.pdf" style={{ color: '#707175', textDecoration: 'underline' }}>Mayor’s Management Report, fiscal 2026</a>, DOE chapter; New York State Education Department, <a href="https://www.p12.nysed.gov/irs/statistics/enroll-n-staff/home.html" style={{ color: '#707175', textDecoration: 'underline' }}>public school enrollment</a>.
                         </div>
                     </div>}
 
@@ -852,59 +899,61 @@
                         <div style={{ fontSize: '14px', color: '#050507', lineHeight: 1.7, fontFamily: 'var(--font-secondary)' }}>
 
                             <div style={{ marginBottom: '32px' }}>
-                                <h3 style={{ fontSize: '15px', fontWeight: 700, fontFamily: 'var(--font-primary)', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#707175', marginBottom: '10px' }}>K-12 composition (1940-2025)</h3>
-                                <p style={{ marginBottom: '10px' }}>This chart shows estimated total K-12 enrollment across five sectors: traditional public schools (NYC DOE), charter schools, religious/parochial schools, independent secular private schools, and homeschool.</p>
-                                <p style={{ marginBottom: '10px' }}><strong>Post-2000 data</strong> for public and charter schools comes from NYC DOE enrollment reports published on InfoHub and the NYS Education Department. These are audited enrollment counts taken on the official BEDS (Basic Educational Data System) Day each fall.</p>
-                                <p style={{ marginBottom: '10px' }}><strong>Pre-2000 data are historical estimates.</strong> There is no single dataset covering all NYC school sectors back to 1940. Pre-2000 figures are assembled from historical DOE reports, NYC Independent Budget Office analyses, NYSED archives, and academic sources. Figures for the 1940s-1960s are rounded approximations and should be understood as showing broad trends, not precise counts.</p>
-                                <p style={{ marginBottom: '10px' }}><strong>Private school enrollment</strong> (both religious and secular) is always an estimate. Private schools in New York State file basic enrollment data with NYSED, but reporting completeness varies. The Archdiocese of New York and Diocese of Brooklyn publish enrollment figures for Catholic schools; other religious school networks (yeshivas, Islamic schools, etc.) are harder to count precisely. The "religious/parochial" category includes all religiously affiliated schools.</p>
-                                <p style={{ marginBottom: '10px' }}><strong>Homeschool numbers</strong> are the most uncertain. New York State requires families to file an Individualized Home Instruction Plan (IHIP) with their local school district. The DOE publishes some counts, but compliance with filing requirements is uneven, and actual homeschooling likely exceeds filed IHIPs. The spike during 2020-2021 reflects both increased filing and media-reported estimates.</p>
-                                <p><strong>Charter schools</strong> first appeared in NYC in 1999 following the NYS Charter Schools Act of 1998. Charter students are publicly funded but shown separately from DOE-operated schools.</p>
+                                <h3 style={{ fontSize: '15px', fontWeight: 700, fontFamily: 'var(--font-primary)', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#707175', marginBottom: '10px' }}>Correction, Oct. 7, 2026</h3>
+                                <p style={{ marginBottom: '10px' }}>An earlier version of this page showed annual enrollment by sector from 1940 to 2025, said the city had lost 300,000 K-12 students from a peak, and showed pre-K and grade-level figures, and student counts on the Workforce tab, that did not match official counts. None of the 1940-2025 sector figures could be traced to a source, and several later figures were rounded estimates or interpolations. The absenteeism tab said no data existed for 2019-20 (DOE published a partial-year figure, 25.1 percent), gave 40.2 percent for 2021-22 (DOE’s figure is 40.3) and a preliminary 33 percent for 2024-25 (DOE’s final figure is 33.3). Every chart now uses published counts from the New York State Education Department, the city’s Department of Education and the other sources named below, and the headlines were rewritten to match.</p>
                             </div>
 
                             <div style={{ marginBottom: '32px' }}>
-                                <h3 style={{ fontSize: '15px', fontWeight: 700, fontFamily: 'var(--font-primary)', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#707175', marginBottom: '10px' }}>Early childhood (Pre-K / 3-K)</h3>
-                                <p style={{ marginBottom: '10px' }}>Pre-K data begins in 2012, covering both DOE-operated and community-based organization (CBO) seats. Universal Pre-K launched citywide in fall 2014 under Mayor de Blasio. 3-K for All began in 2017 in select districts and expanded citywide.</p>
-                                <p style={{ marginBottom: '10px' }}>Enrollment figures come from NYC DOE Demographic Snapshots published on InfoHub. These count filled seats, not available seats -- the gap between capacity and enrollment has widened in recent years, particularly for 3-K.</p>
-                                <p>The decline in both Pre-K and 3-K enrollment since their respective peaks reflects falling birth rates in NYC (births dropped from ~123,000 in 2016 to ~99,000 in 2022) as well as competition from private early childhood providers.</p>
+                                <h3 style={{ fontSize: '15px', fontWeight: 700, fontFamily: 'var(--font-primary)', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#707175', marginBottom: '10px' }}>K-12 enrollment by type of school</h3>
+                                <p style={{ marginBottom: '10px' }}><strong>Public and charter schools.</strong> Counts come from the New York State Education Department (NYSED), Information and Reporting Services, which collects enrollment on BEDS (Basic Educational Data System) Day, the first Wednesday in October. District figures add every New York City row in NYSED’s district files (state district codes beginning 30 to 35, which cover the 32 community school districts, District 75 and the citywide high school and alternative school districts), for 1976-77 through 2025-26. Charter figures add the city’s charter schools in NYSED’s school-level files; none appear before 2000-01, although the city’s oldest operating charter school, Sisulu-Walker Charter School of Harlem, opened in 1999, according to NYSED’s charter school directory. K-12 means kindergarten (half-day and full-day) through 12th grade plus ungraded students; pre-K is left out. The page adds the grade columns rather than using the files’ total column: in the 1992-93 and 1993-94 files the column labeled “K12 total” exceeds the grade columns by about 12,500, roughly the size of pre-K, and in earlier files it differs from them by less than 0.3 percent. NYSED’s school-level and district-level files give identical district totals for every year from 1999-2000 on.</p>
+                                <p style={{ marginBottom: '10px' }}><strong>State and city counts differ slightly.</strong> The Department of Education (DOE) counts students on its October 31 audited register; NYSED counts on BEDS Day. For 2025-26, NYSED counts 780,402 K-12 students in district schools and DOE counts 789,918. The other tabs use DOE’s counts.</p>
+                                <p style={{ marginBottom: '10px' }}><strong>Before 1976-77.</strong> NYSED’s electronic files begin in 1976-77. The federal survey cited on the tab (National Center for Education Statistics, Fall 1971, Table 4) counted 1,149,068 students in kindergarten through 12th grade in fall 1971 and 1,120,082 in fall 1970. It is a different collection, so it is not joined to the state series.</p>
+                                <p style={{ marginBottom: '10px' }}><strong>Private schools.</strong> NYSED’s nonpublic enrollment files list the private schools that report to the state, with each school’s affiliation and enrollment by grade. The page adds schools in the five boroughs. “Religious” covers Catholic, Jewish and other religious affiliations; “independent” is NYSED’s nonsectarian category. Hunter College Campus Schools, which NYSED files with nonpublic schools but which are public schools run by Hunter College, are left out (1,624 K-12 students in 2025-26). Private-school counts are of schools located in the city; some students live elsewhere.</p>
+                                <p style={{ marginBottom: '10px' }}><strong>Home schooling.</strong> NYSED’s count of children instructed at home, as reported by school districts, covers children of compulsory school age taught at home by parents or a tutor they hire. New York City’s figures start in 2014-15: 3,667 that year and 13,079 in 2025-26 (15,283 in 2024-25). Children younger or older than compulsory school age are not counted.</p>
                             </div>
 
                             <div style={{ marginBottom: '32px' }}>
-                                <h3 style={{ fontSize: '15px', fontWeight: 700, fontFamily: 'var(--font-primary)', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#707175', marginBottom: '10px' }}>Public enrollment by grade</h3>
-                                <p style={{ marginBottom: '10px' }}>The grade-level comparison shows DOE-operated public school enrollment only (not charter schools) for 2019 vs. 2025. Source: DOE InfoHub enrollment reports.</p>
-                                <p>The pattern of steeper declines in lower grades reflects both the ongoing birth rate decline and pandemic-era departures that hit younger cohorts hardest. As these smaller cohorts age up, the enrollment wave will continue moving through upper grades.</p>
+                                <h3 style={{ fontSize: '15px', fontWeight: 700, fontFamily: 'var(--font-primary)', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#707175', marginBottom: '10px' }}>3-K and pre-K</h3>
+                                <p style={{ marginBottom: '10px' }}>Counts come from DOE’s Demographic Snapshot, citywide tab including charter schools, using the newest edition that covers each year. They include half-day and full-day seats and children in NYC Early Education Centers, the community-based programs DOE contracts with. DOE notes that its October 31 counts are not audited for charter schools or those centers. In the current edition, 3-K means pre-K students who were 3 years old as of Dec. 31 of the school year. Snapshot editions for 2015-16 and 2016-17 report a single 3-K-plus-pre-K figure; 3-K for All did not exist yet, so the page treats it as pre-K.</p>
+                                <p>Birth figures are births to New York City residents from the Health Department’s Summary of Vital Statistics: 123,231 in 2012 and 120,367 in 2016 (2016 edition, Table PC1), and 99,262 in 2021 and 99,459 in 2022 (2022 edition, Table PO11). An earlier version of this page gave about 123,000 births for 2016; that was the 2012 figure.</p>
+                            </div>
+
+                            <div style={{ marginBottom: '32px' }}>
+                                <h3 style={{ fontSize: '15px', fontWeight: 700, fontFamily: 'var(--font-primary)', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#707175', marginBottom: '10px' }}>Enrollment by grade</h3>
+                                <p>Grade counts are DOE’s October 31 audited register for district schools only. The 2025-26 figures are from the 2021-22 to 2025-26 Demographic Snapshot, whose citywide tab leaves out charter schools. The 2019-20 figures are DOE’s 2019-20 citywide file minus the charter-school row (District 84) in its 2019-20 district file, both on NYC Open Data; they match the charter-free citywide tab in later snapshot editions.</p>
                             </div>
 
                             <div style={{ marginBottom: '32px' }}>
                                 <h3 style={{ fontSize: '15px', fontWeight: 700, fontFamily: 'var(--font-primary)', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#707175', marginBottom: '10px' }}>Chronic absenteeism</h3>
-                                <p style={{ marginBottom: '10px' }}>Chronic absenteeism is defined as a student missing 10% or more of enrolled school days in a given year (typically 18+ days out of 180). This chart uses the NYSED-aligned definition, which excludes suspensions and extended medical absences from the absence count.</p>
-                                <p style={{ marginBottom: '10px' }}>The DOE formally adopted the NYSED definition starting in 2020-21 but retroactively applied it to data from 2016-17 onward. Only 2018-19 is shown as the pre-pandemic baseline because it is the last full school year with reliable data and is widely cited in published analyses.</p>
-                                <p style={{ marginBottom: '10px' }}><strong>2019-20 is excluded entirely</strong> because schools closed in mid-March 2020 and the DOE did not publish end-of-year attendance data. <strong>2020-21 is shown but flagged</strong>: with 61% of students fully remote, attendance tracking was inconsistent across schools, and the reported 30% rate likely understates actual disengagement.</p>
-                                <p>Because NYS excludes suspensions from its definition, these rates are not directly comparable to federal chronic absenteeism data from the U.S. Department of Education, which counts all absences regardless of reason.</p>
+                                <p style={{ marginBottom: '10px' }}>A student is chronically absent when he or she misses 10 percent or more of the days enrolled, about 18 days in a 180-day year. Every figure on the tab comes from one file: NYC Public Schools' citywide End-of-Year Attendance and Chronic Absenteeism Data, 2018-19 through 2024-25, sheet "All Students," row "All Grades," column "% Chronically Absent." DOE is the Department of Education, now branded NYC Public Schools.</p>
+                                <p style={{ marginBottom: '10px' }}>DOE moved to the New York State Education Department's definition in 2020-21 and applied it to every earlier year in the file: attendance of 90 percent or less, counting only students enrolled at least 10 days and present at least one. Under DOE's earlier definition, which counted students enrolled 20 or more days, the citywide rate ran between 24.5 percent and 27.0 percent from 2013-14 through 2018-19 (NYC Open Data, "Attendance Results 2013-2019"); the two definitions give the same 26.5 percent for 2018-19.</p>
+                                <p style={{ marginBottom: '10px' }}>The file covers Districts 1 to 32 and District 75. It leaves out charter schools, District 79, home schooling and home and hospital instruction. "All Grades" includes pre-K students in K-12 schools; DOE added district pre-K centers starting in 2022-23 and District 75 short-term-stay schools the same year. Adding up DOE's kindergarten-through-12th-grade rows instead gives 26.0 percent in 2018-19, 39.6 percent in 2021-22 and 32.4 percent in 2024-25.</p>
+                                <p>2019-20 covers only September 2019 to March 13, 2020, and 2020-21 counts remote and in-person days together, so neither year is comparable with full in-person years. They are shown in a lighter color.</p>
                             </div>
 
                             <div style={{ marginBottom: '32px' }}>
                                 <h3 style={{ fontSize: '15px', fontWeight: 700, fontFamily: 'var(--font-primary)', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#707175', marginBottom: '10px' }}>Workforce</h3>
-                                <p style={{ marginBottom: '10px' }}>The Workforce tab compares NYC public-school staffing to student enrollment in the same district schools, school years 2000-01 through 2022-23. It draws on four independent sources stitched together year by year.</p>
-                                <p style={{ marginBottom: '10px' }}><strong>District classroom teachers</strong> (general education and special education) come from two New York City Independent Budget Office (IBO) reports: the May 2014 fiscal brief "Demographics and Work Experience: A Statistical Portrait of New York City's Public School Teachers" (Table 1) for school years 2000-01 through 2011-12, and the September 2023 brief "Roll Call: Recent Trends in Teacher Retention &amp; Hiring in New York City Public Schools" for school years 2015-16 through 2022-23. Both IBO series are built from individual teacher-level data obtained from the DOE under data-use agreements and cover teachers in DOE-operated traditional public schools only (charter teachers excluded). The intermediate three years (2012-13, 2013-14, 2014-15) are not in either published report and are shown as <strong>linear interpolations</strong> between the IBO endpoints; they are flagged on the tab.</p>
-                                <p style={{ marginBottom: '10px' }}><strong>Total DOE pedagogical and non-pedagogical headcount</strong> come from the New York City Office of Management and Budget (OMB) actual headcount tables, as reproduced in the NYC Council Finance Division briefing paper on the DOE Fiscal 2025 Preliminary Budget (March 2024), Charts 6 and 7. OMB uses fiscal year (July to June); we map fiscal year N to school year N-1 to N. Pedagogical positions include all licensed teachers, paraprofessionals, counselors, social workers, school psychologists, librarians, and principals/assistant principals across the entire DOE, including any pedagogical positions in central and field offices. Non-pedagogical positions include school aides, secretaries, and DOE central administration civilian staff.</p>
-                                <p style={{ marginBottom: '10px' }}><strong>"Other pedagogical"</strong> is computed: total DOE pedagogical headcount (OMB) minus district general-education teachers minus district special-education teachers (both IBO). This residual contains paraprofessionals, school-based pupil-services staff (counselors, social workers, school psychologists, librarians), school leadership (principals and assistant principals), Pre-K and 3-K teachers, and any pedagogical positions assigned to DOE central or field offices. Year-by-year breakdowns of this bucket at finer granularity are not published. The DOE's November 2019 Local Law 226 headcount report is the only recent year that publicly decomposes the school-based portion (72,158 teachers, 16,426 paraprofessionals, 5,580 school aides, 2,728 guidance counselors, 1,640 principals, 860 social workers, 513 school psychologists). The OMB FY24 actual breakdown by program area places about 4,441 pedagogical positions in Categorical Programs (includes the Absent Teacher Reserve and centrally funded specialists) and 1,515 in School Support and Other, totaling roughly 6,000 non-school-based pedagogical positions in fiscal 2024.</p>
-                                <p style={{ marginBottom: '10px' }}><strong>Student enrollment</strong> is the K-12 total in DOE-operated traditional public schools. Endpoint figures (1,105,240 in 2000-01; 1,041,437 in 2011-12; 881,000 in 2022-23) come from the same IBO reports cited above. Years between IBO observations are linear interpolations of district enrollment. The intermediate values match the DOE Demographic Snapshot annual figures within roughly one percent. Charter, religious, secular private, and homeschool students are excluded so that the denominator matches the staff numerator.</p>
-                                <p style={{ marginBottom: '10px' }}><strong>Charter teachers and Pre-K/3-K teachers as separate lines.</strong> The original plan called for these to be broken out as their own colored lines. They are not. Charter-school teacher counts by year are published only inside NYSED Basic Educational Data System (BEDS) Personnel Master File downloads, which require additional processing beyond the scope of this update. Pre-K and 3-K teachers are reported by the DOE in aggregate program totals (8,024 budgeted / 6,605 actual in fiscal 2024) but the public IBO and OMB time series do not separate them from other teachers across all eight years on a comparable basis. Both categories are folded into "other pedagogical" for now and noted explicitly on the tab.</p>
-                                <p style={{ marginBottom: '10px' }}><strong>Fiscal year vs. school year alignment.</strong> IBO teacher counts are by school year (October to October). OMB headcount is by fiscal year (June end-of-year actual). For chart alignment, OMB fiscal year N is plotted at school year N-1 to N. The two series will not match exactly because OMB's pedagogical total includes paraprofessionals and other staff that IBO does not classify as teachers, and because the snapshot dates differ by a few months.</p>
-                                <p><strong>What this means for the user's question.</strong> The user asked whether paraprofessionals and non-school-based "roaming" instructional staff grew while students declined. The published data answer the broader version of the question: the "other pedagogical" bucket (which contains both groups) was 39,450 in 2015-16 and 41,006 in 2022-23, while district enrollment fell from about 979,000 to about 881,000 students. That implies a rise from 40 to 47 such staff per 1,000 students, or 16 percent more per pupil. To isolate paraprofessional and central-office headcount specifically, the next step would be a FOIL request to the DOE's Division of Human Resources or processing of the NYSED BEDS Personnel Master File raw downloads.</p>
+                                <p style={{ marginBottom: '10px' }}>The Workforce tab compares DOE staffing with K-12 enrollment in district schools, school years 2000-01 through 2022-23.</p>
+                                <p style={{ marginBottom: '10px' }}><strong>Teachers.</strong> General-education and special-education teacher counts come from three Independent Budget Office (IBO) reports built from DOE personnel files: “Demographics and Work Experience: A Statistical Portrait of New York City’s Public School Teachers” (May 2014, Table 1) for 2000-01 through 2011-12; “New York City Public School Indicators: Teachers” (June 2017, p. 1) for 2012-13 through 2014-15; and “Roll Call: Recent Trends in Teacher Retention and Hiring in New York City Public Schools” (September 2023, p. 3) for 2015-16 through 2022-23. The 2017 report repeats the 2014 report’s figures for the years they share. An earlier version of this page filled 2012-13 through 2014-15 by straight-line interpolation; those years now use IBO’s published counts. The reports are not one continuous series, so small breaks at 2012-13 and 2015-16 are possible.</p>
+                                <p style={{ marginBottom: '10px' }}><strong>Pedagogical and non-pedagogical headcount.</strong> DOE’s actual headcount as of June of each fiscal year, from the Office of Management and Budget (OMB), as charted by the City Council Finance Division in its report on the DOE Fiscal 2025 Preliminary Budget (March 2024), Charts 6 and 7. Fiscal year N is plotted at school year N-1 to N, so fiscal 2015 appears as 2014-15. The headcount covers all of DOE, including central and field offices. Later Council reports chart fiscal 2024 and 2025 without printing the values, so the series stops at fiscal 2023. The Council’s March 2026 report gives actual headcount as of January 2026, a mid-year figure: 124,570 pedagogical and 13,636 non-pedagogical.</p>
+                                <p style={{ marginBottom: '10px' }}><strong>“Other pedagogical.”</strong> OMB’s pedagogical headcount minus IBO’s general-education and special-education teachers. It was 37,231 in 2014-15, 39,450 in 2015-16 and 41,006 in 2022-23. Per 1,000 K-12 students in district schools, it rose from 41.3 in 2015-16 to 51.4 in 2022-23, about 24 percent. Because the headcount is taken in June and the teacher count reflects the school year, the residual is approximate. The published sources do not itemize it by title year by year.</p>
+                                <p style={{ marginBottom: '10px' }}><strong>Enrollment.</strong> The denominator is NYSED’s BEDS Day count of K-12 students in district schools, the same series as the Composition tab. An earlier version of this page used IBO endpoints with interpolated years in between and rounded figures for 2015-16 through 2022-23 whose source could not be found; it also described them as K-12 counts, although IBO’s 2000-01 and 2011-12 figures (1,105,240 and 1,041,437) include pre-K.</p>
+                                <p style={{ marginBottom: '10px' }}><strong>Title counts, October 2019.</strong> From DOE’s FY 2020 October Headcount Report to the City Council (Nov. 15, 2019), which lists school-based and borough field-support staff by title. An earlier version of this page attributed these counts to the Local Law 226 staff demographics report, which reports only leadership, teachers and other staff, and its count of 1,640 principals included 14 principal administrative associates, a clerical title, and one neighborhood worker. The correct principal count is 1,625.</p>
+                                <p><strong>What is not here.</strong> Charter-school staff, who are not DOE employees, and separate yearly lines for paraprofessionals, pre-K teachers or central-office staff, which the public sources do not provide on a consistent basis.</p>
                             </div>
 
-                            <div style={{ borderTop: '1px solid #ddd', paddingTop: '20px' }}>
+                            <div style={{ paddingTop: '20px' }}>
                                 <h3 style={{ fontSize: '15px', fontWeight: 700, fontFamily: 'var(--font-primary)', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#707175', marginBottom: '10px' }}>Sources</h3>
                                 <ul style={{ margin: 0, paddingLeft: '18px', color: '#707175', fontSize: '13px' }}>
-                                    <li style={{ marginBottom: '6px' }}><a href="https://infohub.nyced.org/" style={{ color: '#394882' }}>NYC DOE InfoHub</a> -- enrollment reports, demographic snapshots, attendance data</li>
-                                    <li style={{ marginBottom: '6px' }}><a href="https://data.nysed.gov/" style={{ color: '#394882' }}>NYS Education Department</a> -- BEDS enrollment, accountability data</li>
-                                    <li style={{ marginBottom: '6px' }}><a href="https://ibo.nyc.ny.us/" style={{ color: '#394882' }}>NYC Independent Budget Office</a> -- historical enrollment analyses</li>
-                                    <li style={{ marginBottom: '6px' }}><a href="https://data.cityofnewyork.us/Education/2016-17-2020-23-Citywide-End-of-Year-Attendance-an/sgsi-66kk" style={{ color: '#394882' }}>NYC Open Data</a> -- school-level attendance and chronic absenteeism, 2016-17 through 2022-23</li>
-                                    <li style={{ marginBottom: '6px' }}><a href="https://manhattan.institute/article/chronic-absenteeism-hampering-school-improvement-efforts-new-york-city" style={{ color: '#394882' }}>Manhattan Institute</a> -- chronic absenteeism analysis</li>
-                                    <li style={{ marginBottom: '6px' }}><a href="https://www.empirecenter.org/publications/schools-out-forever/" style={{ color: '#394882' }}>Empire Center</a> -- attendance and enrollment analysis</li>
-                                    <li style={{ marginBottom: '6px' }}><a href="https://steinhardt.nyu.edu/research-alliance/research/spotlight-nyc-schools/how-has-attendance-nyc-schools-changed-over-time" style={{ color: '#394882' }}>NYU Research Alliance for NYC Schools</a> -- historical attendance trends (2000-2018)</li>
-                                    <li style={{ marginBottom: '6px' }}><a href="https://www.chalkbeat.org/newyork/" style={{ color: '#394882' }}>Chalkbeat New York</a> -- reporting on 2022-23 through 2024-25 chronic absenteeism data</li>
+                                    <li style={{ marginBottom: '6px' }}>New York State Education Department: <a href="https://www.p12.nysed.gov/irs/statistics/enroll-n-staff/home.html" style={{ color: '#394882' }}>public school enrollment</a> (with <a href="https://www.p12.nysed.gov/irs/statistics/enroll-n-staff/ArchiveEnrollmentData1976-1994.html" style={{ color: '#394882' }}>1976-1994</a>, <a href="https://www.p12.nysed.gov/irs/statistics/enroll-n-staff/ArchiveEnrollmentData1994-2011.html" style={{ color: '#394882' }}>1994-2011</a> and <a href="https://www.p12.nysed.gov/irs/statistics/enroll-n-staff/ArchiveEnrollmentData.html" style={{ color: '#394882' }}>2012-2025</a> archives), <a href="https://www.p12.nysed.gov/irs/statistics/nonpublic/home.html" style={{ color: '#394882' }}>nonpublic school enrollment</a>, <a href="https://www.p12.nysed.gov/irs/statistics/HomeSchooled/home.html" style={{ color: '#394882' }}>children instructed at home</a></li>
+                                    <li style={{ marginBottom: '6px' }}>New York City Department of Education: <a href="https://infohub.nyced.org/reports/students-and-schools/school-quality/information-and-data-overview" style={{ color: '#394882' }}>Demographic Snapshot, 2021-22 to 2025-26</a>; earlier editions on <a href="https://data.cityofnewyork.us/browse?q=demographic%20snapshot" style={{ color: '#394882' }}>NYC Open Data</a>; <a href="https://infohub.nyced.org/reports/students-and-schools/school-quality/information-and-data-overview/end-of-year-attendance-and-chronic-absenteeism-data" style={{ color: '#394882' }}>End-of-Year Attendance and Chronic Absenteeism Data</a>; <a href="https://data.cityofnewyork.us/Education/Attendance-Results-2013-2019/mg8s-7r2b" style={{ color: '#394882' }}>Attendance Results 2013-2019</a> (NYC Open Data); <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2019/11/Department-of-Education-Headcount-Report-1-of-2.xlsx" style={{ color: '#394882' }}>FY 2020 October Headcount Report</a></li>
+                                    <li style={{ marginBottom: '6px' }}>New York City Independent Budget Office: <a href="https://a860-gpp.nyc.gov/concern/nyc_government_publications/q237hs926" style={{ color: '#394882' }}>teacher brief, May 2014</a>; New York City Public School Indicators: Teachers, June 2017 (no current link found); <a href="https://www.ibo.nyc.gov/assets/ibo/downloads/pdf/education/2023/2023-september-roll-call-recent-trends-in-teacher-retention-and-hiring-in-new-york-city-public-schools.pdf" style={{ color: '#394882' }}>Roll Call, September 2023</a></li>
+                                    <li style={{ marginBottom: '6px' }}>City Council Finance Division: <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2024/03/040-DOE.pdf" style={{ color: '#394882' }}>DOE Fiscal 2025 Preliminary Budget report</a>; <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2020/04/040-DOE.pdf" style={{ color: '#394882' }}>DOE Fiscal 2021 Executive Budget report</a>; <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2026/03/Department-of-Education-1.pdf" style={{ color: '#394882' }}>report on the DOE Fiscal 2027 Preliminary Plan</a> (March 2026)</li>
+                                    <li style={{ marginBottom: '6px' }}><a href="https://www.nyc.gov/assets/operations/downloads/pdf/mmr2026/doe.pdf" style={{ color: '#394882' }}>Mayor’s Management Report, fiscal 2026</a>, DOE chapter</li>
+                                    <li style={{ marginBottom: '6px' }}>New York City Department of Health and Mental Hygiene, Summary of Vital Statistics, <a href="https://www.nyc.gov/assets/doh/downloads/pdf/vs/2016sum.pdf" style={{ color: '#394882' }}>2016</a> and <a href="https://www.nyc.gov/assets/doh/downloads/pdf/vs/2022sum.pdf" style={{ color: '#394882' }}>2022</a></li>
+                                    <li style={{ marginBottom: '6px' }}>National Center for Education Statistics, <a href="https://files.eric.ed.gov/fulltext/ED075958.pdf" style={{ color: '#394882' }}>Statistics of Public Elementary and Secondary Day Schools, Fall 1971</a></li>
+                                    <li style={{ marginBottom: '6px' }}>New York State Education Department, <a href="https://www.nysed.gov/sites/default/files/programs/accountability/for-posting-nysed-indicator-info-session-4-chronic-absenteeism.pdf" style={{ color: '#394882' }}>chronic absenteeism indicator session</a>, Jan. 25, 2023</li>
+                                    <li style={{ marginBottom: '6px' }}>Reporting: <a href="https://www.chalkbeat.org/newyork/2021/5/24/22452134/remote-learning-nyc-schools/" style={{ color: '#394882' }}>Chalkbeat, May 24, 2021</a> (remote learning); <a href="https://www.chalkbeat.org/newyork/2017/7/18/21100699/new-york-city-s-3-k-for-all-preschool-program-starts-this-fall-here-are-five-things-we-know-so-far/" style={{ color: '#394882' }}>Chalkbeat, July 18, 2017</a> (3-K for All); <a href="https://www.edweek.org/leadership/n-y-c-plows-forward-on-pre-k-initiative/2015/01" style={{ color: '#394882' }}>Education Week, Jan. 3, 2015</a> (Pre-K for All)</li>
                                 </ul>
                             </div>
 
@@ -917,6 +966,6 @@
 
         ReactDOM.render(<App />, document.getElementById('root'));
     </script>
-  <script src="../shared/chrome.js?v=15"></script>
+  <script src="../shared/chrome.js?v=17"></script>
 </body>
 </html>

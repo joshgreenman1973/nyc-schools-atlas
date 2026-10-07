@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>New York City instructional time, 2026–27</title>
+<title>New York City school time, 2026–27</title>
 <style>
   :root {
     --black: #050507;
@@ -74,7 +74,7 @@
     margin-bottom: 8px;
   }
   .chart-wrap.gap { height: 200px; }
-  .chart-wrap.peers { height: 380px; }
+  .chart-wrap.peers { height: 280px; }
   .takeaway {
     background: var(--orange-20);
     padding: 14px 16px;
@@ -180,6 +180,15 @@
   .frag-cell.regents { background: var(--cerulean); opacity: 0.55; }
   .frag-cell.recess { background: var(--cloud); }
   .frag-cell.outside { background: #f4f4f0; }
+  .frag-cell.remote,
+  .frag-remote-swatch {
+    background: repeating-linear-gradient(45deg, var(--chartreuse) 0 3px, var(--white) 3px 6px);
+  }
+  .band-toggle { margin: 0 0 12px; }
+  .band-toggle button[aria-pressed="true"] {
+    background: var(--black);
+    color: var(--white);
+  }
   .frag-row.full {
     box-shadow: inset 3px 0 0 var(--black);
   }
@@ -427,98 +436,105 @@
     .container { box-shadow: none; }
   }
 </style>
-  <link rel="stylesheet" href="../shared/chrome.css?v=15" />
+  <link rel="stylesheet" href="../shared/chrome.css?v=17" />
 </head>
 <body data-section="school-day">
 <div id="site-header"></div>
 <div class="container">
 
-  <h1>New York City kids spend roughly a year and a half less in class over their K&ndash;12 careers than the average American student</h1>
+  <h1>New York City&rsquo;s 2026&ndash;27 schedule adds up to more than a full school year less time in school over K&ndash;12 than the national average</h1>
 
   <p class="dek">
-    The 2026&ndash;27 calendar promises 180 days. Students will see 177 of them, in a school day that runs about 40 minutes shorter than the national norm, with fewer than half the year&rsquo;s weeks running uninterrupted from Monday to Friday.
+    State law requires 180 days of school. The 2026&ndash;27 calendar counts three staff training days toward that total, so students attend 177, and the standard school day of 6 hours 20 minutes is about 35 minutes shorter than the national average. For elementary and middle school students, 24 of the year&rsquo;s 40 school weeks run five full in-person days; for high school students, 19 do.
   </p>
 
   <div class="rule"></div>
 
   <!-- SECTION 1: THE HEADLINE GAP -->
-  <h2>The 129-hour gap</h2>
+  <h2>The 110-hour gap</h2>
   <p class="subhead">
-    Estimated annual instructional hours for a New York City student vs. the U.S. national average
+    Scheduled hours in school per year: a New York City public school student in 2026&ndash;27 vs. the typical U.S. public school (national survey data from 2017&ndash;18)
   </p>
 
   <div class="chart-wrap gap">
-    <canvas id="gapChart" role="img" aria-label="New York City at 1,102 instructional hours per year versus 1,231 hours for the U.S. national average — a gap of 129 hours.">New York City: 1,102 hours. National average: 1,231 hours. Gap: 129 hours per year.</canvas>
+    <canvas id="gapChart" role="img" aria-label="New York City public schools, 2026–27: 1,121 scheduled hours per year. Typical U.S. public school, 2017–18: 1,231 hours. Gap: 110 hours.">New York City public schools, 2026–27: 1,121 hours. Typical U.S. public school, 2017–18: 1,231 hours. Gap: 110 hours per year.</canvas>
   </div>
 
   <div class="takeaway">
-    <strong>129 hours per year</strong> works out to roughly <strong>20 school days</strong>. Carried across a 13-year K&ndash;12 career, that adds up to <strong>about 1,680 hours</strong> &mdash; close to <strong>1.5 academic years of instruction</strong> a New York City student does not get.
+    <strong>110 hours a year</strong> is about <strong>17 New York City school days</strong>. Over a 13-year K&ndash;12 career on this schedule, it adds up to <strong>about 1,430 hours</strong>, or <strong>about 1.2 years of school</strong> at the national average of 1,231 hours a year. Chalkbeat&rsquo;s figure for 2025&ndash;26, a year with 176 school days and a snow day, was 1,102 hours.
   </div>
 
   <!-- SECTION 2: WHAT SETS THE HOURS -->
   <h2>Two factors set the total hours</h2>
   <p class="subhead">
-    School day length &times; student attendance days = annual instructional hours. Both are shaped by the New York State Education Law and the UFT collective bargaining agreement.
+    School day length &times; student attendance days = scheduled hours per year. State education law and the city&rsquo;s contract with the United Federation of Teachers shape both.
   </p>
 
   <div class="stat-grid two">
     <div class="stat-card">
       <div class="stat-num">6h<small>&nbsp;20m</small></div>
-      <div class="stat-label">School day length</div>
-      <div class="stat-desc">About 40 minutes shorter than the national average of seven hours, set by the UFT contract</div>
+      <div class="stat-label">Standard school day</div>
+      <div class="stat-desc">About 35 minutes shorter than the national average of 6.9 hours. The teachers union contract sets the same 6-hour, 20-minute workday for teachers.</div>
     </div>
     <div class="stat-card">
       <div class="stat-num">177<small>&nbsp;days</small></div>
       <div class="stat-label">Student attendance days</div>
-      <div class="stat-desc">Three short of the state&rsquo;s 180-day minimum; gap closed by counting Chancellor&rsquo;s PD days toward the total, as state rules permit</div>
+      <div class="stat-desc">Three short of the state&rsquo;s 180-day minimum. State law lets districts count up to four staff conference days toward the 180; the city counts three.</div>
     </div>
   </div>
 
   <h2>A separate question: how those days are distributed</h2>
   <p class="subhead">
-    The fragmentation of the school year doesn&rsquo;t change the 1,102-hour total &mdash; it describes how those hours are arranged across the calendar, a different kind of cost.
+    How the days fall across the calendar does not change the yearly total. It shows how often the school week is broken up, and it differs by grade.
   </p>
 
   <!-- NEW SECTION A: FRAGMENTATION GRID -->
   <p class="subhead" style="margin-top:-4px">
-    Each row is one week of the 2026&ndash;27 school year. Cells are colored by status; weeks with five back-to-back full student days are highlighted with a black outline.
+    Each row is one week of the 2026&ndash;27 school year, colored by what each weekday is for students in the selected grades. Weeks with five full in-person student days are outlined in black.
   </p>
+
+  <div class="builder-actions band-toggle" role="group" aria-label="Choose grade band">
+    <button type="button" data-band="es" aria-pressed="true">Elementary school</button>
+    <button type="button" data-band="ms" aria-pressed="false">Middle school</button>
+    <button type="button" data-band="hs" aria-pressed="false">High school</button>
+  </div>
 
   <div class="frag-legend">
     <span><span class="frag-swatch" style="background:var(--chartreuse)"></span>Full student day</span>
-    <span><span class="frag-swatch" style="background:var(--orange);opacity:.85"></span>Half-day</span>
-    <span><span class="frag-swatch" style="background:var(--magenta);opacity:.85"></span>Closed</span>
-    <span><span class="frag-swatch" style="background:var(--periwinkle)"></span>PD / no students</span>
-    <span><span class="frag-swatch" style="background:var(--cerulean);opacity:.55"></span>Regents (some grades)</span>
+    <span><span class="frag-swatch" style="background:var(--orange);opacity:.85"></span>Early dismissal (3 hours early)</span>
+    <span><span class="frag-swatch frag-remote-swatch"></span>Remote instruction</span>
+    <span><span class="frag-swatch" style="background:var(--magenta);opacity:.85"></span>Closed for holiday</span>
+    <span><span class="frag-swatch" style="background:var(--periwinkle)"></span>No classes for these grades (staff or clerical day)</span>
+    <span><span class="frag-swatch" style="background:var(--cerulean);opacity:.55"></span>Regents exam days (high school)</span>
     <span><span class="frag-swatch" style="background:var(--cloud)"></span>Recess</span>
   </div>
 
   <div id="fragGrid" class="frag-grid"></div>
 
   <div class="frag-summary">
-    <strong><span id="fullCount">—</span> of <span id="totalWeeks">—</span> weeks</strong> in the 2026&ndash;27 New York City public school year run from Monday to Friday without a closure, half-day, PD day, recess, or Regents-administration interruption. The rest contain at least one break in the instructional sequence.
+    <strong><span id="fullCount">—</span> of the <span id="schoolWeeks">—</span> weeks with school</strong> in 2026&ndash;27 run five full, in-person days for <span id="bandName">elementary school</span> students, with no closure, early dismissal, remote day or staff or clerical day<span id="regentsClause"></span>. The school year spans <span id="totalWeeks">—</span> calendar weeks from first day to last; three of them fall entirely in recesses.
   </div>
 
   <!-- SECTION 3: PEER COMPARISON -->
-  <h2>How New York City compares with peer districts and city charters</h2>
+  <h2>How New York City compares with Chicago and two city charter networks</h2>
   <p class="subhead">
-    Estimated annual instructional hours, 2026&ndash;27 school year
+    Scheduled hours in school per year, 2026&ndash;27, from each system&rsquo;s own calendar and bell times. Lighter segments show the range across grade levels or schools. Houston, Los Angeles, Miami-Dade and Uncommon Schools set hours school by school and publish no system-wide schedule, so they are not charted; the methodology lists what each one does publish.
   </p>
 
   <div class="chart-wrap peers">
-    <canvas id="peersChart" role="img" aria-label="Annual instructional hours by school system. New York City Public Schools at 1,102 hours falls below most urban districts shown. Charter networks Success Academy at 1,570, KIPP NYC at 1,380, and Uncommon Schools at 1,250 substantially exceed New York City.">Annual hours: New York City Public Schools 1,102; LAUSD 1,080; Chicago 1,055; Miami-Dade 1,170; Houston ISD 1,260; Uncommon Schools 1,250; KIPP NYC 1,380; Success Academy 1,570.</canvas>
+    <canvas id="peersChart" role="img" aria-label="Scheduled hours in school per year, 2026–27. Success Academy, 1,209 to 1,496 hours depending on grade. KIPP NYC K–8 schools, 1,262 to 1,442. Chicago Public Schools, 1,232 to 1,276. Typical U.S. public school, 2017–18 data, 1,231. New York City public schools, 1,121.">Success Academy: 1,209–1,496 hours. KIPP NYC K–8: 1,262–1,442. Chicago Public Schools: 1,232–1,276. Typical U.S. public school (2017–18 data): 1,231. New York City public schools: 1,121.</canvas>
   </div>
 
   <!-- NEW SECTION B: BUILD YOUR OWN SCHOOL YEAR -->
   <h2>Build your own school year</h2>
   <p class="subhead">
-    Adjust the inputs to see how annual instructional hours change. The dashed lines mark the New York City baseline (1,102 hours) and the U.S. national average (1,231 hours).
+    Adjust the inputs to see how scheduled hours per year change. The dashed lines mark New York City&rsquo;s 2026&ndash;27 schedule (1,121 hours) and the U.S. average (1,231 hours). The bar runs from zero.
   </p>
 
   <div class="builder">
     <div class="builder-row">
       <label for="dayMin">School day length</label>
-      <input type="range" id="dayMin" min="300" max="510" step="5" value="380">
+      <input type="range" id="dayMin" min="300" max="510" step="1" value="380">
       <div class="val"><span id="dayMinVal">6h 20m</span></div>
     </div>
     <div class="builder-row">
@@ -526,26 +542,21 @@
       <input type="range" id="days" min="160" max="200" step="1" value="177">
       <div class="val"><span id="daysVal">177</span></div>
     </div>
-    <div class="builder-row">
-      <label for="pdDays">PD days counted toward 180</label>
-      <input type="range" id="pdDays" min="0" max="4" step="1" value="3">
-      <div class="val"><span id="pdDaysVal">3</span></div>
-    </div>
 
     <div class="builder-bar">
       <div class="fill" id="fillBar"></div>
-      <div class="ref" id="refNYC" style="left: 0%"><span class="ref-label">New York City 1,102</span></div>
+      <div class="ref" id="refNYC" style="left: 0%"><span class="ref-label">New York City 1,121</span></div>
       <div class="ref" id="refNat" style="left: 0%"><span class="ref-label">U.S. avg 1,231</span></div>
     </div>
 
     <div class="builder-readout">
       <div class="builder-stat">
         <div class="num" id="annualHours">1,121</div>
-        <div class="lbl">Annual instructional hours (your scenario)</div>
+        <div class="lbl">Scheduled hours per year (your scenario)</div>
       </div>
       <div class="builder-stat">
         <div class="num neg" id="gapHours">−110</div>
-        <div class="lbl">Hours per year vs. U.S. national average (1,231)</div>
+        <div class="lbl">Hours per year vs. U.S. average (1,231)</div>
       </div>
       <div class="builder-stat">
         <div class="num neg" id="k12Gap">−1,430</div>
@@ -555,49 +566,50 @@
 
     <div class="builder-actions">
       <button type="button" id="btnNYC">Reset to New York City 2026&ndash;27</button>
-      <button type="button" id="btnNational">Match U.S. average</button>
-      <button type="button" id="btnSuccess">Match Success Academy</button>
+      <button type="button" id="btnNational">U.S. average day and year</button>
+      <button type="button" id="btnSuccess">Success Academy elementary (approx.)</button>
     </div>
+    <p class="subhead" style="margin:10px 0 0">The U.S. average of 1,231 hours is 6.9 hours &times; 178.6 days. The sliders move in whole minutes and days, so the U.S. button (414 minutes &times; 179 days) lands at 1,235. The Success Academy button uses that network&rsquo;s average elementary day (four days to 4:20 p.m. and a Wednesday half day, 7 hours 48 minutes) and 182 days for returning third and fourth graders.</p>
   </div>
 
   <!-- SECTION 4: 2026-27 CALENDAR ANATOMY -->
-  <h2>The shape of next year&rsquo;s school calendar</h2>
+  <h2>The shape of this year&rsquo;s school calendar</h2>
   <p class="subhead">
     Sept. 10, 2026 &ndash; June 28, 2027 &middot; first day to last day, by category
   </p>
 
   <table class="calendar-anatomy">
-    <tr><td>Days students are scheduled in class</td><td>177</td></tr>
-    <tr><td>Chancellor&rsquo;s Conference / PD days counted toward 180</td><td>3</td></tr>
-    <tr><td>Religious / cultural holiday closures</td><td>5</td></tr>
-    <tr><td>Half-days for parent-teacher conferences</td><td>3</td></tr>
-    <tr><td>Regents administration days (some grades only)</td><td>9</td></tr>
-    <tr><td>Length of summer break (weeks)</td><td>~11</td></tr>
+    <tr><td>Days students attend (includes Election Day, Nov. 3, a remote day)</td><td>177</td></tr>
+    <tr><td>Chancellor&rsquo;s Conference Days counted toward the 180-day requirement</td><td>3</td></tr>
+    <tr><td>Religious holiday closures (Yom Kippur, Eid al-Fitr, Good Friday, Eid al-Adha)</td><td>4</td></tr>
+    <tr><td>Early dismissals for parent-teacher conferences, per student</td><td>2</td></tr>
+    <tr><td>Regents exam administration days (Jan. 26&ndash;29 and June 15&ndash;25)</td><td>13</td></tr>
     <tr class="flag"><td>Final day falls on a Monday (June 28)</td><td>&mdash;</td></tr>
   </table>
 
   <div class="callout">
-    <div class="callout-kicker">The Monday Finale</div>
+    <div class="callout-kicker">The Monday finish</div>
     <div class="callout-body">
-      The 2026&ndash;27 school year ends on Monday, June 28, 2027 &mdash; a so-called &ldquo;dog-leg day&rdquo; that observers expect will see lower-than-typical attendance among both students and staff, given how often families have already started summer travel by that point.
+      The 2026&ndash;27 school year ends on Monday, June 28, 2027, the only school day that week. Chalkbeat called it &ldquo;a dog-leg day that&rsquo;s a recipe for low attendance.&rdquo; New York City Public Schools says state law and its staff contracts require the year to end before the second-to-last weekday in June.
     </div>
   </div>
 
   <!-- SECTION 5: KRAFT QUOTE -->
   <div class="pullquote">
-    <p>State minimums set a floor we should be moving beyond. They are not what we should be targeting or aspiring to.</p>
-    <div class="attrib">Matthew Kraft &middot; Brown University &middot; co-author, <em>Time for School</em> (Education Next, 2025)</div>
+    <p>&ldquo;They are not what we should be targeting or aspiring to. They set a floor that we should be moving beyond.&rdquo;</p>
+    <div class="attrib">Matthew Kraft &middot; Brown University &middot; on state minimum school-time laws, to Chalkbeat, Feb. 2026</div>
   </div>
 
   <!-- METHODOLOGY LINK -->
   <div class="methodology-link">
-    Bell-to-bell scheduled hours, including lunch and recess, are the closest measure of what families experience &mdash; but states count instructional time differently and any cumulative gap projection assumes constant conditions. <a href="methodology.html">Read the full methodology and download the data &rarr;</a>
+    Scheduled hours run bell to bell and include lunch and recess. New York State&rsquo;s own &ldquo;instructional hours&rdquo; exclude lunch and recess, so these figures are not the state&rsquo;s measure. The national figure comes from 2017&ndash;18 survey data, and the K&ndash;12 total assumes the 2026&ndash;27 schedule holds for 13 years. <a href="methodology.html">Read the full methodology and download the data &rarr;</a>
+    <p style="margin:10px 0 0">Corrected Oct. 7, 2026: Earlier versions presented Chalkbeat&rsquo;s 2025&ndash;26 figure (1,102 hours) as the 2026&ndash;27 figure, overstated the K&ndash;12 gap as a year and a half, misnamed the national study&rsquo;s authors and misstated several charter and district schedules. <a href="methodology.html#corrections">The corrections are listed in the methodology.</a></p>
   </div>
 
   <!-- SOURCES -->
   <div class="footer">
     <div class="sources">
-      Sources: <a href="https://www.schools.nyc.gov/calendar/2026-2027-school-year-calendar">NYC Public Schools 2026&ndash;27 calendar</a>; <a href="https://www.chalkbeat.org/newyork/2026/02/27/nyc-shorter-school-year-instructional-time-gap/">Chalkbeat</a>; <a href="https://www.educationnext.org/time-for-school-assessing-inequality-access-instructional-time-united-states/">Kraft et al., <em>Time for School</em>, Education Next 2025</a>; <a href="https://cbcny.org/research/highest-costs-middling-marks">Citizens Budget Commission</a>; <a href="https://www.successacademies.org/academic-calendars/">Success Academy</a>; <a href="https://kippnyc.org/">KIPP NYC</a>; <a href="https://uncommonschools.org/">Uncommon Schools</a>; <a href="https://www.cps.edu/calendar/">Chicago Public Schools</a>; <a href="https://www.lausd.org/calendar">LAUSD</a>; <a href="https://www.dadeschools.net/">Miami-Dade</a>; <a href="https://www.houstonisd.org/">Houston ISD</a>.
+      Sources: <a href="https://www.schools.nyc.gov/calendar/2026-2027-school-year-calendar">NYC Public Schools 2026&ndash;27 calendar</a>; <a href="https://www.schools.nyc.gov/calendar/how-we-create-the-new-york-city-public-schools-calendar">How We Create the NYC Public Schools Calendar</a>; Chalkbeat (<a href="https://www.chalkbeat.org/newyork/2026/02/27/nyc-shorter-school-year-instructional-time-gap/">Feb. 27, 2026</a>; <a href="https://www.chalkbeat.org/newyork/2026/04/21/nyc-public-school-calendar-2026-2027/">April 21, 2026</a>); <a href="https://www.educationnext.org/time-for-school-assessing-inequality-access-instructional-time-united-states/">Kraft and Novicoff, &ldquo;Time for School,&rdquo; Education Next, Winter 2025</a>; <a href="https://www.law.cornell.edu/regulations/new-york/8-NYCRR-175.5">8 NYCRR 175.5</a>; <a href="https://www.uft.org/your-rights/contracts/contract-2023/contract-2023-time-workday-and-remote-work">United Federation of Teachers contract</a>; <a href="https://www.successacademies.org/academic-calendars/">Success Academy calendars</a> and <a href="https://sites.google.com/successacademies.org/family-handbooks/family-handbook/the-school-day">school day</a>; <a href="https://kippnyc.org/family-resources/">KIPP NYC family handbooks</a>; <a href="https://nyc.uncommonschools.org/family-resources/">Uncommon Schools NYC</a>; <a href="https://www.cps.edu/calendar/">Chicago Public Schools</a>; <a href="https://www.houstonisd.org/our-district/district-calendar">Houston Independent School District</a>; <a href="https://api.dadeschools.net/WMSFiles/392/calendars/25-26/School-Calendars-2026-2027-Elementary.pdf">Miami-Dade County Public Schools</a>; <a href="https://www.lausd.org/calendar">Los Angeles Unified</a>.
     </div>
   </div>
 
@@ -612,9 +624,9 @@
     new Chart(gapCtx, {
       type: 'bar',
       data: {
-        labels: ['New York City public schools', 'U.S. national average'],
+        labels: [['New York City public schools', '2026–27'], ['Typical U.S. public school', '2017–18']],
         datasets: [{
-          data: [1102, 1231],
+          data: [1121, 1231],
           backgroundColor: ['#e7466d', '#9b9fbc'],
           borderWidth: 0,
           barThickness: 50
@@ -645,6 +657,13 @@
               font: { family: 'Inter, system-ui, sans-serif', size: 10 },
               color: '#707175',
               callback: function(v){ return v.toLocaleString(); }
+            },
+            title: {
+              display: true,
+              text: 'Scheduled hours in school per year',
+              font: { family: 'Inter, system-ui, sans-serif', size: 11, weight: '400' },
+              color: '#707175',
+              padding: { top: 6 }
             }
           },
           y: {
@@ -662,7 +681,7 @@
         afterDatasetsDraw: function(chart){
           var c = chart.ctx;
           var meta = chart.getDatasetMeta(0);
-          var data = [1102, 1231];
+          var data = [1121, 1231];
           c.save();
           c.font = '700 16px Inter, system-ui, sans-serif';
           c.textAlign = 'left';
@@ -678,41 +697,58 @@
   }
 
   // ============= PEER COMPARISON CHART =============
+  // Scheduled hours per year, 2026-27, from each system's own calendar and bell times.
+  // lo/hi = range across grade levels or schools; equal when one figure applies.
+  // Derivations and sources: methodology.html and data.json.
+  var PEERS = [
+    {"label": "Success Academy (charter)", "lo": 1209, "hi": 1496, "kind": "charter", "note": "Range across grades; 164–193 days"},
+    {"label": "KIPP NYC K–8 (charter)", "lo": 1262, "hi": 1442, "kind": "charter", "note": "Range across schools; 182–186 days"},
+    {"label": "Chicago Public Schools", "lo": 1232, "hi": 1276, "kind": "district", "note": "176 days; 7-hour elementary day"},
+    {"label": "Typical U.S. public school (2017–18)", "lo": 1231, "hi": 1231, "kind": "reference", "note": "6.9 hours × 178.6 days"},
+    {"label": "New York City public schools", "lo": 1121, "hi": 1121, "kind": "focal", "note": "177 days × 6 hours 20 minutes"}
+  ];
   var peerCtx = document.getElementById('peersChart');
   if (peerCtx) {
-    var labels = [
-      'Success Academy (NYC charter)',
-      'KIPP NYC (charter)',
-      'Houston ISD',
-      'Uncommon Schools (NYC charter)',
-      'Miami-Dade County',
-      'New York City Public Schools',
-      'LAUSD',
-      'Chicago Public Schools'
-    ];
-    var data = [1570, 1380, 1260, 1250, 1170, 1102, 1080, 1055];
-    var colors = labels.map(function(l){
-      if (l === 'New York City Public Schools') return '#e7466d';
-      if (l.indexOf('charter') > -1) return '#dde44c';
+    var NYC_LABEL = 'New York City public schools';
+    var labels = PEERS.map(function(p){ return p.label; });
+    var baseColor = function(p){
+      if (p.kind === 'focal') return '#e7466d';
+      if (p.kind === 'charter') return '#dde44c';
+      if (p.kind === 'reference') return '#bdbdbd';
       return '#9b9fbc';
-    });
+    };
+    var rangeColor = function(p){
+      if (p.kind === 'charter') return 'rgba(221,228,76,0.4)';
+      return 'rgba(155,159,188,0.4)';
+    };
+    var fmtRange = function(p){
+      return p.lo === p.hi ? p.lo.toLocaleString() + ' hrs'
+        : p.lo.toLocaleString() + '–' + p.hi.toLocaleString() + ' hrs';
+    };
 
     new Chart(peerCtx, {
       type: 'bar',
       data: {
         labels: labels,
         datasets: [{
-          data: data,
-          backgroundColor: colors,
+          label: 'Low end',
+          data: PEERS.map(function(p){ return p.lo; }),
+          backgroundColor: PEERS.map(baseColor),
           borderWidth: 0,
-          barThickness: 24
+          barThickness: 22
+        }, {
+          label: 'Range',
+          data: PEERS.map(function(p){ return p.hi - p.lo; }),
+          backgroundColor: PEERS.map(rangeColor),
+          borderWidth: 0,
+          barThickness: 22
         }]
       },
       options: {
         indexAxis: 'y',
         responsive: true,
         maintainAspectRatio: false,
-        layout: { padding: { right: 70, left: 4, top: 4, bottom: 4 } },
+        layout: { padding: { right: 96, left: 4, top: 4, bottom: 4 } },
         plugins: {
           legend: { display: false },
           tooltip: {
@@ -720,13 +756,18 @@
             titleFont: { family: 'Inter, system-ui, sans-serif', size: 12, weight: '600' },
             bodyFont: { family: 'Inter, system-ui, sans-serif', size: 12 },
             padding: 8,
-            callbacks: { label: function(c){ return c.parsed.x.toLocaleString() + ' hours/year'; } }
+            filter: function(item){ return item.datasetIndex === 0; },
+            callbacks: {
+              label: function(c){ var p = PEERS[c.dataIndex]; return fmtRange(p) + ' per year'; },
+              afterLabel: function(c){ return PEERS[c.dataIndex].note || ''; }
+            }
           }
         },
         scales: {
           x: {
+            stacked: true,
             beginAtZero: true,
-            max: 1700,
+            max: 1600,
             grid: { color: '#eeeeee', drawBorder: false },
             border: { display: false },
             ticks: {
@@ -736,13 +777,14 @@
             },
             title: {
               display: true,
-              text: 'Annual instructional hours',
+              text: 'Scheduled hours in school per year, 2026–27',
               font: { family: 'Inter, system-ui, sans-serif', size: 11, weight: '400' },
               color: '#707175',
               padding: { top: 6 }
             }
           },
           y: {
+            stacked: true,
             grid: { display: false, drawBorder: false },
             border: { display: false },
             ticks: {
@@ -751,12 +793,12 @@
                 return {
                   family: 'Inter, system-ui, sans-serif',
                   size: 12,
-                  weight: label === 'New York City Public Schools' ? '700' : '400'
+                  weight: label === NYC_LABEL ? '700' : '400'
                 };
               },
               color: function(ctx){
                 var label = ctx.tick && ctx.tick.label ? (Array.isArray(ctx.tick.label) ? ctx.tick.label.join('') : ctx.tick.label) : '';
-                return label === 'New York City Public Schools' ? '#e7466d' : '#050507';
+                return label === NYC_LABEL ? '#e7466d' : '#050507';
               }
             }
           }
@@ -766,14 +808,15 @@
         id: 'peerLabels',
         afterDatasetsDraw: function(chart){
           var c = chart.ctx;
-          var meta = chart.getDatasetMeta(0);
+          var top = chart.getDatasetMeta(1);
           c.save();
           c.font = '600 12px Inter, system-ui, sans-serif';
           c.textAlign = 'left';
           c.textBaseline = 'middle';
-          meta.data.forEach(function(bar, i){
-            c.fillStyle = labels[i] === 'New York City Public Schools' ? '#e7466d' : '#050507';
-            c.fillText(data[i].toLocaleString() + ' hrs', bar.x + 6, bar.y);
+          top.data.forEach(function(bar, i){
+            var p = PEERS[i];
+            c.fillStyle = p.kind === 'focal' ? '#e7466d' : '#050507';
+            c.fillText(fmtRange(p), bar.x + 6, bar.y);
           });
           c.restore();
         }
@@ -782,67 +825,78 @@
   }
 
   // ============= FRAGMENTATION GRID =============
-  // Each week: Monday date + 5 cells (Mon-Fri) classified.
-  // Classifications drawn from the NYC public schools 2026-27 calendar.
-  // Codes: s=student day, x=closed, h=half-day, p=PD/no students, r=Regents (some grades),
-  //        b=recess, o=outside school year (before/after first/last day).
-  var weeks = [
-    { mon: '2026-09-07', days: ['o','o','o','s','s'] }, // Pre-year through Wed; first day Thu Sept 10
-    { mon: '2026-09-14', days: ['s','s','s','s','s'] },
-    { mon: '2026-09-21', days: ['x','s','s','s','s'] }, // Yom Kippur
-    { mon: '2026-09-28', days: ['s','s','s','s','s'] },
-    { mon: '2026-10-05', days: ['s','s','s','s','s'] },
-    { mon: '2026-10-12', days: ['x','s','s','s','s'] }, // Indigenous Peoples'
-    { mon: '2026-10-19', days: ['s','s','s','s','s'] },
-    { mon: '2026-10-26', days: ['s','s','s','s','s'] },
-    { mon: '2026-11-02', days: ['s','s','s','h','s'] }, // Election Day Tue (remote); P-T conf Thu half-day
-    { mon: '2026-11-09', days: ['s','s','x','h','s'] }, // Veterans Wed; P-T conf Thu MS/D75
-    { mon: '2026-11-16', days: ['s','s','s','s','h'] }, // P-T conf Fri HS half-day — broken
-    { mon: '2026-11-23', days: ['s','s','s','x','x'] }, // Thanksgiving Thu/Fri
-    { mon: '2026-11-30', days: ['s','s','s','s','s'] },
-    { mon: '2026-12-07', days: ['s','s','s','s','s'] },
-    { mon: '2026-12-14', days: ['s','s','s','s','s'] },
-    { mon: '2026-12-21', days: ['s','s','s','b','b'] }, // Winter recess starts Dec 24
-    { mon: '2026-12-28', days: ['b','b','b','b','b'] },
-    { mon: '2027-01-04', days: ['s','s','s','s','s'] },
-    { mon: '2027-01-11', days: ['s','s','s','s','s'] },
-    { mon: '2027-01-18', days: ['x','s','s','s','s'] }, // MLK Mon
-    { mon: '2027-01-25', days: ['s','r','r','r','r'] }, // Regents Tue-Fri
-    { mon: '2027-02-01', days: ['p','s','s','s','s'] }, // PD Mon (HS no classes)
-    { mon: '2027-02-08', days: ['s','s','s','s','s'] },
-    { mon: '2027-02-15', days: ['b','b','b','b','b'] }, // Midwinter recess
-    { mon: '2027-02-22', days: ['s','s','s','s','s'] },
-    { mon: '2027-03-01', days: ['s','s','s','s','s'] },
-    { mon: '2027-03-08', days: ['s','x','s','s','s'] }, // Eid al-Fitr Tue
-    { mon: '2027-03-15', days: ['s','s','s','s','s'] },
-    { mon: '2027-03-22', days: ['s','s','s','s','x'] }, // Good Friday
-    { mon: '2027-03-29', days: ['s','s','s','s','s'] },
-    { mon: '2027-04-05', days: ['s','s','s','s','s'] },
-    { mon: '2027-04-12', days: ['s','s','s','s','s'] },
-    { mon: '2027-04-19', days: ['s','s','s','b','b'] }, // Spring recess starts Apr 22
-    { mon: '2027-04-26', days: ['b','b','b','b','b'] }, // Spring recess through Apr 30
-    { mon: '2027-05-03', days: ['s','s','s','s','s'] },
-    { mon: '2027-05-10', days: ['s','s','s','s','s'] },
-    { mon: '2027-05-17', days: ['x','s','s','s','s'] }, // Eid al-Adha
-    { mon: '2027-05-24', days: ['s','s','s','s','s'] },
-    { mon: '2027-05-31', days: ['x','s','s','s','s'] }, // Memorial Day
-    { mon: '2027-06-07', days: ['s','p','s','p','s'] }, // Clerical Tue (no 3K-MS); Anniversary Day Thu
-    { mon: '2027-06-14', days: ['s','r','r','r','r'] }, // Regents Tue-Fri
-    { mon: '2027-06-21', days: ['s','r','r','r','r'] }, // Regents through Jun 25
-    { mon: '2027-06-28', days: ['s','o','o','o','o'] }  // Last day Mon
-  ];
+  // Every weekday is classified from the rules below, transcribed from the
+  // NYC Public Schools 2026-27 school year calendar
+  // (schools.nyc.gov/calendar/2026-2027-school-year-calendar).
+  // Elementary = K-8 programs incl. 3-K/Pre-K; middle = grades 6-8 and D75;
+  // high = grades 9-12, K-12 and 6-12 schools, per the calendar's own definitions
+  // (K-12 schools follow the high school conference dates but the elementary
+  // clerical day; this grid does not split them out).
+  // Codes: s=full student day, h=early dismissal (3 hours early), v=remote day,
+  //        x=closed for holiday, p=no classes for these grades (staff/clerical day),
+  //        r=Regents exam days (high school), b=recess, o=before first/after last day.
+  var CAL = {
+    first: '2026-09-10',
+    last: '2027-06-28',
+    closed: ['2026-09-21', '2026-10-12', '2026-11-11', '2026-11-26', '2026-11-27',
+             '2027-01-18', '2027-03-09', '2027-03-26', '2027-05-17', '2027-05-31',
+             '2027-06-10'],
+    recess: [['2026-12-24', '2027-01-01'], ['2027-02-15', '2027-02-19'], ['2027-04-22', '2027-04-30']],
+    remote: ['2026-11-03'],
+    regents: [['2027-01-26', '2027-01-29'], ['2027-06-15', '2027-06-25']],
+    bands: {
+      es: { name: 'elementary school', early: ['2026-11-05', '2027-03-03'], off: ['2027-06-08'], regents: false },
+      ms: { name: 'middle school', early: ['2026-11-12', '2027-03-04'], off: ['2027-06-08'], regents: false },
+      hs: { name: 'high school', early: ['2026-11-20', '2027-03-19'], off: ['2027-02-01'], regents: true }
+    }
+  };
 
   var classMap = {
-    s: 'student', x: 'holiday', h: 'halfday', p: 'pd',
+    s: 'student', x: 'holiday', h: 'halfday', v: 'remote', p: 'pd',
     r: 'regents', b: 'recess', o: 'outside'
   };
   var labelMap = {
-    s: 'Student day', x: 'Closed', h: 'Half-day', p: 'PD / no students',
-    r: 'Regents', b: 'Recess', o: 'Pre-/post-year'
+    s: 'Full student day', x: 'Closed for holiday', h: 'Early dismissal', v: 'Remote instruction',
+    p: 'No classes for these grades', r: 'Regents exam day', b: 'Recess', o: 'Before or after the school year'
   };
 
+  function inRanges(iso, ranges) {
+    return ranges.some(function(r){ return iso >= r[0] && iso <= r[1]; });
+  }
+  function isoOf(d) {
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+  function classify(iso, band) {
+    var b = CAL.bands[band];
+    if (iso < CAL.first || iso > CAL.last) return 'o';
+    if (inRanges(iso, CAL.recess)) return 'b';
+    if (CAL.closed.indexOf(iso) > -1) return 'x';
+    if (b.off.indexOf(iso) > -1) return 'p';
+    if (CAL.remote.indexOf(iso) > -1) return 'v';
+    if (b.early.indexOf(iso) > -1) return 'h';
+    if (b.regents && inRanges(iso, CAL.regents)) return 'r';
+    return 's';
+  }
+  function buildWeeks(band) {
+    var weeks = [];
+    var mon = new Date(2026, 8, 7);   // Monday, Sept. 7, 2026
+    var end = new Date(2027, 5, 28);  // Monday, June 28, 2027
+    while (mon <= end) {
+      var days = [];
+      for (var i = 0; i < 5; i++) {
+        var d = new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() + i);
+        days.push(classify(isoOf(d), band));
+      }
+      weeks.push({ mon: isoOf(mon), date: new Date(mon.getTime()), days: days });
+      mon = new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() + 7);
+    }
+    return weeks;
+  }
+
   var grid = document.getElementById('fragGrid');
-  if (grid) {
+  function renderGrid(band) {
+    if (!grid) return;
+    grid.innerHTML = '';
     var head = ['Week of', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
     head.forEach(function(h, i){
       var d = document.createElement('div');
@@ -852,22 +906,24 @@
       grid.appendChild(d);
     });
 
-    var fullCount = 0;
-    weeks.forEach(function(w, i){
+    var weeks = buildWeeks(band);
+    var fullCount = 0, schoolWeeks = 0;
+    var dayNames = ['Mon','Tue','Wed','Thu','Fri'];
+    weeks.forEach(function(w){
       var isFull = w.days.every(function(c){ return c === 's'; });
       if (isFull) fullCount++;
+      if (w.days.some(function(c){ return 'svhr'.indexOf(c) > -1; })) schoolWeeks++;
 
-      var monDate = new Date(w.mon + 'T00:00:00');
       var label = document.createElement('div');
       label.className = 'frag-row-label' + (isFull ? ' full' : '');
-      label.textContent = (isFull ? '✓ ' : '') + monDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      label.textContent = (isFull ? '✓ ' : '') + w.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
       grid.appendChild(label);
 
       w.days.forEach(function(code, j){
         var cell = document.createElement('div');
         cell.className = 'frag-cell ' + classMap[code];
-        var dayNames = ['Mon','Tue','Wed','Thu','Fri'];
-        cell.title = dayNames[j] + ' ' + w.mon + ' · ' + labelMap[code];
+        var cellDate = new Date(w.date.getFullYear(), w.date.getMonth(), w.date.getDate() + j);
+        cell.title = dayNames[j] + ' ' + isoOf(cellDate) + ' · ' + labelMap[code];
         if (isFull) {
           cell.style.outline = '1.5px solid #050507';
           cell.style.outlineOffset = '-1px';
@@ -877,16 +933,26 @@
     });
 
     document.getElementById('fullCount').textContent = fullCount;
+    document.getElementById('schoolWeeks').textContent = schoolWeeks;
     document.getElementById('totalWeeks').textContent = weeks.length;
+    document.getElementById('bandName').textContent = CAL.bands[band].name;
+    document.getElementById('regentsClause').textContent = CAL.bands[band].regents ? ' or Regents exam day' : '';
   }
+
+  var bandButtons = document.querySelectorAll('.band-toggle button');
+  bandButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      bandButtons.forEach(function(b){ b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+      renderGrid(btn.getAttribute('data-band'));
+    });
+  });
+  renderGrid('es');
 
   // ============= BUILD YOUR OWN SCHOOL YEAR =============
   var dayMin = document.getElementById('dayMin');
   var days = document.getElementById('days');
-  var pdDays = document.getElementById('pdDays');
   var dayMinVal = document.getElementById('dayMinVal');
   var daysVal = document.getElementById('daysVal');
-  var pdDaysVal = document.getElementById('pdDaysVal');
   var annualHours = document.getElementById('annualHours');
   var gapHours = document.getElementById('gapHours');
   var k12Gap = document.getElementById('k12Gap');
@@ -895,8 +961,8 @@
   var refNat = document.getElementById('refNat');
 
   var BAR_MAX = 1600; // hours; visual scale max
-  var US_AVG = 1231;
-  var NYC_BASELINE = 1102;
+  var US_AVG = 1231; // 6.9 hours x 178.6 days, 2017-18 (Kraft and Novicoff, Education Next, 2025)
+  var NYC_BASELINE = 1121; // 380 minutes x 177 days, 2026-27
 
   function fmtHours(min) {
     var h = Math.floor(min / 60);
@@ -911,10 +977,8 @@
   function update() {
     var dm = parseInt(dayMin.value, 10);
     var d = parseInt(days.value, 10);
-    var pd = parseInt(pdDays.value, 10);
     dayMinVal.textContent = fmtHours(dm);
     daysVal.textContent = d;
-    pdDaysVal.textContent = pd;
 
     // Annual hours = day length (hr) * student attendance days
     var hrs = (dm * d) / 60;
@@ -936,21 +1000,21 @@
     refNat.style.left = ((US_AVG / BAR_MAX) * 100) + '%';
   }
 
-  if (dayMin && days && pdDays) {
-    [dayMin, days, pdDays].forEach(function(el){ el.addEventListener('input', update); });
+  if (dayMin && days) {
+    [dayMin, days].forEach(function(el){ el.addEventListener('input', update); });
     document.getElementById('btnNYC').addEventListener('click', function(){
-      dayMin.value = 380; days.value = 177; pdDays.value = 3; update();
+      dayMin.value = 380; days.value = 177; update();
     });
     document.getElementById('btnNational').addEventListener('click', function(){
-      dayMin.value = 420; days.value = 180; pdDays.value = 0; update();
+      dayMin.value = 414; days.value = 179; update();
     });
     document.getElementById('btnSuccess').addEventListener('click', function(){
-      dayMin.value = 510; days.value = 185; pdDays.value = 0; update();
+      dayMin.value = 468; days.value = 182; update();
     });
     update();
   }
 })();
 </script>
-  <script src="../shared/chrome.js?v=15"></script>
+  <script src="../shared/chrome.js?v=17"></script>
 </body>
 </html>

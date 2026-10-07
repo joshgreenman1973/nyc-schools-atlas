@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>NYC schools atlas — About & methodology</title>
 <meta name="description" content="Methodology, sources, and limits behind every section of the NYC schools atlas.">
-<link rel="stylesheet" href="../shared/chrome.css?v=15" />
+<link rel="stylesheet" href="../shared/chrome.css?v=17" />
 </head>
 <body data-section="about">
 
@@ -15,48 +15,41 @@
   <div class="container">
     <div class="kicker">NYC Schools Atlas</div>
     <h1>About this atlas</h1>
-    <p class="dek">A reference for parents, journalists, and researchers — the map of every K&ndash;12 school in New York City, plus the citywide systems those schools sit inside.</p>
+    <p class="dek">A reference for parents, journalists and researchers: every K&ndash;12 school in New York City, each set against similar schools on every measure the city and state publish for all schools at once.</p>
 
-    <h2>What&rsquo;s here</h2>
-    <p>The atlas has six sections. They&rsquo;re built to answer different questions but share one underlying premise: every claim is sourced and every assumption is visible.</p>
+    <h2>The map</h2>
+    <p>The <a href="../">map</a> plots 2,445 schools: 1,622 district public schools, 284 charter schools and 539 private schools. Click a public or charter school to open a sheet with about 35 measures, grouped the way <a href="https://www.chalkbeat.org/newyork/2026/10/07/how-to-find-nyc-public-schools-parents-guide/">Chalkbeat and The City Reporter&rsquo;s guide to vetting a school</a> groups them: teacher trust in the principal and whether teachers would recommend the school, chronic absence, test scores and DOE&rsquo;s impact score, graduation, school climate and safety from the 2026 school survey, class size, counselors, spending, PTA money, space, enrollment, demographics and special education services. Each measure sits on a small chart of every school at the same level, so a number comes with its context. Schools reviewed by Insideschools link to the review, with its date.</p>
+    <p>The map also lines up every school in view on every measure at once, colors schools by any one measure, and finds the zoned schools for an address. Private schools report none of these measures to the city or state, so they appear with name and location only.</p>
+    <p>Every measure&rsquo;s source, year, coverage and definition is listed in <a href="https://github.com/joshgreenman1973/nyc-schools-atlas/blob/main/data/MEASURES.md">MEASURES.md</a>, and how schools are compared is explained in <a href="https://github.com/joshgreenman1973/nyc-schools-atlas/blob/main/data/METHODOLOGY.md">METHODOLOGY.md</a>, including an Oct. 7, 2026 correction: until then the map showed the share of students who were not chronically absent under the label &ldquo;chronic absence.&rdquo;</p>
+
+    <h2>The explainers</h2>
+    <p>Five companion pages cover the citywide systems the schools sit inside. Each cites its sources on the page.</p>
     <ul>
-      <li><a href="../">Map</a> &mdash; every NYC public, charter, and private K&ndash;12 school plotted, with demographics, programs, attendance zones, outcomes, and enrollment trajectories. 2,524 schools.</li>
-      <li><a href="../curriculum/">Curriculum</a> &mdash; what New York State expects every K&ndash;12 student to know, by subject and grade, from the official Next-Generation and Framework standards.</li>
-      <li><a href="../school-day/">School day</a> &mdash; the 2026&ndash;27 calendar, the 129-hour annual instructional gap with the U.S. average, and where the time goes.</li>
-      <li><a href="../enrollment/">Enrollment</a> &mdash; 85 years of K&ndash;12 enrollment, 1940&ndash;2025: the Baby Boom expansion, the 1970s collapse, the pre-pandemic peak, and the post-pandemic loss of 300,000 students.</li>
-      <li><a href="../spending/">Spending</a> &mdash; where the $40B Department of Education budget goes, why per-pupil spending exceeds $35,000, and how that compares to the rest of the country.</li>
-      <li><a href="../special-ed/">Special education</a> &mdash; the $1.3B Carter/Connors due-process line, growing 28&times; since FY2005, and what the data does and doesn&rsquo;t show.</li>
+      <li><a href="../curriculum/">Curriculum</a> &mdash; what New York State expects students to know, by subject and grade, from the state&rsquo;s learning standards.</li>
+      <li><a href="../school-day/">School day</a> &mdash; how much time New York City students spend in school in 2026&ndash;27, and how that compares with the national average, Chicago and two charter networks.</li>
+      <li><a href="../enrollment/">Enrollment</a> &mdash; how enrollment in district, charter and private schools has changed since 1976&ndash;77, with 3-K and pre-K, grade by grade, chronic absence and school staffing.</li>
+      <li><a href="../spending/">Spending</a> &mdash; what the city spends per student, where the money goes and how that compares with other districts.</li>
+      <li><a href="../special-ed/">Special education</a> &mdash; what the city spends on special education due process cases (private school tuition and services families win or settle for), and where the money goes.</li>
     </ul>
 
     <h2>Principles</h2>
-    <p><b>Sources before claims.</b> Every chart and tooltip cites its provenance. Where the source is multiple files, each section&rsquo;s "Sources" block lists them. The map&rsquo;s per-school records carry a <code>quality_meta</code> field that records the exact NYC DOE file and vintage behind every outcomes metric.</p>
-    <p><b>Visible assumptions.</b> Where a calculation involves a choice (a denominator, a window, a definition), it&rsquo;s called out. The map&rsquo;s "Enrollment trajectory" view, for example, defines &ldquo;collapsing&rdquo; as &gt;25% loss over the past three reported years &mdash; not a hidden threshold.</p>
-    <p><b>Honest limitations.</b> Each section has a "Honest limits" or equivalent block listing what is <em>not</em> in the data and why. Examples: the public DOE demographic snapshot is stale at 2021&ndash;22; private schools have no demographic reporting; DOE cannot disaggregate Carter from Connors spending; standards are not curriculum.</p>
-    <p><b>Per-school spending is missing.</b> NYC DOE&rsquo;s School Based Expenditure Report is not on the Open Data API in usable form. The Spending section answers the citywide question (where the $40B goes); per-school dollar amounts will be added when a clean source is available.</p>
+    <p><b>Sources before claims.</b> Every number traces to a published file, saved in the repository with the script that reads it. Where a figure is computed, the formula is written down.</p>
+    <p><b>Check meaning, not just matching.</b> On Oct. 7, 2026, every value on the map was re-derived from the raw files with code written separately from the build. No value differed from its source, but the check turned up labels and comparisons that didn&rsquo;t mean what they said; those were fixed and are listed in the methodology.</p>
+    <p><b>Visible limits.</b> Charter schools are missing from several DOE reports; DOE redacts small counts; some measures are a year or two old; Insideschools reviews are often several years old. The map and the methodology say so where it matters.</p>
 
     <h2>How to use it</h2>
     <ul>
-      <li>Looking for a specific school? Use the <a href="../">Map</a> &mdash; search by name, neighborhood, or address. The address bar returns the zoned schools for any NYC address.</li>
-      <li>Looking at trends? The <a href="../enrollment/">Enrollment</a> and <a href="../spending/">Spending</a> sections cover decades. The map&rsquo;s "Enrollment trajectory" view shows three-year change school by school.</li>
-      <li>Writing about NYC schools? Every page&rsquo;s charts and quoted figures are sourced. Deep-link by URL: <code>/?school=02M212</code> on the map page opens that school&rsquo;s card.</li>
-      <li>Parent or guardian? The Map&rsquo;s school tooltips show demographics, programs, admissions, attendance zones, outcomes, and nearby alternatives. The <a href="../curriculum/">Curriculum</a> section shows what the state expects at each grade.</li>
+      <li>Looking for a specific school? Search the <a href="../">map</a> by name, neighborhood or address, or enter an address to see its zoned schools.</li>
+      <li>Comparing schools near you? Zoom the map to your area and press &ldquo;Line up schools in view.&rdquo; Shift-click schools anywhere to pin them to the top of that list.</li>
+      <li>Linking to a school? Add <code>#school=</code> and the school&rsquo;s DOE code to the map&rsquo;s address, for example <a href="../#school=13K307">#school=13K307</a>.</li>
     </ul>
 
     <h2>Build and code</h2>
-    <p>The atlas is a static site &mdash; HTML, JavaScript, and JSON. No build step, no backend, no analytics. The map uses Leaflet and CARTO Dark Matter tiles; charts use Chart.js or Recharts depending on section. Fonts: Fraunces (display) and Inter (body).</p>
-    <p>Source code and data: <a href="https://github.com/joshgreenman1973/nyc-schools-atlas">github.com/joshgreenman1973/nyc-schools-atlas</a>. Built by Josh Greenman. Issues, corrections, and data leads welcome.</p>
-
-    <h2>What&rsquo;s next</h2>
-    <ul>
-      <li>Refresh the demographic snapshot from 2021&ndash;22 to 2024&ndash;25 (FOIL or NYSED report-card scrape).</li>
-      <li>Add per-school spending (DOE School Based Expenditure Report, parsed from PDF).</li>
-      <li>Time-series trends for chronic absence and graduation rates, school by school.</li>
-      <li>Deep-linkable per-school pages with their own URLs and metadata.</li>
-      <li>Address-to-all-schools view: not just the zoned school, but the closest 5 charters, all HS options, and nearby private schools.</li>
-    </ul>
+    <p>The atlas is a static site: HTML, JavaScript and JSON, with no backend and no analytics. The data files are built by Python scripts in the repository from the saved source files. The map uses Leaflet and CARTO tiles; charts use Chart.js or Recharts.</p>
+    <p>Source code and data: <a href="https://github.com/joshgreenman1973/nyc-schools-atlas">github.com/joshgreenman1973/nyc-schools-atlas</a>. Built by Josh Greenman. Corrections and data leads welcome.</p>
   </div>
 </main>
 
-<script src="../shared/chrome.js?v=15"></script>
+<script src="../shared/chrome.js?v=17"></script>
 </body>
 </html>

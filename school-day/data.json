@@ -1,178 +1,406 @@
 {
-  "title": "NYC Public School Instructional Time, 2026-27",
-  "last_updated": "2026-04-28",
+  "title": "New York City public school time, 2026-27",
+  "last_updated": "2026-10-07",
+  "measure": "Scheduled hours in school per year: standard school day length, bell to bell, including lunch and recess, times scheduled student attendance days. This is not New York State's 'instructional hours' measure, which excludes lunch and recess (8 NYCRR 175.5).",
   "core_findings": {
-    "nyc_annual_hours_2025_26": 1102,
-    "us_national_average_hours": 1231,
-    "annual_gap_hours": 129,
-    "annual_gap_days_equivalent": 20,
-    "k12_cumulative_gap_hours": 1680,
-    "k12_cumulative_gap_years_equivalent": 1.5,
+    "nyc_school_year": "2026-27",
     "nyc_school_day_minutes": 380,
     "nyc_school_day_label": "6h 20m",
-    "national_school_day_average_label": "~7h",
-    "nyc_attendance_days_2026_27": 177,
+    "nyc_student_attendance_days": 177,
     "nyc_state_required_days": 180,
-    "nyc_pd_days_counted_2026_27": 3,
-    "full_5_day_weeks_per_year": 20,
-    "total_weeks_per_year": 45
+    "nyc_conference_days_counted_toward_180": 3,
+    "nyc_scheduled_hours": 1121,
+    "nyc_scheduled_hours_formula": "380 minutes x 177 days / 60 = 1,121.0",
+    "nyc_scheduled_hours_net_of_early_dismissals": 1115,
+    "nyc_scheduled_hours_net_formula": "1,121 - 2 early dismissals x 3 hours",
+    "us_average_hours": 1231,
+    "us_average_basis": "6.9 hours x 178.6 days, typical K-12 public school (traditional and charter), 2017-18 National Teacher and Principal Survey, per Kraft and Novicoff (2025)",
+    "us_average_school_day_hours": 6.9,
+    "us_average_days": 178.6,
+    "us_traditional_public_only_hours": 1226,
+    "annual_gap_hours": 110,
+    "annual_gap_nyc_days_equivalent": 17.4,
+    "nyc_day_shorter_than_us_average_minutes": 34,
+    "k12_years": 13,
+    "k12_cumulative_gap_hours": 1430,
+    "k12_cumulative_gap_us_years": 1.16,
+    "k12_cumulative_gap_nyc_years": 1.28,
+    "k12_note": "Illustrative: assumes the 2026-27 schedule holds for 13 years and perfect attendance. Years measured in national-average years of 1,231 hours, the convention Kraft and Novicoff use (133 hours x 13 / 1,231 = their '1.4 additional years').",
+    "comparison_2025_26": {
+      "nyc_student_days": 176,
+      "snow_days_waived": 1,
+      "chalkbeat_hours": 1102,
+      "chalkbeat_gap_hours": 129,
+      "reproduction": "(176 - 1) x 380 / 60 - 2 x 3 = 1,102.3",
+      "source": "Chalkbeat, Feb. 27, 2026; Chalkbeat, Sept. 9, 2025"
+    }
+  },
+  "week_grid_2026_27": {
+    "calendar_weeks_first_to_last_day": 43,
+    "weeks_entirely_in_recess": 3,
+    "weeks_with_school": 40,
+    "full_in_person_weeks": {
+      "elementary": 24,
+      "middle": 24,
+      "high_school": 19
+    },
+    "definition": "All five weekdays are full in-person student days for that grade band: no holiday, recess, early dismissal, remote day, staff or clerical day, and for high school no Regents exam day. Computed in index.html from the calendar rules."
   },
   "nyc_2026_27_calendar": {
+    "source": "https://www.schools.nyc.gov/calendar/2026-2027-school-year-calendar",
     "first_day": "2026-09-10",
     "last_day": "2027-06-28",
-    "summer_break_weeks": 11,
     "key_events": [
-      {"date": "2026-09-10", "day": "Thursday", "event": "First day of school for students"},
-      {"date": "2026-09-21", "day": "Monday", "event": "Yom Kippur; schools closed"},
-      {"date": "2026-10-12", "day": "Monday", "event": "Italian Heritage/Indigenous Peoples' Day"},
-      {"date": "2026-11-03", "day": "Tuesday", "event": "Election Day; remote instruction for students"},
-      {"date": "2026-11-05", "day": "Thursday", "event": "Parent-Teacher Conferences (Elementary); 3-hour early dismissal"},
-      {"date": "2026-11-11", "day": "Wednesday", "event": "Veterans Day; schools closed"},
-      {"date": "2026-11-12", "day": "Thursday", "event": "Parent-Teacher Conferences (Middle School/D75); early dismissal"},
-      {"date": "2026-11-20", "day": "Friday", "event": "Parent-Teacher Conferences (High School); early dismissal"},
-      {"date": "2026-11-26", "day": "Thursday-Friday", "event": "Thanksgiving Recess"},
-      {"date": "2026-12-24", "day": "Thursday-Friday", "event": "Winter Recess (through Jan 1)"},
-      {"date": "2027-01-18", "day": "Monday", "event": "Rev. Dr. Martin Luther King Jr. Day"},
-      {"date": "2027-01-26", "day": "Tuesday-Friday", "event": "Regents Administration (through Jan 29)"},
-      {"date": "2027-02-01", "day": "Monday", "event": "Professional Development Day (HS/6-12 No Classes)"},
-      {"date": "2027-02-02", "day": "Tuesday", "event": "Spring Semester begins"},
-      {"date": "2027-02-15", "day": "Monday-Friday", "event": "Midwinter Recess (through Feb 19)"},
-      {"date": "2027-03-09", "day": "Tuesday", "event": "Eid al-Fitr; schools closed"},
-      {"date": "2027-03-26", "day": "Friday", "event": "Good Friday; schools closed"},
-      {"date": "2027-04-22", "day": "Thursday-Friday", "event": "Spring Recess (covers Passover; through April 30)"},
-      {"date": "2027-05-17", "day": "Monday", "event": "Eid al-Adha; schools closed"},
-      {"date": "2027-05-31", "day": "Monday", "event": "Memorial Day"},
-      {"date": "2027-06-08", "day": "Tuesday", "event": "Clerical Day (No classes 3-K through MS)"},
-      {"date": "2027-06-10", "day": "Thursday", "event": "Anniversary Day/Chancellor's Conference Day; no students"},
-      {"date": "2027-06-15", "day": "Tuesday-Friday", "event": "Regents Administration (through June 25)"},
-      {"date": "2027-06-28", "day": "Monday", "event": "Last day of school for students"}
+      {
+        "date": "2026-09-10",
+        "day": "Thursday",
+        "event": "First day of school"
+      },
+      {
+        "date": "2026-09-21",
+        "day": "Monday",
+        "event": "Yom Kippur, schools closed"
+      },
+      {
+        "date": "2026-10-12",
+        "day": "Monday",
+        "event": "Italian Heritage/Indigenous Peoples' Day, schools closed"
+      },
+      {
+        "date": "2026-11-03",
+        "day": "Tuesday",
+        "event": "Election Day, school in session remotely for all students"
+      },
+      {
+        "date": "2026-11-05",
+        "day": "Thursday",
+        "event": "Parent-teacher conferences, elementary schools and Pre-K Centers; students dismissed three hours early"
+      },
+      {
+        "date": "2026-11-11",
+        "day": "Wednesday",
+        "event": "Veterans Day, schools closed"
+      },
+      {
+        "date": "2026-11-12",
+        "day": "Thursday",
+        "event": "Parent-teacher conferences, middle schools and D75; students dismissed three hours early"
+      },
+      {
+        "date": "2026-11-20",
+        "day": "Friday",
+        "event": "Parent-teacher conferences, high schools, K-12 and 6-12 schools; students dismissed three hours early"
+      },
+      {
+        "date": "2026-11-26",
+        "end": "2026-11-27",
+        "day": "Thursday-Friday",
+        "event": "Thanksgiving Recess, schools closed"
+      },
+      {
+        "date": "2026-12-24",
+        "end": "2027-01-01",
+        "day": "Thursday-Friday",
+        "event": "Winter Recess, schools closed"
+      },
+      {
+        "date": "2027-01-18",
+        "day": "Monday",
+        "event": "Rev. Dr. Martin Luther King Jr. Day, schools closed"
+      },
+      {
+        "date": "2027-01-26",
+        "end": "2027-01-29",
+        "day": "Tuesday-Friday",
+        "event": "Regents Administration"
+      },
+      {
+        "date": "2027-02-01",
+        "day": "Monday",
+        "event": "Professional Development Day; students in high schools and 6-12 schools do not attend; all other students attend"
+      },
+      {
+        "date": "2027-02-02",
+        "day": "Tuesday",
+        "event": "Spring semester begins"
+      },
+      {
+        "date": "2027-02-15",
+        "end": "2027-02-19",
+        "day": "Monday-Friday",
+        "event": "Midwinter Recess, schools closed"
+      },
+      {
+        "date": "2027-03-03",
+        "day": "Wednesday",
+        "event": "Parent-teacher conferences, elementary schools and Pre-K Centers; students dismissed three hours early"
+      },
+      {
+        "date": "2027-03-04",
+        "day": "Thursday",
+        "event": "Parent-teacher conferences, middle schools and D75; students dismissed three hours early"
+      },
+      {
+        "date": "2027-03-09",
+        "day": "Tuesday",
+        "event": "Eid al-Fitr, schools closed"
+      },
+      {
+        "date": "2027-03-19",
+        "day": "Friday",
+        "event": "Parent-teacher conferences, high schools, K-12 and 6-12 schools; students dismissed three hours early"
+      },
+      {
+        "date": "2027-03-26",
+        "day": "Friday",
+        "event": "Good Friday, schools closed"
+      },
+      {
+        "date": "2027-04-22",
+        "end": "2027-04-30",
+        "day": "Thursday-Friday",
+        "event": "Spring Recess, schools closed"
+      },
+      {
+        "date": "2027-05-17",
+        "day": "Monday",
+        "event": "Eid al-Adha, schools closed"
+      },
+      {
+        "date": "2027-05-31",
+        "day": "Monday",
+        "event": "Memorial Day, schools closed"
+      },
+      {
+        "date": "2027-06-08",
+        "day": "Tuesday",
+        "event": "Clerical Day; no classes for 3-K, Pre-K, elementary, middle, K-12 schools and standalone D75 programs"
+      },
+      {
+        "date": "2027-06-10",
+        "day": "Thursday",
+        "event": "Anniversary Day/Chancellor's Conference Day; students do not attend"
+      },
+      {
+        "date": "2027-06-15",
+        "end": "2027-06-25",
+        "day": "Tuesday-Friday (June 15-18), Monday-Friday (June 21-25)",
+        "event": "Regents Administration"
+      },
+      {
+        "date": "2027-06-28",
+        "day": "Monday",
+        "event": "Last day of school for students"
+      }
+    ],
+    "evening_only_conferences_not_affecting_hours": [
+      "2026-09-23",
+      "2026-09-24",
+      "2026-09-30",
+      "2026-11-19",
+      "2027-03-18",
+      "2027-05-12",
+      "2027-05-13",
+      "2027-05-26"
     ],
     "anatomy_summary": {
       "student_attendance_days": 177,
-      "pd_days_counted_toward_180": 3,
-      "religious_cultural_holiday_closures": 5,
-      "half_days_for_parent_teacher_conferences": 3,
-      "regents_administration_days": 9,
-      "summer_break_weeks": 11,
+      "remote_days_included": 1,
+      "conference_days_counted_toward_180": 3,
+      "religious_holiday_closures": 4,
+      "religious_holiday_closures_list": [
+        "Yom Kippur",
+        "Eid al-Fitr",
+        "Good Friday",
+        "Eid al-Adha"
+      ],
+      "early_dismissals_per_student": 2,
+      "regents_administration_days": 13,
       "ends_on_monday": true
     }
   },
   "comparison_data_2026_27": {
-    "definition": "Estimated annual instructional hours, scheduled bell-to-bell where applicable",
-    "districts_and_charters": [
+    "definition": "Scheduled hours in school per year, 2026-27: student days x bell-to-bell day length (including lunch and recess), adjusted for recurring early-dismissal days. Ranges span grade levels or schools. Systems that set hours school by school with no published system-wide schedule are listed but not charted.",
+    "systems": [
       {
-        "name": "Success Academy (NYC charter)",
-        "annual_hours": 1570,
-        "days": "185-190",
-        "daily_hours": "8h 30m",
+        "name": "Success Academy (New York City charter network)",
         "category": "charter",
-        "notes": "Early-August start; long days plus internal assessments"
+        "charted": true,
+        "hours_low": 1209,
+        "hours_high": 1496,
+        "days": "164-193",
+        "daily_schedule": "Elementary 7:50 a.m.-4:20 p.m.; middle 8:00 a.m.-4:00 p.m.; high school 7:55 a.m.-4:30 p.m.; Wednesdays dismiss at 12:50, 12:20 and 1:00 p.m.",
+        "first_last_day": "Aug. 3 (high school grades 10-12) to Sept. 9 (kindergarten); June 11 for K-8; May 21 to June 17 for high school grades",
+        "derivation": "Day-by-day count of each grade cohort's 2026-27 network calendar (excluding the Bronx K-12 campus); Wednesdays and start-of-year half days at the Wednesday dismissal time",
+        "source_url": "https://www.successacademies.org/academic-calendars/",
+        "schedule_url": "https://sites.google.com/successacademies.org/family-handbooks/family-handbook/the-school-day",
+        "status": "Derived from network calendars and handbook"
       },
       {
-        "name": "KIPP NYC (charter)",
-        "annual_hours": 1380,
-        "days": "182-185",
-        "daily_hours": "7h 35m",
+        "name": "KIPP NYC (charter network, K-8 schools)",
         "category": "charter",
-        "notes": "Late-August start; school day 7:55 AM - 3:30 PM"
-      },
-      {
-        "name": "Houston ISD",
-        "annual_hours": 1260,
-        "days": "~187",
-        "daily_hours": "7h 30m",
-        "category": "peer_district",
-        "notes": "Texas operates on 75,600 minutes/year standard"
-      },
-      {
-        "name": "Uncommon Schools (NYC charter)",
-        "annual_hours": 1250,
-        "days": "180-185",
-        "daily_hours": "7h 30m typical",
-        "category": "charter",
-        "notes": "Half-day Fridays with 12:30 PM dismissal"
-      },
-      {
-        "name": "Miami-Dade County",
-        "annual_hours": 1170,
-        "days": 180,
-        "daily_hours": "~6h 30m",
-        "category": "peer_district",
-        "notes": "Aug 13, 2026 - June 4, 2027; FL law requires later MS/HS start times by July 2026"
-      },
-      {
-        "name": "NYC Public Schools",
-        "annual_hours": 1102,
-        "days": 177,
-        "daily_hours": "6h 20m",
-        "category": "focal",
-        "notes": "Sept 10, 2026 - June 28, 2027; UFT contract sets day length"
-      },
-      {
-        "name": "LAUSD",
-        "annual_hours": 1080,
-        "days": 180,
-        "daily_hours": "~6h",
-        "category": "peer_district",
-        "notes": "Aug 10, 2026 - May 28, 2027"
+        "charted": true,
+        "hours_low": 1262,
+        "hours_high": 1442,
+        "days": "182-186",
+        "daily_schedule": "7 to 8 hours depending on school (e.g., KIPP Star Harlem Middle 8:00 a.m.-3:00 p.m.; KIPP Beyond Middle 7:55 a.m.-3:30 p.m.; KIPP Freedom Middle 7:15 a.m.-3:15 p.m.); eight network-wide 1:30 p.m. early dismissals",
+        "first_last_day": "Aug. 18-24, 2026 to June 23, 2027",
+        "derivation": "Each school's 2026-27 Student and Family Handbook; high schools not included",
+        "source_url": "https://kippnyc.org/family-resources/",
+        "status": "Derived from school handbooks"
       },
       {
         "name": "Chicago Public Schools",
-        "annual_hours": 1055,
-        "days": 176,
-        "daily_hours": "~6h 30m post-2012 reform",
         "category": "peer_district",
-        "notes": "Aug 24, 2026 - June 11, 2027"
+        "charted": true,
+        "hours_low": 1232,
+        "hours_high": 1276,
+        "days": "176 (district total)",
+        "daily_schedule": "Elementary 7 hours (since 2012; teachers' contract: day 'shall normally begin at 8:30 a.m. and end at 3:30 p.m.'); high school about 7 hours 15 minutes (2024-25 school-profile median, 435 minutes)",
+        "first_last_day": "Aug. 24, 2026 to June 11, 2027",
+        "derivation": "176 x 7 h = 1,232; 176 x 7.25 h = 1,276",
+        "source_url": "https://www.cps.edu/calendar/",
+        "status": "Derived; high school end uses 2024-25 data"
+      },
+      {
+        "name": "New York City public schools",
+        "category": "focal",
+        "charted": true,
+        "hours_low": 1121,
+        "hours_high": 1121,
+        "days": "177",
+        "daily_schedule": "6 hours 20 minutes (standard)",
+        "first_last_day": "Sept. 10, 2026 to June 28, 2027",
+        "derivation": "380 min x 177 days / 60",
+        "source_url": "https://www.schools.nyc.gov/calendar/2026-2027-school-year-calendar",
+        "status": "Derived from official calendar"
+      },
+      {
+        "name": "Houston ISD",
+        "category": "peer_district",
+        "charted": false,
+        "hours_low": null,
+        "hours_high": null,
+        "days": "181 (our count of the official calendar; matches Houston Chronicle)",
+        "daily_schedule": "Set by campus; no district-wide bell schedule found. Campus bell-schedule pages sampled (school year not stated) show 7 to 8.5 hours.",
+        "first_last_day": "Aug. 10, 2026 to May 28, 2027",
+        "derivation": "Not charted. The earlier 1,260 figure is the Texas legal minimum (75,600 minutes), not Houston's schedule.",
+        "source_url": "https://www.houstonisd.org/our-district/district-calendar",
+        "status": "Hours unverifiable district-wide"
+      },
+      {
+        "name": "Miami-Dade County Public Schools",
+        "category": "peer_district",
+        "charted": false,
+        "hours_low": null,
+        "hours_high": null,
+        "days": "180 (district total)",
+        "daily_schedule": "Set by school; elementary grades 2-5 and K-8 centers (grades 2-8) released one hour early every Wednesday",
+        "first_last_day": "Aug. 13, 2026 to June 3, 2027",
+        "derivation": "Not charted: no district-wide bell schedule found",
+        "source_url": "https://api.dadeschools.net/WMSFiles/392/calendars/25-26/School-Calendars-2026-2027-Elementary.pdf",
+        "status": "Hours unverifiable district-wide"
+      },
+      {
+        "name": "Los Angeles Unified School District",
+        "category": "peer_district",
+        "charted": false,
+        "hours_low": null,
+        "hours_high": null,
+        "days": "180 (tentative calendar)",
+        "daily_schedule": "Not verified for 2026-27; the district's 2023 bulletin set minimum instructional minutes (excluding lunch and recess), not bell-to-bell times",
+        "first_last_day": "Aug. 12, 2026 to June 4, 2027 (tentative calendar)",
+        "derivation": "Not charted",
+        "source_url": "https://www.lausd.org/calendar",
+        "status": "Hours unverifiable"
+      },
+      {
+        "name": "Uncommon Schools NYC (charter network)",
+        "category": "charter",
+        "charted": false,
+        "hours_low": null,
+        "hours_high": null,
+        "days": "About 180-182 elementary and middle; 171-180 high school",
+        "daily_schedule": "Not published ('campus hours vary by school'); Fridays dismiss at 12:30 p.m.",
+        "first_last_day": "Late August 2026 start",
+        "derivation": "Not charted",
+        "source_url": "https://nyc.uncommonschools.org/family-resources/",
+        "status": "Hours unverifiable"
       }
-    ]
+    ],
+    "us_average_reference": {
+      "name": "Typical U.S. public school (2017-18 data)",
+      "hours": 1231,
+      "source": "Kraft and Novicoff, Education Next, Winter 2025"
+    }
   },
   "structural_requirements": {
-    "ny_state_minimum_days": 180,
-    "ny_state_min_hours_k6": 900,
-    "ny_state_min_hours_7_12": 990,
-    "uft_school_day_length_minutes": 380,
-    "max_pd_days_counted_toward_180": 4,
+    "ny_state_minimum_session_days": 180,
+    "ny_state_min_instructional_hours_k_6": 900,
+    "ny_state_min_instructional_hours_7_12": 990,
+    "ny_instructional_hours_exclude": "lunch and recess (8 NYCRR 175.5(b)(1))",
+    "max_conference_days_excused": 4,
+    "teacher_workday_minutes_uft_contract": 380,
     "calendar_constraints": [
-      "Must begin after Labor Day (UFT contract)",
-      "Must end before second-to-last weekday in June (UFT contract)",
-      "Must include 180 days of instruction (NY State law)",
-      "Up to 4 PD days may count toward 180 (NY State regulation)"
+      "Start after Labor Day (NYC Public Schools, citing state Education Law and staff contracts)",
+      "End before the second-to-last weekday in June (NYC Public Schools, citing state Education Law and staff contracts)",
+      "At least 180 days of session, which may include superintendents' (chancellor's) conference days (Education Law 3604(7); 8 NYCRR 175.5)",
+      "A deficiency of up to four days for superintendents' conferences is excused (Education Law 3604(8))",
+      "Remote instruction days count as student attendance days (NYC Public Schools)"
     ]
   },
   "key_voices": {
     "matthew_kraft": {
-      "title": "Professor of education and economics, Brown University",
-      "co_author_of": "Time for School (Education Next, 2025)",
-      "key_quote": "State minimums set a floor we should be moving beyond. They are not what we should be targeting or aspiring to.",
+      "title": "Professor of education and economics, Brown University (per Chalkbeat)",
+      "co_author_of": "Time for School (Education Next, Winter 2025), with Sarah Novicoff",
+      "quote_on_state_minimums": "They are not what we should be targeting or aspiring to. They set a floor that we should be moving beyond.",
+      "quote_context": "Said of state laws setting minimum school time; Chalkbeat, Feb. 27, 2026",
       "secondary_quote": "Overall the evidence strongly points to additional instructional time increasing student success in school. Of course, how much time you add, when you add it, and how it's used also matter tremendously. But it is one of those necessary but not sufficient inputs into supporting a successful education."
     },
     "david_bloomfield": {
       "title": "Professor of education, law, and public policy, Brooklyn College and CUNY Graduate Center",
       "key_quote": "What seems like 180 days isn't really. A child's individual calendar may differ from grade to grade, program to program because of testing and other non-instructional obligations.",
-      "fragmentation_observation": "Out of 45 school weeks, less than half — about 20 — have complete five-day weeks."
+      "quote_note": "Chalkbeat printed these as two quoted passages separated by 'he said, adding'.",
+      "fragmentation_observation_paraphrase": "Out of 45 school weeks, he said, less than half — about 20 — have complete five-day weeks.",
+      "fragmentation_note": "Chalkbeat paraphrase, not a direct quote; refers to the 2025-26 calendar (Chalkbeat, Feb. 27, 2026)."
     },
     "kamar_samuels": {
-      "title": "NYC Schools Chancellor",
-      "context": "Pledged to focus on chronic absenteeism",
+      "title": "New York City Schools Chancellor",
+      "context": "Pledged to focus on chronic absenteeism (Chalkbeat, Feb. 27, 2026)",
       "quote": "Folks need to understand that if we're not in school your child is going to miss work."
     }
   },
   "context_data": {
-    "nyc_chronic_absenteeism_rate": "~33%",
-    "nyc_per_pupil_spending_rank": "Above national average; below-average performance per CBC",
-    "national_avg_school_days": "179-180",
-    "national_avg_school_day_hours": 7,
-    "national_avg_weekly_hours": 35,
-    "nyc_avg_weekly_hours": 31.67
+    "nyc_chronic_absenteeism": "About 1 in 3 New York City students were chronically absent in 2024-25 (Chalkbeat, Feb. 27, 2026)",
+    "ny_state_per_pupil_spending": "91 percent above the national average in 2021-22; estimated $36,293 per student in 2024-25 (Citizens Budget Commission, Jan. 17, 2025; New York State, not New York City)",
+    "us_average_school_day_hours": 6.9,
+    "us_average_days": 178.6,
+    "us_average_weekly_hours": 34.5,
+    "nyc_weekly_hours": 31.67
   },
   "sources": [
     {
-      "title": "School Year Calendar 2026-2027",
+      "title": "2026-2027 School Year Calendar",
       "publisher": "NYC Public Schools",
       "url": "https://www.schools.nyc.gov/calendar/2026-2027-school-year-calendar"
     },
     {
-      "title": "NYC unveils 2026-27 school calendar: Late September start and a Monday finish in June",
+      "title": "2026-27 School Year Calendar (printable PDF)",
+      "publisher": "NYC Public Schools",
+      "url": "https://www.schools.nyc.gov/docs/default-source/sections/calendar/2026-27-school-year-calendar.pdf"
+    },
+    {
+      "title": "2025-2026 School Year Calendar",
+      "publisher": "NYC Public Schools",
+      "url": "https://www.schools.nyc.gov/calendar/2025-2026-school-year-calendar"
+    },
+    {
+      "title": "How We Create the New York City Public Schools Calendar",
+      "publisher": "NYC Public Schools",
+      "url": "https://www.schools.nyc.gov/calendar/how-we-create-the-new-york-city-public-schools-calendar"
+    },
+    {
+      "title": "NYC's 2026-27 school calendar is out: late September start, a Monday finish in June",
       "author": "Amy Zimmer",
       "publisher": "Chalkbeat",
       "date": "2026-04-21",
@@ -186,13 +414,6 @@
       "url": "https://www.chalkbeat.org/newyork/2026/02/27/nyc-shorter-school-year-instructional-time-gap/"
     },
     {
-      "title": "Time for School: Assessing Inequality in Access to Instructional Time in the United States",
-      "author": "Matthew A. Kraft, Sarah Goldstein, and Lyon",
-      "publisher": "Education Next",
-      "date": "2025",
-      "url": "https://www.educationnext.org/time-for-school-assessing-inequality-access-instructional-time-united-states/"
-    },
-    {
       "title": "NYC schools have 176 days of class, not the required 180. Here's why.",
       "author": "Amy Zimmer",
       "publisher": "Chalkbeat",
@@ -200,9 +421,21 @@
       "url": "https://www.chalkbeat.org/newyork/2025/09/09/why-nyc-school-year-is-shorter-than-180-days/"
     },
     {
-      "title": "Highest Costs, Middling Marks",
-      "publisher": "Citizens Budget Commission",
-      "url": "https://cbcny.org/research/highest-costs-middling-marks"
+      "title": "Time for School: Assessing the inequality of access to instructional time across the United States",
+      "author": "Matthew A. Kraft and Sarah Novicoff",
+      "publisher": "Education Next 25(1), 32-39",
+      "date": "Winter 2025",
+      "url": "https://www.educationnext.org/time-for-school-assessing-inequality-access-instructional-time-united-states/"
+    },
+    {
+      "title": "8 NYCRR 175.5, Minimum instructional hours and use of superintendents' conference days for State aid purposes",
+      "publisher": "Legal Information Institute (Cornell)",
+      "url": "https://www.law.cornell.edu/regulations/new-york/8-NYCRR-175.5"
+    },
+    {
+      "title": "New York Education Law 3604",
+      "publisher": "New York State Senate",
+      "url": "https://www.nysenate.gov/legislation/laws/EDN/3604"
     },
     {
       "title": "Contract 2023: Time, the workday and remote work",
@@ -210,37 +443,75 @@
       "url": "https://www.uft.org/your-rights/contracts/contract-2023/contract-2023-time-workday-and-remote-work"
     },
     {
-      "title": "Academic Calendars K-12",
-      "publisher": "Success Academy",
+      "title": "State Education Practices, Table 1.1: Minimum number of instructional days and hours in the school year, by state: 2020",
+      "publisher": "National Center for Education Statistics",
+      "url": "https://nces.ed.gov/programs/statereform/tab1_1-2020.asp"
+    },
+    {
+      "title": "Highest Costs, Middling Marks: New York School Spending and Results",
+      "publisher": "Citizens Budget Commission",
+      "date": "2025-01-17",
+      "url": "https://cbcny.org/research/highest-costs-middling-marks"
+    },
+    {
+      "title": "Success Academy academic calendars, 2026-27",
+      "publisher": "Success Academy Charter Schools",
       "url": "https://www.successacademies.org/academic-calendars/"
     },
     {
-      "title": "KIPP NYC",
-      "url": "https://kippnyc.org/"
+      "title": "2026 Family Handbook: The School Day",
+      "publisher": "Success Academy Charter Schools",
+      "url": "https://sites.google.com/successacademies.org/family-handbooks/family-handbook/the-school-day"
     },
     {
-      "title": "Uncommon Schools",
-      "url": "https://uncommonschools.org/"
+      "title": "Family Resources (2026-27 Student and Family Handbooks by school)",
+      "publisher": "KIPP NYC",
+      "url": "https://kippnyc.org/family-resources/"
     },
     {
-      "title": "Chicago Public Schools 2026-27 Calendar",
+      "title": "Family Resources (2026-27 calendars and family handbook)",
+      "publisher": "Uncommon Schools NYC",
+      "url": "https://nyc.uncommonschools.org/family-resources/"
+    },
+    {
+      "title": "Chicago Public Schools District Calendar, SY26-27",
+      "publisher": "Chicago Public Schools",
       "url": "https://www.cps.edu/calendar/"
     },
     {
-      "title": "LAUSD 2026-27 Instructional Calendar",
-      "url": "https://www.lausd.org/calendar"
+      "title": "Mayor Emanuel, CPS announce 7-hour day for elementary students (April 2012)",
+      "publisher": "City of Chicago",
+      "url": "https://www.chicago.gov/content/city/en/depts/mayor/press_room/press_releases/2012/april_2012/mayor_emanuel_cpsannounce7-hourdayforelementarystudents.html"
     },
     {
-      "title": "Houston ISD District Calendar",
+      "title": "Houston ISD District Calendar, 2026-27",
+      "publisher": "Houston Independent School District",
       "url": "https://www.houstonisd.org/our-district/district-calendar"
     },
     {
-      "title": "Miami-Dade County Public Schools",
-      "url": "https://www.dadeschools.net/"
+      "title": "School Calendar 2026-2027, Elementary and Secondary",
+      "publisher": "Miami-Dade County Public Schools",
+      "url": "https://api.dadeschools.net/WMSFiles/392/calendars/25-26/School-Calendars-2026-2027-Elementary.pdf"
     },
     {
-      "title": "NCES State Education Practices: Minimum instructional days and hours",
-      "url": "https://nces.ed.gov/programs/statereform/tab1_1-2020.asp"
+      "title": "LAUSD Calendars",
+      "publisher": "Los Angeles Unified School District",
+      "url": "https://www.lausd.org/calendar"
+    },
+    {
+      "title": "Texas Education Code 25.081, Operation of Schools",
+      "publisher": "Texas Public Law",
+      "url": "https://texas.public.law/statutes/tex._educ._code_section_25.081"
+    },
+    {
+      "title": "Florida Statutes 1011.61, Definitions (full-time student hours)",
+      "publisher": "Florida Senate",
+      "url": "https://www.flsenate.gov/Laws/Statutes/2025/1011.61"
+    },
+    {
+      "title": "California Education Code 46207, minimum instructional minutes",
+      "publisher": "California Public Law",
+      "url": "https://california.public.law/codes/education_code_section_46207"
     }
   ]
 }

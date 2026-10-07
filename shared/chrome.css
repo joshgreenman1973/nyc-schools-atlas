@@ -70,7 +70,7 @@
   color: var(--site-text);
 }
 .site-brand .mark em {
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
   color: var(--site-accent);
 }
@@ -255,7 +255,7 @@ body[data-section]:not([data-section="map"]) .dek,
 body[data-section]:not([data-section="map"]) header .subtitle,
 body[data-section]:not([data-section="map"]) header .dek {
   font-family: 'Fraunces', Georgia, serif !important;
-  font-style: italic !important;
+  font-style: normal !important;
   font-size: 20px !important;
   font-weight: 400 !important;
   color: var(--site-paper-muted) !important;

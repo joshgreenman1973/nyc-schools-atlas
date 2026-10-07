@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NYC special education due process spending tracker</title>
+<title>New York City special education due process spending tracker</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
 <style>
@@ -64,6 +64,8 @@ h3 {
 }
 p { margin-bottom: 0.85rem; }
 a { color: var(--vc-indigo); text-decoration: underline; text-underline-offset: 2px; }
+sup.cite { font-size: 0.7em; line-height: 0; }
+sup.cite a { text-decoration: none; }
 
 .metrics {
   display: grid;
@@ -105,6 +107,11 @@ a { color: var(--vc-indigo); text-decoration: underline; text-underline-offset: 
   color: var(--vc-charcoal);
   margin-bottom: 0.9rem;
 }
+.chart-source {
+  font-size: 0.75rem;
+  color: var(--vc-charcoal);
+  margin-top: 0.7rem;
+}
 .chart-wrap { position: relative; height: 380px; }
 
 table {
@@ -116,6 +123,7 @@ th, td {
   text-align: left;
   padding: 0.55rem 0.6rem;
   border-bottom: 1px solid #eee;
+  vertical-align: top;
 }
 th {
   font-weight: 700;
@@ -125,8 +133,9 @@ th {
   text-transform: uppercase;
   color: var(--vc-charcoal);
 }
-td.num { font-variant-numeric: tabular-nums; text-align: right; }
+th.num, td.num { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
 td.src { font-size: 0.82rem; color: var(--vc-charcoal); }
+td.status { font-size: 0.82rem; white-space: nowrap; }
 
 .callout {
   background: #fff8f3;
@@ -137,8 +146,10 @@ td.src { font-size: 0.82rem; color: var(--vc-charcoal); }
 }
 .callout strong { font-weight: 700; }
 
-ul { padding-left: 1.2rem; margin-bottom: 1rem; }
+ul, ol { padding-left: 1.2rem; margin-bottom: 1rem; }
 li { margin-bottom: 0.35rem; }
+ol.sources { font-size: 0.85rem; color: #333; }
+ol.sources li { margin-bottom: 0.5rem; }
 
 footer {
   border-top: 1px solid #eee;
@@ -153,52 +164,58 @@ footer {
   .chart-wrap { height: 320px; }
 }
 </style>
-  <link rel="stylesheet" href="../shared/chrome.css?v=15" />
+  <link rel="stylesheet" href="../shared/chrome.css?v=17" />
 </head>
 <body data-section="special-ed">
 <div id="site-header"></div>
 <div class="container">
 <header>
   <div class="kicker">NYC Schools Atlas · Fiscal monitor</div>
-  <h1>NYC special education due process spending</h1>
-  <p class="subtitle">Annual tracker of what New York City pays out under Carter and Connors cases — the federal Individuals with Disabilities Education Act (IDEA) mechanisms that let families recover private school tuition and services when the Department of Education fails to provide a Free Appropriate Public Education.</p>
+  <h1>New York City special education due process spending</h1>
+  <p class="subtitle">What New York City pays when families challenge the special education their children are offered: private school tuition, related services, transportation and legal fees the Department of Education (DOE) pays through settlements, hearing orders and pendency. The budget line was long labeled "Carter cases," after the 1993 Supreme Court decision allowing tuition reimbursement when a district fails to offer a free appropriate public education (FAPE) under the federal Individuals with Disabilities Education Act (IDEA). It also pays for services to students whose parents enrolled them in private schools for other reasons, a right that comes from state law.<sup class="cite"><a href="#src-1">1</a>,<a href="#src-7">7</a></sup></p>
 </header>
 
 <section>
   <div class="metrics">
-    <div class="metric"><div class="value">$1.3B</div><div class="label">FY2025 total spending</div></div>
-    <div class="metric"><div class="value">28×</div><div class="label">Growth since FY2005 ($47M)</div></div>
-    <div class="metric"><div class="value">$101,757</div><div class="label">Average settlement per student, FY2024</div></div>
-    <div class="metric"><div class="value">~60%</div><div class="label">Of all US due process filings originate in NYC (FY2021)</div></div>
+    <div class="metric"><div class="value">$1.14B</div><div class="label">Fiscal year (FY) 2025 spending at the Comptroller's closeout. About $1.42B on the accounting basis used before FY2025 (City Council estimate).<sup class="cite"><a href="#src-1">1</a></sup></div></div>
+    <div class="metric"><div class="value">$1.41B</div><div class="label">FY2027 adopted budget, down from $1.55B budgeted for FY2026<sup class="cite"><a href="#src-3">3</a></sup></div></div>
+    <div class="metric"><div class="value">$109,859</div><div class="label">Average cost of a settlement, FY2026, up from $101,424 in FY2025 (Mayor's Management Report)<sup class="cite"><a href="#src-5">5</a></sup></div></div>
+    <div class="metric"><div class="value">62%</div><div class="label">Share of special education due process complaints filed in the 50 states in 2020&ndash;21 that were filed in New York City (14,141 of 22,759)<sup class="cite"><a href="#src-15">15</a>,<a href="#src-16">16</a></sup></div></div>
   </div>
 </section>
 
 <section>
-  <h2>Total annual spending, FY2005–FY2027</h2>
+  <h2>Annual spending, FY2013&ndash;FY2027</h2>
   <div class="chart-box">
-    <div class="chart-title">Carter / Connors / pendency payments combined</div>
-    <div class="chart-note">Figures include tuition reimbursement, direct tuition payment, related services, transportation, and legal fees. FY2026 and FY2027 are budgeted / projected. Policy markers shown where the trajectory inflects.</div>
+    <div class="chart-title">Spending charged to the due process budget line ("Carter cases"), millions of nominal dollars</div>
+    <div class="chart-note">Includes tuition, related services, transportation and legal fees. FY2013&ndash;FY2025 are year-end actuals. Starting in FY2025, costs are booked to the year a case is decided or settled instead of being charged back to earlier years, which makes FY2025 look lower than the prior trend; the lighter segment is the City Council's estimate of what the old practice would have added. FY2026 is spending through April 2026 only; the full-year figure comes with the Comptroller's annual financial report. FY2027 is the adopted budget. The axis starts at zero.</div>
     <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
+    <div class="chart-source">Sources: City Council Finance Division reports built on DOE and Office of Management and Budget (OMB) data;<sup class="cite"><a href="#src-1">1</a>,<a href="#src-2">2</a>,<a href="#src-8">8</a>,<a href="#src-9">9</a>,<a href="#src-10">10</a>,<a href="#src-11">11</a>,<a href="#src-12">12</a></sup> Comptroller (FY2027 budget).<sup class="cite"><a href="#src-3">3</a></sup> Year-by-year values and notes are in the table below.</div>
   </div>
+  <p>On a consistent basis, spending grew from $234 million in FY2015 to $1.19 billion in FY2024, about 5.1 times. Adjusted for inflation with the consumer price index, the FY2015 figure is about $310 million in 2024 dollars, so the real increase was about 3.8 times.<sup class="cite"><a href="#src-11">11</a>,<a href="#src-1">1</a>,<a href="#src-23">23</a></sup> Going further back, the Independent Budget Office (IBO) put the cost at $47 million in FY2005; earlier years come from different sources that do not line up, so they are not charted.<sup class="cite"><a href="#src-14">14</a></sup></p>
+  <p>The city has budgeted far less than it ends up spending. In FY2022, for example, it initially budgeted $666 million and spent $918 million.<sup class="cite"><a href="#src-13">13</a></sup> The State Comptroller's office said in August 2026 that the city will likely need to add $277 million to the FY2027 budget for these cases.<sup class="cite"><a href="#src-4">4</a></sup></p>
 </section>
 
 <section>
-  <h2>What's actually driving the growth</h2>
+  <h2>What's driving the growth</h2>
   <div class="chart-box">
-    <div class="chart-title">Tuition vs. services as share of due process payments</div>
-    <div class="chart-note">In FY2012, tuition was 74% of due process payments. By FY2023, services (speech, OT, PT, SETSS, paraprofessionals delivered by private providers) had overtaken tuition as the largest category.</div>
+    <div class="chart-title">Related services vs. tuition and other costs, selected years, millions of nominal dollars</div>
+    <div class="chart-note">Only years with a published breakdown are shown, so the bars are not evenly spaced in time. "Related services" means services such as speech, occupational and physical therapy and special education teacher support services (SETSS) paid to private providers, for students with Individualized Education Programs (IEPs) and for private school students with Individualized Education Services Programs (IESPs). "Tuition and other" is mostly tuition; from 2010 to 2020, legal fees were 2.3 to 6.6 percent of the total and transportation typically under 1 percent. FY2025 is on the new accounting basis.</div>
     <div class="chart-wrap"><canvas id="mixChart"></canvas></div>
+    <div class="chart-source">Sources: FY2012 and FY2022, Comptroller;<sup class="cite"><a href="#src-7">7</a></sup> FY2020, IBO;<sup class="cite"><a href="#src-12">12</a></sup> FY2024 and FY2025, City Council Finance Division.<sup class="cite"><a href="#src-1">1</a></sup></div>
   </div>
-  <p class="callout"><strong>Caveat:</strong> The Department of Education cannot disaggregate Carter (reimbursement-based) from Connors (prospective / direct payment) spending. In March 2025 testimony before the City Council, DOE General Counsel confirmed the data is not structured to separate them. This means it is not possible, from public data, to measure whether Connors has succeeded at its original purpose — leveling access for families who cannot front tuition.</p>
+  <p>Tuition was 74 percent of due process payments in FY2012, and services 21 percent.<sup class="cite"><a href="#src-7">7</a></sup> Services then grew faster: to $372 million, or 41 percent, in FY2022, and to a peak of $535 million, about 45 percent, in FY2024.<sup class="cite"><a href="#src-7">7</a>,<a href="#src-1">1</a></sup> The Comptroller reported in August 2023 that services were 58 percent of FY2023 payments made to that point, but on a full-year basis tuition has remained the larger share.<sup class="cite"><a href="#src-7">7</a>,<a href="#src-9">9</a>,<a href="#src-13">13</a></sup> Service costs fell to $376 million in FY2025 ($436 million adjusting for the accounting change), while IESP case filings fell 38 percent; tuition costs did not show the same decline.<sup class="cite"><a href="#src-1">1</a></sup> DOE told the Council that IEP cases cost about $105,000 a year per case, against about $28,000 for an IESP student, and that IESP cases were 21 to 22 percent of due process costs in FY2025 and FY2026.<sup class="cite"><a href="#src-1">1</a></sup></p>
+  <p class="callout"><strong>Caveat:</strong> DOE cannot separate Carter cases (reimbursement after parents pay) from Connors cases (direct payment to a school for families who cannot pay up front). At a March 13, 2025, Council Committee on Education hearing, then-First Deputy Chancellor Daniel Weisberg said direct payments do not identify Connors cases because DOE also pays schools directly for pendency in Carter cases after a family's first win: "We just don't have the data organized that way." General Counsel Liz Vladeck said the Connors model, meant to give lower-income families access, "has not succeeded" at leveling the playing field, citing DOE's demographic data and litigation experience.<sup class="cite"><a href="#src-17">17</a></sup> The public data cannot test that conclusion independently.</p>
 </section>
 
 <section>
-  <h2>Where the money goes: specialized private schools commonly cited in Carter placements</h2>
-  <p>No public dataset lists which private schools receive Carter or Connors payments, or how much each receives annually. Obtaining that breakdown would require a FOIL request to DOE for payee-level tuition disbursements. What is published is each school's own annual tuition — shown below for schools widely cited in legal guides, journalism, and DOE Council testimony as serving students placed under IDEA due process. Inclusion on this list is not an allegation; these are schools known to enroll Carter-placed students, and most say so publicly.</p>
+  <h2>Where the money goes</h2>
+  <p>Payments the city makes directly to schools are public. Checkbook NYC, the Comptroller's spending database, lists each DOE payment by payee and budget code; due process payments are recorded under budget code 2127, labeled "Carter Cases" and, starting during FY2025, "Due Process Cases."<sup class="cite"><a href="#src-6">6</a></sup> In FY2026, payments to schools and other organizations in Checkbook's "payments to contract/corporate schools" category under that code totaled $513 million across about 160 payees; the 10 largest received 42 percent.</p>
   <div class="chart-box" style="padding: 0; overflow-x: auto;">
     <table id="schoolsTable"></table>
   </div>
-  <p class="callout"><strong>What this table is not.</strong> These are the schools' own <em>published annual tuition</em> figures for 2025–26 (or most recent available), not per-student Carter receipts. Actual settlements paid by DOE frequently exceed the published tuition because they can include related services (speech, occupational therapy, physical therapy), 1:1 paraprofessionals, transportation, and legal fees. The FY2024 average Carter settlement of $101,757 is higher than all but a handful of published tuitions on this list, which is consistent with settlements bundling services on top of tuition.</p>
+  <p>Payments to other schools included Winston Preparatory School ($8.9 million in FY2026), the IDEAL School of Manhattan ($8.7 million), the Churchill School and Center ($8.0 million), Aaron School ($7.5 million), Mary McDowell Friends School ($6.1 million), the Windward School ($2.9 million), Stephen Gaynor School ($2.7 million) and the Gateway School ($1.5 million).<sup class="cite"><a href="#src-6">6</a></sup></p>
+  <p class="callout"><strong>What these figures are not.</strong> They are payments issued in each fiscal year, which can cover tuition owed for earlier years, settlements, hearing orders or pendency; a payment says nothing about the merits of any case. They leave out reimbursements paid to parents or their lawyers and payments to individual service providers, which Checkbook records separately and does not tie to a school, so they understate what the city pays for students at each school. Payee names follow Checkbook's records, with capitalization and corporate suffixes such as "LLC" simplified.</p>
 </section>
 
 <section>
@@ -209,76 +226,120 @@ footer {
 </section>
 
 <section>
-  <h2>Why the curve bent in 2014</h2>
-  <p>In September 2014, the de Blasio administration simplified the settlement process: a 15-day target to settle, a policy of not re-litigating previously settled cases, and reduced paperwork requirements. Settlement volume jumped 61% in the first full year. The reform was a response to a documented dysfunction — families who had won FAPE-denial findings were being dragged back into hearings every September — but it created a one-way ratchet: placements approved once tended to continue indefinitely, with annual tuition escalation, under IDEA's "stay-put" pendency protections.</p>
+  <h2>What changed in 2014</h2>
+  <p>On June 24, 2014, Mayor Bill de Blasio and Assembly Speaker Sheldon Silver announced changes that DOE would put in place by Sept. 1, 2014. Where settlement was appropriate, DOE would seek to settle within 15 days of receiving a parent's notice of intent to place a child in a private school. It would not re-litigate settled or decided cases unless the IEP placement recommendation changed, and would avoid litigation when it could not offer a placement or when a child was about to enter a school's final grade. It would require full paperwork every three years instead of every year, and pay tuition monthly when a school required it.<sup class="cite"><a href="#src-18">18</a></sup> Speaker Silver said at the time that parents "have to fight this battle year after year."<sup class="cite"><a href="#src-18">18</a></sup></p>
+  <p>Spending on the line rose from $234 million in FY2015 to $499 million in FY2019 and $710 million in FY2020, and IBO counted about 5,300 "Carter students" in 2015 and almost 14,000 by early 2021.<sup class="cite"><a href="#src-11">11</a>,<a href="#src-10">10</a>,<a href="#src-12">12</a></sup> IBO pointed to several drivers, including more students, rising tuition and growing use of private service providers.<sup class="cite"><a href="#src-12">12</a>,<a href="#src-13">13</a></sup> A February 2026 Manhattan Institute report argues that the no-re-litigation policy lets private placements continue year after year without a new finding on whether the public schools could serve the child.<sup class="cite"><a href="#src-22">22</a></sup> Under IDEA's pendency, or "stay-put," rule, a child stays in the current placement while a dispute is pending, which is why DOE keeps paying schools directly after a family's first win.<sup class="cite"><a href="#src-21">21</a>,<a href="#src-17">17</a></sup></p>
+  <p>Other changes since: Executive Order 91 of Dec. 27, 2021, began moving New York City's special education impartial hearings from DOE's Impartial Hearing Office to the Office of Administrative Trials and Hearings (OATH), giving OATH concurrent jurisdiction until a full transfer.<sup class="cite"><a href="#src-19">19</a></sup> In January 2026, Mayor Zohran Mamdani cited special education among services the prior administration had underbudgeted, in announcing a $12 billion shortfall over FY2026 and FY2027.<sup class="cite"><a href="#src-20">20</a></sup> The Council created a separate unit of appropriation for due process cases, used starting with the FY2027 budget, and the FY2027 budget assumes $149 million a year in savings from bringing more services in-house.<sup class="cite"><a href="#src-2">2</a>,<a href="#src-3">3</a></sup></p>
 </section>
 
 <section>
   <h2>What this tracker can and can't show</h2>
   <h3>Publicly available (tracked here)</h3>
   <ul>
-    <li>Total annual spending, from IBO fiscal briefs, the City Comptroller's reports, the State Comptroller (OSC), the Mayor's Management Report, and DOE budget testimony at City Council.</li>
-    <li>Category split (tuition vs. services vs. legal vs. transportation) from the Comptroller's <em>Course Correction</em> report (FY2012–FY2023).</li>
-    <li>Total case counts and timeliness from the Mayor's Management Report.</li>
+    <li>Annual spending on the due process budget line, from City Council Finance Division reports built on DOE and OMB data, IBO, the Comptroller and the State Comptroller.</li>
+    <li>The split between related services and tuition and other costs, for years with a published breakdown.</li>
+    <li>Due process complaints filed and settled and average settlement cost, newly reported in the Mayor's Management Report for FY2026; hearing timeliness is in OATH's chapter of the same report.<sup class="cite"><a href="#src-5">5</a></sup></li>
+    <li>Payments to individual schools and organizations, from Checkbook NYC.<sup class="cite"><a href="#src-6">6</a></sup></li>
+    <li>Race and ethnicity, sex, age and ZIP code of students with due process cases, from DOE reports required by the Council's budget terms and conditions. In FY2025, white students were 64.9 percent of settled or closed cases, against 16.1 percent of public school enrollment.<sup class="cite"><a href="#src-2">2</a>,<a href="#src-24">24</a></sup></li>
   </ul>
   <h3>Not publicly available</h3>
   <ul>
-    <li>Carter vs. Connors split — DOE itself cannot produce this.</li>
-    <li>School-by-school spending distribution — which private schools absorb what share.</li>
-    <li>Demographic breakdown of filing families (FOIL-able but not published).</li>
-    <li>Outcomes data on private placements — academic, behavioral, or post-secondary.</li>
-    <li>District-level availability of District 75 programs and ICT seats, year over year.</li>
+    <li>A split between Carter and Connors cases; DOE says its data cannot produce one.<sup class="cite"><a href="#src-17">17</a></sup></li>
+    <li>School-level totals that include reimbursements paid to parents, which Checkbook does not attribute to a school.</li>
+    <li>Family income; DOE's reports to the Council give only the median income of the student's ZIP code.<sup class="cite"><a href="#src-24">24</a></sup></li>
+    <li>Outcomes for students placed in private schools through due process. We found no public data on their academic progress, graduation or later outcomes.</li>
   </ul>
-  <p>See <a href="methodology.md">methodology.md</a> for full source notes, data gaps, and reconciliation of the FY2021 figures (which differ between IBO's in-year brief and later retrospective totals).</p>
+  <p>See <a href="methodology.md">methodology.md</a> for how the figures were assembled, where sources disagree and how each was checked.</p>
+</section>
+
+<section>
+  <h2>Sources</h2>
+  <ol class="sources">
+    <li id="src-1">New York City Council Finance Division, <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2026/06/Department-of-Education.pdf">Report on the Fiscal 2027 Executive Plan, Department of Education</a> (June 2026). FY2020&ndash;FY2025 actuals (Chart 2), FY2025 accounting change and $278 million estimate, FY2026 spending through April 2026, service costs, IEP and IESP case costs.</li>
+    <li id="src-2">New York City Council Finance Division, <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2026/03/Department-of-Education-1.pdf">Report on the Fiscal 2027 Preliminary Plan, Department of Education</a> (March 2026). Budgets vs. actuals FY2015&ndash;FY2026, FY2025 actual of $1.13 billion, new unit of appropriation 476, demographics of settled or closed cases.</li>
+    <li id="src-3">Office of the New York City Comptroller, <a href="https://comptroller.nyc.gov/reports/comments-on-new-york-citys-fiscal-year-2027-adopted-budget/">Comments on New York City's Fiscal Year 2027 Adopted Budget</a> (Aug. 12, 2026). FY2027 budget of $1.41 billion; FY2026 budget of $1.55 billion; $149 million in planned savings.</li>
+    <li id="src-4">Office of the New York State Comptroller, <a href="https://www.osc.ny.gov/files/reports/osdc/pdf/fy27-nyc-adopted-plan-report-final.pdf">Review of the Financial Plan of the City of New York, Report 8-2027</a> (August 2026).</li>
+    <li id="src-5">Mayor's Office of Operations, <a href="https://www.nyc.gov/assets/operations/downloads/pdf/mmr2026/doe.pdf">Fiscal 2026 Mayor's Management Report, Department of Education chapter</a> (September 2026), Goal 1d; <a href="https://www.nyc.gov/assets/operations/downloads/pdf/mmr2026/oath.pdf">OATH chapter</a>.</li>
+    <li id="src-6"><a href="https://www.checkbooknyc.com/">Checkbook NYC</a>, Office of the New York City Comptroller. Department of Education spending, expense category "payments to contract/corporate schools" (6700), budget code 2127, fiscal years 2025 and 2026, retrieved Oct. 7, 2026, through the Checkbook NYC API. Query details are in the methodology.</li>
+    <li id="src-7">Office of the New York City Comptroller, <a href="https://comptroller.nyc.gov/reports/course-correction/">Course Correction: Expanding and strengthening special education services improves student outcomes and reduces costly due process claims</a> (Aug. 23, 2023), pages 10&ndash;11.</li>
+    <li id="src-8">New York City Council Finance Division, <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2023/03/DOE-Expense.pdf">Report on the Fiscal 2024 Preliminary Plan, Department of Education</a> (March 2023), Figure 2 (FY2016 actual).</li>
+    <li id="src-9">New York City Council Finance Division, <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2025/03/Department-of-Education.pdf">Report on the Fiscal 2026 Preliminary Plan, Department of Education</a> (March 2025). FY2019 and FY2024 actuals; spending by object code, FY2015&ndash;FY2024.</li>
+    <li id="src-10">New York City Council Finance Division, <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2019/03/040-DOE-Expense-2020.pdf">Report on the Fiscal 2020 Preliminary Plan, Department of Education</a> (March 20, 2019), Table 27 and note 18 (FY2017 and adjusted FY2018 actuals); and <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2020/04/040-DOE.pdf">Report on the Fiscal 2021 Preliminary Budget</a> (March 19, 2020), Table 25 (FY2018 as booked, FY2019).</li>
+    <li id="src-11">New York City Council Finance Division, <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2015/06/fy2016-doe.pdf">Report on the Fiscal 2016 Preliminary Budget, Department of Education</a> (March 25, 2015), Table 15 (FY2013 and FY2014 actuals); and <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2016/05/040-Department-of-Education.pdf">Report on the Fiscal 2017 Preliminary Budget</a> (March 16, 2016), Chart 18 (FY2015 actual).</li>
+    <li id="src-12">New York City Independent Budget Office, <a href="https://web.archive.org/web/2024/https://ibo.nyc.ny.us/iboreports/carter-case-spending-for-students-with-special-needs-continues-to-grow-rapidly-march-2021.pdf">"Carter Case" Spending for Students With Special Needs Continues to Grow Rapidly</a> (March 2021; archived copy).</li>
+    <li id="src-13">New York City Independent Budget Office, <a href="https://web.archive.org/web/2024/https://ibo.nyc.ny.us/iboreports/carter-case-spending-for-students-with-disabilities-continues-to-climb-nycbtn-september2022.pdf">"Carter Case" Spending for Students with Disabilities Continues to Climb</a> (September 2022; archived copy).</li>
+    <li id="src-14">New York City Independent Budget Office, <a href="https://web.archive.org/web/2015/http://www.ibo.nyc.ny.us/iboreports/march2010final.pdf">An Analysis of the Mayor's Preliminary Budget for 2011</a> (March 2010; archived copy).</li>
+    <li id="src-15">Center for Appropriate Dispute Resolution in Special Education (CADRE), <a href="https://cadreworks.org/sites/default/files/resources/2022%20National%20IDEA%20Dispute%20Resolution%20Data%20Summary%20FINAL_accessible.pdf">IDEA Dispute Resolution Data Summary for U.S. and Outlying Areas, 2010&ndash;11 to 2020&ndash;21</a>: 22,759 due process complaints in the 50 states in 2020&ndash;21. <a href="https://cadreworks.org/media/5704/download">New York summary</a>: 14,618.</li>
+    <li id="src-16">New York State Education Department, <a href="https://www.regents.nysed.gov/sites/regents/files/1121p12d2.pdf">Board of Regents P-12 Education Committee item on impartial hearing regulations</a> (Nov. 4, 2021): 98 percent of the state's 2020&ndash;21 complaints, 14,141, were filed in New York City.</li>
+    <li id="src-17">New York City Council Committee on Education, March 13, 2025, hearing; <a href="https://citymeetings.nyc/meetings/new-york-city-council/2025-03-13-1000-am-committee-on-education/chapter/challenges-in-separating-spending-between-carter-and-connors-cases/">citymeetings.nyc transcript and video of the exchange</a> (machine transcript).</li>
+    <li id="src-18">Office of the Mayor, <a href="https://web.archive.org/web/2015/http://www1.nyc.gov/office-of-the-mayor/news/306-14/mayor-de-blasio-speaker-silver-new-steps-help-families-students-disabilities">Mayor de Blasio and Speaker Silver Announce New Steps to Help Families of Students with Disabilities</a> (June 24, 2014; archived copy).</li>
+    <li id="src-19"><a href="https://www.nyc.gov/assets/home/downloads/pdf/executive-orders/2021/eo-91.pdf">Executive Order 91</a> (Dec. 27, 2021).</li>
+    <li id="src-20">Office of the Mayor, <a href="https://www.nyc.gov/mayors-office/news/2026/01/mayor-mamdani-details--adams-budget-crisis-">Mayor Mamdani Details "Adams Budget Crisis"</a> (Jan. 28, 2026).</li>
+    <li id="src-21">20 U.S.C. &sect; 1415(j), <a href="https://www.law.cornell.edu/uscode/text/20/1415">via Cornell Legal Information Institute</a>.</li>
+    <li id="src-22">Jennifer Weber, Manhattan Institute, <a href="https://manhattan.institute/article/reassessing-carter-case-spending-for-students-with-disabilities-in-new-york-city-schools">Reassessing "Carter-Case" Spending for Students with Disabilities in New York City Schools</a> (February 2026).</li>
+    <li id="src-23">U.S. Bureau of Labor Statistics, <a href="https://data.bls.gov/timeseries/CUUR0000SA0">Consumer Price Index for All Urban Consumers, U.S. city average</a>, annual averages 2015 (237.017) and 2024 (313.689).</li>
+    <li id="src-24">New York City Council, <a href="https://council.nyc.gov/budget/fy2026/">Fiscal 2026 budget terms-and-conditions reports</a>, including DOE's <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2026/08/Department-of-Education-Due-Process-Cases-Report-2-of-2.xlsx">Due Process Cases report (2 of 2)</a> (August 2026).</li>
+  </ol>
 </section>
 
 <footer>
-  Last updated April 2026. Not affiliated with the NYC Department of Education. All figures sourced from public documents — see methodology.
+  Last updated October 2026. Not affiliated with the New York City Department of Education. All figures come from the public documents listed above; see the methodology for details.
 </footer>
 </div>
 
 <script>
+// Millions of nominal dollars. kind: actual | partial | budget.
+// srcs refer to the numbered source list on the page.
 const data = [
-  { fy: 2005, total: 47,   tuition: null, services: null, note: null, src: "Manhattan Institute compilation of IBO/DOE" },
-  { fy: 2010, total: 143,  tuition: null, services: null, note: null, src: "Manhattan Institute" },
-  { fy: 2012, total: 161,  tuition: 119,  services: 33,   note: "Pre-reform baseline", src: "Comptroller, Course Correction" },
-  { fy: 2015, total: 250,  tuition: null, services: null, note: "de Blasio 15-day settlement policy takes effect FY2015", src: "IBO" },
-  { fy: 2016, total: 312,  tuition: null, services: null, note: null, src: "Manhattan Institute" },
-  { fy: 2020, total: 499,  tuition: null, services: null, note: null, src: "Manhattan Institute" },
-  { fy: 2021, total: 807,  tuition: null, services: null, note: "IBO in-year figure $653M; later retrospective $807M", src: "IBO / OSC retrospective" },
-  { fy: 2022, total: 918,  tuition: 468,  services: 372,  note: null, src: "Comptroller, Course Correction" },
-  { fy: 2023, total: 1070, tuition: null, services: null, note: "OATH begins taking over impartial hearings", src: "NYS Comptroller (OSC)" },
-  { fy: 2024, total: 1200, tuition: null, services: null, note: null, src: "DOE Council testimony" },
-  { fy: 2025, total: 1300, tuition: null, services: null, note: "Flagged by Mayor Mamdani as major unbudgeted need", src: "City Journal / IBO" },
-  { fy: 2026, total: 1300, tuition: null, services: null, note: "Budgeted", src: "DOE projections" },
-  { fy: 2027, total: 1500, tuition: null, services: null, note: "Budgeted", src: "DOE projections" }
+  { fy: 2013, total: 199.0, kind: 'actual', status: 'Actual', note: '', srcs: [11] },
+  { fy: 2014, total: 222.2, kind: 'actual', status: 'Actual', note: '', srcs: [11] },
+  { fy: 2015, total: 234.4, kind: 'actual', status: 'Actual', note: 'First year under the 2014 settlement policy, in effect by Sept. 1, 2014', srcs: [11, 18] },
+  { fy: 2016, total: 312.3, kind: 'actual', status: 'Actual', note: '', srcs: [8] },
+  { fy: 2017, total: 416.9, kind: 'actual', status: 'Actual', note: '', srcs: [10] },
+  { fy: 2018, total: 463.3, kind: 'actual', status: 'Actual, adjusted', note: 'Council figure moving about $70 million that was booked to schools for the blind and deaf back to this line; city books show $393.3 million', srcs: [10] },
+  { fy: 2019, total: 499.3, kind: 'actual', status: 'Actual', note: '', srcs: [10, 9] },
+  { fy: 2020, total: 710.0, kind: 'actual', status: 'Actual', note: '', srcs: [1, 12] },
+  { fy: 2021, total: 807.4, kind: 'actual', status: 'Actual', note: 'The $653 million IBO cited in March 2021 was the budget at that point, not spending', srcs: [1, 12] },
+  { fy: 2022, total: 918.0, kind: 'actual', status: 'Actual', note: 'Initially budgeted at $666 million. Executive Order 91 began moving impartial hearings to the Office of Administrative Trials and Hearings in December 2021', srcs: [1, 13, 19] },
+  { fy: 2023, total: 1070.2, kind: 'actual', status: 'Actual', note: '', srcs: [1] },
+  { fy: 2024, total: 1193.1, kind: 'actual', status: 'Actual', note: '', srcs: [1, 9] },
+  { fy: 2025, total: 1138.7, extra: 278.0, kind: 'actual', status: 'Actual, new accounting', note: 'Costs now booked to the year of decision or settlement. About $1,416.7 million under the old practice (Council estimate of $278 million)', srcs: [1, 2] },
+  { fy: 2026, total: 1318.6, kind: 'partial', status: 'Partial year', note: 'Spending through April 2026. Full-year budget: $1.55 billion. Final figure due with the Comptroller’s annual financial report', srcs: [1, 3] },
+  { fy: 2027, total: 1410, kind: 'budget', status: 'Adopted budget', note: 'Includes $149 million in planned savings. The State Comptroller expects about $277 million more will be needed', srcs: [3, 4] }
 ];
 
-const fmt$ = v => v >= 1000 ? `$${(v/1000).toFixed(2)}B` : `$${v}M`;
+const COLORS = { actual: '#ff7c53', extra: '#ffc7b3', partial: '#c9a0d6', budget: '#9b9fbc' };
+const fmt$ = v => v >= 1000 ? `$${(v / 1000).toFixed(2)}B` : `$${Math.round(v)}M`;
+const fmtTable$ = v => `$${v.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}M`;
+const pick = (d, kind) => d.kind === kind ? d.total : null;
 
 Chart.defaults.font.family = "'Inter', system-ui, -apple-system, sans-serif";
 Chart.defaults.color = '#050507';
 
+const labels = data.map(d => `FY${String(d.fy).slice(2)}`);
+const reformIndex = data.findIndex(d => d.fy === 2015) - 0.5;
+
 new Chart(document.getElementById('trendChart'), {
   type: 'bar',
   data: {
-    labels: data.map(d => `FY${String(d.fy).slice(2)}`),
-    datasets: [{
-      label: 'Total spending ($M)',
-      data: data.map(d => d.total),
-      backgroundColor: data.map(d => d.fy >= 2026 ? '#9b9fbc' : '#ff7c53'),
-      borderRadius: 2
-    }]
+    labels,
+    datasets: [
+      { label: 'Actual', data: data.map(d => pick(d, 'actual')), backgroundColor: COLORS.actual, borderRadius: 2, stack: 's' },
+      { label: 'FY25 estimate, old accounting', data: data.map(d => d.extra || null), backgroundColor: COLORS.extra, borderRadius: 2, stack: 's' },
+      { label: 'FY26 through April 2026', data: data.map(d => pick(d, 'partial')), backgroundColor: COLORS.partial, borderRadius: 2, stack: 's' },
+      { label: 'FY27 adopted budget', data: data.map(d => pick(d, 'budget')), backgroundColor: COLORS.budget, borderRadius: 2, stack: 's' }
+    ]
   },
   options: {
     maintainAspectRatio: false,
     plugins: {
-      legend: { display: false },
+      legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } },
       tooltip: {
+        filter: item => item.parsed.y != null,
         callbacks: {
-          label: ctx => fmt$(ctx.parsed.y),
-          afterLabel: ctx => {
-            const d = data[ctx.dataIndex];
+          label: ctx => `${ctx.dataset.label}: ${fmt$(ctx.parsed.y)}`,
+          afterBody: items => {
+            const d = data[items[0].dataIndex];
             return d.note ? d.note : '';
           }
         }
@@ -287,31 +348,18 @@ new Chart(document.getElementById('trendChart'), {
         annotations: {
           reform: {
             type: 'line',
-            xMin: 3, xMax: 3,
+            xMin: reformIndex, xMax: reformIndex,
             borderColor: '#394882',
             borderWidth: 1,
             borderDash: [4, 4],
             label: {
               display: true,
-              content: '2014 settlement reform',
-              position: 'start',
+              content: '2014 settlement policy',
+              position: 'end',
               backgroundColor: 'rgba(57,72,130,0.9)',
               color: '#fff',
               font: { size: 10 },
               padding: 4
-            }
-          },
-          projected: {
-            type: 'box',
-            xMin: 10.5, xMax: 12.5,
-            backgroundColor: 'rgba(155,159,188,0.08)',
-            borderWidth: 0,
-            label: {
-              display: true,
-              content: 'Budgeted',
-              position: { x: 'center', y: 'start' },
-              color: '#707175',
-              font: { size: 10 }
             }
           }
         }
@@ -319,35 +367,32 @@ new Chart(document.getElementById('trendChart'), {
     },
     scales: {
       y: {
+        stacked: true,
+        beginAtZero: true,
+        title: { display: true, text: 'Millions of nominal dollars', font: { size: 11 } },
         ticks: { callback: v => fmt$(v) },
         grid: { color: '#f0f0f0' }
       },
-      x: { grid: { display: false } }
+      x: { stacked: true, grid: { display: false } }
     }
   }
 });
 
-const mixYears = data.filter(d => d.tuition != null);
+// Related services vs. everything else, years with a published breakdown.
+const mix = [
+  { label: 'FY12', services: 33, total: 161, src: 'Comptroller' },
+  { label: 'FY20', services: 179, total: 710.3, src: 'IBO' },
+  { label: 'FY22', services: 372, total: 918, src: 'Comptroller' },
+  { label: 'FY24', services: 535.1, total: 1193.1, src: 'City Council' },
+  { label: 'FY25*', services: 375.9, total: 1138.7, src: 'City Council (new accounting basis)' }
+];
 new Chart(document.getElementById('mixChart'), {
   type: 'bar',
   data: {
-    labels: mixYears.map(d => `FY${String(d.fy).slice(2)}`),
+    labels: mix.map(m => m.label),
     datasets: [
-      {
-        label: 'Tuition',
-        data: mixYears.map(d => d.tuition),
-        backgroundColor: '#394882'
-      },
-      {
-        label: 'Services',
-        data: mixYears.map(d => d.services),
-        backgroundColor: '#dde44c'
-      },
-      {
-        label: 'Other (legal, transportation)',
-        data: mixYears.map(d => d.total - d.tuition - d.services),
-        backgroundColor: '#9b9fbc'
-      }
+      { label: 'Tuition, legal fees and transportation', data: mix.map(m => +(m.total - m.services).toFixed(1)), backgroundColor: '#394882' },
+      { label: 'Related services', data: mix.map(m => m.services), backgroundColor: '#dde44c' }
     ]
   },
   options: {
@@ -355,73 +400,87 @@ new Chart(document.getElementById('mixChart'), {
     plugins: {
       legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 12 } } },
       tooltip: {
-        callbacks: { label: ctx => `${ctx.dataset.label}: ${fmt$(ctx.parsed.y)}` }
+        callbacks: {
+          label: ctx => {
+            const m = mix[ctx.dataIndex];
+            const share = Math.round(ctx.parsed.y / m.total * 100);
+            return `${ctx.dataset.label}: ${fmt$(ctx.parsed.y)} (${share}%)`;
+          },
+          footer: items => `Source: ${mix[items[0].dataIndex].src}`
+        }
       }
     },
     scales: {
       x: { stacked: true, grid: { display: false } },
-      y: { stacked: true, ticks: { callback: v => fmt$(v) }, grid: { color: '#f0f0f0' } }
+      y: {
+        stacked: true,
+        beginAtZero: true,
+        title: { display: true, text: 'Millions of nominal dollars', font: { size: 11 } },
+        ticks: { callback: v => fmt$(v) },
+        grid: { color: '#f0f0f0' }
+      }
     }
   }
 });
 
-const schools = [
-  { name: "Stephen Gaynor School", grades: "K–8", focus: "Learning differences", tuition: 86220, year: "2025–26", notes: "" },
-  { name: "The Windward School (NYC)", grades: "1–9", focus: "Language-based learning disabilities (dyslexia)", tuition: 75980, year: "2025–26", notes: "" },
-  { name: "Mary McDowell Friends School", grades: "K–12", focus: "Learning disabilities", tuition: 87000, year: "2025–26", notes: "" },
-  { name: "The Churchill School and Center", grades: "K–12", focus: "Language-based learning disabilities", tuition: 80000, year: "2025–26", notes: "K–8 $79,000; 9–12 $81,000 (midpoint shown)" },
-  { name: "The Gateway School", grades: "K–8", focus: "Language-based learning disabilities, ADHD", tuition: 80500, year: "2025–26", notes: "School states most families pursue DOE reimbursement or direct payment" },
-  { name: "The Cooke School & Institute", grades: "Ages 5–21", focus: "Mild to moderate cognitive/developmental disabilities", tuition: 95500, year: "2025–26", notes: "" },
-  { name: "Parkside School", grades: "K–5", focus: "Language-based learning and social-pragmatic needs", tuition: 73000, year: "2025–26", notes: "" },
-  { name: "Aaron School", grades: "K–12", focus: "Learning and social differences", tuition: 49975, year: "2024–25", notes: "" },
-  { name: "The IDEAL School of Manhattan", grades: "K–12", focus: "Inclusion model; tiered programs", tuition: 95401, year: "2025–26", notes: "Standard $55,997; Zenith $95,401 (shown); Dylan $169,294" },
-  { name: "Rebecca School", grades: "Ages 4–21", focus: "Autism spectrum, DIR/Floortime method", tuition: null, year: "2025–26", notes: "Tuition not publicly listed" }
+// Checkbook NYC: DOE payments, expense category 6700, budget code 2127, by payee. $ millions.
+const payees = [
+  { name: 'Gersh Academy', fy26: 51.1, fy25: 48.4 },
+  { name: 'Rebecca School', fy26: 28.6, fy25: 27.6 },
+  { name: 'Cooke School and Institute', fy26: 27.4, fy25: 30.1 },
+  { name: 'International Academy of Hope', fy26: 23.6, fy25: 20.5 },
+  { name: 'The STAR Program', fy26: 21.1, fy25: 20.7 },
+  { name: 'Ohel Chaya', fy26: 18.7, fy25: 11.6 },
+  { name: "The Manhattan Children's Center", fy26: 12.5, fy25: 15.1 },
+  { name: 'Yeshiva Bais Lemudei Hashem Jewish Center (special education)', fy26: 11.6, fy25: 10.1 },
+  { name: 'International Academy for the Brain', fy26: 11.2, fy25: 15.2 },
+  { name: 'Shrub Oak International School', fy26: 10.9, fy25: 8.1 }
 ];
 
-const schoolsTable = document.getElementById('schoolsTable');
-schoolsTable.innerHTML = `
+document.getElementById('schoolsTable').innerHTML = `
+  <caption style="caption-side: top; text-align: left; padding: 0.8rem 0.6rem 0.4rem; font-weight: 700; font-size: 0.95rem;">10 largest recipients of direct due process payments, FY2026 (millions of nominal dollars)</caption>
   <thead><tr>
-    <th>School</th>
-    <th>Grades</th>
-    <th>Focus</th>
-    <th class="num">Published tuition</th>
-    <th>Year</th>
-    <th>Note</th>
+    <th>Rank</th>
+    <th>Payee</th>
+    <th class="num">FY2026</th>
+    <th class="num">FY2025</th>
   </tr></thead>
   <tbody>
-  ${schools.map(s => `
+  ${payees.map((p, i) => `
     <tr>
-      <td>${s.name}</td>
-      <td>${s.grades}</td>
-      <td>${s.focus}</td>
-      <td class="num">${s.tuition ? '$' + s.tuition.toLocaleString() : '—'}</td>
-      <td>${s.year}</td>
-      <td class="src">${s.notes}</td>
+      <td>${i + 1}</td>
+      <td>${p.name}</td>
+      <td class="num">$${p.fy26.toFixed(1)}M</td>
+      <td class="num">$${p.fy25.toFixed(1)}M</td>
     </tr>
   `).join('')}
   </tbody>
+  <tfoot><tr><td colspan="4" class="src">Source: Checkbook NYC, Department of Education payments in the "payments to contract/corporate schools" category under budget code 2127, by fiscal year of payment, retrieved Oct. 7, 2026.<sup class="cite"><a href="#src-6">6</a></sup></td></tr></tfoot>
 `;
 
-const table = document.getElementById('dataTable');
-table.innerHTML = `
+const srcLinks = s => s.map(n => `<a href="#src-${n}">${n}</a>`).join(', ');
+document.getElementById('dataTable').innerHTML = `
   <thead><tr>
     <th>Fiscal year</th>
-    <th class="num">Total spending</th>
+    <th class="num">Amount</th>
+    <th>Status</th>
     <th>Note</th>
-    <th>Primary source</th>
+    <th>Sources</th>
   </tr></thead>
   <tbody>
   ${data.map(d => `
     <tr>
       <td>FY${d.fy}</td>
-      <td class="num">${fmt$(d.total)}</td>
-      <td>${d.note || ''}</td>
-      <td class="src">${d.src}</td>
+      <td class="num">${fmtTable$(d.total)}</td>
+      <td class="status">${d.status}</td>
+      <td>${d.note}</td>
+      <td class="src">${srcLinks(d.srcs)}</td>
     </tr>
   `).join('')}
   </tbody>
+  <tfoot><tr><td colspan="5" class="src">Millions of nominal dollars. Fiscal years run July 1 to June 30. FY2005, for comparison: $47 million (IBO).</td></tr></tfoot>
 `;
 </script>
-  <script src="../shared/chrome.js?v=15"></script>
+  <script src="../shared/chrome.js?v=17"></script>
 </body>
 </html>
