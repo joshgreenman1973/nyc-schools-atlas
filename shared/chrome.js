@@ -51,14 +51,16 @@
     }).join('');
 
     const homeHref = root.replace(/\/$/, '') + '/';
+    // The map page stands on its own: no section tabs or section tagline.
+    const isMap = section === 'map';
     const headerHtml = `
       <div class="site-header">
         <div class="site-header-inner">
           <a class="site-brand" href="${homeHref}">
             <span class="mark">NYC Schools <em>atlas</em></span>
-            <span class="tag">Map &middot; data &middot; spending &middot; standards</span>
+            ${isMap ? '' : '<span class="tag">Map &middot; data &middot; spending &middot; standards</span>'}
           </a>
-          <nav class="site-nav" aria-label="Sections">${navHtml}</nav>
+          ${isMap ? '' : `<nav class="site-nav" aria-label="Sections">${navHtml}</nav>`}
         </div>
         <div class="site-section-bar"></div>
       </div>`;
