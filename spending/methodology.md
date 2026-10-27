@@ -1,8 +1,22 @@
-# Methodology: per-pupil K-12 spending in New York City
+# Methodology: per-pupil spending in New York City public schools
 
-Last updated: Oct. 7, 2026
+Last updated: Oct. 26, 2026
 
 This note explains where every number on the spending page comes from, how each calculated figure was produced and what each figure does and does not include. Fiscal years (FY) are New York City's, July to June: FY2024 is the 2023-24 school year. Dollar figures are dollars as spent in the year shown unless they are labeled as adjusted for inflation.
+
+## What changed on Oct. 26, 2026
+
+The standalone version of this page (joshgreenman1973.github.io/experiments/nyc-doe-per-pupil-spending/) had a third review on Oct. 26, 2026. Fixes that apply to this shorter version were carried over, along with its new opening breakdown.
+
+| Item | Before | Now | Why |
+|---|---|---|---|
+| Opening section | Page opened with the Census trend | New lead section, "What the money pays for": NYSED 2024-25 districtwide spending per pupil ($35,058) by seven function groups and by salaries, benefits and other, and a Census FY2024 function table for New York City and the U.S. | The only per-pupil breakdown by function was FY2018's |
+| Section 5 | "Where each dollar goes inside a school"; note said state reports list school spending only "by funding source" | Retitled as DOE's last school-level breakdown (FY2018); note now points to NYSED's school reports, which split spending by function and by salaries, benefits and other | NYSED Financial Transparency Reports |
+| Section 5 caption | "the first five bars" | Named categories (the fifth bar is system-wide obligations, not building services) | SBER FY2018 |
+| Section 4, U/A 433/434 | U/A 453/454 "shrank by a similar amount" | "shrank" ($448.0 million FY2025 actual to $176.0 million FY2026 adopted, against $131.3 million in the new lines) | IBO; adopted budget |
+| Headline | "Per-pupil K-12 spending" | "Per-pupil spending in New York City public schools" | The Census enrollment includes about 39,000 pre-K pupils |
+
+Checked and unchanged here: the pedagogical-positions note in Section 2 (the City Council's FY2027 Preliminary report describes added District 75 personnel as "primarily pedagogical, including paraprofessionals"), the IBO broader-series figures (+12.9 percent total, +19.4 percent per pupil), and the labeled special education illustration in Section 7, which this version keeps and the standalone page does not carry.
 
 ## What changed on Oct. 7, 2026
 
@@ -63,6 +77,15 @@ A full re-check of the page against primary sources found several errors. Every 
 - $35,796 per pupil, FY2024: Census Table 18, New York City row. The press release quote: "Among the 100 largest school systems (by enrollment), New York City School District in New York ($35,796) had the highest current expenditures per pupil in FY 2024."
 - Boston, $39,929: calculated from the Census FY2024 district file (see the formula below); Boston had 45,742 students and is not in Table 18.
 - Enrollment change: Census Table 18 enrollment, 981,667 (FY2016) to 845,509 (FY2024), -13.9 percent.
+
+## Lead section: what the money pays for
+
+Built by `nyc-doe-per-pupil-spending/scripts/build_composition.py` in the joshgreenman1973/experiments repository (output `data/composition.json` there); the same figures appear on that standalone page. The NYSED districtwide column was parsed from a saved copy of P.S. 307's 2024-25 report (`data/three-schools/nysed/800000045541.html` in that project).
+
+- **NYSED 2024-25, $35,058 per pupil:** the "NYC Chancellor's Office" districtwide column of the 2024-25 Financial Transparency Report (identical on every NYC school's report; parsed from the saved P.S. 307 page). Salaries $17,157, employee benefits $10,154, all other $7,747. The state's 12 functions are combined into seven groups: instruction (1 Instruction $18,425 + 3 Support Services, Instructional Staff $520 = $18,944); pupil support (2; $5,116); school administration (5; $2,030); transportation (7; $1,733); building operation and maintenance (6; $2,984); food services (9; $827); central administration and other districtwide costs (4 General Admin $257 + 8 Business/Central/Other $1,796 + 12 Districtwide Current Operations $1,368 = $3,422). Rows 10 and 11 are zero. Chart values are rounded so each group's three parts sum to its rounded total; any $1 remainder goes to salaries.
+- **Census FY2024, $35,796 per pupil:** district file, NYC (NCESID 3620580), divided by V33 = 845,509: instruction TCURINST - V91 - V92 = $26,092 (Table 18's instruction column; Table 18 also gives instruction salaries $13,742 and benefits $7,957, leaving $4,394 other); pupil support E17 $75; instructional staff support E07 $362; general administration E08 $584; school administration E09 $1,572; operation and maintenance V40 $3,313; student transportation V45 $2,044; business, central and other support V90 + V85 $1,100; food services E11 (all of TCUROTH) $652. They sum to $35,796, matching Table 18. U.S.: Table 8, instruction $10,346 (salaries $6,293, benefits $2,764, other $1,289), pupil support $1,229, instructional staff support $916, general administration $351, school administration $946; other support services $3,140 is Table 8's support total ($6,582) minus those four; food and other $691 is the total ($17,619) minus instruction and support. Salaries plus benefits: 70.3 percent of the NYC total ($16,218 + $8,943) and 79.0 percent of the U.S. total.
+- **Why pupil support differs:** Census Appendix B: "Instructional expenditure for the New York City School District includes expenditure for guidance counselors." The state's report assigns pupil-support costs to function 2.
+- **FY2018 SBER:** unchanged; now Section 5 ("Inside the school building"), see below.
 
 ## Sections 1 and 2: the Census series
 
@@ -136,7 +159,7 @@ From IBO's sheet E (actual spending by U/A). Total of all U/As: $34.67 billion.
 
 Central administration's share of actual spending, FY2011-FY2025, ranged from 1.24 percent to 1.77 percent (FY2019: 1.41 percent). The Council's FY2019 preliminary budget had $345.0 million of $25.6 billion (1.35 percent), with 2,055 positions; we re-added every U/A in that report and reproduced the page's earlier FY2019 buckets exactly. Starting with the FY2026 budget, new U/As 433/434 (Division of Technology) appear and U/A 453/454 falls by a similar amount, so FY2026 and later budgets are not comparable with these figures. Council descriptions used for labels: U/A 403/404 "provides for the direct special education instruction, school supervision and support services ... in a resource room, self-contained and collaborative team classroom setting"; U/A 421/422 includes "funding for District 75 schools"; U/A 423/424 "contains funds for centrally-managed special education related services"; U/A 472 funds "Contract Schools, Carter Cases, Foster Care and Blind and Deaf schools."
 
-## Section 5: School Based Expenditure Report, FY2018
+## Section 5: inside the school building, School Based Expenditure Report, FY2018
 
 From the FY2018 System Wide Report #1 (run Aug. 6, 2019), enrollment 1,021,229. Per student: classroom instruction $12,276; instructional support $4,183; leadership, supervision and support $2,087; ancillary support $1,970; building services $1,650; other $3; direct services subtotal $22,170; field support $506; system-wide costs $738; system-wide obligations $2,853 (debt service $2,132, retiree health and welfare $713, Special Commissioner for Investigation $8); public schools total $26,266. Pass-throughs, not per student: $4.75 billion (charter $2.39 billion; non-public schools $2.29 billion, of which special education $2.04 billion; Fashion Institute of Technology $0.06 billion). Grand total $31.57 billion. The InfoHub index lists FY2018 as the final report.
 

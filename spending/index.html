@@ -178,7 +178,11 @@ table.data th {
 }
 table.data td.num { text-align: right; font-variant-numeric: tabular-nums; }
 table.data th.num { text-align: right; }
-.table-scroll { overflow-x: auto; }
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table-scroll table.data { min-width: 520px; font-size: 0.86rem; }
+.small-note { font-size: 0.8rem; color: var(--vc-charcoal); }
+table.data tr.row-strong td { font-weight: 700; border-top: 1px solid #ccc; }
+
 
 .controls { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; margin-bottom: 0.75rem; }
 .btn-group { display: flex; gap: 0; }
@@ -217,7 +221,7 @@ table.data th.num { text-align: right; }
 
 <header>
   <div class="kicker">New York City public schools: spending, fiscal years 2016 to 2025</div>
-  <h1>Per-pupil K-12 spending in New York City: where the money goes</h1>
+  <h1>Per-pupil spending in New York City public schools: where the money goes</h1>
   <p class="subtitle">Among the 100 largest school districts in the United States, New York City spent the most per pupil in fiscal year (FY) 2024, the latest year the U.S. Census Bureau has published. This page shows how that figure is built, how much of its growth comes from shrinking enrollment and where the money goes. The figures come from the Census Bureau, the New York City Independent Budget Office (IBO), the City Council's Finance Division, the Department of Education (DOE), the Bureau of Labor Statistics and the National Center for Education Statistics (NCES). Each chart names its source. City fiscal years run July to June, so FY2024 is the 2023-24 school year.</p>
 </header>
 
@@ -244,6 +248,45 @@ table.data th.num { text-align: right; }
       <div class="foot">From 981,667 to 845,509 pupils, the enrollment count behind the Census per-pupil figure.</div>
     </div>
   </div>
+</section>
+
+<section id="what-it-pays-for">
+  <h2>What the money pays for</h2>
+  <p class="deck">Three official sources break New York City's per-pupil spending into what it pays for. The New York State Education Department's financial transparency reports cover 2024-25 and split each category into salaries, employee benefits and everything else. The Census Bureau's survey splits the same FY2024 figure used in Sections 1 and 2 and compares it with the national average. DOE's School Based Expenditure Report, last published for FY2018, has finer school-level detail (Section 5). Each source sorts costs into its own categories and counts slightly different things, so their lines do not match one for one and should not be read as a time series.</p>
+
+  <h3>2024-25: $35,058 per pupil, by function and by type of cost (NYSED)</h3>
+  <div class="chart-wrap">
+    <div class="chart-canvas"><canvas id="compositionChart"></canvas></div>
+    <div class="chart-caption"><strong>Source:</strong> New York State Education Department, 2024-25 Financial Transparency Report, New York City districtwide column (shown on every NYC school's report; for example, <a href="https://data.nysed.gov/expenditures.php?year=2025&amp;instid=800000045541">P.S. 307's</a>), under the state's <a href="https://data.nysed.gov/businessrules.php?type=expenditures">business rules</a>. Actual spending in all traditional public schools divided by their October 2024 pre-K-12 enrollment. Excludes charter school tuition, debt service and other exclusions such as services to private schools and pre-K payments to community-based organizations. The state reports 12 functions; this chart combines "instruction" with "support services, instructional staff" ($520), and puts general administration ($257), business and central services ($1,796) and "districtwide current operations" ($1,368, mostly employee benefits not assigned to a function) in the last bar. Dollars as spent.</div>
+  </div>
+  <div class="callout">
+    <strong>Most of the money is people.</strong> Salaries ($17,157) and employee benefits ($10,154) were $27,311 of the $35,058, or 78 percent. Instruction was 54 percent of the total ($18,944), pupil support such as counseling, therapy and health services 15 percent ($5,116) and school administration 6 percent ($2,030). Building operation and maintenance ($2,984) and transportation ($1,733) are mostly purchased services, contracts, utilities and supplies rather than DOE salaries.
+  </div>
+
+  <h3>FY2024: $35,796 per pupil, compared with the U.S. average (Census)</h3>
+  <div class="table-scroll">
+  <table class="data">
+    <thead><tr><th>Function, per pupil, FY2024</th><th class="num">New York City</th><th class="num">U.S. average</th></tr></thead>
+    <tbody>
+      <tr><td>Instruction</td><td class="num">$26,092</td><td class="num">$10,346</td></tr>
+      <tr><td>&nbsp;&nbsp;Salaries</td><td class="num">$13,742</td><td class="num">$6,293</td></tr>
+      <tr><td>&nbsp;&nbsp;Employee benefits</td><td class="num">$7,957</td><td class="num">$2,764</td></tr>
+      <tr><td>&nbsp;&nbsp;Other instructional spending</td><td class="num">$4,394</td><td class="num">$1,289</td></tr>
+      <tr><td>Pupil support</td><td class="num">$75</td><td class="num">$1,229</td></tr>
+      <tr><td>Instructional staff support</td><td class="num">$362</td><td class="num">$916</td></tr>
+      <tr><td>General administration</td><td class="num">$584</td><td class="num">$351</td></tr>
+      <tr><td>School administration</td><td class="num">$1,572</td><td class="num">$946</td></tr>
+      <tr><td>Building operation and maintenance</td><td class="num">$3,313</td><td class="num" rowspan="3" style="vertical-align:middle;">$3,140 combined</td></tr>
+      <tr><td>Student transportation</td><td class="num">$2,044</td></tr>
+      <tr><td>Business, central and other support services</td><td class="num">$1,100</td></tr>
+      <tr><td>Food services and other</td><td class="num">$652</td><td class="num">$691</td></tr>
+      <tr class="row-strong"><td>Total current spending per pupil</td><td class="num">$35,796</td><td class="num">$17,619</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small-note"><strong>Source:</strong> U.S. Census Bureau, 2024 Annual Survey of School System Finances: Table 18 and the <a href="https://www2.census.gov/programs-surveys/school-finances/tables/2024/secondary-education-finance/elsec24.xlsx">district file</a> for New York City (NCESID 3620580); Table 8 for the U.S. (<a href="https://www2.census.gov/programs-surveys/school-finances/tables/2024/secondary-education-finance/elsec24_sumtables.xlsx">summary tables</a>). New York City's lines come from the district file and add exactly to Table 18's $35,796. As in Table 18, instruction excludes payments to charter and private schools. Table 8 does not split the U.S. average's other support services, so those three lines are combined for the U.S. column. Census notes that New York City reports guidance counselors under instruction, which is one reason its pupil-support line is $75 here and $5,116 in the state's figures. Salaries and benefits are 70 percent of the Census total for New York City and 79 percent for the U.S.</p>
+
+  <div class="note"><strong>How the two fit together.</strong> The state and Census figures are close in size ($35,058 and $35,796) but are not the same measure: they cover different years, use different enrollment counts (state: October 2024 pre-K-12 enrollment; Census: the federal Common Core of Data count) and assign costs to functions differently. IBO's budget-line data (Sections 3 and 4) cover the whole department in total dollars, not per pupil, and do not map one-to-one to these functions.</div>
 </section>
 
 <section>
@@ -313,18 +356,18 @@ table.data th.num { text-align: right; }
   </div>
   <div class="note"><strong>Why fringe benefits are their own bar.</strong> Most health insurance, Social Security and welfare-fund costs for DOE employees are budgeted on one central line, U/A 461, rather than charged to schools or offices. The budget does not say how much of it covers school staff versus central staff, so it is shown separately. Pensions are not in DOE's budget at all.</div>
   <div class="callout">
-    <strong>If you're looking for a big central-bureaucracy story, the operating budget isn't it.</strong> Headquarters administration was about 1.3 percent of operating spending in FY2025; adding school support organizations brings administration to about 2.4 percent. The large categories are school-related programs (56 percent), centrally budgeted fringe benefits (12 percent), centrally run special education and private placements (15 percent) and operations such as transportation, food and facilities (14 percent). Pensions, debt service and other health care costs, another $7.0 billion, sit outside the operating budget. Two cautions: some administrative work is paid from other lines, and starting with the FY2026 budget the city created new U/As 433/434 for DOE's technology division while U/A 453/454 shrank by a similar amount, so budgets from FY2026 on are not directly comparable with these figures.
+    <strong>If you're looking for a big central-bureaucracy story, the operating budget isn't it.</strong> Headquarters administration was about 1.3 percent of operating spending in FY2025; adding school support organizations brings administration to about 2.4 percent. The large categories are school-related programs (56 percent), centrally budgeted fringe benefits (12 percent), centrally run special education and private placements (15 percent) and operations such as transportation, food and facilities (14 percent). Pensions, debt service and other health care costs, another $7.0 billion, sit outside the operating budget. Two cautions: some administrative work is paid from other lines, and starting with the FY2026 budget the city created new U/As 433/434 for DOE's technology division while U/A 453/454 shrank, so budgets from FY2026 on are not directly comparable with these figures.
   </div>
 </section>
 
 <section>
-  <h2>5. Where each dollar goes inside a school</h2>
+  <h2>5. Inside the school building: DOE's last school-level breakdown (FY2018)</h2>
   <p class="deck">The most detailed public breakdown of New York City per-pupil spending by function was DOE's School Based Expenditure Report. DOE's last edition covers FY2018 (the 2017-18 school year), so this chart shows FY2018 in dollars as spent that year.</p>
   <div class="chart-wrap">
     <div class="chart-canvas tall"><canvas id="functionalChart"></canvas></div>
-    <div class="chart-caption"><strong>Source:</strong> NYC DOE, School Based Expenditure Report, FY2018 System Wide Report #1 (run Aug. 6, 2019). Per-student amounts for public schools, using DOE's enrollment of 1,021,229 (879,907 general education and 141,322 full-time special education students). "Direct services to schools" (the first five bars plus a $3 "other" line) totals $22,170 per student. "System-wide obligations" is mostly debt service ($2,132 per student) and retiree health and welfare ($713); pension contributions for current staff are counted within the other categories. All public-school functions total $26,266 per student. Pass-throughs of $4.75 billion (charter schools $2.39 billion; non-public schools $2.29 billion, of which $2.04 billion was special education; the Fashion Institute of Technology $0.06 billion) are not included in the per-student amounts.</div>
+    <div class="chart-caption"><strong>Source:</strong> NYC DOE, School Based Expenditure Report, FY2018 System Wide Report #1 (run Aug. 6, 2019). Per-student amounts for public schools, using DOE's enrollment of 1,021,229 (879,907 general education and 141,322 full-time special education students). "Direct services to schools" (classroom instruction, instructional support, leadership, ancillary support and building services, plus a $3 "other" line) totals $22,170 per student. "System-wide obligations" is mostly debt service ($2,132 per student) and retiree health and welfare ($713); pension contributions for current staff are counted within the other categories. All public-school functions total $26,266 per student. Pass-throughs of $4.75 billion (charter schools $2.39 billion; non-public schools $2.29 billion, of which $2.04 billion was special education; the Fashion Institute of Technology $0.06 billion) are not included in the per-student amounts.</div>
   </div>
-  <div class="note"><strong>Why this matters.</strong> No DOE report since FY2018 splits per-pupil spending into classroom instruction, school leadership, support services and system overhead this way. DOE still files New York State school funding transparency forms, and the state report card lists school-level per-pupil spending by funding source, but neither uses these functional categories. IBO's budget-line data (Sections 3 and 4) are the closest current substitute and do not map one-to-one to classroom versus administration.</div>
+  <div class="note"><strong>How this fits with the breakdown at the top of the page.</strong> The FY2018 report is DOE's own accounting. It uses categories neither current source uses, adds debt service and retiree health care, and has not been published since, so it cannot be lined up with the 2024-25 state figures or the FY2024 Census figures as a time series. For school-by-school spending today, each school's NYSED Financial Transparency Report splits its actual spending per pupil the same way as the chart at the top of the page.</div>
 </section>
 
 <section>
@@ -403,6 +446,7 @@ table.data th.num { text-align: right; }
     <li>New York City Council Finance Division, Report on the Fiscal 2019 Preliminary Budget and the Fiscal 2018 Preliminary Mayor's Management Report for the Department of Education, March 2018. <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2018/03/FY19-Department-of-Education-Expense.pdf">PDF</a></li>
     <li>New York City Council Finance Division, Report on the Fiscal 2027 Preliminary Plan for the Department of Education, March 2026 (due-process spending, U/A tables). <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2026/03/Department-of-Education-1.pdf">PDF</a></li>
     <li>NYC Department of Education, School Based Expenditure Reports, FY2018 System Wide Report (last edition). <a href="https://infohub.nyced.org/reports/financial/financial-data-and-reports/school-based-expenditure-reports">Link</a></li>
+    <li>New York State Education Department, 2024-25 Financial Transparency Report, New York City districtwide column (actual spending per pupil by function and by salaries, benefits and other), shown on every NYC school's report, for example <a href="https://data.nysed.gov/expenditures.php?year=2025&amp;instid=800000045541">P.S. 307's</a>; <a href="https://data.nysed.gov/businessrules.php?type=expenditures">business rules</a>. Groups and totals built by <a href="https://github.com/joshgreenman1973/experiments/blob/main/nyc-doe-per-pupil-spending/scripts/build_composition.py">build_composition.py</a>.</li>
     <li>NYC Department of Education, Demographic Snapshot, 2021-22 to 2025-26 (version of Aug. 20, 2026). <a href="https://infohub.nyced.org/reports/students-and-schools/school-quality/information-and-data-overview">Link</a></li>
     <li>NYC Department of Education, FY2027 school funding presentation to community education councils (District 75 funding). <a href="https://www.nycenet.edu/offices/finance_schools/budget/DSBPO/allocationmemo/fy25_26/fy26_docs/FY2027_FSF_CEC_Deck_English.pdf">PDF</a></li>
     <li>NYC Public Schools, due-process cases report to the City Council, December 2025. <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2025/12/Department-of-Education-Due-Process-Cases-Report-1-of-2.xlsx">Spreadsheet</a></li>
@@ -618,6 +662,47 @@ new Chart(document.getElementById('bucketsChart'), {
 });
 </script>
 <script>
+// Lead section, what the money pays for: NYSED 2024-25 Financial Transparency Reports, actual spending per pupil.
+// Generated by nyc-doe-per-pupil-spending/scripts/build_composition.py in joshgreenman1973/experiments (data/composition.json). Seven groups of the state's 12 functions:
+// instruction = 1+3; pupil support = 2; school administration = 5; transportation = 7; building = 6; food = 9;
+// central administration and other districtwide = 4+8+12. Each triple is [salaries, employee benefits, all other], rounded so it sums to the rounded group total (any $1 remainder goes to salaries);
+// columns are P.S. 307, P.S. 321, P.S. 369 (used on the standalone page) and the NYC districtwide figure (index 3, used here). Totals are the sum of each triple.
+const FN_GROUPS = [
+  { label: "Instruction", color: VC.orange, d: [[16799, 8791, 2059], [9196, 4813, 561], [44639, 23361, 898], [11475, 6005, 1464]] },
+  { label: "Pupil support (counseling, therapy, health)", color: VC.magenta, d: [[5729, 2998, 846], [1612, 844, 846], [14222, 7443, 853], [2677, 1401, 1038]] },
+  { label: "School administration", color: VC.cerulean, d: [[1568, 821, 0], [622, 325, 0], [2997, 1569, 0], [1332, 698, 0]] },
+  { label: "Transportation", color: VC.chartreuse, d: [[26, 13, 5331], [1, 0, 69], [95, 50, 19840], [8, 4, 1721]] },
+  { label: "Building operation and maintenance", color: VC.periwinkle, d: [[240, 125, 2649], [240, 125, 2649], [240, 125, 2649], [237, 124, 2623]] },
+  { label: "Food services", color: VC.rose, d: [[328, 171, 337], [328, 171, 337], [328, 171, 337], [323, 170, 334]] },
+  { label: "Central administration and other districtwide costs", color: VC.charcoal, d: [[1155, 1791, 573], [1071, 1747, 573], [993, 1706, 573], [1103, 1752, 567]] }
+];
+const sum3 = t => t[0] + t[1] + t[2];
+const money = v => '$' + Math.round(v).toLocaleString();
+
+// Districtwide composition: one bar per function, stacked by type of cost.
+new Chart(document.getElementById('compositionChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Instruction', 'Pupil support', ['School', 'administration'], 'Transportation', ['Building operation', 'and maintenance'], 'Food services', ['Central and other', 'districtwide costs']],
+    datasets: [['Salaries', 0, VC.indigo], ['Employee benefits', 1, VC.cerulean], ['All other (contracts, supplies, utilities)', 2, VC.periwinkle]]
+      .map(([label, i, color]) => ({ label, data: FN_GROUPS.map(f => f.d[3][i]), backgroundColor: color }))
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    plugins: {
+      legend: { position: 'bottom', labels: { boxWidth: 12, padding: 8, font: { size: 11 } } },
+      tooltip: { callbacks: {
+        title: c => FN_GROUPS[c[0].dataIndex].label + ': ' + money(sum3(FN_GROUPS[c[0].dataIndex].d[3])) + ' per pupil',
+        label: c => c.dataset.label + ': ' + money(c.parsed.x)
+      } }
+    },
+    scales: {
+      x: { stacked: true, beginAtZero: true, ticks: { callback: v => '$' + (v / 1000) + 'K' }, grid: { color: '#eee' } },
+      y: { stacked: true, grid: { display: false }, ticks: { font: { size: 11 } } }
+    }
+  }
+});
+
 // 5. DOE School Based Expenditure Report, FY2018 System Wide Report #1, per student (enrollment 1,021,229)
 new Chart(document.getElementById('functionalChart'), {
   type: 'bar',
