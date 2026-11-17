@@ -778,7 +778,7 @@
             const [workforceYZero, setWorkforceYZero] = useState(false);
             const [wfProgress, setWfProgress] = useState(workforceData.length - 1);
             const [wfPlaying, setWfPlaying] = useState(false);
-            const [wfIndexed, setWfIndexed] = useState(false);
+            const [wfIndexed, setWfIndexed] = useState(true);
             const [narrow, setNarrow] = useState(window.innerWidth < 600);
             useEffect(() => {
                 const on = () => setNarrow(window.innerWidth < 600);
@@ -1150,7 +1150,7 @@
                                 enrollment: firstWith('enrollment').enrollment,
                             };
                             var chartData = wfIndexed ? animated.map(d => ({
-                                year: d.year,
+                                year: d.year, raw: d,
                                 genEd: d.genEd != null ? (d.genEd / bases.genEd) * 100 : null,
                                 sped: d.sped != null ? (d.sped / bases.sped) * 100 : null,
                                 otherPed: d.otherPed != null ? (d.otherPed / bases.otherPed) * 100 : null,
@@ -1175,21 +1175,23 @@
                                 <input type="range" min="0" max={maxIdx} step="0.05" value={wfProgress} onChange={e => { setWfProgress(parseFloat(e.target.value)); setWfPlaying(false); }} style={{ flex: 1 }} />
                                 <span style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: '20px', fontWeight: 600, color: '#050507', fontVariantNumeric: 'lining-nums tabular-nums', minWidth: '76px', textAlign: 'right' }}>{animated[animated.length - 1].year}</span>
                             </div>
-                            <div style={{ display: 'flex', gap: '8px 18px', flexWrap: 'wrap', flexBasis: '100%' }}>
-                            <label className="en-check">
-                                <input type="checkbox" checked={wfIndexed} onChange={e => setWfIndexed(e.target.checked)} />
-                                Show as % change since each line's first year
-                            </label>
-                            <label className="en-check">
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px 18px', flexWrap: 'wrap', flexBasis: '100%' }}>
+                            <GxSegment label="Measure" value={wfIndexed ? 'pct' : 'count'} onChange={(m) => setWfIndexed(m === 'pct')} options={[
+                                { id: 'pct', label: 'Change since first year' }, { id: 'count', label: 'Staff counts' },
+                            ]} />
+                            {!wfIndexed && <label className="en-check">
                                 <input type="checkbox" checked={workforceYZero} onChange={e => setWorkforceYZero(e.target.checked)} />
                                 Start y-axis at zero
-                            </label>
+                            </label>}
                             </div>
                         </div>
 
                         <div className="en-card">
+                        <div className="en-card-note">{wfIndexed
+                            ? 'Percent change from each line’s first year: 2000-01 for teachers and enrollment, 2014-15 for other pedagogical and non-pedagogical staff.'
+                            : 'Number of staff. Enrollment is on a different scale, so it appears only in the change view.'}</div>
                         <Key items={[
-                            { label: 'K-12 enrollment, district schools (right scale)', color: C.ink, type: 'ln' },
+                            ...(wfIndexed ? [{ label: 'K-12 enrollment, district schools', color: C.ink, type: 'ln' }] : []),
                             { label: 'General-education teachers', color: C.district, type: 'ln' },
                             { label: 'Special-education teachers', color: C.religious, type: 'ln' },
                             { label: 'Other pedagogical staff', color: C.homeschool, type: 'ln' },
@@ -1200,9 +1202,8 @@
                                 <ComposedChart data={chartData} margin={{ top: 8, right: 0, left: 0, bottom: 0 }}>
                                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#ece6da" />
                                     <XAxis dataKey="year" tick={{ fill: '#5d5f66', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={narrow ? shortYear : undefined} />
-                                    <YAxis yAxisId="staff" tickFormatter={wfIndexed ? (v => v.toFixed(0) + '%') : formatYAxis} tick={{ fill: '#5d5f66', fontSize: 11 }} axisLine={false} tickLine={false} width={56} domain={wfIndexed ? [workforceYZero ? 0 : 60, 220] : (workforceYZero ? [0, 'auto'] : ['auto', 'auto'])} label={{ value: wfIndexed ? '% of first year' : 'Staff', angle: -90, position: 'insideLeft', fill: '#5d5f66', fontSize: 11 }} />
-                                    <YAxis yAxisId="students" orientation="right" tickFormatter={wfIndexed ? (v => v.toFixed(0) + '%') : formatYAxis} tick={{ fill: '#5d5f66', fontSize: 11 }} axisLine={false} tickLine={false} width={56} domain={wfIndexed ? [workforceYZero ? 0 : 60, 220] : (workforceYZero ? [0, 'auto'] : ['auto', 'auto'])} label={{ value: wfIndexed ? '% of first year' : 'K-12 students', angle: 90, position: 'insideRight', fill: '#5d5f66', fontSize: 11 }} />
-                                    {wfIndexed && <ReferenceLine yAxisId="staff" y={100} stroke="#bbb" strokeDasharray="2 4" />}
+                                    <YAxis tickFormatter={wfIndexed ? (v => (v > 100 ? '+' : v < 100 ? '−' : '') + Math.abs(v - 100).toFixed(0) + '%') : formatYAxis} tick={{ fill: '#5d5f66', fontSize: 11 }} axisLine={false} tickLine={false} width={44} domain={wfIndexed ? [60, 220] : (workforceYZero ? [0, 'auto'] : ['auto', 'auto'])} ticks={wfIndexed ? [60, 100, 140, 180, 220] : undefined} />
+                                    {wfIndexed && <ReferenceLine y={100} stroke="#9a9ca3" strokeWidth={1} />}
                                     <Tooltip wrapperStyle={{ outline: 'none' }} content={({ active, payload, label }) => {
                                         if (!active || !payload || !payload.length) return null;
                                         var shortName = (n) => n.replace(/ \(.+?\)/, '');
@@ -1213,17 +1214,18 @@
                                                     <div key={i} style={{ display: 'flex', alignItems: 'center', marginBottom: '1px', whiteSpace: 'nowrap' }}>
                                                         <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: e.color, marginRight: '6px', flexShrink: 0 }} />
                                                         <span style={{ color: 'rgba(255,255,255,0.7)', marginRight: '10px' }}>{shortName(e.name)}</span>
-                                                        <span style={{ fontWeight: 700, marginLeft: 'auto', fontVariantNumeric: 'tabular-nums' }}>{wfIndexed ? e.value.toFixed(1) + '%' : e.value.toLocaleString()}</span>
+                                                        <span style={{ fontWeight: 700, marginLeft: 'auto', fontVariantNumeric: 'tabular-nums' }}>{wfIndexed ? ((e.value >= 100 ? '+' : '−') + Math.abs(e.value - 100).toFixed(1) + '%') : Math.round(e.value).toLocaleString()}</span>
+                                                        {wfIndexed && e.payload.raw && e.payload.raw[e.dataKey] != null && <span style={{ color: 'rgba(255,255,255,0.6)', marginLeft: '8px', fontVariantNumeric: 'tabular-nums', minWidth: '58px', textAlign: 'right' }}>{Math.round(e.payload.raw[e.dataKey]).toLocaleString()}</span>}
                                                     </div>
                                                 ))}
                                             </div>
                                         );
                                     }} />
-                                    <Line yAxisId="staff" type="linear" dataKey="genEd" name="General-education teachers (district)" stroke={C.district} strokeWidth={2} dot={false} activeDot={{ r: 4, stroke: '#fff', strokeWidth: 2 }} isAnimationActive={false} />
-                                    <Line yAxisId="staff" type="linear" dataKey="sped" name="Special-education teachers (district)" stroke={C.religious} strokeWidth={2} dot={false} activeDot={{ r: 4, stroke: '#fff', strokeWidth: 2 }} isAnimationActive={false} />
-                                    <Line yAxisId="staff" type="linear" dataKey="otherPed" name="Other pedagogical (all DOE pedagogical staff minus teachers)" stroke={C.homeschool} strokeWidth={2} dot={false} activeDot={{ r: 4, stroke: '#fff', strokeWidth: 2 }} isAnimationActive={false} />
-                                    <Line yAxisId="staff" type="linear" dataKey="nonPed" name="Non-pedagogical staff (all DOE)" stroke={C.muted} strokeWidth={2} strokeDasharray="4 4" dot={false} activeDot={{ r: 4, stroke: '#fff', strokeWidth: 2 }} isAnimationActive={false} />
-                                    <Line yAxisId="students" type="linear" dataKey="enrollment" name="K-12 enrollment (district schools)" stroke={C.ink} strokeWidth={2.5} dot={false} activeDot={{ r: 4, stroke: '#fff', strokeWidth: 2 }} isAnimationActive={false} />
+                                    <Line type="linear" dataKey="genEd" name="General-education teachers (district)" stroke={C.district} strokeWidth={2} dot={false} activeDot={{ r: 4, stroke: '#fff', strokeWidth: 2 }} isAnimationActive={false} />
+                                    <Line type="linear" dataKey="sped" name="Special-education teachers (district)" stroke={C.religious} strokeWidth={2} dot={false} activeDot={{ r: 4, stroke: '#fff', strokeWidth: 2 }} isAnimationActive={false} />
+                                    <Line type="linear" dataKey="otherPed" name="Other pedagogical (all DOE pedagogical staff minus teachers)" stroke={C.homeschool} strokeWidth={2} dot={false} activeDot={{ r: 4, stroke: '#fff', strokeWidth: 2 }} isAnimationActive={false} />
+                                    <Line type="linear" dataKey="nonPed" name="Non-pedagogical staff (all DOE)" stroke={C.muted} strokeWidth={2} strokeDasharray="4 4" dot={false} activeDot={{ r: 4, stroke: '#fff', strokeWidth: 2 }} isAnimationActive={false} />
+                                    {wfIndexed && <Line type="linear" dataKey="enrollment" name="K-12 enrollment (district schools)" stroke={C.ink} strokeWidth={2.5} dot={false} activeDot={{ r: 4, stroke: '#fff', strokeWidth: 2 }} isAnimationActive={false} />}
                                 </ComposedChart>
                             </ResponsiveContainer>
                         </div>
