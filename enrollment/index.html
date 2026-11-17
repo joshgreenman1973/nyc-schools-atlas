@@ -54,7 +54,7 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--vc-cloud); border-radius: 2px; }
     </style>
-  <link rel="stylesheet" href="../shared/chrome.css?v=17" />
+  <link rel="stylesheet" href="../shared/chrome.css?v=18" />
   <style>
     /* Page layer on top of the atlas chrome. #root scoping outranks chrome's !important rules. */
     #root { --en-line: var(--site-paper-line, #e3dccc); --en-soft: var(--site-paper-line-soft, #ede5d2); --en-ink: var(--site-paper-ink, #050507); --en-muted: var(--site-paper-muted, #5d5f66); }
@@ -212,7 +212,7 @@
             { year: '2022-23', district: 797844, charter: 139274 },
             { year: '2023-24', district: 794626, charter: 143563 },
             { year: '2024-25', district: 799752, charter: 146995 },
-            { year: '2025-26', district: 780402, charter: 149870 },
+            { year: '2025-26', district: 779622, charter: 148840 },
         ];
 
         // All K-12 students in schools located in New York City, by type of school, 2000-01 to 2025-26.
@@ -246,7 +246,7 @@
             { year: '2022-23', district: 797844, charter: 139274, religious: 174866, independent: 42118, homeschool: 14781, catholic: 56885, jewish: 105009, otherReligious: 12972 },
             { year: '2023-24', district: 794626, charter: 143563, religious: 174577, independent: 42706, homeschool: 13991, catholic: 55305, jewish: 106189, otherReligious: 13083 },
             { year: '2024-25', district: 799752, charter: 146995, religious: 174078, independent: 42373, homeschool: 15283, catholic: 53728, jewish: 107201, otherReligious: 13149 },
-            { year: '2025-26', district: 780402, charter: 149870, religious: 172449, independent: 41500, homeschool: 13079, catholic: 50702, jewish: 108751, otherReligious: 12996 },
+            { year: '2025-26', district: 779622, charter: 148840, religious: 172449, independent: 41500, homeschool: 13079, catholic: 50702, jewish: 108751, otherReligious: 12996 },
         ];
 
         // 3-K and pre-K enrollment, NYC Department of Education Demographic Snapshot, citywide tab including charter schools,
@@ -254,7 +254,7 @@
         // Centers. Newest snapshot vintage used for each year. k12 = kindergarten to grade 12 on the same basis.
         const earlyChildhoodData = [
             { year: '2010-11', preK: 57250, threeK: 0, k12: 1026070 },
-            { year: '2011-12', preK: 57518, threeK: 0, k12: 1032019 },
+            { year: '2011-12', preK: 57518, threeK: 0, k12: 1032013 },
             { year: '2012-13', preK: 54990, threeK: 0, k12: 1039955 },
             { year: '2013-14', preK: 55734, threeK: 0, k12: 1048745 },
             { year: '2014-15', preK: 66403, threeK: 0, k12: 1056380 },
@@ -291,7 +291,7 @@
         // October 31 audited register (Nov. 13, 2020, and Nov. 12, 2021), citywide, newest edition published for each year.
         // gradeAll includes charter schools. gradeDistrict leaves them out: from 2019-20 the snapshot's charter-free citywide tab;
         // before that, the citywide figure minus the charter-school row (District 84) of the same edition's district tab.
-        // 3-K and pre-K for every year are the same figures as preKData above (half-day and full-day, including NYC Early
+        // 3-K and pre-K for every year are the same figures as earlyChildhoodData above (half-day and full-day, including NYC Early
         // Education Centers). Columns follow gradeKeys.
         const gradeKeys = ["3K", "PK", "K", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
         const gradeShort = ['3-K', 'Pre-K', 'K', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
@@ -334,7 +334,7 @@
             [39229, 55497, 52525, 55350, 56017, 56404, 57571, 57418, 56074, 56956, 59594, 71889, 74557, 65907, 69656]
         ];
         // Preliminary 2026-27 K-12 count in district schools (charter schools not included), released by DOE Nov. 16, 2026,
-        // as of Oct. 31, 2026. Same basis as gradeDistrict: 789,918 in 2025-26 minus the 23,018 decline DOE reported.
+        // as of Oct. 31, 2026. Same basis as gradeDistrict: 789,918 in 2025-26 minus 766,900, a decline of 23,018 (DOE reported about 23,000).
         const prelimK12District = { year: '2026-27', value: 766900 };
 
         // Workforce data, school years 2000-01 to 2022-23.
@@ -842,7 +842,7 @@
                     <div className="en-callout">
                         <div className="en-callout-head">Update, Nov. 17, 2026: preliminary count for 2026-27</div>
                         <p>
-                            The city’s Department of Education reported on Nov. 16 that 766,900 students were enrolled in kindergarten through 12th grade in its schools as of Oct. 31, 2026, about 23,000 (2.9 percent) fewer than a year earlier. The count leaves out charter schools. Including 3-K, pre-K and the new 2-K program, enrollment was 863,100, down from 885,860 a year earlier.
+                            The city’s Department of Education reported on Nov. 16 that 766,900 students were enrolled in kindergarten through 12th grade in its schools as of Oct. 31, 2026, about 23,000 (2.9 percent) fewer than a year earlier. The count leaves out charter schools. Including 3-K, pre-K and the new 2-K program, enrollment was 863,100, down from 885,860 a year earlier. (DOE’s audited 2025-26 count for 3-K through 12th grade, used in the grade explorer below, is 884,644; DOE did not say what its 885,860 comparison figure includes.)
                         </p>
                         <p className="en-callout-fine">
                             These figures are preliminary and have not been audited. They come from the department’s own register, not the state’s October counts used in the charts below, so they are not plotted. The state has not yet published its 2026-27 count.
@@ -890,7 +890,7 @@
                         </div>
 
                         <p className="en-body">
-                            District enrollment bottomed out at 914,782 in 1982-83 and rose to 1,058,593 in 1998-99. It fell by 68,974 from 2010-11 to 2019-20 and by another 124,318 from 2019-20 to 2025-26. Counting charter schools, public school enrollment fell 1.5 percent from 2015-16 to 2019-20 and 10.0 percent from 2019-20 to 2025-26. A federal survey counted 1,149,068 students in kindergarten through 12th grade in fall 1971, more than in any year shown here, but it was compiled on a different basis, so it is not plotted.
+                            District enrollment fell to 914,782 in 1982-83, then rose to 1,058,593 in 1998-99. It fell by 68,974 from 2010-11 to 2019-20 and by another 125,098 from 2019-20 to 2025-26, to the lowest level in the series. Counting charter schools, public school enrollment fell 1.5 percent from 2015-16 to 2019-20 and 10.2 percent from 2019-20 to 2025-26. A federal survey counted 1,149,068 students in fall 1971, more than in any year shown here, but it was compiled on a different basis, so it is not plotted.
                         </p>
 
                         <h3 className="en-h3">
@@ -1339,8 +1339,8 @@
                             <div>
                                 <h3 className="en-mh">K-12 enrollment by type of school</h3>
                                 <p><strong>Public and charter schools.</strong> Counts come from the New York State Education Department (NYSED), Information and Reporting Services, which collects enrollment on BEDS (Basic Educational Data System) Day, the first Wednesday in October. District figures add every New York City row in NYSED’s district files (state district codes beginning 30 to 35, which cover the 32 community school districts, District 75 and the citywide high school and alternative school districts), for 1976-77 through 2025-26. Charter figures add the city’s charter schools in NYSED’s school-level files; none appear before 2000-01, although the city’s oldest operating charter school, Sisulu-Walker Charter School of Harlem, opened in 1999, according to NYSED’s charter school directory. K-12 means kindergarten (half-day and full-day) through 12th grade plus ungraded students; pre-K is left out. The page adds the grade columns rather than using the files’ total column: in the 1992-93 and 1993-94 files the column labeled “K12 total” exceeds the grade columns by about 12,500, roughly the size of pre-K, and in earlier files it differs from them by less than 0.3 percent. NYSED’s school-level and district-level files give identical district totals for every year from 1999-2000 on.</p>
-                                <p><strong>State and city counts differ slightly.</strong> The Department of Education (DOE) counts students on its October 31 audited register; NYSED counts on BEDS Day. For 2025-26, NYSED counts 780,402 K-12 students in district schools and DOE counts 789,918. The other tabs use DOE’s counts.</p>
-                                <p><strong>Before 1976-77.</strong> NYSED’s electronic files begin in 1976-77. The federal survey cited on the tab (National Center for Education Statistics, Fall 1971, Table 4) counted 1,149,068 students in kindergarten through 12th grade in fall 1971 and 1,120,082 in fall 1970. It is a different collection, so it is not joined to the state series.</p>
+                                <p><strong>State and city counts differ slightly.</strong> The Department of Education (DOE) counts students on its October 31 audited register; NYSED counts on BEDS Day. For 2025-26, NYSED counts 779,622 K-12 students in district schools and DOE counts 789,918. (NYSED’s 2025-26 files were re-pulled on Oct. 8, 2026; this page uses the current version.) The other tabs use DOE’s counts.</p>
+                                <p><strong>Before 1976-77.</strong> NYSED’s electronic files begin in 1976-77. The federal survey cited on the tab (National Center for Education Statistics, Fall 1971, Table 4) counted 1,149,068 students in fall 1971 and 1,120,082 in fall 1970, for grades K-6 and 7-12. The report counts 93,517 more city children as “preprimary” (nursery and kindergarten) in a separate table, so it is not clear whether every kindergartner is in the 1,149,068, and the total also includes special education and ungraded students. It is a different collection, so it is not joined to the state series.</p>
                                 <p><strong>Private schools.</strong> NYSED’s nonpublic enrollment files list the private schools that report to the state, with each school’s affiliation and enrollment by grade. The page adds schools in the five boroughs. “Religious” covers Catholic, Jewish and other religious affiliations; “independent” is NYSED’s nonsectarian category. Hunter College Campus Schools, which NYSED files with nonpublic schools but which are public schools run by Hunter College, are left out (1,624 K-12 students in 2025-26). Private-school counts are of schools located in the city; some students live elsewhere.</p>
                                 <p><strong>Home schooling.</strong> NYSED’s count of children instructed at home, as reported by school districts, covers children of compulsory school age taught at home by parents or a tutor they hire. New York City’s figures start in 2014-15: 3,667 that year and 13,079 in 2025-26 (15,283 in 2024-25). Children younger or older than compulsory school age are not counted.</p>
                             </div>
@@ -1355,7 +1355,7 @@
                                 <h3 className="en-mh">Enrollment by grade</h3>
                                 <p>Grade counts, 3-K through 12th grade, come from DOE’s Demographic Snapshot, which counts students on the October 31 audited register (Nov. 13 in 2020-21 and Nov. 12 in 2021-22, when the school year started late). Each year comes from the newest edition that covers it: the 2021-22 to 2025-26 edition for 2021-22 onward; the 2020-21 to 2024-25 edition for 2020-21; the 2019-20 to 2023-24 edition for 2019-20; the 2016-17 to 2020-21 citywide file on NYC Open Data for 2016-17 to 2018-19; the 2015-16 to 2019-20 file for 2015-16; the 2014-15 to 2018-19 file for 2014-15; and the 2013-14 to 2017-18, 2012-13 to 2016-17, 2011-12 to 2015-16 and 2010-11 to 2014-15 editions for 2013-14 back to 2010-11. DOE no longer posts the 2019-20 to 2023-24 and 2020-21 to 2024-25 editions or the editions published from 2015 to 2018; those were retrieved from the Internet Archive. Where editions overlap, their citywide totals are identical. 3-K and pre-K include half-day and full-day seats and NYC Early Education Centers and match the 3-K and pre-K tab; for 2017-18 and 2018-19, when the citywide file combines them, 3-K comes from DOE’s 3-K for All snapshot on NYC Open Data.</p>
                                 <p><strong>With and without charter schools.</strong> From 2019-20, DOE publishes citywide counts with and without charter schools, and the explorer uses both. Earlier editions publish only the figure that includes charters; for those years, district-school counts are that figure minus the charter-school row (District 84) of the same edition’s district file, grade by grade. In the 2019-20 edition, which publishes both, the District 84 row equals the difference between the two citywide figures (129,668 students). Charter K-12 counts on this basis run within about 2 percent of the state’s October charter counts. 3-K is the same in both views, since no charter school enrolled 3-K students in these years.</p>
-                                <p>The preliminary 2026-27 point on the K-12 line (766,900 as of Oct. 31, 2026, district schools only) is from DOE’s Nov. 16, 2026, release as reported by The New York Times and NY1. It is 23,018 below the audited 2025-26 count of 789,918, the decline DOE reported, so it is on the same basis. DOE released no grade-by-grade detail, and the figure may change in the audit.</p>
+                                <p>The preliminary 2026-27 point on the K-12 line (766,900 as of Oct. 31, 2026, district schools only) is from DOE’s Nov. 16, 2026, release as reported by The New York Times and NY1. It is 23,018 below the audited 2025-26 count of 789,918, matching the decline of about 23,000 that DOE reported, so it is on the same basis. DOE released no grade-by-grade detail, and the figure may change in the audit.</p>
                             </div>
 
                             <div>
@@ -1370,7 +1370,7 @@
                                 <h3 className="en-mh">Workforce</h3>
                                 <p>The Workforce tab compares DOE staffing with K-12 enrollment in district schools, school years 2000-01 through 2022-23.</p>
                                 <p><strong>Teachers.</strong> General-education and special-education teacher counts come from three Independent Budget Office (IBO) reports built from DOE personnel files: “Demographics and Work Experience: A Statistical Portrait of New York City’s Public School Teachers” (May 2014, Table 1) for 2000-01 through 2011-12; “New York City Public School Indicators: Teachers” (June 2017, p. 1) for 2012-13 through 2014-15; and “Roll Call: Recent Trends in Teacher Retention and Hiring in New York City Public Schools” (September 2023, p. 3) for 2015-16 through 2022-23. The 2017 report repeats the 2014 report’s figures for the years they share. An earlier version of this page filled 2012-13 through 2014-15 by straight-line interpolation; those years now use IBO’s published counts. The reports are not one continuous series, so small breaks at 2012-13 and 2015-16 are possible.</p>
-                                <p><strong>Pedagogical and non-pedagogical headcount.</strong> DOE’s actual headcount as of June of each fiscal year, from the Office of Management and Budget (OMB), as charted by the City Council Finance Division in its report on the DOE Fiscal 2025 Preliminary Budget (March 2024), Charts 6 and 7. Fiscal year N is plotted at school year N-1 to N, so fiscal 2015 appears as 2014-15. The headcount covers all of DOE, including central and field offices. Later Council reports chart fiscal 2024 and 2025 without printing the values, so the series stops at fiscal 2023. The Council’s March 2026 report gives actual headcount as of January 2026, a mid-year figure: 124,570 pedagogical and 13,636 non-pedagogical.</p>
+                                <p><strong>Pedagogical and non-pedagogical headcount.</strong> DOE’s actual headcount as of June of each fiscal year, from the Office of Management and Budget (OMB), as charted by the City Council Finance Division in its report on the DOE Fiscal 2025 Preliminary Budget (March 2024), Charts 6 and 7. Fiscal year N is plotted at school year N-1 to N, so fiscal 2015 appears as 2014-15. The headcount covers all of DOE, including central and field offices. The Council’s March 2026 report prints actuals for fiscal 2024 and 2025 (118,167 and 120,720 pedagogical; 13,052 and 13,522 non-pedagogical), but IBO’s teacher counts end in 2022-23 and “other pedagogical” needs both, so the charts stop there. The Council’s March 2026 report gives actual headcount as of January 2026, a mid-year figure: 124,570 pedagogical and 13,636 non-pedagogical.</p>
                                 <p><strong>“Other pedagogical.”</strong> OMB’s pedagogical headcount minus IBO’s general-education and special-education teachers. It was 37,231 in 2014-15, 39,450 in 2015-16 and 41,006 in 2022-23. Per 1,000 K-12 students in district schools, it rose from 41.3 in 2015-16 to 51.4 in 2022-23, about 24 percent. Because the headcount is taken in June and the teacher count reflects the school year, the residual is approximate. The published sources do not itemize it by title year by year.</p>
                                 <p><strong>Enrollment.</strong> The denominator is NYSED’s BEDS Day count of K-12 students in district schools, the same series as the Composition tab. An earlier version of this page used IBO endpoints with interpolated years in between and rounded figures for 2015-16 through 2022-23 whose source could not be found; it also described them as K-12 counts, although IBO’s 2000-01 and 2011-12 figures (1,105,240 and 1,041,437) include pre-K.</p>
                                 <p><strong>Title counts, October 2019.</strong> From DOE’s FY 2020 October Headcount Report to the City Council (Nov. 15, 2019), which lists school-based and borough field-support staff by title. An earlier version of this page attributed these counts to the Local Law 226 staff demographics report, which reports only leadership, teachers and other staff, and its count of 1,640 principals included 14 principal administrative associates, a clerical title, and one neighborhood worker. The correct principal count is 1,625.</p>
@@ -1401,6 +1401,6 @@
 
         ReactDOM.render(<App />, document.getElementById('root'));
     </script>
-  <script src="../shared/chrome.js?v=17"></script>
+  <script src="../shared/chrome.js?v=18"></script>
 </body>
 </html>

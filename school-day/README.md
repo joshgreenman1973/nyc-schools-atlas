@@ -4,7 +4,7 @@ The "School day" section of the NYC Schools Atlas: scheduled hours in school for
 
 **Live:** https://joshgreenman1973.github.io/nyc-schools-atlas/school-day/
 
-(An older standalone copy at https://joshgreenman1973.github.io/nyc-school-time/ predates the Oct. 7, 2026, corrections.)
+(An older standalone copy remains at https://joshgreenman1973.github.io/nyc-school-time/. This section is the maintained version.)
 
 ## Files
 

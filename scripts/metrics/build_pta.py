@@ -81,12 +81,14 @@ def main():
         if dbn in schools:
             raise SystemExit(f"duplicate DBN {dbn}")
         n_rows += 1
+        beg = num(r[idx["Beginning Balance"]])
         inc = num(r[idx["Total Income"]])
         exp = num(r[idx["Total Expenses"]])
         endb = num(r[idx["Ending Balance"]])
         e = enroll.get(dbn)
         per = round(inc / e, 2) if (inc is not None and e) else None
         schools[dbn] = {
+            "pta_beginning_balance": beg,
             "pta_revenue": inc,
             "pta_expenses": exp,
             "pta_ending_balance": endb,
@@ -107,7 +109,7 @@ def main():
         raise SystemExit(f"school income sum {tot} != citywide {city_income}")
 
     vals = list(schools.values())
-    n_blank = sum(1 for v in vals if all(v[k] is None for k in ("pta_revenue", "pta_expenses", "pta_ending_balance")))
+    n_blank = sum(1 for v in vals if all(v[k] is None for k in ("pta_beginning_balance", "pta_revenue", "pta_expenses", "pta_ending_balance")))
     n_inc_noexp = sum(1 for v in vals if v["pta_revenue"] is not None and v["pta_expenses"] is None)
     n_zero = sum(1 for v in vals if v["pta_revenue"] == 0)
 
@@ -120,6 +122,13 @@ def main():
         "vintage": "2024-25",
         "fetched": FETCHED,
         "fields": {
+            "pta_beginning_balance": {
+                "label": "PA/PTA beginning balance",
+                "definition": "Funds the PA/PTA reported holding at the start of the reporting period (self-reported).",
+                "source_field": "Beginning Balance (sheet: School)",
+                "unit": "dollars",
+                "direction": "neutral",
+            },
             "pta_revenue": {
                 "label": "PA/PTA income",
                 "definition": "Total income the school's parent association or PTA reported for the 2024-25 school year (annual financial report, self-reported).",

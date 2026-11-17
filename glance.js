@@ -69,7 +69,8 @@ function fmt(m, v) {
   if (v == null) return '—';
   if (typeof v === 'string') return v;
   switch (m.unit) {
-    case 'pct': return `${Math.round(v * 100)}%`;
+    // Under 1%, one decimal: 0.005 reads 0.5%, not a rounded-up 1%.
+    case 'pct': return (v !== 0 && Math.abs(v * 100) < 0.95) ? `${(v * 100).toFixed(1)}%` : `${Math.round(v * 100)}%`;
     case 'pct1': return `${(v * 100).toFixed(1)}%`;
     case 'change': return `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(Math.round(v * 100))}%`;
     case 'dollars': return v >= 1e6 ? `$${(v / 1e6).toFixed(1)}M` : `$${Math.round(v).toLocaleString()}`;

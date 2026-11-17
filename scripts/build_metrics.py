@@ -14,10 +14,12 @@ Measures derived here (not published as such by the source):
                         school's level (the scores are standardized within
                         report type, so they are never mixed in one ranking).
   ela / math            % at Levels 3-4 from the newest state test file.
-  suspensions_per_100   (principal's + superintendent's suspensions, 2024-25)
-                        / 2024-25 enrollment from the DOE Demographic Snapshot
-                        x 100. Only when DOE shows both counts; DOE redacts
-                        counts of 1 to 5.
+  suspensions_per_100   (principal's + superintendent's suspensions, 2025-26)
+                        / 2025-26 K-12 enrollment from the DOE Demographic
+                        Snapshot x 100. Ranked only when DOE shows both counts;
+                        DOE redacts counts of 0 to 5, so a school with one
+                        count hidden shows a floor ("at least ...") as text
+                        and one with both hidden shows "0 to 10".
   enroll_change         (2025-26 enrollment - 2021-22 enrollment) / 2021-22,
                         DOE Demographic Snapshot; only when 2021-22 >= 20.
   eni, pct_swd, pct_ell DOE Demographic Snapshot 2025-26.
@@ -225,9 +227,9 @@ def trend_of(dbn, year):
     return None
 
 
-def _k12_2024_25():
-    """2024-25 enrollment minus 3-K and pre-K (who can't be suspended), from
-    the Demographic Snapshot's school tab."""
+def _k12(year):
+    """Enrollment minus 3-K and pre-K (who can't be suspended) for one school
+    year, from the Demographic Snapshot's school tab."""
     import openpyxl
     wb = openpyxl.load_workbook(ROOT / 'data/sources/nyc_doe_demographic_snapshot_2021-22_to_2025-26.xlsx', read_only=True)
     rows = wb['School'].iter_rows(values_only=True)
@@ -235,27 +237,38 @@ def _k12_2024_25():
     ix = {c: i for i, c in enumerate(h)}
     out = {}
     for r in rows:
-        if r[ix['Year']] == '2024-25' and r[0]:
+        if r[ix['Year']] == year and r[0]:
             out[r[0].strip().upper()] = (r[ix['Total Enrollment']] or 0) - (r[ix['Grade 3K']] or 0) - (r[ix['Grade PK (Half Day & Full Day)']] or 0)
     return out
 
 
-K12_2425 = _k12_2024_25()
+SUSP_YEAR = '2025-26'  # DOE's LL93 file and the enrollment denominator must be the same year
+K12_SUSP = _k12(SUSP_YEAR)
 SUSP_FILE = set(SRC['suspensions']['schools']) if SRC.get('suspensions') else set()
 
 
 def suspensions(dbn):
     if dbn.startswith('84') or not SRC.get('suspensions'):
         return None  # charter schools aren't in DOE's discipline report
-    e = K12_2425.get(dbn)
+    e = K12_SUSP.get(dbn)
     if not e:
         return None
     if dbn not in SUSP_FILE:
         return "Not listed in DOE's report"
     t = get('suspensions', dbn, 'total_suspensions')
-    if t is None:
-        return 'Redacted by DOE (it hides counts of 1 to 5)'
-    return t / e * 100
+    if t is not None:
+        return t / e * 100
+    # DOE redacts counts of 0 to 5. A shown count plus a hidden one is a floor,
+    # never an exact rate, so it is shown as text and not ranked.
+    k = get('suspensions', dbn, 'suspensions_shown') or 0
+    hidden = get('suspensions', dbn, 'suspensions_hidden_parts')
+    if hidden == 2:
+        return '0 to 10 suspensions: DOE hides both counts, as it does for counts of 0 to 5'
+    if k == 0:
+        return '0 to 5 suspensions: one count is zero and DOE hides the other, as it does for counts of 0 to 5'
+    r = math.floor(k / e * 1000) / 10  # round down, so the floor stays a floor
+    return f'At least {r:.1f} per 100: DOE shows {k:,} suspensions and hides one count, as it does for counts of 0 to 5'
+
 suspensions.key, suspensions.name = 'suspensions', 'total_suspensions'
 
 
@@ -271,19 +284,39 @@ def enroll_change(dbn):
     return round((b - a) / a, 4)
 
 
+def _doe_buildings():
+    """Buildings DOE owns or leases for its schools: every building in the
+    School Construction Authority's Blue Book (all editions in the saved file)
+    plus every building DOE's current list gives a non-charter school. A
+    charter school whose building is neither sits in private space, which
+    DOE's accessibility list never covers."""
+    import csv
+    sca = {r['Bldg ID'].strip().upper() for r in csv.DictReader(open(ROOT / 'data/sources/nyc_sca_enrollment_capacity_utilization_gkd7-3vk7_all_vintages_thru_2025-26.csv'))}
+    return sca | {v['building'] for d, v in LCG.items() if not d.startswith('84')}
+
+
+DOE_BLDG = _doe_buildings()
+
+
 def access(dbn):
     """DOE's accessibility list, read against the building DOE's current
-    school list gives for the school. DOE leaves inaccessible buildings off
-    the list."""
+    school list gives for the school. DOE's list covers only DOE buildings
+    with some accessibility; it leaves inaccessible buildings off, and it never
+    covers charter schools in private space."""
     b = LCG.get(dbn, {}).get('building')
     if b and b not in ('NAN', ''):
         if (dbn, b) in ACC_PAIR:
             return ACC_PAIR[(dbn, b)]
         if b in ACC_BLDG:
             return ACC_BLDG[b]  # listed under a school it shares the building with
+        private = dbn.startswith('84') and b not in DOE_BLDG
         if ACC_DBN.get(dbn):
-            return "Main building not on DOE's accessible list; another of its sites is"
-        return "Not on DOE's accessible-buildings list"
+            if private:
+                return "Main building isn’t a DOE building, so it can’t be on DOE’s list; another of its sites is listed"
+            return "Main building not on DOE’s accessible list; another of its sites is"
+        if private:
+            return "Not in a DOE building, so not on DOE’s list"
+        return "Not on DOE’s accessible-buildings list"
     return get('accessibility', dbn, 'accessibility')  # not on DOE's current list; use the August roster match
 access.key, access.name = 'accessibility', 'accessibility'
 
@@ -376,33 +409,26 @@ add('attendance', 'climate', from_src('attendance', 'attendance_rate'),
     'Average daily attendance', 'Attendance rate', unit='pct1', dir=1, source='DOE attendance data')
 add('suspensions', 'climate', suspensions,
     'Suspensions per 100 students', 'Suspensions per 100', unit='num', dp=1, dir=0,
-    definition="Principal's and superintendent's suspensions in 2024-25 per 100 students in kindergarten through 12th grade (3-K and pre-K children, who can't be suspended, are left out of the count). DOE redacts counts of 1 to 5, so schools with few suspensions show \"redacted\" instead of a rate; some schools aren't in DOE's report at all. Neither high nor low is good on its own: a high rate can mean strict discipline, and a low one doesn't guarantee a calm school.",
-    source='DOE Local Law 93 discipline report; enrollment from DOE Demographic Snapshot', vintage='2024-25')
+    definition="Principal’s and superintendent’s suspensions in 2025-26 per 100 students in kindergarten through 12th grade that year (3-K and pre-K children, who can’t be suspended, are left out of the count). DOE hides any count from 0 to 5. Where it hides one of the two counts, the map shows the lowest rate the shown count allows (“at least ...”), and where it hides both, “0 to 10 suspensions”; neither is ranked, since the true rate isn’t known. Some schools aren’t in DOE’s report at all. Neither high nor low is good on its own: a high rate can mean strict discipline, and a low one doesn’t guarantee a calm school.",
+    source='DOE Local Law 93 discipline report; enrollment from DOE Demographic Snapshot', vintage='2025-26')
 
 add('experience', 'staff', from_src('sqr', 'pct_teachers_3plus_years'),
     'Teachers with three or more years of experience', 'Teachers with 3+ years', dir=1,
     source='DOE School Quality Report')
 add('class_size', 'staff', from_src('class_size', 'avg_class_size_overall'),
     'Average class size', 'Average class size', unit='num', dp=1, dir=-1,
-    source='DOE class size report', vintage='2025-26 (June)')
-def class_cap(dbn):
-    v = get('class_size', dbn, 'cap_pct_at_or_below')
-    ex = get('class_size', dbn, 'cap_n_exempt_classes') or 0
-    ne = get('class_size', dbn, 'cap_n_nonexempt_classes') or 0
-    if ex and ex >= ne:
-        return f'{ex:,} of {ex + ne:,} classes exempted from the cap'
-    return v
-class_cap.key, class_cap.name = 'class_size', 'cap_pct_at_or_below'
-
-
-add('class_cap', 'staff', class_cap,
+    definition="Average students per class as of Oct. 31, 2026: kindergarten to 5th grade homeroom classes, the gym, art, music and other classes elementary students take with a subject teacher (counted by DOE for the first time in 2026-27), and every middle and high school class section. Self-contained special education classes are left out, as in DOE’s own averages. Because DOE added classes in 2026-27, these figures don’t compare directly with earlier years. Charter, District 75 and District 79 schools aren’t in DOE’s report.",
+    source='DOE class size report', vintage='2026-27 (Oct. 31, 2026)')
+add('class_cap', 'staff', from_src('class_size', 'cap_pct_at_or_below'),
     "Classes within the state's class-size cap", 'Classes within state cap', dir=1,
-    definition="Share of a school's non-exempt classes at or below the state cap (20 students in K-3, 23 in grades 4-8, 25 in high school). DOE exempts some classes, mostly for lack of space; exempt classes are left out of the share, so where half or more of a school's classes are exempt the map shows the exempt count instead of a share. Self-contained special education classes aren't covered.",
-    source='DOE state class-size report', vintage='Oct. 31, 2025')
+    definition="Share of a school’s classes at or below the state cap (20 students in K-3, 23 in grades 4-8, 25 in high school, 40 in gym and performing groups) as of Oct. 31, 2026. DOE granted no exemptions for 2026-27, so every class the law covers is counted, including elementary gym, art and music classes for the first time. Self-contained special education classes aren’t covered. Citywide, 73.4% of classes were within the cap.",
+    source="DOE state class-size report (Table C, Nov. 15, 2026)", vintage='Oct. 31, 2026')
 def counselor(dbn):
     v = get('counselors', dbn, 'students_per_counselor')
     n = get('counselors', dbn, 'n_counselors_total')
     e = get('counselors', dbn, 'enrollment_basis')
+    if n == 0:
+        return 'No guidance counselor on staff'  # text, so the sheet shows it; never ranked
     if v is None and n and 0 < n < 1 and e:
         return e / n  # DOE's file shows enrollment / 1 here; this is enrollment / actual counselors
     if v is not None and n and e:
@@ -421,7 +447,7 @@ add('per_pupil', 'staff', from_src('spending', 'per_pupil'),
     source='NYSED school-level spending report', vintage='2024-25')
 def pta(dbn):
     v = get('pta', dbn, 'pta_per_student')
-    if v == 0 and not get('pta', dbn, 'pta_expenses') and not get('pta', dbn, 'pta_ending_balance'):
+    if v == 0 and not any(get('pta', dbn, k) for k in ('pta_beginning_balance', 'pta_expenses', 'pta_ending_balance')):
         return '$0 reported (every money column is zero)'
     return v
 pta.key, pta.name = 'pta', 'pta_per_student'
@@ -429,7 +455,7 @@ pta.key, pta.name = 'pta', 'pta_per_student'
 
 add('pta', 'staff', pta,
     'PTA money raised per student', 'PTA money per student', unit='dollars', dir=0,
-    definition="Total PTA or parent association income in 2024-25 divided by the school's 2024-25 enrollment. The figures are self-reported: parent groups file paper reports that principals or parent coordinators key in. Schools whose report has zeros in every money column are shown as such and not ranked, since that can mean an unfiled report as easily as nothing raised. Charter schools aren't covered.",
+    definition="Total PTA or parent association income in 2024-25 divided by the school's 2024-25 enrollment. The figures are self-reported: parent groups file paper reports that principals or parent coordinators key in. Schools whose report has zeros in every money column (beginning balance, income, expenses and ending balance) are shown as such and not ranked, since that can mean an unfiled report as easily as nothing raised. Charter schools aren't covered.",
     source='DOE PTA financial report (Local Law 171)', vintage='2024-25')
 
 add('enrollment', 'students', enroll, 'Students enrolled', 'Enrollment', unit='count', dir=0,
@@ -459,12 +485,13 @@ add('iep_services', 'sped', from_src('sqr', 'iep_all_related_services_pct'),
     source='DOE School Quality Report')
 add('ict_size', 'sped', from_src('class_size', 'avg_class_size_ict'),
     'Average co-taught (ICT) class', 'Co-taught (ICT) class size', unit='num', dp=1, dir=0,
-    source='DOE class size report', vintage='2025-26 (June)')
+    source='DOE class size report', vintage='2026-27 (Oct. 31, 2026)')
 add('special_size', 'sped', from_src('class_size', 'avg_class_size_special'),
     'Average self-contained special class', 'Special class size', unit='num', dp=1, dir=0,
-    source='DOE class size report', vintage='2025-26 (June)')
+    source='DOE class size report', vintage='2026-27 (Oct. 31, 2026)')
 add('access', 'sped', access,
     'Building accessibility', 'Building accessibility', unit='text', dir=0,
+    definition="DOE’s rating of the school’s main building, “Fully Accessible” or “Partially Accessible”, from its Building Accessibility Profile list, matched on the building DOE’s current school list gives for the school. DOE’s list covers only buildings with some accessibility (“Non-accessible buildings are not included”), so a school whose building isn’t listed reads “Not on DOE’s accessible-buildings list”: the building may be inaccessible or may not have been assessed. When the main building isn’t listed but another of the school’s sites is, the map says so. Charter schools in private space, outside any DOE building, can never be on the list, so they read “Not in a DOE building, so not on DOE’s list”; ask the school. Blank when DOE’s current list gives no building.",
     source='DOE Building Accessibility Profile list', vintage='Aug. 2026')
 
 
@@ -489,6 +516,7 @@ EXTRAS = {
     'building_use': 'Whole building, all schools in it',
     'current_list': "On DOE's current school list",
     'spending_note': 'About the spending figure',
+    'earlier_name': 'Earlier name',
 }
 
 
@@ -535,6 +563,15 @@ def extras(dbn):
         x['building_use'] = f'{hu(bu * 100)}% of capacity (building {bid}, shared by {SHARED_BLDG[bid]} schools)'
     if dbn not in LCG:
         x['current_list'] = 'No. It is missing from DOE\'s list of open schools as of Oct. 7, 2026, so it may have closed, merged or taken a new number after 2025-26.'
+    if dbn == '84X637':
+        # Same charter, same DBN and state BEDS code (320700861089). SUNY's
+        # Charter Schools Institute: "revise the charter for Bronx 5 Lower to
+        # offer this model under the name Strive Charter School" ... "Bronx 5
+        # Lower will begin operating as Strive for the 2026-27 school year"
+        # (IV-C01_Success-Strive-Revision-Summary, Feb. 2026).
+        x['earlier_name'] = ("Success Academy Charter School–Bronx 5 Lower, through 2025-26. SUNY revised its charter so it runs as "
+                             "Strive Charter School, under its own board, from 2026-27; DOE and the state kept the same school number. "
+                             "Spending and other figures from 2025-26 and earlier are from the Success Academy years.")
     if dbn == '84K964':
         x['spending_note'] = "NYSED's $4,470 for this first-year school is about a third of the next-lowest school's; treat it with caution."
     return x
@@ -621,7 +658,7 @@ for m in M:
     if m['unit'] == 'text':
         out_metrics.append({k: v for k, v in m.items() if k not in ('fn', 'text', 'split')})
         continue
-    # Text values (redacted, exempt, all-zero reports) are shown but never ranked.
+    # Text values (redacted suspensions and their floors, no counselor, all-zero PTA reports) are shown but never ranked.
     vals = {k: v for k, v in vals.items() if not isinstance(v, str)}
     allv = sorted(vals.values())
     if len(allv) < 30:
@@ -701,8 +738,6 @@ for d in by_dbn:
         t[ids.index('eni')] = 'over 95%'
     if dm.get('eni_mask') == 'below' and 'eni' in ids:
         t[ids.index('eni')] = 'under 5%'
-    if get('counselors', d, 'n_counselors_total') == 0 and 'counselor' in ids:
-        t[ids.index('counselor')] = 'no counselor'
     if t:
         rec['t'] = t
     out_schools[d] = rec

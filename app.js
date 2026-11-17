@@ -1,6 +1,6 @@
 /* NYC schools atlas */
 // Bump with each data rebuild so browsers don't pair new code with cached data.
-const DATA_V = '2026-10-07c';
+const DATA_V = '2026-11-17a';
 const GSV_KEY = "AIzaSyBPEjOGoN9DTFfr4BaLoHNIVM_FHNQNeFI";
 
 const map = L.map('map', { preferCanvas: true, zoomControl: true, minZoom: 10, maxZoom: 18 })

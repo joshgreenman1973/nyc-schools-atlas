@@ -1297,6 +1297,113 @@
  ],
  "moved_to_current_doe_address": [
   {
+   "dbn": "75R721",
+   "name": "The Richard H. Hungerford School",
+   "from": "155 TOMPKINS AVENUE",
+   "to": "715 L Ocean Terrace",
+   "meters": 2844
+  },
+  {
+   "dbn": "84K879",
+   "name": "Brooklyn Prospect Charter School Downtown Campus",
+   "map_address": "1104 FULTON STREET",
+   "doe_address": "80 WILLOUGHBY STREET",
+   "meters": 2703,
+   "held": true
+  },
+  {
+   "dbn": "84X611",
+   "name": "AECI II: NYC Charter High School for Computer Engineering and Innovation",
+   "map_address": "423 East 138th Street",
+   "doe_address": "1000 Walton Avenue",
+   "meters": 2417,
+   "held": true
+  },
+  {
+   "dbn": "84K125",
+   "name": "Success Academy Charter School - Bed-Stuy 2",
+   "map_address": "211 THROOP AVENUE",
+   "doe_address": "92-53 Springfield Boulevard",
+   "meters": 17629,
+   "held": true
+  },
+  {
+   "dbn": "84K928",
+   "name": "Brooklyn Prospect Charter School Sunset Yards Campus",
+   "map_address": "3002 FORT HAMILTON PARKWAY",
+   "doe_address": "341 39 Street",
+   "meters": 2465,
+   "held": true
+  },
+  {
+   "dbn": "84X617",
+   "name": "KIPP Bronx Charter School III",
+   "map_address": "2246 JEROME AVENUE",
+   "doe_address": "201 East 144 Street",
+   "meters": 4973,
+   "held": true
+  },
+  {
+   "dbn": "84X347",
+   "name": "International Leadership Charter High School",
+   "map_address": "3030 Riverdale Avenue",
+   "doe_address": "3511 BAINBRIDGE AVENUE",
+   "meters": 2637,
+   "held": true
+  },
+  {
+   "dbn": "84Q436",
+   "name": "Zeta Charter School \u2013 Queens 2",
+   "map_address": "55-30 JUNCTION BOULEVARD",
+   "doe_address": "133-50 41 Avenue",
+   "meters": 3801,
+   "held": true
+  },
+  {
+   "dbn": "84X635",
+   "name": "Earl Monroe New Renaissance Basketball Charter School",
+   "map_address": "1617 PARKVIEW AVENUE",
+   "doe_address": "647 Elton Avenue",
+   "meters": 7994,
+   "held": true
+  },
+  {
+   "dbn": "84X648",
+   "name": "Bronx Charter School for Excellence 9",
+   "map_address": "1160 BEACH AVENUE",
+   "doe_address": "681 Kelly Street",
+   "meters": 3394,
+   "held": true
+  },
+  {
+   "dbn": "84M702",
+   "name": "Sisulu-Walker Charter School of Harlem",
+   "from": "125 WEST 115 STREET",
+   "to": "71-111 Convent Ave",
+   "meters": 1590
+  },
+  {
+   "dbn": "84M522",
+   "name": "Broome Street Academy Charter High School",
+   "from": "121 AVENUE OF THE AMERICAS",
+   "to": "522 Broome St",
+   "meters": 79
+  },
+  {
+   "dbn": "02M150",
+   "name": "P.S. 150",
+   "from": "334 GREENWICH STREET",
+   "to": "28-42 Trinity Place",
+   "meters": 1368
+  },
+  {
+   "dbn": "84X638",
+   "name": "Success Academy Charter School \u2013 Bronx 5 Upper",
+   "from": "604 EAST 139 STREET",
+   "to": "101 East 150 Street",
+   "meters": 1813
+  },
+  {
    "dbn": "17K646",
    "name": "Aspirations Diploma Plus High School",
    "from": "402 EASTERN PARKWAY",
@@ -1778,78 +1885,6 @@
    "from": "4222 4 AVENUE",
    "to": "4012 Fort Hamilton Parkway",
    "meters": 1666
-  },
-  {
-   "dbn": "84K879",
-   "name": "Brooklyn Prospect Charter School Downtown Campus",
-   "map_address": "1104 FULTON STREET",
-   "doe_address": "80 WILLOUGHBY STREET",
-   "meters": 2703,
-   "held": true
-  },
-  {
-   "dbn": "84X611",
-   "name": "AECI II: NYC Charter High School for Computer Engineering and Innovation",
-   "map_address": "423 East 138th Street",
-   "doe_address": "1000 Walton Avenue",
-   "meters": 2417,
-   "held": true
-  },
-  {
-   "dbn": "84K125",
-   "name": "Success Academy Charter School - Bed-Stuy 2",
-   "map_address": "211 THROOP AVENUE",
-   "doe_address": "92-53 Springfield Boulevard",
-   "meters": 17629,
-   "held": true
-  },
-  {
-   "dbn": "84K928",
-   "name": "Brooklyn Prospect Charter School Sunset Yards Campus",
-   "map_address": "3002 FORT HAMILTON PARKWAY",
-   "doe_address": "341 39 Street",
-   "meters": 2465,
-   "held": true
-  },
-  {
-   "dbn": "84X617",
-   "name": "KIPP Bronx Charter School III",
-   "map_address": "2246 JEROME AVENUE",
-   "doe_address": "201 East 144 Street",
-   "meters": 4973,
-   "held": true
-  },
-  {
-   "dbn": "84X347",
-   "name": "International Leadership Charter High School",
-   "map_address": "3030 Riverdale Avenue",
-   "doe_address": "3511 BAINBRIDGE AVENUE",
-   "meters": 2637,
-   "held": true
-  },
-  {
-   "dbn": "84Q436",
-   "name": "Zeta Charter School \u2013 Queens 2",
-   "map_address": "55-30 JUNCTION BOULEVARD",
-   "doe_address": "133-50 41 Avenue",
-   "meters": 3801,
-   "held": true
-  },
-  {
-   "dbn": "84X635",
-   "name": "Earl Monroe New Renaissance Basketball Charter School",
-   "map_address": "1617 PARKVIEW AVENUE",
-   "doe_address": "647 Elton Avenue",
-   "meters": 7994,
-   "held": true
-  },
-  {
-   "dbn": "84X648",
-   "name": "Bronx Charter School for Excellence 9",
-   "map_address": "1160 BEACH AVENUE",
-   "doe_address": "681 Kelly Street",
-   "meters": 3394,
-   "held": true
   }
  ],
  "renamed_to_current_doe_name": [
@@ -2717,5 +2752,6 @@
    "to": "Success Academy Charter School - Norwood",
    "source": "LCGMS"
   }
- ]
+ ],
+ "not_geocoded": []
 }

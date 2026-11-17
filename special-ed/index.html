@@ -164,7 +164,7 @@ footer {
   .chart-wrap { height: 320px; }
 }
 </style>
-  <link rel="stylesheet" href="../shared/chrome.css?v=17" />
+  <link rel="stylesheet" href="../shared/chrome.css?v=18" />
 </head>
 <body data-section="special-ed">
 <div id="site-header"></div>
@@ -172,13 +172,13 @@ footer {
 <header>
   <div class="kicker">NYC Schools Atlas · Fiscal monitor</div>
   <h1>New York City special education due process spending</h1>
-  <p class="subtitle">What New York City pays when families challenge the special education their children are offered: private school tuition, related services, transportation and legal fees the Department of Education (DOE) pays through settlements, hearing orders and pendency. The budget line was long labeled "Carter cases," after the 1993 Supreme Court decision allowing tuition reimbursement when a district fails to offer a free appropriate public education (FAPE) under the federal Individuals with Disabilities Education Act (IDEA). It also pays for services to students whose parents enrolled them in private schools for other reasons, a right that comes from state law.<sup class="cite"><a href="#src-1">1</a>,<a href="#src-7">7</a></sup></p>
+  <p class="subtitle">What New York City pays when families challenge the special education their children are offered: private school tuition, related services, transportation and legal fees the Department of Education (DOE) pays through settlements, hearing orders and pendency. The budget line was long labeled "Carter cases," after the 1993 Supreme Court decision holding that when a district fails to offer a free appropriate public education (FAPE), parents can be reimbursed for a private school even if it does not meet every requirement the federal Individuals with Disabilities Education Act (IDEA) sets for public placements, such as state standards. The court first allowed tuition reimbursement under the law in 1985, in the Burlington case. It also pays for services to students whose parents enrolled them in private schools for other reasons, a right that comes from state law.<sup class="cite"><a href="#src-1">1</a>,<a href="#src-7">7</a></sup></p>
 </header>
 
 <section>
   <div class="metrics">
-    <div class="metric"><div class="value">$1.14B</div><div class="label">Fiscal year (FY) 2025 spending at the Comptroller's closeout. About $1.42B on the accounting basis used before FY2025 (City Council estimate).<sup class="cite"><a href="#src-1">1</a></sup></div></div>
-    <div class="metric"><div class="value">$1.41B</div><div class="label">FY2027 adopted budget, down from $1.55B budgeted for FY2026<sup class="cite"><a href="#src-3">3</a></sup></div></div>
+    <div class="metric"><div class="value">$2.36B</div><div class="label">Fiscal year (FY) 2026 spending at the Comptroller's year-end count, including $842 million owed but not yet paid. FY2025 was $1.14B, or about $1.42B on the accounting basis used before FY2025 (City Council estimate).<sup class="cite"><a href="#src-25">25</a>,<a href="#src-6">6</a>,<a href="#src-1">1</a></sup></div></div>
+    <div class="metric"><div class="value">$1.41B</div><div class="label">FY2027 adopted budget, down from $1.55B budgeted for FY2026 as of the Comptroller's Aug. 12, 2026, review. FY2026's modified budget reached $1.60B by year-end (Checkbook NYC).<sup class="cite"><a href="#src-3">3</a>,<a href="#src-6">6</a></sup></div></div>
     <div class="metric"><div class="value">$109,859</div><div class="label">Average cost of a settlement, FY2026, up from $101,424 in FY2025 (Mayor's Management Report)<sup class="cite"><a href="#src-5">5</a></sup></div></div>
     <div class="metric"><div class="value">62%</div><div class="label">Share of special education due process complaints filed in the 50 states in 2020&ndash;21 that were filed in New York City (14,141 of 22,759)<sup class="cite"><a href="#src-15">15</a>,<a href="#src-16">16</a></sup></div></div>
   </div>
@@ -188,12 +188,13 @@ footer {
   <h2>Annual spending, FY2013&ndash;FY2027</h2>
   <div class="chart-box">
     <div class="chart-title">Spending charged to the due process budget line ("Carter cases"), millions of nominal dollars</div>
-    <div class="chart-note">Includes tuition, related services, transportation and legal fees. FY2013&ndash;FY2025 are year-end actuals. Starting in FY2025, costs are booked to the year a case is decided or settled instead of being charged back to earlier years, which makes FY2025 look lower than the prior trend; the lighter segment is the City Council's estimate of what the old practice would have added. FY2026 is spending through April 2026 only; the full-year figure comes with the Comptroller's annual financial report. FY2027 is the adopted budget. The axis starts at zero.</div>
+    <div class="chart-note">Includes tuition, related services, transportation and legal fees. FY2013&ndash;FY2026 are year-end actuals. Starting in FY2025, costs are booked to the year a case is decided or settled instead of being charged back to earlier years, which makes FY2025 look lower than the prior trend. The City Council estimates that under the old practice, $278 million spent in FY2026 would have been charged back to FY2025. As in the Council's chart, that amount is moved: the lighter FY2025 segment adds it, and the hatched FY2026 segment marks what was taken out. FY2026 is the Comptroller's year-end figure; the purple segment is costs recorded for FY2026 but not yet paid at year-end (accrued); Checkbook NYC shows no accruals on this line in FY2020&ndash;FY2025. FY2027 is the adopted budget. The axis starts at zero.</div>
     <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
-    <div class="chart-source">Sources: City Council Finance Division reports built on DOE and Office of Management and Budget (OMB) data;<sup class="cite"><a href="#src-1">1</a>,<a href="#src-2">2</a>,<a href="#src-8">8</a>,<a href="#src-9">9</a>,<a href="#src-10">10</a>,<a href="#src-11">11</a>,<a href="#src-12">12</a></sup> Comptroller (FY2027 budget).<sup class="cite"><a href="#src-3">3</a></sup> Year-by-year values and notes are in the table below.</div>
+    <div class="chart-source">Sources: City Council Finance Division reports built on DOE and Office of Management and Budget (OMB) data;<sup class="cite"><a href="#src-1">1</a>,<a href="#src-2">2</a>,<a href="#src-8">8</a>,<a href="#src-9">9</a>,<a href="#src-10">10</a>,<a href="#src-11">11</a>,<a href="#src-12">12</a></sup> Comptroller (FY2026 year-end total and FY2027 budget);<sup class="cite"><a href="#src-25">25</a>,<a href="#src-3">3</a></sup> Checkbook NYC (FY2026 paid and accrued amounts).<sup class="cite"><a href="#src-6">6</a></sup> Year-by-year values and notes are in the table below.</div>
   </div>
   <p>On a consistent basis, spending grew from $234 million in FY2015 to $1.19 billion in FY2024, about 5.1 times. Adjusted for inflation with the consumer price index, the FY2015 figure is about $310 million in 2024 dollars, so the real increase was about 3.8 times.<sup class="cite"><a href="#src-11">11</a>,<a href="#src-1">1</a>,<a href="#src-23">23</a></sup> Going further back, the Independent Budget Office (IBO) put the cost at $47 million in FY2005; earlier years come from different sources that do not line up, so they are not charted.<sup class="cite"><a href="#src-14">14</a></sup></p>
-  <p>The city has budgeted far less than it ends up spending. In FY2022, for example, it initially budgeted $666 million and spent $918 million.<sup class="cite"><a href="#src-13">13</a></sup> The State Comptroller's office said in August 2026 that the city will likely need to add $277 million to the FY2027 budget for these cases.<sup class="cite"><a href="#src-4">4</a></sup></p>
+  <p>In June 2026, working from spending through April, the Council's Finance Division said that once the $278 million is moved back to FY2025, FY2026 no longer looks like a rise after FY2025's dip; it "now looks like the potential first year of progress on decreasing due process case spending."<sup class="cite"><a href="#src-1">1</a></sup> The full-year figure came later. The Comptroller's annual financial report for FY2026, released Oct. 29, 2026, puts FY2026 spending on the line at $2.36 billion, more than double FY2025's $1.14 billion, and says the accrued expenses in that total reveal "a layer of previously unreported costs."<sup class="cite"><a href="#src-25">25</a></sup> Of the $2.36 billion, $1.52 billion was paid during the year and $842 million was accrued.<sup class="cite"><a href="#src-6">6</a></sup> Whether FY2026 was a decline depends on those accrued costs. Counting only what was paid and moving the $278 million back, FY2026 comes to about $1.24 billion, below FY2025's adjusted $1.42 billion; counting the accrued costs, it comes to about $2.09 billion.<sup class="cite"><a href="#src-1">1</a>,<a href="#src-6">6</a>,<a href="#src-25">25</a></sup></p>
+  <p>The city has budgeted far less than it ends up spending. In FY2022, for example, it initially budgeted $666 million and spent $918 million.<sup class="cite"><a href="#src-13">13</a></sup> In FY2026, spending ran $1.43 billion over the adopted budget, the Comptroller reported.<sup class="cite"><a href="#src-25">25</a></sup> The State Comptroller's office said in August 2026 that the city will likely need to add $277 million to the FY2027 budget for these cases.<sup class="cite"><a href="#src-4">4</a></sup></p>
 </section>
 
 <section>
@@ -204,7 +205,7 @@ footer {
     <div class="chart-wrap"><canvas id="mixChart"></canvas></div>
     <div class="chart-source">Sources: FY2012 and FY2022, Comptroller;<sup class="cite"><a href="#src-7">7</a></sup> FY2020, IBO;<sup class="cite"><a href="#src-12">12</a></sup> FY2024 and FY2025, City Council Finance Division.<sup class="cite"><a href="#src-1">1</a></sup></div>
   </div>
-  <p>Tuition was 74 percent of due process payments in FY2012, and services 21 percent.<sup class="cite"><a href="#src-7">7</a></sup> Services then grew faster: to $372 million, or 41 percent, in FY2022, and to a peak of $535 million, about 45 percent, in FY2024.<sup class="cite"><a href="#src-7">7</a>,<a href="#src-1">1</a></sup> The Comptroller reported in August 2023 that services were 58 percent of FY2023 payments made to that point, but on a full-year basis tuition has remained the larger share.<sup class="cite"><a href="#src-7">7</a>,<a href="#src-9">9</a>,<a href="#src-13">13</a></sup> Service costs fell to $376 million in FY2025 ($436 million adjusting for the accounting change), while IESP case filings fell 38 percent; tuition costs did not show the same decline.<sup class="cite"><a href="#src-1">1</a></sup> DOE told the Council that IEP cases cost about $105,000 a year per case, against about $28,000 for an IESP student, and that IESP cases were 21 to 22 percent of due process costs in FY2025 and FY2026.<sup class="cite"><a href="#src-1">1</a></sup></p>
+  <p>Tuition was 74 percent of due process payments in FY2012, and services 21 percent.<sup class="cite"><a href="#src-7">7</a></sup> Services then grew faster: to $372 million, or 41 percent, in FY2022, and to $535 million, about 45 percent, in FY2024, the highest through FY2025.<sup class="cite"><a href="#src-7">7</a>,<a href="#src-1">1</a></sup> The Comptroller reported in August 2023 that services were 58 percent of FY2023 payments made to that point, but in full-year figures through FY2025, tuition remained the larger share.<sup class="cite"><a href="#src-7">7</a>,<a href="#src-9">9</a>,<a href="#src-13">13</a></sup> FY2026 depends on the basis. In cash paid during the year, Checkbook's payments to contract and corporate schools, which are mostly tuition, came to $981 million, about twice the $497 million for services; counting accrued costs, services ($1.17 billion, of which $670 million was accrued) slightly exceeded those school payments ($1.15 billion).<sup class="cite"><a href="#src-6">6</a></sup> Service costs fell to $376 million in FY2025 ($436 million adjusting for the accounting change), while IESP case filings fell 38 percent; tuition costs did not show the same decline.<sup class="cite"><a href="#src-1">1</a></sup> DOE told the Council that IEP cases cost about $105,000 a year per case, against about $28,000 for an IESP student, and that IESP cases were 21 to 22 percent of due process costs in FY2025 and FY2026 to date.<sup class="cite"><a href="#src-1">1</a></sup></p>
   <p class="callout"><strong>Caveat:</strong> DOE cannot separate Carter cases (reimbursement after parents pay) from Connors cases (direct payment to a school for families who cannot pay up front). At a March 13, 2025, Council Committee on Education hearing, then-First Deputy Chancellor Daniel Weisberg said direct payments do not identify Connors cases because DOE also pays schools directly for pendency in Carter cases after a family's first win: "We just don't have the data organized that way." General Counsel Liz Vladeck said the Connors model, meant to give lower-income families access, "has not succeeded" at leveling the playing field, citing DOE's demographic data and litigation experience.<sup class="cite"><a href="#src-17">17</a></sup> The public data cannot test that conclusion independently.</p>
 </section>
 
@@ -246,7 +247,7 @@ footer {
   <ul>
     <li>A split between Carter and Connors cases; DOE says its data cannot produce one.<sup class="cite"><a href="#src-17">17</a></sup></li>
     <li>School-level totals that include reimbursements paid to parents, which Checkbook does not attribute to a school.</li>
-    <li>Family income; DOE's reports to the Council give only the median income of the student's ZIP code.<sup class="cite"><a href="#src-24">24</a></sup></li>
+    <li>Family income; DOE's reports to the Council give only the student's ZIP code and a band for that ZIP code's median household income, measured against the national median (for example, 50 to 100 percent of it).<sup class="cite"><a href="#src-24">24</a></sup></li>
     <li>Outcomes for students placed in private schools through due process. We found no public data on their academic progress, graduation or later outcomes.</li>
   </ul>
   <p>See <a href="methodology.md">methodology.md</a> for how the figures were assembled, where sources disagree and how each was checked.</p>
@@ -260,8 +261,8 @@ footer {
     <li id="src-3">Office of the New York City Comptroller, <a href="https://comptroller.nyc.gov/reports/comments-on-new-york-citys-fiscal-year-2027-adopted-budget/">Comments on New York City's Fiscal Year 2027 Adopted Budget</a> (Aug. 12, 2026). FY2027 budget of $1.41 billion; FY2026 budget of $1.55 billion; $149 million in planned savings.</li>
     <li id="src-4">Office of the New York State Comptroller, <a href="https://www.osc.ny.gov/files/reports/osdc/pdf/fy27-nyc-adopted-plan-report-final.pdf">Review of the Financial Plan of the City of New York, Report 8-2027</a> (August 2026).</li>
     <li id="src-5">Mayor's Office of Operations, <a href="https://www.nyc.gov/assets/operations/downloads/pdf/mmr2026/doe.pdf">Fiscal 2026 Mayor's Management Report, Department of Education chapter</a> (September 2026), Goal 1d; <a href="https://www.nyc.gov/assets/operations/downloads/pdf/mmr2026/oath.pdf">OATH chapter</a>.</li>
-    <li id="src-6"><a href="https://www.checkbooknyc.com/">Checkbook NYC</a>, Office of the New York City Comptroller. Department of Education spending, expense category "payments to contract/corporate schools" (6700), budget code 2127, fiscal years 2025 and 2026, retrieved Oct. 7, 2026, through the Checkbook NYC API. Query details are in the methodology.</li>
-    <li id="src-7">Office of the New York City Comptroller, <a href="https://comptroller.nyc.gov/reports/course-correction/">Course Correction: Expanding and strengthening special education services improves student outcomes and reduces costly due process claims</a> (Aug. 23, 2023), pages 10&ndash;11.</li>
+    <li id="src-6"><a href="https://www.checkbooknyc.com/">Checkbook NYC</a>, Office of the New York City Comptroller. Department of Education spending, expense category "payments to contract/corporate schools" (6700), budget code 2127, fiscal years 2025 and 2026, retrieved Oct. 7, 2026, through the Checkbook NYC API; and budget data for budget code 2127 (adopted and modified budgets, cash and accrued expenses), fiscal years 2020&ndash;2026, retrieved Nov. 17, 2026. Query details are in the methodology.</li>
+    <li id="src-7">Office of the New York City Comptroller, <a href="https://comptroller.nyc.gov/reports/course-correction/">Course Correction: Expanding and strengthening special education services improves student outcomes and reduces costly due process claims</a> (Aug. 28, 2023), pages 10&ndash;11.</li>
     <li id="src-8">New York City Council Finance Division, <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2023/03/DOE-Expense.pdf">Report on the Fiscal 2024 Preliminary Plan, Department of Education</a> (March 2023), Figure 2 (FY2016 actual).</li>
     <li id="src-9">New York City Council Finance Division, <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2025/03/Department-of-Education.pdf">Report on the Fiscal 2026 Preliminary Plan, Department of Education</a> (March 2025). FY2019 and FY2024 actuals; spending by object code, FY2015&ndash;FY2024.</li>
     <li id="src-10">New York City Council Finance Division, <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2019/03/040-DOE-Expense-2020.pdf">Report on the Fiscal 2020 Preliminary Plan, Department of Education</a> (March 20, 2019), Table 27 and note 18 (FY2017 and adjusted FY2018 actuals); and <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2020/04/040-DOE.pdf">Report on the Fiscal 2021 Preliminary Budget</a> (March 19, 2020), Table 25 (FY2018 as booked, FY2019).</li>
@@ -279,16 +280,17 @@ footer {
     <li id="src-22">Jennifer Weber, Manhattan Institute, <a href="https://manhattan.institute/article/reassessing-carter-case-spending-for-students-with-disabilities-in-new-york-city-schools">Reassessing "Carter-Case" Spending for Students with Disabilities in New York City Schools</a> (February 2026).</li>
     <li id="src-23">U.S. Bureau of Labor Statistics, <a href="https://data.bls.gov/timeseries/CUUR0000SA0">Consumer Price Index for All Urban Consumers, U.S. city average</a>, annual averages 2015 (237.017) and 2024 (313.689).</li>
     <li id="src-24">New York City Council, <a href="https://council.nyc.gov/budget/fy2026/">Fiscal 2026 budget terms-and-conditions reports</a>, including DOE's <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2026/08/Department-of-Education-Due-Process-Cases-Report-2-of-2.xlsx">Due Process Cases report (2 of 2)</a> (August 2026).</li>
+    <li id="src-25">Office of the New York City Comptroller, <a href="https://comptroller.nyc.gov/wp-content/uploads/documents/ACFR-2026.pdf">Annual Comprehensive Financial Report of the Comptroller for the Fiscal Years Ended June 30, 2026 and 2025</a> (Oct. 29, 2026), letter of transmittal, pages xiv and xviii. FY2026 due process spending of $2.363 billion; spending over the adopted budget.</li>
   </ol>
 </section>
 
 <footer>
-  Last updated October 2026. Not affiliated with the New York City Department of Education. All figures come from the public documents listed above; see the methodology for details.
+  Last updated November 2026. Not affiliated with the New York City Department of Education. All figures come from the public documents listed above; see the methodology for details.
 </footer>
 </div>
 
 <script>
-// Millions of nominal dollars. kind: actual | partial | budget.
+// Millions of nominal dollars. kind: actual | yearend | budget.
 // srcs refer to the numbered source list on the page.
 const data = [
   { fy: 2013, total: 199.0, kind: 'actual', status: 'Actual', note: '', srcs: [11] },
@@ -303,12 +305,31 @@ const data = [
   { fy: 2022, total: 918.0, kind: 'actual', status: 'Actual', note: 'Initially budgeted at $666 million. Executive Order 91 began moving impartial hearings to the Office of Administrative Trials and Hearings in December 2021', srcs: [1, 13, 19] },
   { fy: 2023, total: 1070.2, kind: 'actual', status: 'Actual', note: '', srcs: [1] },
   { fy: 2024, total: 1193.1, kind: 'actual', status: 'Actual', note: '', srcs: [1, 9] },
-  { fy: 2025, total: 1138.7, extra: 278.0, kind: 'actual', status: 'Actual, new accounting', note: 'Costs now booked to the year of decision or settlement. About $1,416.7 million under the old practice (Council estimate of $278 million)', srcs: [1, 2] },
-  { fy: 2026, total: 1318.6, kind: 'partial', status: 'Partial year', note: 'Spending through April 2026. Full-year budget: $1.55 billion. Final figure due with the Comptroller’s annual financial report', srcs: [1, 3] },
+  { fy: 2025, total: 1138.7, extra: 278.0, kind: 'actual', status: 'Actual, new accounting', note: 'Costs now booked to the year of decision or settlement. About $1,416.7 million under the old practice, adding the Council’s estimate of $278 million in FY2026 spending that would have been charged back to FY2025', srcs: [1, 2] },
+  // FY2026 year-end (Comptroller, Checkbook NYC): paid 1,521.4 + accrued 841.8 = 2,363.2.
+  // As in the Council's chart, the $278M moved to FY2025 is drawn as a hatched segment and comes out of the paid portion.
+  { fy: 2026, total: 2363.2, paid: 1521.4 - 278.0, accrued: 841.8, moved: 278.0, kind: 'yearend', status: 'Actual, includes accruals', note: 'Year-end total of $2,363.2 million, from the Comptroller’s annual financial report. Paid during the year: $1,521.4 million; accrued, not yet paid: $841.8 million (Checkbook NYC). FY2020–FY2025 had no accruals on this line. Through April 2026 the Council reported $1,318.6 million. Less the Council’s $278 million estimate: about $2,085.2 million, or $1,243.4 million counting only what was paid. Modified budget: $1.60 billion', srcs: [25, 6, 1] },
   { fy: 2027, total: 1410, kind: 'budget', status: 'Adopted budget', note: 'Includes $149 million in planned savings. The State Comptroller expects about $277 million more will be needed', srcs: [3, 4] }
 ];
 
-const COLORS = { actual: '#ff7c53', extra: '#ffc7b3', partial: '#c9a0d6', budget: '#9b9fbc' };
+const COLORS = { actual: '#ff7c53', extra: '#ffc7b3', accrued: '#c9a0d6', budget: '#9b9fbc' };
+
+// Diagonal hatch for the FY2026 spending the Council moves back to FY2025.
+const hatch = (() => {
+  const c = document.createElement('canvas');
+  c.width = 8; c.height = 8;
+  const g = c.getContext('2d');
+  g.fillStyle = '#ffffff';
+  g.fillRect(0, 0, 8, 8);
+  g.strokeStyle = COLORS.actual;
+  g.lineWidth = 1.5;
+  g.beginPath();
+  g.moveTo(0, 8); g.lineTo(8, 0);
+  g.moveTo(-2, 2); g.lineTo(2, -2);
+  g.moveTo(6, 10); g.lineTo(10, 6);
+  g.stroke();
+  return g.createPattern(c, 'repeat');
+})();
 const fmt$ = v => v >= 1000 ? `$${(v / 1000).toFixed(2)}B` : `$${Math.round(v)}M`;
 const fmtTable$ = v => `$${v.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}M`;
 const pick = (d, kind) => d.kind === kind ? d.total : null;
@@ -326,14 +347,16 @@ new Chart(document.getElementById('trendChart'), {
     datasets: [
       { label: 'Actual', data: data.map(d => pick(d, 'actual')), backgroundColor: COLORS.actual, borderRadius: 2, stack: 's' },
       { label: 'FY25 estimate, old accounting', data: data.map(d => d.extra || null), backgroundColor: COLORS.extra, borderRadius: 2, stack: 's' },
-      { label: 'FY26 through April 2026', data: data.map(d => pick(d, 'partial')), backgroundColor: COLORS.partial, borderRadius: 2, stack: 's' },
+      { label: 'FY26 paid, less the $278M', data: data.map(d => d.paid || null), backgroundColor: COLORS.actual, borderRadius: 2, stack: 's' },
+      { label: 'FY26 accrued, not yet paid', data: data.map(d => d.accrued || null), backgroundColor: COLORS.accrued, borderRadius: 2, stack: 's' },
+      { label: 'FY26 spending moved to FY25 (Council estimate)', data: data.map(d => d.moved || null), backgroundColor: hatch, borderColor: COLORS.actual, borderWidth: 1, borderSkipped: false, stack: 's' },
       { label: 'FY27 adopted budget', data: data.map(d => pick(d, 'budget')), backgroundColor: COLORS.budget, borderRadius: 2, stack: 's' }
     ]
   },
   options: {
     maintainAspectRatio: false,
     plugins: {
-      legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } },
+      legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 }, filter: item => item.text !== 'FY26 paid, less the $278M' } },
       tooltip: {
         filter: item => item.parsed.y != null,
         callbacks: {
@@ -481,6 +504,6 @@ document.getElementById('dataTable').innerHTML = `
   <tfoot><tr><td colspan="5" class="src">Millions of nominal dollars. Fiscal years run July 1 to June 30. FY2005, for comparison: $47 million (IBO).</td></tr></tfoot>
 `;
 </script>
-  <script src="../shared/chrome.js?v=17"></script>
+  <script src="../shared/chrome.js?v=18"></script>
 </body>
 </html>
