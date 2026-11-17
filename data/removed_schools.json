@@ -1297,19 +1297,18 @@
  ],
  "moved_to_current_doe_address": [
   {
-   "dbn": "75R721",
-   "name": "The Richard H. Hungerford School",
-   "from": "155 TOMPKINS AVENUE",
-   "to": "715 L Ocean Terrace",
-   "meters": 2844
+   "dbn": "84X617",
+   "name": "KIPP Bronx Charter School III",
+   "from": "2246 JEROME AVENUE",
+   "to": "201 East 144 Street",
+   "meters": 4973
   },
   {
-   "dbn": "84K879",
-   "name": "Brooklyn Prospect Charter School Downtown Campus",
-   "map_address": "1104 FULTON STREET",
-   "doe_address": "80 WILLOUGHBY STREET",
-   "meters": 2703,
-   "held": true
+   "dbn": "84X648",
+   "name": "Bronx Charter School for Excellence 9",
+   "from": "1160 BEACH AVENUE",
+   "to": "681 Kelly Street",
+   "meters": 3394
   },
   {
    "dbn": "84X611",
@@ -1317,6 +1316,7 @@
    "map_address": "423 East 138th Street",
    "doe_address": "1000 Walton Avenue",
    "meters": 2417,
+   "reason": "No independent source places the school at 1000 Walton Avenue.",
    "held": true
   },
   {
@@ -1325,22 +1325,7 @@
    "map_address": "211 THROOP AVENUE",
    "doe_address": "92-53 Springfield Boulevard",
    "meters": 17629,
-   "held": true
-  },
-  {
-   "dbn": "84K928",
-   "name": "Brooklyn Prospect Charter School Sunset Yards Campus",
-   "map_address": "3002 FORT HAMILTON PARKWAY",
-   "doe_address": "341 39 Street",
-   "meters": 2465,
-   "held": true
-  },
-  {
-   "dbn": "84X617",
-   "name": "KIPP Bronx Charter School III",
-   "map_address": "2246 JEROME AVENUE",
-   "doe_address": "201 East 144 Street",
-   "meters": 4973,
+   "reason": "DOE's record mixes this school with Success Academy Queens Village (92-53 Springfield Blvd.); Success Academy's site lists Bed-Stuy 2 at 211 Throop Avenue.",
    "held": true
   },
   {
@@ -1349,31 +1334,43 @@
    "map_address": "3030 Riverdale Avenue",
    "doe_address": "3511 BAINBRIDGE AVENUE",
    "meters": 2637,
+   "reason": "SUNY's renewal report lists both 3030 Riverdale Avenue and a Bainbridge Avenue site; DOE's school page still gives 3030 Riverdale as the location.",
    "held": true
+  },
+  {
+   "dbn": "84K879",
+   "name": "Brooklyn Prospect Charter School Downtown Campus",
+   "from": "1104 FULTON STREET",
+   "to": "80 WILLOUGHBY STREET",
+   "meters": 2703
+  },
+  {
+   "dbn": "84K928",
+   "name": "Brooklyn Prospect Charter School Sunset Yards Campus",
+   "from": "3002 FORT HAMILTON PARKWAY",
+   "to": "341 39 Street",
+   "meters": 2465
   },
   {
    "dbn": "84Q436",
    "name": "Zeta Charter School \u2013 Queens 2",
-   "map_address": "55-30 JUNCTION BOULEVARD",
-   "doe_address": "133-50 41 Avenue",
-   "meters": 3801,
-   "held": true
+   "from": "55-30 JUNCTION BOULEVARD",
+   "to": "133-50 41 Avenue",
+   "meters": 3801
   },
   {
    "dbn": "84X635",
    "name": "Earl Monroe New Renaissance Basketball Charter School",
-   "map_address": "1617 PARKVIEW AVENUE",
-   "doe_address": "647 Elton Avenue",
-   "meters": 7994,
-   "held": true
+   "from": "1617 PARKVIEW AVENUE",
+   "to": "647 Elton Avenue",
+   "meters": 7994
   },
   {
-   "dbn": "84X648",
-   "name": "Bronx Charter School for Excellence 9",
-   "map_address": "1160 BEACH AVENUE",
-   "doe_address": "681 Kelly Street",
-   "meters": 3394,
-   "held": true
+   "dbn": "75R721",
+   "name": "The Richard H. Hungerford School",
+   "from": "155 TOMPKINS AVENUE",
+   "to": "715 L Ocean Terrace",
+   "meters": 2844
   },
   {
    "dbn": "84M702",

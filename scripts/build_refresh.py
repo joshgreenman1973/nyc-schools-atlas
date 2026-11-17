@@ -229,7 +229,29 @@ def geosearch(addr, zipc, boro, cache):
 
 
 # Long moves confirmed by hand against a second source.
-CONFIRMED_MOVES = {'84K766': "Insideschools' page lists the same address, 272 Macon St."}
+CONFIRMED_MOVES = {
+    '84K766': "Insideschools' page lists the same address, 272 Macon St.",
+    # Checked Nov. 17, 2026.
+    '84K879': "SUNY renewal report (April 2026): Downtown Elementary and Middle School, 80 Willoughby Street.",
+    '84K928': "SUNY renewal report (April 2026): Sunset Yards Elementary and Middle School, 341 39th Street.",
+    '84Q436': "New York City Charter School Center listing: Zeta Charter School - Queens Flushing, 133-50 41st Avenue.",
+    '84X635': "NY YIMBY and AP (Oct. 16, 2026): permanent building at 647 Elton Avenue opened; 1617 Parkview was temporary.",
+    '84X617': "DOE's school page lists 201 E. 144th St. (its location), 501 Gerard Ave. and 1504 Macombs Rd.; KIPP's site lists the old map address, 2246 Jerome Ave., as KIPP Freedom Elementary, a different school.",
+    '84X648': "Formerly Girls Preparatory Charter School of New York; SUNY's Public Prep renewal report lists Girls Prep Bronx Elementary at 681 Kelly St. and the old map address, 1160 Beach Ave., as Vertex Partnership Academies.",
+}
+
+# Long moves in DOE's list that a second source contradicts or can't confirm;
+# the dot stays at the map address, and the reason is logged.
+HELD_REASONS = {
+    '84K125': "DOE's record mixes this school with Success Academy Queens Village (92-53 Springfield Blvd.); Success Academy's site lists Bed-Stuy 2 at 211 Throop Avenue.",
+    '84X347': "SUNY's renewal report lists both 3030 Riverdale Avenue and a Bainbridge Avenue site; DOE's school page still gives 3030 Riverdale as the location.",
+    '84X611': "No independent source places the school at 1000 Walton Avenue.",
+}
+
+# Grade spans that changed after the latest DOE snapshot, with a source.
+GRADE_OVERRIDES = {
+    '84X637': ('K-4', "SUNY revision summary (Feb. 2026): Strive serves kindergarten through fourth grade in 2026-27."),
+}
 
 
 def confirmed(name, g, fac):
@@ -316,7 +338,8 @@ def current_names_and_places(keep, latest, idx):
             continue
         dist = meters(s['lat'], s['lon'], g['lat'], g['lon'])
         if dist > 2000 and d not in CONFIRMED_MOVES and not confirmed(s['name'], g, fac):
-            held.append({'dbn': d, 'name': s['name'], 'map_address': s.get('address'), 'doe_address': addr, 'meters': round(dist)})
+            held.append({'dbn': d, 'name': s['name'], 'map_address': s.get('address'), 'doe_address': addr, 'meters': round(dist),
+                         **({'reason': HELD_REASONS[d]} if d in HELD_REASONS else {})})
             continue
         if dist > 75:
             moved.append({'dbn': d, 'name': s['name'], 'from': s.get('address'), 'to': addr, 'meters': round(dist)})
@@ -463,6 +486,8 @@ def main():
         span = grade_span(r, idx)
         if span:
             s['grades'] = span
+        if s['dbn'] in GRADE_OVERRIDES:
+            s['grades'] = GRADE_OVERRIDES[s['dbn']][0]
 
     # Private schools: NCES 2023-24
     import csv

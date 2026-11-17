@@ -105,7 +105,7 @@ Limits:
 - The category name is Checkbook's. The page lists payees by name only and does not characterize them.
 - A payment shows that a school received money under the due process budget code. It says nothing about the merits of any case.
 
-The earlier version of this page listed 10 schools by reputation, with published tuition from school websites and aggregator sites. All 10 appear in Checkbook with FY2026 payments under budget code 2127: Cooke School and Institute ($27.4 million), Rebecca School ($28.6 million), the IDEAL School of Manhattan ($8.7 million), the Churchill School and Center ($8.0 million), Aaron School ($7.5 million), Mary McDowell Friends School ($6.1 million), the Windward School ($2.9 million), Stephen Gaynor School ($2.7 million), the Gateway School ($1.5 million) and the Parkside School ($0.06 million). Their tuition figures were not re-verified and have been removed.
+Ten private special education schools often named in coverage of these cases all appear in Checkbook with FY2026 payments under budget code 2127: Cooke School and Institute ($27.4 million), Rebecca School ($28.6 million), the IDEAL School of Manhattan ($8.7 million), the Churchill School and Center ($8.0 million), Aaron School ($7.5 million), Mary McDowell Friends School ($6.1 million), the Windward School ($2.9 million), Stephen Gaynor School ($2.7 million), the Gateway School ($1.5 million) and the Parkside School ($0.06 million). Their tuition figures were not re-verified and have been removed.
 
 ## Other figures
 
