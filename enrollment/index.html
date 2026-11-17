@@ -193,24 +193,55 @@
             { year: '2024-25', rate: 33.3, era: 'post' },
         ];
 
-        // Enrollment by grade in district public schools (charter schools not included), NYC DOE Demographic Snapshot,
-        // October 31 audited register: 2019-20 from the 2019-20 to 2023-24 snapshot ("Citywide" tab, which excludes charters),
-        // 2025-26 from the 2021-22 to 2025-26 snapshot ("Citywide" tab).
-        const gradeData = [
-            { grade: 'K', y2019: 65370, y2026: 52525 },
-            { grade: '1', y2019: 66041, y2026: 55350 },
-            { grade: '2', y2019: 67985, y2026: 56017 },
-            { grade: '3', y2019: 67757, y2026: 56404 },
-            { grade: '4', y2019: 69359, y2026: 57571 },
-            { grade: '5', y2019: 70361, y2026: 57418 },
-            { grade: '6', y2019: 68163, y2026: 56074 },
-            { grade: '7', y2019: 69961, y2026: 56956 },
-            { grade: '8', y2019: 68927, y2026: 59594 },
-            { grade: '9', y2019: 81437, y2026: 71889 },
-            { grade: '10', y2019: 79935, y2026: 74557 },
-            { grade: '11', y2019: 67899, y2026: 65907 },
-            { grade: '12', y2019: 72097, y2026: 69656 },
+        // Enrollment in every grade, 3-K to 12th, 2010-11 to 2025-26. NYC Department of Education Demographic Snapshot,
+        // October 31 audited register (Nov. 13, 2020, and Nov. 12, 2021), citywide, newest edition published for each year.
+        // gradeAll includes charter schools. gradeDistrict leaves them out: from 2019-20 the snapshot's charter-free citywide tab;
+        // before that, the citywide figure minus the charter-school row (District 84) of the same edition's district tab.
+        // 3-K and pre-K for every year are the same figures as preKData above (half-day and full-day, including NYC Early
+        // Education Centers). Columns follow gradeKeys.
+        const gradeKeys = ["3K", "PK", "K", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+        const gradeShort = ['3-K', 'Pre-K', 'K', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+        const gradeLong = ['3-K', 'Pre-K', 'Kindergarten', '1st grade', '2nd grade', '3rd grade', '4th grade', '5th grade', '6th grade', '7th grade', '8th grade', '9th grade', '10th grade', '11th grade', '12th grade'];
+        const gradeYears = ["2010-11", "2011-12", "2012-13", "2013-14", "2014-15", "2015-16", "2016-17", "2017-18", "2018-19", "2019-20", "2020-21", "2021-22", "2022-23", "2023-24", "2024-25", "2025-26"];
+        const gradeAll = [
+            [0, 57250, 78661, 82515, 79869, 77057, 75439, 75680, 74041, 74083, 74899, 97583, 98571, 69553, 68119],
+            [0, 57518, 81487, 83521, 81143, 78936, 75787, 75607, 76199, 73924, 74430, 94729, 94348, 71747, 70155],
+            [0, 54990, 84752, 86099, 82154, 80131, 76788, 75711, 75088, 75510, 74336, 94113, 91766, 70344, 73163],
+            [0, 55734, 85375, 89630, 84368, 81320, 77886, 76778, 75238, 74614, 75999, 92323, 90396, 71028, 73790],
+            [0, 66403, 85775, 88704, 87410, 82532, 80229, 77505, 75931, 75347, 74793, 93678, 89909, 71239, 73328],
+            [0, 71847, 84386, 87804, 86930, 85309, 81287, 79581, 76798, 75802, 75405, 91723, 90854, 71502, 74735],
+            [0, 72553, 82517, 86008, 86279, 85050, 84185, 80563, 78985, 76778, 76283, 91796, 90614, 74251, 75370],
+            [824, 70704, 81588, 83578, 83978, 84363, 83367, 83277, 79114, 78125, 76816, 90062, 89424, 73716, 76398],
+            [3314, 70590, 78627, 81908, 81205, 81706, 82510, 82044, 81289, 78451, 77748, 88773, 88074, 73517, 76745],
+            [17586, 69894, 78587, 79171, 80298, 79555, 80287, 81513, 80250, 80638, 78247, 88990, 86802, 73455, 76595],
+            [15480, 60501, 72265, 76037, 75904, 77237, 77034, 77979, 78763, 78698, 79616, 85580, 87748, 74939, 76357],
+            [34740, 57315, 68828, 70546, 71053, 71455, 72779, 72938, 73298, 74852, 76084, 84553, 81620, 73618, 75209],
+            [39821, 59255, 67276, 69985, 69558, 69921, 70205, 71942, 71288, 72505, 74478, 82648, 83039, 71827, 74147],
+            [39200, 59182, 69155, 70570, 71503, 70721, 71061, 71498, 72260, 72538, 74008, 84974, 84543, 73208, 73640],
+            [38282, 57596, 67636, 70129, 70328, 71392, 70668, 71079, 70835, 72660, 73402, 84833, 85005, 73817, 76675],
+            [39229, 56713, 64536, 67791, 69090, 69236, 70446, 70137, 69784, 70468, 72667, 81310, 83452, 73886, 76753]
         ];
+        const gradeDistrict = [
+            [0, 57250, 72875, 76722, 75123, 73657, 72793, 71658, 70406, 71553, 73072, 95612, 96870, 68584, 67624],
+            [0, 57518, 75097, 76902, 75224, 74359, 72434, 71178, 71972, 70491, 72105, 92147, 92574, 70204, 69338],
+            [0, 54990, 77024, 78692, 75348, 74272, 72416, 70280, 69949, 71437, 71051, 90583, 89502, 68739, 71865],
+            [0, 55734, 75705, 80585, 76667, 74574, 72285, 70148, 68645, 69684, 72105, 87587, 87422, 69080, 72353],
+            [0, 66209, 75200, 78023, 78399, 74873, 73699, 69938, 68177, 68844, 70028, 88420, 86114, 68697, 71445],
+            [0, 71337, 73811, 76856, 76348, 76556, 74058, 71777, 67752, 68285, 69255, 85874, 86463, 68156, 72263],
+            [0, 72035, 71468, 74638, 75402, 74744, 75759, 72110, 69552, 67964, 69088, 85476, 85468, 70386, 72077],
+            [824, 70171, 70143, 71562, 72531, 73506, 73335, 73693, 69227, 69083, 68565, 83278, 83823, 69402, 72663],
+            [3314, 70066, 66626, 69805, 69440, 70751, 72314, 71476, 70418, 68883, 69058, 81819, 81594, 68753, 72633],
+            [17586, 69322, 65370, 66041, 67985, 67757, 69359, 70361, 68163, 69961, 68927, 81437, 79935, 67899, 72097],
+            [15480, 59865, 59143, 62262, 62573, 64711, 65052, 66505, 65811, 66605, 69032, 77834, 80479, 68874, 71264],
+            [34740, 56452, 56529, 57424, 57899, 58767, 60816, 61244, 60449, 62516, 64546, 76478, 74399, 67370, 69507],
+            [39821, 58038, 55288, 57198, 56737, 57071, 58070, 60261, 58173, 59966, 62601, 74438, 75591, 65423, 68301],
+            [39200, 57877, 56471, 57755, 58423, 57848, 58471, 59237, 58888, 59614, 61602, 76205, 76468, 66448, 67557],
+            [38282, 56255, 55461, 57149, 57448, 58485, 57914, 58681, 57155, 59620, 60669, 75944, 76572, 66518, 70095],
+            [39229, 55497, 52525, 55350, 56017, 56404, 57571, 57418, 56074, 56956, 59594, 71889, 74557, 65907, 69656]
+        ];
+        // Preliminary 2026-27 K-12 count in district schools (charter schools not included), released by DOE Nov. 16, 2026,
+        // as of Oct. 31, 2026. Same basis as gradeDistrict: 789,918 in 2025-26 minus the 23,018 decline DOE reported.
+        const prelimK12District = { year: '2026-27', value: 766900 };
 
         // Workforce data, school years 2000-01 to 2022-23.
         // genEd, sped: teachers employed by the NYC Department of Education (DOE), counted by the NYC Independent Budget
@@ -328,13 +359,307 @@
         const PauseIcon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="3" width="5" height="18"/><rect x="14" y="3" width="5" height="18"/></svg>;
         const ResetIcon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>;
 
-        const StatCard = ({ label, value, detail, color }) => (
-            <div style={{ background: '#fff', border: '1px solid #ddd', padding: '20px 24px', flex: 1, minWidth: '160px' }}>
+        const StatCard = ({ label, value, detail, color, minWidth }) => (
+            <div style={{ background: '#fff', border: '1px solid #ddd', padding: '20px 24px', flex: 1, minWidth: minWidth || '160px' }}>
                 <div style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#707175', marginBottom: '6px' }}>{label}</div>
                 <div style={{ fontSize: '32px', fontWeight: 900, letterSpacing: '-0.03em', color: color || '#050507', lineHeight: 1 }}>{value}</div>
                 {detail && <div style={{ fontSize: '12px', color: '#707175', marginTop: '6px' }}>{detail}</div>}
             </div>
         );
+
+        // ---------- Grade explorer ----------
+        const GX_INK = '#050507', GX_MUTED = '#707175', GX_RULE = '#dddddd';
+        const GX_CUR = '#394882', GX_CMP = '#c4c6cf';
+        // One-hue indigo ramp for the grid: share of the grade's own peak, 60 percent or less = lightest
+        const GX_RAMP = [[238, 240, 247], [184, 190, 219], [124, 135, 186], [57, 72, 130], [27, 35, 74]];
+        const gxShade = (t) => {
+            var x = Math.max(0, Math.min(1, (t - 0.6) / 0.4)) * (GX_RAMP.length - 1);
+            var i = Math.min(GX_RAMP.length - 2, Math.floor(x)), f = x - i;
+            var c = GX_RAMP[i].map((v, k) => Math.round(v + (GX_RAMP[i + 1][k] - v) * f));
+            return { bg: 'rgb(' + c.join(',') + ')', ink: x > 2.1 ? '#ffffff' : GX_INK };
+        };
+        const gxK = (v) => (v / 1000).toFixed(1);
+        const gxPct = (a, b) => { var p = ((b - a) / a) * 100; return (p > 0 ? '+' : p < 0 ? '−' : '') + Math.abs(p).toFixed(1) + '%'; };
+        const gxShortYear = (y) => y.slice(2, 4) + '–' + y.slice(5, 7);
+        const GX_TOTAL = 'K12';
+
+        const GxSegment = ({ options, value, onChange, label }) => (
+            <div role="group" aria-label={label} style={{ display: 'inline-flex', border: '1px solid ' + GX_INK }}>
+                {options.map((o, i) => (
+                    <button key={o.id} onClick={() => onChange(o.id)} aria-pressed={value === o.id} style={{
+                        background: value === o.id ? GX_INK : '#fff', color: value === o.id ? '#fff' : GX_INK,
+                        border: 'none', borderLeft: i ? '1px solid ' + GX_INK : 'none',
+                        padding: '9px 14px', fontSize: '12px', fontWeight: 700, letterSpacing: '0.04em',
+                        cursor: 'pointer', fontFamily: 'var(--font-primary)', whiteSpace: 'nowrap',
+                    }}>{o.label}</button>
+                ))}
+            </div>
+        );
+
+        const GxTip = ({ children }) => (
+            <div style={{ background: GX_INK, color: '#fff', padding: '12px 16px', fontFamily: 'var(--font-primary)', fontSize: '13px', boxShadow: '0 8px 32px rgba(0,0,0,0.24)', minWidth: '190px', pointerEvents: 'none' }}>{children}</div>
+        );
+
+        const GradeExplorer = () => {
+            const [mode, setMode] = useState('grid');
+            const [charter, setCharter] = useState('out');
+            const [grade, setGrade] = useState('K');
+            const [yearIdx, setYearIdx] = useState(gradeYears.length - 1);
+            const [cmpIdx, setCmpIdx] = useState(gradeYears.indexOf('2019-20'));
+            const [playing, setPlaying] = useState(false);
+            const [hover, setHover] = useState(null);
+
+            useEffect(() => {
+                if (!hover) return;
+                const clear = () => setHover(null);
+                window.addEventListener('scroll', clear, { passive: true, once: true });
+                return () => window.removeEventListener('scroll', clear);
+            }, [hover]);
+
+            useEffect(() => {
+                if (!playing) return;
+                const id = setInterval(() => {
+                    setYearIdx(i => {
+                        if (i >= gradeYears.length - 1) { setPlaying(false); return i; }
+                        return i + 1;
+                    });
+                }, 900);
+                return () => clearInterval(id);
+            }, [playing]);
+
+            const rows = charter === 'in' ? gradeAll : gradeDistrict;
+            const k12 = rows.map(r => r.slice(2).reduce((s, v) => s + v, 0));
+            const series = (g) => g === GX_TOTAL ? k12 : rows.map(r => r[gradeKeys.indexOf(g)]);
+            const nameOf = (g) => g === GX_TOTAL ? 'Kindergarten to 12th grade' : gradeLong[gradeKeys.indexOf(g)];
+            const lastIdx = gradeYears.length - 1;
+            const charterNote = charter === 'in' ? 'District and charter schools' : 'District schools only, charter schools not included';
+
+            const goGrade = (g) => { setGrade(g); setMode('grade'); setHover(null); };
+            const goYear = (i) => { setYearIdx(i); setPlaying(false); setMode('year'); setHover(null); };
+
+            // ---------- view 1: every grade, every year ----------
+            const gridView = () => {
+                var gridRows = gradeKeys.map(g => ({ g, label: gradeShort[gradeKeys.indexOf(g)], vals: series(g) }));
+                gridRows.push({ g: GX_TOTAL, label: 'K–12', vals: k12, total: true });
+                var cellStyle = { padding: 0, height: '30px', minWidth: '44px' };
+                var stickyCol = { position: 'sticky', left: 0, background: '#fff', zIndex: 1 };
+                return (
+                    <div>
+                        <div className="custom-scrollbar" style={{ overflowX: 'auto', margin: '0 -4px', padding: '0 4px' }} onMouseLeave={() => setHover(null)}>
+                            <table style={{ borderCollapse: 'separate', borderSpacing: '2px', width: '100%', minWidth: '820px', fontVariantNumeric: 'tabular-nums', fontFamily: 'var(--font-primary)' }}>
+                                <thead>
+                                    <tr>
+                                        <th style={{ ...stickyCol, textAlign: 'left', fontSize: '10px', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: GX_MUTED, padding: '0 8px 6px 0' }}>Grade</th>
+                                        {gradeYears.map((y, i) => (
+                                            <th key={y} style={{ padding: '0 0 6px', fontWeight: 600 }}>
+                                                <button onClick={() => goYear(i)} title={'See every grade in ' + y} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '11px', color: GX_MUTED, fontFamily: 'var(--font-primary)', fontWeight: 600, padding: '2px 0', width: '100%', textDecoration: 'underline', textDecorationColor: GX_RULE, textUnderlineOffset: '3px' }}>{gxShortYear(y)}</button>
+                                            </th>
+                                        ))}
+                                        <th style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: GX_MUTED, padding: '0 0 6px 10px', textAlign: 'right', whiteSpace: 'nowrap' }}>vs. peak</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {gridRows.map((row) => {
+                                        var max = Math.max(...row.vals), peakI = row.vals.indexOf(max), last = row.vals[lastIdx];
+                                        return (
+                                            <tr key={row.g}>
+                                                <th scope="row" style={{ ...stickyCol, textAlign: 'left', padding: row.total ? '10px 8px 0 0' : '0 8px 0 0' }}>
+                                                    <button onClick={() => goGrade(row.g)} title={'See ' + nameOf(row.g) + ' over time'} style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-primary)', fontSize: '13px', fontWeight: row.total ? 900 : 700, color: GX_INK, padding: 0, whiteSpace: 'nowrap', textDecoration: 'underline', textDecorationColor: GX_RULE, textUnderlineOffset: '3px' }}>{row.label}</button>
+                                                </th>
+                                                {row.vals.map((v, i) => {
+                                                    var on = hover && hover.g === row.g && hover.i === i;
+                                                    var lit = hover && (hover.g === row.g || hover.i === i);
+                                                    if (!v) return <td key={i} style={{ ...cellStyle, paddingTop: row.total ? '10px' : 0, textAlign: 'center', color: '#c4c6cf', fontSize: '12px' }}>–</td>;
+                                                    var s = gxShade(v / max);
+                                                    return (
+                                                        <td key={i} style={{ ...cellStyle, paddingTop: row.total ? '10px' : 0 }}>
+                                                            <button
+                                                                onClick={() => goGrade(row.g)}
+                                                                onMouseEnter={(e) => { var b = e.currentTarget.getBoundingClientRect(); setHover({ g: row.g, i, x: b.left + b.width / 2, y: b.top }); }}
+                                                                onFocus={(e) => { var b = e.currentTarget.getBoundingClientRect(); setHover({ g: row.g, i, x: b.left + b.width / 2, y: b.top }); }}
+                                                                onBlur={() => setHover(null)}
+                                                                aria-label={nameOf(row.g) + ', ' + gradeYears[i] + ': ' + formatNumber(v)}
+                                                                style={{
+                                                                    display: 'block', width: '100%', height: '30px', border: 'none', cursor: 'pointer',
+                                                                    background: s.bg, color: s.ink, fontFamily: 'var(--font-primary)',
+                                                                    fontSize: row.total ? '12px' : '11.5px', fontWeight: i === peakI ? 800 : 500,
+                                                                    outline: on ? '2px solid ' + GX_INK : 'none', outlineOffset: '1px',
+                                                                    opacity: hover && !lit ? 0.55 : 1, transition: 'opacity 120ms',
+                                                                }}>{row.total ? (v / 1000000).toFixed(2) + 'M' : gxK(v)}</button>
+                                                        </td>
+                                                    );
+                                                })}
+                                                <td style={{ textAlign: 'right', padding: row.total ? '10px 0 0 10px' : '0 0 0 10px', fontSize: '12px', fontWeight: 700, color: GX_INK, whiteSpace: 'nowrap' }}>{peakI === lastIdx ? 'at peak' : gxPct(max, last)}</td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                        {hover && (() => {
+                            var v = series(hover.g)[hover.i], prev = hover.i ? series(hover.g)[hover.i - 1] : null;
+                            var max = Math.max(...series(hover.g));
+                            return (
+                                <div style={{ position: 'fixed', left: Math.min(Math.max(hover.x, 110), window.innerWidth - 110), top: hover.y - 8, transform: 'translate(-50%, -100%)', zIndex: 50 }}>
+                                    <GxTip>
+                                        <div style={{ fontWeight: 900, fontSize: '15px', marginBottom: '6px' }}>{nameOf(hover.g)}, {gradeYears[hover.i]}</div>
+                                        <div style={{ fontSize: '20px', fontWeight: 900, letterSpacing: '-0.02em', marginBottom: '6px' }}>{formatNumber(v)}</div>
+                                        {prev ? <div style={{ color: 'rgba(255,255,255,0.75)' }}>{gxPct(prev, v)} from {gradeYears[hover.i - 1]}</div> : null}
+                                        <div style={{ color: 'rgba(255,255,255,0.75)' }}>{Math.round((v / max) * 100)}% of this grade’s peak</div>
+                                    </GxTip>
+                                </div>
+                            );
+                        })()}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginTop: '14px', fontSize: '11px', color: GX_MUTED }}>
+                            <span>Each row is shaded against that grade’s own peak year (in bold):</span>
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                                60% of peak or less
+                                <span style={{ display: 'inline-block', width: '120px', height: '10px', background: 'linear-gradient(90deg,' + GX_RAMP.map(c => 'rgb(' + c.join(',') + ')').join(',') + ')' }} />
+                                peak
+                            </span>
+                            <span>Figures in thousands. Click a grade for its trend or a year for that year’s grades.</span>
+                        </div>
+                    </div>
+                );
+            };
+
+            // ---------- view 2: one grade over time ----------
+            const gradeView = () => {
+                var vals = series(grade);
+                var showPrelim = grade === GX_TOTAL && charter === 'out';
+                var data = gradeYears.map((y, i) => ({ year: y, value: vals[i], prelim: showPrelim && i === lastIdx ? vals[i] : null }));
+                if (showPrelim) data.push({ year: prelimK12District.year, value: null, prelim: prelimK12District.value });
+                var first = vals.findIndex(v => v > 0);
+                var max = Math.max(...vals), peakI = vals.indexOf(max), last = vals[lastIdx];
+                var i1920 = gradeYears.indexOf('2019-20');
+                var chips = gradeKeys.map((g, i) => ({ id: g, label: gradeShort[i] })).concat([{ id: GX_TOTAL, label: 'K–12 total' }]);
+                return (
+                    <div>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginBottom: '22px' }}>
+                            {chips.map(c => (
+                                <button key={c.id} onClick={() => setGrade(c.id)} aria-pressed={grade === c.id} style={{
+                                    background: grade === c.id ? GX_INK : '#fff', color: grade === c.id ? '#fff' : GX_INK,
+                                    border: '1px solid ' + (grade === c.id ? GX_INK : GX_RULE), padding: '7px 11px', minWidth: '40px',
+                                    fontSize: '12px', fontWeight: 700, cursor: 'pointer', fontFamily: 'var(--font-primary)',
+                                }}>{c.label}</button>
+                            ))}
+                        </div>
+                        <div style={{ display: 'flex', gap: '12px', marginBottom: '24px', flexWrap: 'wrap' }}>
+                            <StatCard minWidth="210px" label={nameOf(grade) + ', ' + gradeYears[lastIdx]} value={formatNumber(last)} detail={gxPct(vals[lastIdx - 1], last) + ' from the year before'} color={GX_CUR} />
+                            <StatCard minWidth="210px" label={'Peak, ' + gradeYears[peakI]} value={formatNumber(max)} detail={peakI === lastIdx ? 'The latest year is the peak' : gxPct(max, last) + ' since then'} />
+                            {first <= i1920 && vals[i1920] ? <StatCard minWidth="210px" label="Since 2019-20" value={gxPct(vals[i1920], last)} detail={formatNumber(vals[i1920]) + ' → ' + formatNumber(last)} /> : <StatCard minWidth="210px" label={'Since ' + gradeYears[first]} value={formatNumber(last - vals[first])} detail={'Started at ' + formatNumber(vals[first])} />}
+                        </div>
+                        <div style={{ height: '360px', width: '100%' }}>
+                            <ResponsiveContainer width="100%" height="100%">
+                                <ComposedChart data={data} margin={{ top: 16, right: 16, left: 4, bottom: 0 }}>
+                                    <defs>
+                                        <linearGradient id="gxFill" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stopColor={GX_CUR} stopOpacity={0.22} />
+                                            <stop offset="100%" stopColor={GX_CUR} stopOpacity={0.02} />
+                                        </linearGradient>
+                                    </defs>
+                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
+                                    <XAxis dataKey="year" tick={{ fill: GX_MUTED, fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={gxShortYear} ticks={gradeYears.filter((y, i) => i % 3 === 0).concat(showPrelim ? [prelimK12District.year] : [])} interval={0} />
+                                    <YAxis tickFormatter={formatYAxis} tick={{ fill: GX_MUTED, fontSize: 11 }} axisLine={false} tickLine={false} width={44} domain={[0, 'auto']} />
+                                    <Tooltip cursor={{ stroke: GX_INK, strokeWidth: 1, strokeDasharray: '2 3' }} content={({ active, payload, label }) => {
+                                        if (!active || !payload || !payload.length) return null;
+                                        var d = payload[0].payload, i = gradeYears.indexOf(label);
+                                        if (d.value == null) return <GxTip><div style={{ fontWeight: 900, fontSize: '15px', marginBottom: '6px' }}>{label}, preliminary</div><div style={{ fontSize: '20px', fontWeight: 900 }}>{formatNumber(d.prelim)}</div><div style={{ color: 'rgba(255,255,255,0.75)', marginTop: '4px', maxWidth: '220px' }}>Not yet audited. {gxPct(last, d.prelim)} from {gradeYears[lastIdx]}.</div></GxTip>;
+                                        return <GxTip>
+                                            <div style={{ fontWeight: 900, fontSize: '15px', marginBottom: '6px' }}>{nameOf(grade)}, {label}</div>
+                                            <div style={{ fontSize: '20px', fontWeight: 900 }}>{formatNumber(d.value)}</div>
+                                            {i > 0 && vals[i - 1] ? <div style={{ color: 'rgba(255,255,255,0.75)', marginTop: '4px' }}>{gxPct(vals[i - 1], d.value)} from {gradeYears[i - 1]}</div> : null}
+                                        </GxTip>;
+                                    }} />
+                                    {showPrelim && <ReferenceLine x={prelimK12District.year} stroke={GX_RULE} label={{ value: 'Preliminary', position: 'insideTopRight', fill: GX_MUTED, fontSize: 10 }} />}
+                                    <Area isAnimationActive={true} animationDuration={400} type="linear" dataKey="value" name={nameOf(grade)} stroke={GX_CUR} strokeWidth={2} fill="url(#gxFill)" dot={false} label={(p) => { if (p.value == null || (p.index !== peakI && p.index !== lastIdx)) return null; var end = p.index === lastIdx && !showPrelim; return <text x={p.x + (end ? -2 : 0)} y={p.y - 10} textAnchor={end ? 'end' : p.index === 0 ? 'start' : 'middle'} fontSize={11} fontWeight={800} fill={GX_INK} fontFamily="Inter, sans-serif">{formatNumber(p.value)}</text>; }} activeDot={{ r: 5, fill: GX_CUR, stroke: '#fff', strokeWidth: 2 }} connectNulls={false} />
+                                    {showPrelim && <Line isAnimationActive={false} type="linear" dataKey="prelim" stroke={GX_CUR} strokeWidth={2} strokeDasharray="4 4" dot={{ r: 5, fill: '#fff', stroke: GX_CUR, strokeWidth: 2 }} activeDot={{ r: 5, fill: '#fff', stroke: GX_CUR, strokeWidth: 2 }} connectNulls={true} />}
+                                </ComposedChart>
+                            </ResponsiveContainer>
+                        </div>
+                        {showPrelim && <p style={{ fontSize: '12px', color: GX_MUTED, marginTop: '10px', maxWidth: '720px' }}>The dashed segment is the Department of Education’s preliminary count for 2026-27, released Nov. 16, 2026. It has not been audited and gives no grade-by-grade detail.</p>}
+                        {grade === '3K' && <p style={{ fontSize: '12px', color: GX_MUTED, marginTop: '10px', maxWidth: '720px' }}>3-K for All began in two districts in 2017-18 and expanded citywide over the following years.</p>}
+                    </div>
+                );
+            };
+
+            // ---------- view 3: every grade in one year ----------
+            const yearView = () => {
+                var cur = rows[yearIdx], cmp = rows[cmpIdx];
+                var data = gradeKeys.map((g, i) => ({ grade: gradeShort[i], name: gradeLong[i], cur: cur[i], cmp: cmp[i] }));
+                var totCur = cur.reduce((s, v) => s + v, 0), totCmp = cmp.reduce((s, v) => s + v, 0);
+                var kCur = k12[yearIdx], kCmp = k12[cmpIdx];
+                var top = Math.ceil(Math.max(...gradeAll.flat()) / 10000) * 10000;
+                return (
+                    <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap', marginBottom: '22px' }}>
+                            <button onClick={() => { if (yearIdx >= lastIdx) setYearIdx(0); setPlaying(p => !p); }} aria-label={playing ? 'Pause' : 'Play through the years'} style={{ background: GX_INK, color: '#fff', border: 'none', width: '38px', height: '38px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>{playing ? <PauseIcon /> : <PlayIcon />}</button>
+                            <div style={{ flex: '1 1 260px', minWidth: '200px' }}>
+                                <input type="range" min={0} max={lastIdx} step={1} value={yearIdx} onChange={e => { setPlaying(false); setYearIdx(+e.target.value); }} aria-label="School year" style={{ width: '100%' }} />
+                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: GX_MUTED, marginTop: '6px' }}>
+                                    <span>{gradeYears[0]}</span><span>{gradeYears[lastIdx]}</span>
+                                </div>
+                            </div>
+                            <div style={{ fontSize: '30px', fontWeight: 900, letterSpacing: '-0.03em', minWidth: '120px', fontVariantNumeric: 'tabular-nums' }}>{gradeYears[yearIdx]}</div>
+                            <label style={{ fontSize: '12px', color: GX_MUTED, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                Compare with
+                                <select value={cmpIdx} onChange={e => setCmpIdx(+e.target.value)} style={{ border: '1px solid ' + GX_INK, padding: '7px 8px', fontSize: '12px', fontWeight: 700, fontFamily: 'var(--font-primary)', background: '#fff', color: GX_INK, borderRadius: 0 }}>
+                                    {gradeYears.map((y, i) => <option key={y} value={i}>{y}</option>)}
+                                </select>
+                            </label>
+                        </div>
+                        <div style={{ display: 'flex', gap: '12px', marginBottom: '24px', flexWrap: 'wrap' }}>
+                            <StatCard minWidth="210px" label={'3-K to 12th grade, ' + gradeYears[yearIdx]} value={formatNumber(totCur)} detail={gxPct(totCmp, totCur) + ' vs. ' + gradeYears[cmpIdx]} color={GX_CUR} />
+                            <StatCard minWidth="210px" label={'Kindergarten to 12th, ' + gradeYears[yearIdx]} value={formatNumber(kCur)} detail={gxPct(kCmp, kCur) + ' vs. ' + gradeYears[cmpIdx]} />
+                            <StatCard minWidth="210px" label={'3-K and pre-K, ' + gradeYears[yearIdx]} value={formatNumber(cur[0] + cur[1])} detail={gxPct(cmp[0] + cmp[1] || 1, cur[0] + cur[1]) + ' vs. ' + gradeYears[cmpIdx]} />
+                        </div>
+                        <div style={{ display: 'flex', gap: '18px', fontSize: '12px', color: GX_INK, marginBottom: '8px' }}>
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}><span style={{ width: '10px', height: '10px', background: GX_CUR, display: 'inline-block' }} />{gradeYears[yearIdx]}</span>
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}><span style={{ width: '10px', height: '10px', background: GX_CMP, display: 'inline-block' }} />{gradeYears[cmpIdx]}</span>
+                        </div>
+                        <div style={{ height: '380px', width: '100%' }}>
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={data} margin={{ top: 10, right: 6, left: 4, bottom: 0 }} barCategoryGap="18%" barGap={2}>
+                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
+                                    <XAxis dataKey="grade" tick={{ fill: GX_MUTED, fontSize: 11 }} axisLine={false} tickLine={false} interval={0} tickFormatter={(v) => window.innerWidth < 560 ? ({ '3-K': '3K', 'Pre-K': 'PK' }[v] || v) : v} />
+                                    <YAxis tickFormatter={formatYAxis} tick={{ fill: GX_MUTED, fontSize: 11 }} axisLine={false} tickLine={false} width={40} domain={[0, top]} />
+                                    <Tooltip cursor={{ fill: 'rgba(57,72,130,0.07)' }} content={({ active, payload }) => {
+                                        if (!active || !payload || !payload.length) return null;
+                                        var d = payload[0].payload;
+                                        return <GxTip>
+                                            <div style={{ fontWeight: 900, fontSize: '15px', marginBottom: '8px' }}>{d.name}</div>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}><span style={{ color: 'rgba(255,255,255,0.75)' }}>{gradeYears[yearIdx]}</span><strong>{formatNumber(d.cur)}</strong></div>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}><span style={{ color: 'rgba(255,255,255,0.75)' }}>{gradeYears[cmpIdx]}</span><strong>{formatNumber(d.cmp)}</strong></div>
+                                            {d.cmp ? <div style={{ color: '#dde44c', marginTop: '6px', fontWeight: 700 }}>{gxPct(d.cmp, d.cur)}</div> : null}
+                                        </GxTip>;
+                                    }} />
+                                    <Bar dataKey="cmp" name={gradeYears[cmpIdx]} fill={GX_CMP} radius={[3, 3, 0, 0]} isAnimationActive={true} animationDuration={350} />
+                                    <Bar dataKey="cur" name={gradeYears[yearIdx]} fill={GX_CUR} radius={[3, 3, 0, 0]} isAnimationActive={true} animationDuration={350} />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
+                        {cur[0] === 0 && <p style={{ fontSize: '12px', color: GX_MUTED, marginTop: '10px' }}>3-K for All began in 2017-18.</p>}
+                    </div>
+                );
+            };
+
+            return (
+                <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap', marginBottom: '22px' }}>
+                        <GxSegment label="View" value={mode} onChange={(m) => { setMode(m); setHover(null); setPlaying(false); }} options={[
+                            { id: 'grid', label: 'Every grade' }, { id: 'grade', label: 'One grade' }, { id: 'year', label: 'One year' },
+                        ]} />
+                        <GxSegment label="Charter schools" value={charter} onChange={setCharter} options={[
+                            { id: 'out', label: 'District schools' }, { id: 'in', label: 'With charters' },
+                        ]} />
+                    </div>
+                    <div style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: GX_MUTED, marginBottom: '12px' }}>
+                        {mode === 'grid' ? 'Enrollment by grade, ' + gradeYears[0] + ' to ' + gradeYears[lastIdx] : mode === 'grade' ? nameOf(grade) + ', ' + gradeYears[0] + ' to ' + gradeYears[lastIdx] : 'Every grade, ' + gradeYears[yearIdx] + ' vs. ' + gradeYears[cmpIdx]} · {charterNote}
+                    </div>
+                    {mode === 'grid' ? gridView() : mode === 'grade' ? gradeView() : yearView()}
+                </div>
+            );
+        };
 
         const App = () => {
             const [activeTab, setActiveTab] = useState('composition');
@@ -550,56 +875,25 @@
 
                     {/* TAB 3: GRADES */}
                     {activeTab === 'grades' && (() => {
-                        var sum = (key, from, to) => gradeData.slice(from, to).reduce((s, d) => s + d[key], 0);
-                        var k8a = sum('y2019', 0, 9), k8b = sum('y2026', 0, 9);
-                        var hsa = sum('y2019', 9, 13), hsb = sum('y2026', 9, 13);
-                        var pctChg = (a, b) => (((b - a) / a) * 100).toFixed(1) + '%';
-                        var kg = gradeData[0];
+                        var i19 = gradeYears.indexOf('2019-20'), iL = gradeYears.length - 1;
+                        var sumR = (r, from, to) => gradeDistrict[r].slice(from, to).reduce((s, v) => s + v, 0);
+                        var k8a = sumR(i19, 2, 11), k8b = sumR(iL, 2, 11), hsa = sumR(i19, 11, 15), hsb = sumR(iL, 11, 15);
+                        var pc = (a, b) => (((a - b) / a) * 100).toFixed(1);
                         return <div>
                         <h2 style={{ fontSize: '22px', fontWeight: 900, letterSpacing: '-0.02em', marginBottom: '4px' }}>
                             Kindergarten through 8th grade lost a far larger share of students than high school
                         </h2>
-                        <p style={{ fontSize: '13px', color: '#707175', marginBottom: '28px' }}>
-                            Enrollment by grade in district public schools (charter schools not included), 2019-20 and 2025-26
+                        <p style={{ fontSize: '13px', color: '#707175', marginBottom: '8px', maxWidth: '760px' }}>
+                            Enrollment in every grade from 3-K to 12th, {gradeYears[0]} to {gradeYears[iL]}. See every grade at once, follow one grade over time or compare every grade in two years, with or without charter schools.
+                        </p>
+                        <p style={{ fontSize: '13px', color: '#505257', lineHeight: 1.6, marginBottom: '28px', maxWidth: '760px' }}>
+                            In district schools, kindergarten through 8th grade fell {pc(k8a, k8b)} percent from 2019-20 to 2025-26, from {formatNumber(k8a)} to {formatNumber(k8b)} students. High school fell {pc(hsa, hsb)} percent, from {formatNumber(hsa)} to {formatNumber(hsb)}. In 2025-26, every grade from kindergarten through 8th enrolled fewer students than any high school grade.
                         </p>
 
-                        <div style={{ display: 'flex', gap: '12px', marginBottom: '28px', flexWrap: 'wrap' }}>
-                            <StatCard label="Kindergarten to 8th grade" value={pctChg(k8a, k8b)} detail={formatNumber(k8a) + ' → ' + formatNumber(k8b)} color="#e7466d" />
-                            <StatCard label="9th to 12th grade" value={pctChg(hsa, hsb)} detail={formatNumber(hsa) + ' → ' + formatNumber(hsb)} color="#707175" />
-                            <StatCard label="Kindergarten" value={pctChg(kg.y2019, kg.y2026)} detail={formatNumber(kg.y2019) + ' → ' + formatNumber(kg.y2026)} color="#e7466d" />
-                        </div>
+                        <GradeExplorer />
 
-                        <div style={{ height: '400px', width: '100%' }}>
-                            <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={gradeData} margin={{ top: 10, right: 10, left: 10, bottom: 0 }} barCategoryGap="20%">
-                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
-                                    <XAxis dataKey="grade" tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} />
-                                    <YAxis tickFormatter={formatYAxis} tick={{ fill: '#707175', fontSize: 11 }} axisLine={false} tickLine={false} width={40} domain={[0, 90000]} ticks={[0, 30000, 60000, 90000]} />
-                                    <Tooltip content={({ active, payload, label }) => {
-                                        if (!active || !payload || !payload.length) return null;
-                                        var d = payload[0].payload;
-                                        return (
-                                            <div style={{ background: '#050507', color: '#fff', padding: '12px 16px', fontFamily: 'var(--font-primary)', fontSize: '13px', boxShadow: '0 8px 32px rgba(0,0,0,0.24)' }}>
-                                                <div style={{ fontWeight: 900, fontSize: '16px', marginBottom: '6px' }}>{label === 'K' ? 'Kindergarten' : 'Grade ' + label}</div>
-                                                <div>2019-20: <strong>{formatNumber(d.y2019)}</strong></div>
-                                                <div>2025-26: <strong>{formatNumber(d.y2026)}</strong></div>
-                                                <div style={{ color: 'rgba(255,255,255,0.7)', marginTop: '4px' }}>Change: {pctChg(d.y2019, d.y2026)}</div>
-                                            </div>
-                                        );
-                                    }} cursor={{ fill: 'rgba(221,228,76,0.1)' }} />
-                                    <Legend iconType="square" iconSize={10} wrapperStyle={{ paddingTop: '16px', fontSize: '12px' }} />
-                                    <Bar isAnimationActive={false} dataKey="y2019" name="2019-20" fill="#bbbbbb" radius={[3, 3, 0, 0]} />
-                                    <Bar isAnimationActive={false} dataKey="y2026" name="2025-26" fill="#e7466d" radius={[3, 3, 0, 0]} />
-                                </BarChart>
-                            </ResponsiveContainer>
-                        </div>
-
-                        <p style={{ fontSize: '13px', color: '#505257', lineHeight: 1.6, marginTop: '16px', maxWidth: '720px' }}>
-                            In 2025-26, every grade from kindergarten through 8th enrolled fewer students than any high school grade.
-                        </p>
-
-                        <div style={{ marginTop: '12px', fontSize: '11px', color: '#707175' }}>
-                            <span style={{ fontWeight: 600 }}>Source:</span>{' '}New York City Department of Education, Demographic Snapshot, October 31 audited register. 2025-26: <a href="https://infohub.nyced.org/reports/students-and-schools/school-quality/information-and-data-overview" style={{ color: '#707175', textDecoration: 'underline' }}>2021-22 to 2025-26 edition</a>, citywide tab, which leaves out charter schools. 2019-20: the <a href="https://data.cityofnewyork.us/d/ycfm-qijh" style={{ color: '#707175', textDecoration: 'underline' }}>2019-20 citywide file</a> minus charter schools (District 84) in the <a href="https://data.cityofnewyork.us/d/8jzu-ady5" style={{ color: '#707175', textDecoration: 'underline' }}>2019-20 district file</a> on NYC Open Data.
+                        <div style={{ marginTop: '20px', fontSize: '11px', color: '#707175', lineHeight: 1.6, maxWidth: '760px' }}>
+                            <span style={{ fontWeight: 600 }}>Source:</span>{' '}New York City Department of Education, Demographic Snapshot, October 31 audited register, newest edition for each year: <a href="https://infohub.nyced.org/reports/students-and-schools/school-quality/information-and-data-overview" style={{ color: '#707175', textDecoration: 'underline' }}>2021-22 to 2025-26</a> (InfoHub); earlier editions on <a href="https://data.cityofnewyork.us/browse?q=demographic%20snapshot" style={{ color: '#707175', textDecoration: 'underline' }}>NYC Open Data</a> and, where DOE no longer posts them, the Internet Archive. Preliminary 2026-27: DOE, Nov. 16, 2026. Details in Methodology.
                         </div>
                     </div>;
                     })()}
@@ -933,7 +1227,9 @@
 
                             <div style={{ marginBottom: '32px' }}>
                                 <h3 style={{ fontSize: '15px', fontWeight: 700, fontFamily: 'var(--font-primary)', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#707175', marginBottom: '10px' }}>Enrollment by grade</h3>
-                                <p>Grade counts are DOE’s October 31 audited register for district schools only. The 2025-26 figures are from the 2021-22 to 2025-26 Demographic Snapshot, whose citywide tab leaves out charter schools. The 2019-20 figures are DOE’s 2019-20 citywide file minus the charter-school row (District 84) in its 2019-20 district file, both on NYC Open Data; they match the charter-free citywide tab in later snapshot editions.</p>
+                                <p style={{ marginBottom: '10px' }}>Grade counts, 3-K through 12th grade, come from DOE’s Demographic Snapshot, which counts students on the October 31 audited register (Nov. 13 in 2020-21 and Nov. 12 in 2021-22, when the school year started late). Each year comes from the newest edition that covers it: the 2021-22 to 2025-26 edition for 2021-22 onward; the 2020-21 to 2024-25 edition for 2020-21; the 2019-20 to 2023-24 edition for 2019-20; the 2016-17 to 2020-21 citywide file on NYC Open Data for 2016-17 to 2018-19; the 2015-16 to 2019-20 file for 2015-16; the 2014-15 to 2018-19 file for 2014-15; and the 2013-14 to 2017-18, 2012-13 to 2016-17, 2011-12 to 2015-16 and 2010-11 to 2014-15 editions for 2013-14 back to 2010-11. DOE no longer posts the 2019-20 to 2023-24 and 2020-21 to 2024-25 editions or the editions published from 2015 to 2018; those were retrieved from the Internet Archive. Where editions overlap, their citywide totals are identical. 3-K and pre-K include half-day and full-day seats and NYC Early Education Centers and match the 3-K and pre-K tab; for 2017-18 and 2018-19, when the citywide file combines them, 3-K comes from DOE’s 3-K for All snapshot on NYC Open Data.</p>
+                                <p style={{ marginBottom: '10px' }}><strong>With and without charter schools.</strong> From 2019-20, DOE publishes citywide counts with and without charter schools, and the explorer uses both. Earlier editions publish only the figure that includes charters; for those years, district-school counts are that figure minus the charter-school row (District 84) of the same edition’s district file, grade by grade. In the 2019-20 edition, which publishes both, the District 84 row equals the difference between the two citywide figures (129,668 students). Charter K-12 counts on this basis run within about 2 percent of the state’s October charter counts. 3-K is the same in both views, since no charter school enrolled 3-K students in these years.</p>
+                                <p>The preliminary 2026-27 point on the K-12 line (766,900 as of Oct. 31, 2026, district schools only) is from DOE’s Nov. 16, 2026, release as reported by The New York Times and NY1. It is 23,018 below the audited 2025-26 count of 789,918, the decline DOE reported, so it is on the same basis. DOE released no grade-by-grade detail, and the figure may change in the audit.</p>
                             </div>
 
                             <div style={{ marginBottom: '32px' }}>
